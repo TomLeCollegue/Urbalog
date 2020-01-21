@@ -6,13 +6,45 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/discovery"
+                android:layout_width="199dp"
+                android:layout_height="59dp"
+                android:text="Start Discovery" />
+
+            <Button
+                android:id="@+id/advertising"
+                android:layout_width="199dp"
+                android:layout_height="59dp"
+                android:text="Start Advertising" />
+
+            <Button
+                android:id="@+id/disconectBut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Disconect" />
+
+            <TextView
+                android:id="@+id/isAdvertising"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/connectedText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
