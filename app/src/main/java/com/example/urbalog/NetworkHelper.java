@@ -41,6 +41,7 @@ public class NetworkHelper {
     private Context c;
     private boolean advertising;
     private boolean discovering;
+    private boolean host;
 
     private List<Pair<String, String>> listPlayer;
 
@@ -85,7 +86,15 @@ public class NetworkHelper {
                 }
 
                 @Override
-                public void onEndpointLost(String endpointId) {}
+                public void onEndpointLost(String endpointId) {
+                    for (int i = 0; i<listPlayer.size(); i++)
+                    {
+                        if(listPlayer.get(i).second == endpointId) {
+                            listPlayer.remove(i);
+                        }
+                    }
+                    MainActivity.setStatusText("Connected : "+listPlayer.size()+" players");
+                }
             };
 
     // Callbacks for connections to other devices
@@ -106,7 +115,6 @@ public class NetworkHelper {
                         Log.i(TAG, "onConnectionResult: connection successful");
 
                         connectionsClient.stopDiscovery();
-                        //connectionsClient.stopAdvertising();
 
                         listPlayer.add(new Pair<>(playerName, endpointId));
                         MainActivity.setStatusText("Connected : "+listPlayer.size()+" players");
@@ -118,13 +126,22 @@ public class NetworkHelper {
 
                 @Override
                 public void onDisconnected(String endpointId) {
-                    for (int i = 0; i<listPlayer.size(); i++)
-                    {
-                        if(listPlayer.get(i).second == endpointId) {
-                            listPlayer.remove(i);
+                    if(host) {
+                        for (int i = 0; i < listPlayer.size(); i++) {
+                            if (endpointId.equals(listPlayer.get(i).second))
+                                listPlayer.remove(i);
+                        }
+                        if(listPlayer.size() == 0){
+                            stop();
+                            MainActivity.setStatusText("Disconnected");
+                        }
+                        else{
+                            MainActivity.setStatusText("Connected : " + listPlayer.size() + " players");
                         }
                     }
-                    MainActivity.setStatusText("Connected : "+listPlayer.size()+" players");
+                    else {
+                        MainActivity.setStatusText("Disconnected");
+                    }
                 }
             };
 
@@ -132,6 +149,7 @@ public class NetworkHelper {
         this.c = c;
         discovering = false;
         advertising = false;
+        host = false;
         listPlayer = new ArrayList<>();
         connectionsClient = Nearby.getConnectionsClient(c);
     }
@@ -145,6 +163,7 @@ public class NetworkHelper {
         if (discovering != true) {
             startAdvertising();
             advertising = true;
+            host = true;
             MainActivity.setStatusText("Searching");
         }
     }
@@ -154,6 +173,7 @@ public class NetworkHelper {
         {
             startDiscovery();
             discovering = true;
+            host = false;
             MainActivity.setStatusText("Searching");
         }
     }
@@ -166,6 +186,7 @@ public class NetworkHelper {
         }
         MainActivity.setStatusText("Disconnected");
         listPlayer.clear();
+        host = false;
     }
 
     /** Starts looking for other players using Nearby Connections. */
