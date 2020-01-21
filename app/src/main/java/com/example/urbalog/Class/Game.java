@@ -8,6 +8,8 @@ public class Game {
     private Integer scoreAttractivite;
     private Integer scoreFluidite;
     private Integer scoreEnvironnemental;
+    private Market market;
+    private City city;
 
     public Game() {
         scoreLogistique = 0;
