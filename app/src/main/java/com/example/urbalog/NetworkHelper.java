@@ -2,28 +2,17 @@ package com.example.urbalog;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
+
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.CallSuper;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-
-import com.example.urbalog.CodenameGenerator;
-import com.example.urbalog.MainActivity;
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
 import com.google.android.gms.nearby.connection.ConnectionInfo;
 import com.google.android.gms.nearby.connection.ConnectionLifecycleCallback;
 import com.google.android.gms.nearby.connection.ConnectionResolution;
 import com.google.android.gms.nearby.connection.ConnectionsClient;
-import com.google.android.gms.nearby.connection.ConnectionsStatusCodes;
 import com.google.android.gms.nearby.connection.DiscoveredEndpointInfo;
 import com.google.android.gms.nearby.connection.DiscoveryOptions;
 import com.google.android.gms.nearby.connection.EndpointDiscoveryCallback;
@@ -36,18 +25,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
+/**
+ * Helper class for network interactions using Nearby Connection API
+ * This handle advertise/discovery, data sending, disconnection and managements of connections
+ */
 
 public class NetworkHelper {
     private Context appContext;
+
     private boolean advertising;
     private boolean discovering;
     private boolean host;
 
-    private List<Pair<String, String>> listPlayer;
+    private List<Pair<String, String>> listPlayer; // Pair array for connexion information storage of connected users
 
     private ConnectionsClient connectionsClient;
-    private static final String TAG = "POC_nearby";
+    private static final String TAG = "UrbalogGame"; // Tag for log
     private final String codeName = CodenameGenerator.generate();
 
     private Object dataReceived;
@@ -62,11 +55,17 @@ public class NetworkHelper {
 
     private static final int REQUEST_CODE_REQUIRED_PERMISSIONS = 1;
 
-    private static final Strategy STRATEGY = Strategy.P2P_STAR;
+    private static final Strategy STRATEGY = Strategy.P2P_STAR; // Nearby connection strategie for data sending
 
     // Callbacks for receiving payloads
     private final PayloadCallback payloadCallback =
             new PayloadCallback() {
+                /**
+                 * Callback for data reception
+                 * It deserialize the received object (in byte) to an instance
+                 * @param endpointId
+                 * @param payload
+                 */
                 @Override
                 public void onPayloadReceived(String endpointId, Payload payload) {
                     dataReceived = new Object();
@@ -79,6 +78,12 @@ public class NetworkHelper {
                     }
                 }
 
+                /**
+                 * Call when data transfer is finish and succeed
+                 * It check the Class and do the appropriate action
+                 * @param endpointId
+                 * @param update
+                 */
                 @Override
                 public void onPayloadTransferUpdate(String endpointId, PayloadTransferUpdate update) {
                     if(!host){
@@ -131,7 +136,6 @@ public class NetworkHelper {
 
                         listPlayer.add(new Pair<>(playerName, endpointId));
                         MainActivity.setStatusText("Connected : "+listPlayer.size()+" players");
-                        // setButtonState(true);
                     } else {
                         Log.i(TAG, "onConnectionResult: connection failed");
                     }
@@ -167,6 +171,9 @@ public class NetworkHelper {
         connectionsClient = Nearby.getConnectionsClient(c);
     }
 
+    /**
+     * Ends and disconnect from all endpoints
+     */
     public void stop() {
         connectionsClient.stopAllEndpoints();
     }
@@ -181,6 +188,10 @@ public class NetworkHelper {
         }
     }
 
+    /**
+     * Launch discovery and set status attributes
+     * @param view
+     */
     public void searchGame(View view) {
         if (advertising != true)
         {
@@ -191,7 +202,7 @@ public class NetworkHelper {
         }
     }
 
-    /** Disconnects from the opponent and reset the UI. */
+    /** Disconnects from the opponent and reset the player list. */
     public void disconnect(View view) {
         for (int i = 0; i<listPlayer.size(); i++)
         {
@@ -204,7 +215,6 @@ public class NetworkHelper {
 
     /** Starts looking for other players using Nearby Connections. */
     private void startDiscovery() {
-        // Note: Discovery may fail. To keep this demo simple, we don't handle failures.
         connectionsClient.startDiscovery(
                 appContext.getPackageName(), endpointDiscoveryCallback,
                 new DiscoveryOptions.Builder().setStrategy(STRATEGY).build());
@@ -212,7 +222,6 @@ public class NetworkHelper {
 
     /** Broadcasts our presence using Nearby Connections so other players can find us. */
     private void startAdvertising() {
-        // Note: Advertising may fail. To keep this demo simple, we don't handle failures.
         connectionsClient.startAdvertising(
                 codeName, appContext.getPackageName(), connectionLifecycleCallback,
                 new AdvertisingOptions.Builder().setStrategy(STRATEGY).build());
@@ -236,6 +245,12 @@ public class NetworkHelper {
         return discovering;
     }
 
+    /**
+     * Send data to all client connected to the host
+     * It serialize the object in parameter before sending it
+     * @param o
+     * @throws IOException
+     */
     public void sendToAllClients(Object o) throws IOException {
         Payload data = Payload.fromBytes(SerializationHelper.serialize(o));
         for (int i = 0; i < listPlayer.size(); i++) {

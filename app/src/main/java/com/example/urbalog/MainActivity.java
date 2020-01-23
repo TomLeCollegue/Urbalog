@@ -5,7 +5,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -13,8 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.urbalog.R;
 
 import java.io.IOException;
 
@@ -73,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Request needed permissions to user when application start if they are not already allowed
+     */
     @Override
     protected void onStart()
     {
@@ -82,6 +82,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Check permissions status for the application
+     * @param context
+     * @param permissions
+     * @return boolean
+     */
     private static boolean hasPermissions(Context context, String... permissions) {
         for (String permission : permissions) {
             if (ContextCompat.checkSelfPermission(context, permission)
@@ -92,10 +98,15 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Request needed permissions to user through UI
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @CallSuper
     @Override
-    public void onRequestPermissionsResult(
-            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode != NetworkHelper.getRequestCodeRequiredPermissions()) {
