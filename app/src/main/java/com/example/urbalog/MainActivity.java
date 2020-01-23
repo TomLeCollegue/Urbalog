@@ -16,26 +16,19 @@ import android.widget.Toast;
 
 import com.example.urbalog.R;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button bAdvertising;
     private Button bDiscovery;
     private Button bDisconect;
+    private Button bSend;
+    private static TextView tData;
     private TextView tAdvertising;
     private TextView tDiscovery;
     private static TextView tConnected;
     private com.example.urbalog.NetworkHelper net;
-
-    private static final String[] REQUIRED_PERMISSIONS =
-            new String[] {
-                    Manifest.permission.BLUETOOTH,
-                    Manifest.permission.BLUETOOTH_ADMIN,
-                    Manifest.permission.ACCESS_WIFI_STATE,
-                    Manifest.permission.CHANGE_WIFI_STATE,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-            };
-
-    private static final int REQUEST_CODE_REQUIRED_PERMISSIONS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
         bAdvertising = (Button)findViewById(R.id.advertising);
         bDiscovery = (Button)findViewById(R.id.discovery);
         bDisconect = (Button)findViewById(R.id.disconectBut);
+        bSend = (Button)findViewById(R.id.dataButton);
         tConnected = (TextView)findViewById(R.id.connectedText);
+        tData = (TextView)findViewById(R.id.textContent);
         net = new com.example.urbalog.NetworkHelper(getApplicationContext());
 
         bAdvertising.setOnClickListener(new View.OnClickListener() {
@@ -66,14 +61,24 @@ public class MainActivity extends AppCompatActivity {
                 net.disconnect(getCurrentFocus());
             }
         });
+        bSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    net.sendToAllClients("test");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
     protected void onStart()
     {
         super.onStart();
-        if (!hasPermissions(this, REQUIRED_PERMISSIONS)) {
-            requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CODE_REQUIRED_PERMISSIONS);
+        if (!hasPermissions(this, NetworkHelper.getRequiredPermissions())) {
+            requestPermissions(NetworkHelper.getRequiredPermissions(), NetworkHelper.getRequestCodeRequiredPermissions());
         }
     }
 
@@ -93,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode != REQUEST_CODE_REQUIRED_PERMISSIONS) {
+        if (requestCode != NetworkHelper.getRequestCodeRequiredPermissions()) {
             return;
         }
 
@@ -111,4 +116,7 @@ public class MainActivity extends AppCompatActivity {
         tConnected.setText(text);
     }
 
+    public static void setDataText(String text) {
+        tData.setText(text);
+    }
 }

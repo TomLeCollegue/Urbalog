@@ -32,13 +32,14 @@ import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.android.gms.nearby.connection.Strategy;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class NetworkHelper {
-    private Context c;
+    private Context appContext;
     private boolean advertising;
     private boolean discovering;
     private boolean host;
@@ -49,6 +50,7 @@ public class NetworkHelper {
     private static final String TAG = "POC_nearby";
     private final String codeName = CodenameGenerator.generate();
 
+    private Object dataReceived;
     private static final String[] REQUIRED_PERMISSIONS =
             new String[] {
                     Manifest.permission.BLUETOOTH,
@@ -67,12 +69,23 @@ public class NetworkHelper {
             new PayloadCallback() {
                 @Override
                 public void onPayloadReceived(String endpointId, Payload payload) {
-
+                    dataReceived = new Object();
+                    try {
+                        dataReceived = SerializationHelper.deserialize(payload.asBytes());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
                 public void onPayloadTransferUpdate(String endpointId, PayloadTransferUpdate update) {
-
+                    if(!host){
+                        if(dataReceived instanceof String){
+                            MainActivity.setDataText((String)dataReceived);
+                        }
+                    }
                 }
             };
 
@@ -146,7 +159,7 @@ public class NetworkHelper {
             };
 
     public NetworkHelper(Context c) {
-        this.c = c;
+        appContext = c;
         discovering = false;
         advertising = false;
         host = false;
@@ -193,7 +206,7 @@ public class NetworkHelper {
     private void startDiscovery() {
         // Note: Discovery may fail. To keep this demo simple, we don't handle failures.
         connectionsClient.startDiscovery(
-                c.getPackageName(), endpointDiscoveryCallback,
+                appContext.getPackageName(), endpointDiscoveryCallback,
                 new DiscoveryOptions.Builder().setStrategy(STRATEGY).build());
     }
 
@@ -201,8 +214,16 @@ public class NetworkHelper {
     private void startAdvertising() {
         // Note: Advertising may fail. To keep this demo simple, we don't handle failures.
         connectionsClient.startAdvertising(
-                codeName, c.getPackageName(), connectionLifecycleCallback,
+                codeName, appContext.getPackageName(), connectionLifecycleCallback,
                 new AdvertisingOptions.Builder().setStrategy(STRATEGY).build());
+    }
+
+    public static String[] getRequiredPermissions() {
+        return REQUIRED_PERMISSIONS;
+    }
+
+    public static int getRequestCodeRequiredPermissions() {
+        return REQUEST_CODE_REQUIRED_PERMISSIONS;
     }
 
     public boolean isAdvertising()
@@ -213,5 +234,12 @@ public class NetworkHelper {
     public boolean isDiscovering()
     {
         return discovering;
+    }
+
+    public void sendToAllClients(Object o) throws IOException {
+        Payload data = Payload.fromBytes(SerializationHelper.serialize(o));
+        for (int i = 0; i < listPlayer.size(); i++) {
+            Nearby.getConnectionsClient(appContext).sendPayload(listPlayer.get(i).second, data);
+        }
     }
 }
