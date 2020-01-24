@@ -4,30 +4,32 @@ import java.util.Objects;
 
 public class Building {
 
-    private String nameBuilding;
+    private String name;
     private String description;
-    private String information;
-    private Integer scoreLogistique;
-    private Integer scoreAttractivite;
-    private Integer scoreFluidite;
-    private Integer scoreEnvironnemental;
+    private Integer coutPolitique;
+    private Integer coutSocial;
+    private Integer coutEconomique;
+    private Integer effetAttractivite;
+    private Integer effetFluidite;
+    private Integer effetEnvironnemental;
 
-    public Building(String nameBuilding, String description, String information, Integer scoreLogistique, Integer scoreAttractivite, Integer scoreFluidite, Integer scoreEnvironnemental) {
-        this.nameBuilding = nameBuilding;
+    public Building(String name, String description, Integer coutPolitique, Integer coutSocial, Integer coutEconomique, Integer effetAttractivite, Integer effetFluidite, Integer effetEnvironnemental) {
+        this.name = name;
         this.description = description;
-        this.information = information;
-        this.scoreLogistique = scoreLogistique;
-        this.scoreAttractivite = scoreAttractivite;
-        this.scoreFluidite = scoreFluidite;
-        this.scoreEnvironnemental = scoreEnvironnemental;
+        this.coutPolitique = coutPolitique;
+        this.coutSocial = coutSocial;
+        this.coutEconomique = coutEconomique;
+        this.effetAttractivite = effetAttractivite;
+        this.effetFluidite = effetFluidite;
+        this.effetEnvironnemental = effetEnvironnemental;
     }
 
-    public String getNameBuilding() {
-        return nameBuilding;
+    public String getName() {
+        return name;
     }
 
-    public void setNameBuilding(String nameBuilding) {
-        this.nameBuilding = nameBuilding;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -38,44 +40,52 @@ public class Building {
         this.description = description;
     }
 
-    public String getInformation() {
-        return information;
+    public Integer getCoutPolitique() {
+        return coutPolitique;
     }
 
-    public void setInformation(String information) {
-        this.information = information;
+    public void setCoutPolitique(Integer coutPolitique) {
+        this.coutPolitique = coutPolitique;
     }
 
-    public Integer getScoreLogistique() {
-        return scoreLogistique;
+    public Integer getCoutSocial() {
+        return coutSocial;
     }
 
-    public void setScoreLogistique(Integer scoreLogistique) {
-        this.scoreLogistique = scoreLogistique;
+    public void setCoutSocial(Integer coutSocial) {
+        this.coutSocial = coutSocial;
     }
 
-    public Integer getScoreAttractivite() {
-        return scoreAttractivite;
+    public Integer getCoutEconomique() {
+        return coutEconomique;
     }
 
-    public void setScoreAttractivite(Integer scoreAttractivite) {
-        this.scoreAttractivite = scoreAttractivite;
+    public void setCoutEconomique(Integer coutEconomique) {
+        this.coutEconomique = coutEconomique;
     }
 
-    public Integer getScoreFluidite() {
-        return scoreFluidite;
+    public Integer getEffetAttractivite() {
+        return effetAttractivite;
     }
 
-    public void setScoreFluidite(Integer scoreFluidite) {
-        this.scoreFluidite = scoreFluidite;
+    public void setEffetAttractivite(Integer effetAttractivite) {
+        this.effetAttractivite = effetAttractivite;
     }
 
-    public Integer getScoreEnvironnemental() {
-        return scoreEnvironnemental;
+    public Integer getEffetFluidite() {
+        return effetFluidite;
     }
 
-    public void setScoreEnvironnemental(Integer scoreEnvironnemental) {
-        this.scoreEnvironnemental = scoreEnvironnemental;
+    public void setEffetFluidite(Integer effetFluidite) {
+        this.effetFluidite = effetFluidite;
+    }
+
+    public Integer getEffetEnvironnemental() {
+        return effetEnvironnemental;
+    }
+
+    public void setEffetEnvironnemental(Integer effetEnvironnemental) {
+        this.effetEnvironnemental = effetEnvironnemental;
     }
 
     @Override
@@ -83,30 +93,32 @@ public class Building {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Building building = (Building) o;
-        return Objects.equals(nameBuilding, building.nameBuilding) &&
+        return Objects.equals(name, building.name) &&
                 Objects.equals(description, building.description) &&
-                Objects.equals(information, building.information) &&
-                Objects.equals(scoreLogistique, building.scoreLogistique) &&
-                Objects.equals(scoreAttractivite, building.scoreAttractivite) &&
-                Objects.equals(scoreFluidite, building.scoreFluidite) &&
-                Objects.equals(scoreEnvironnemental, building.scoreEnvironnemental);
+                Objects.equals(coutPolitique, building.coutPolitique) &&
+                Objects.equals(coutSocial, building.coutSocial) &&
+                Objects.equals(coutEconomique, building.coutEconomique) &&
+                Objects.equals(effetAttractivite, building.effetAttractivite) &&
+                Objects.equals(effetFluidite, building.effetFluidite) &&
+                Objects.equals(effetEnvironnemental, building.effetEnvironnemental);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nameBuilding, description, information, scoreLogistique, scoreAttractivite, scoreFluidite, scoreEnvironnemental);
+        return Objects.hash(name, description, coutPolitique, coutSocial, coutEconomique, effetAttractivite, effetFluidite, effetEnvironnemental);
     }
 
     @Override
     public String toString() {
-        return "Building{" +
-                "nameBuilding='" + nameBuilding + '\'' +
-                ", description='" + description + '\'' +
-                ", information='" + information + '\'' +
-                ", scoreLogistique=" + scoreLogistique +
-                ", scoreAttractivite=" + scoreAttractivite +
-                ", scoreFluidite=" + scoreFluidite +
-                ", scoreEnvironnemental=" + scoreEnvironnemental +
+        return "Building ===> {" +
+                "\nname='" + name + '\'' +
+                ", \ndescription='" + description + '\'' +
+                ", \ncoutPolitique=" + coutPolitique +
+                ", \ncoutSocial=" + coutSocial +
+                ", \ncoutEconomique=" + coutEconomique +
+                ", \neffetAttractivite=" + effetAttractivite +
+                ", \neffetFluidite=" + effetFluidite +
+                ", \neffetEnvironnemental=" + effetEnvironnemental +
                 '}';
     }
 }
