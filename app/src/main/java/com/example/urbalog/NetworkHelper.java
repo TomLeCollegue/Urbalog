@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
+import com.example.urbalog.Class.TransferPackage;
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
 import com.google.android.gms.nearby.connection.ConnectionInfo;
@@ -38,6 +39,8 @@ public class NetworkHelper {
     private boolean advertising;
     private boolean discovering;
     private boolean host;
+
+    private Game currentGame;
 
     private List<Pair<String, String>> listPlayer; // Pair array for connexion information storage of connected users
 
@@ -92,10 +95,12 @@ public class NetworkHelper {
                         if(dataReceived instanceof String){
                             MainActivity.setDataText((String)dataReceived);
                         }
-                        else if(dataReceived instanceof Pair){
-                            if(((Pair) dataReceived).second instanceof Market)
+                        else if(dataReceived instanceof TransferPackage){
+                            if(((TransferPackage) dataReceived).second instanceof Market)
                             {
-                                (Game)((Pair)dataReceived).first;
+                                if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first))) {
+                                    currentGame.refreshMarket(((Market) ((TransferPackage) dataReceived).second));
+                                }
                             }
                         }
                     }
@@ -104,8 +109,8 @@ public class NetworkHelper {
                         if(dataReceived instanceof String){
                             MainActivity.setDataText((String)dataReceived);
                         }
-                        else if(dataReceived instanceof Pair){
-                            if(((Pair) dataReceived).second instanceof Market)
+                        else if(dataReceived instanceof TransferPackage){
+                            if(((TransferPackage) dataReceived).second instanceof Market)
                             {
 
                             }
@@ -253,6 +258,10 @@ public class NetworkHelper {
 
     public static int getRequestCodeRequiredPermissions() {
         return REQUEST_CODE_REQUIRED_PERMISSIONS;
+    }
+
+    public void setCurrentGame(Game currentGame) {
+        this.currentGame = currentGame;
     }
 
     public boolean isAdvertising()

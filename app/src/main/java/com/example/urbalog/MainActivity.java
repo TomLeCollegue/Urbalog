@@ -8,10 +8,15 @@ import androidx.core.content.ContextCompat;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.urbalog.Class.Game;
+import com.example.urbalog.Class.Market;
+import com.example.urbalog.Class.TransferPackage;
 
 import java.io.IOException;
 
@@ -26,11 +31,14 @@ public class MainActivity extends AppCompatActivity {
     private TextView tDiscovery;
     private static TextView tConnected;
     private com.example.urbalog.NetworkHelper net;
+    private Game test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        test = new Game();
 
         bAdvertising = (Button)findViewById(R.id.advertising);
         bDiscovery = (Button)findViewById(R.id.discovery);
@@ -39,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         tConnected = (TextView)findViewById(R.id.connectedText);
         tData = (TextView)findViewById(R.id.textContent);
         net = new com.example.urbalog.NetworkHelper(getApplicationContext());
+        net.setCurrentGame(test);
 
         bAdvertising.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    net.sendToAllClients("test");
+                    net.sendToAllClients(new TransferPackage<Game, Market>(test, new Market()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

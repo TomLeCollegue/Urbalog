@@ -1,8 +1,11 @@
 package com.example.urbalog.Class;
 
+import com.example.urbalog.MainActivity;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Game {
+public class Game implements Serializable {
 
     private Integer scoreLogistique;
     private Integer scoreAttractivite;
@@ -58,7 +61,6 @@ public class Game {
         this.market = market;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,5 +91,6 @@ public class Game {
     {
         setMarket(newMarket);
         //updateMarketView(); // à faire quand la vue sera implémenté
+        MainActivity.setDataText(Integer.toString(getMarket().getBuildings().size()));
     }
 }
