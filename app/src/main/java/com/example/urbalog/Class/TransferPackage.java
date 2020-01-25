@@ -35,6 +35,14 @@ public class TransferPackage<F, S> extends Object implements Serializable {
         return Objects.hash(first, second);
     }
 
+    @Override
+    public String toString() {
+        return "TransferPackage{" +
+                "first=" + first +
+                ", second=" + second +
+                '}';
+    }
+
     public static <A, B> TransferPackage<A, B> create(A a, B b){
         return new TransferPackage<A, B>(a, b);
     }
