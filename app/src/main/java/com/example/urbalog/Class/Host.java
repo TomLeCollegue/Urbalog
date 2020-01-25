@@ -1,15 +1,22 @@
 package com.example.urbalog.Class;
 
+import android.content.Context;
+
+import com.example.urbalog.NetworkHelper;
+
 import java.util.ArrayList;
 
 public class Host {
 
     private ArrayList<Player> players;
     private ArrayList<Game> games;
+    private NetworkHelper netHelp;
+    private Context appContext;
 
     public Host() {
         this.players = new ArrayList<Player>();
         this.games = new ArrayList<Game>();
+        this.netHelp = new NetworkHelper(appContext);
     }
 
     public ArrayList<Player> getPlayers() {

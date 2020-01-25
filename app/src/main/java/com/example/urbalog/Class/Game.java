@@ -50,6 +50,15 @@ public class Game {
         this.scoreEnvironnemental = scoreEnvironnemental;
     }
 
+    public Market getMarket() {
+        return market;
+    }
+
+    public void setMarket(Market market) {
+        this.market = market;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,5 +83,11 @@ public class Game {
                 ", scoreFluidite=" + scoreFluidite +
                 ", scoreEnvironnemental=" + scoreEnvironnemental +
                 '}';
+    }
+
+    public void refreshMarket(Market newMarket)
+    {
+        setMarket(newMarket);
+        //updateMarketView(); // à faire quand la vue sera implémenté
     }
 }

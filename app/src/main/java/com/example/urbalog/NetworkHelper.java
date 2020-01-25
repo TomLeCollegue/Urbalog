@@ -7,6 +7,8 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 
+import com.example.urbalog.Class.Game;
+import com.example.urbalog.Class.Market;
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
 import com.google.android.gms.nearby.connection.ConnectionInfo;
@@ -89,6 +91,24 @@ public class NetworkHelper {
                     if(!host){
                         if(dataReceived instanceof String){
                             MainActivity.setDataText((String)dataReceived);
+                        }
+                        else if(dataReceived instanceof Pair){
+                            if(((Pair) dataReceived).second instanceof Market)
+                            {
+                                (Game)((Pair)dataReceived).first;
+                            }
+                        }
+                    }
+                    else if(host)
+                    {
+                        if(dataReceived instanceof String){
+                            MainActivity.setDataText((String)dataReceived);
+                        }
+                        else if(dataReceived instanceof Pair){
+                            if(((Pair) dataReceived).second instanceof Market)
+                            {
+
+                            }
                         }
                     }
                 }
@@ -245,6 +265,11 @@ public class NetworkHelper {
         return discovering;
     }
 
+    public boolean isHost()
+    {
+        return host;
+    }
+
     /**
      * Send data to all client connected to the host
      * It serialize the object in parameter before sending it
@@ -257,4 +282,5 @@ public class NetworkHelper {
             Nearby.getConnectionsClient(appContext).sendPayload(listPlayer.get(i).second, data);
         }
     }
+
 }
