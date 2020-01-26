@@ -135,10 +135,10 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Building> ListBuildings;
         ListBuildings = M.getBuildings();
 
-        textNameBuilding1.setText(ListBuildings.get(1));
-        textNameBuilding2.setText(ListBuildings.get(2));
-        textNameBuilding3.setText(ListBuildings.get(3));
-        textNameBuilding4.setText(ListBuildings.get(4));
-        textNameBuilding5.setText(ListBuildings.get(5));
+        textNameBuilding1.setText(ListBuildings.get(1).getName());
+        textNameBuilding2.setText(ListBuildings.get(2).getName());
+        textNameBuilding3.setText(ListBuildings.get(3).getName());
+        textNameBuilding4.setText(ListBuildings.get(4).getName());
+        textNameBuilding5.setText(ListBuildings.get(5).getName());
     }
 }
