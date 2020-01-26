@@ -112,7 +112,15 @@ public class NetworkHelper {
                         else if(dataReceived instanceof TransferPackage){
                             if(((TransferPackage) dataReceived).second instanceof Market)
                             {
-
+                                if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first))) {
+                                    currentGame.setMarket(((Market) ((TransferPackage) dataReceived).second));
+                                    try {
+                                        TransferPackage resend = new TransferPackage<Game, Market>((((Game) ((TransferPackage) dataReceived).first)), ((Market) ((TransferPackage) dataReceived).second));
+                                        sendToAllClients(resend);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             }
                         }
                     }
