@@ -1,5 +1,7 @@
 package com.example.urbalog.Class;
 
+import com.example.urbalog.NetworkHelper;
+
 import java.util.Objects;
 
 public class Player {
@@ -8,6 +10,7 @@ public class Player {
     private Integer age;
     private String job;
     private Integer score;
+    private NetworkHelper netHelp;
 
     public Player(String name, Integer age, String job, Integer score) {
         this.name = name;

@@ -1,14 +1,16 @@
 package com.example.urbalog.Class;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Market {
+public class Market implements Serializable {
 
     private ArrayList<Building> buildings;
 
-    public Market() {
+    public Market(){
         this.buildings = new ArrayList<Building>();
+        buildings.add(new Building("Parking", "aaa", "aaa", 1,1,1,1));
     }
 
     public ArrayList<Building> getBuildings() {
