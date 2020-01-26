@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
@@ -186,13 +187,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         recreate();
-    }
-
-    public static void setStatusText(String text) {
-        tConnected.setText(text);
-    }
-
-    public static void setDataText(String text) {
-        tData.setText(text);
     }
 }
