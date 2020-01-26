@@ -10,7 +10,6 @@ public class Market implements Serializable {
 
     public Market(){
         this.buildings = new ArrayList<Building>();
-        buildings.add(new Building("Parking", "aaa", "aaa", 1,1,1,1));
     }
 
     public ArrayList<Building> getBuildings() {

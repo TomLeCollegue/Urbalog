@@ -91,6 +91,6 @@ public class Game implements Serializable {
     {
         setMarket(newMarket);
         //updateMarketView(); // à faire quand la vue sera implémenté
-        MainActivity.setDataText(Integer.toString(getMarket().getBuildings().size()));
+        //MainActivity.setDataText(Integer.toString(getMarket().getBuildings().size()));
     }
 }
