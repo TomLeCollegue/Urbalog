@@ -18,6 +18,8 @@ import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
 import com.example.urbalog.Class.TransferPackage;
 import java.io.IOException;
+import java.util.ArrayList;
+import com.example.urbalog.Json.JsonBuilding;
 public class MainActivity extends AppCompatActivity {
 
     private TextView textPoliticalResssourcesBuilding1;
@@ -78,6 +80,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        JsonBuilding.init(MainActivity.this);
+        JsonBuilding.addBuildings();
+
+
+
 
 
         textPoliticalResssourcesBuilding1 = (TextView) findViewById(R.id.text_political_resssources_building_1);
@@ -134,19 +141,79 @@ public class MainActivity extends AppCompatActivity {
 
         Market M = new Market();
 
-        fillInfoNameBuildingsView(M);
+
+
+
+
+        fillInfosView(M);
 
     }
 
-    void fillInfoNameBuildingsView(Market M){
+    void fillInfosView(Market M){
         ArrayList<Building> ListBuildings;
         ListBuildings = M.getBuildings();
 
-        textNameBuilding1.setText(ListBuildings.get(1).getName());
-        textNameBuilding2.setText(ListBuildings.get(2).getName());
-        textNameBuilding3.setText(ListBuildings.get(3).getName());
-        textNameBuilding4.setText(ListBuildings.get(4).getName());
-        textNameBuilding5.setText(ListBuildings.get(5).getName());
+        Integer betPolitic1 = 0;
+        Integer betPolitic2 = 0;
+        Integer betPolitic3 = 0;
+        Integer betPolitic4 = 0;
+        Integer betPolitic5 = 0;
+        Integer betEco1 = 0;
+        Integer betEco2 = 0;
+        Integer betEco3 = 0;
+        Integer betEco4 = 0;
+        Integer betEco5 = 0;
+        Integer betSocial1 = 0;
+        Integer betSocial2 = 0;
+        Integer betSocial3 = 0;
+        Integer betSocial4 = 0;
+        Integer betSocial5 = 0;
+
+
+        textNameBuilding1.setText(ListBuildings.get(0).getName());
+        textNameBuilding2.setText(ListBuildings.get(1).getName());
+        textNameBuilding3.setText(ListBuildings.get(2).getName());
+        textNameBuilding4.setText(ListBuildings.get(3).getName());
+        textNameBuilding5.setText(ListBuildings.get(4).getName());
+
+        textEnviBuilding1.setText(String.valueOf(ListBuildings.get(0).getEffetEnvironnemental()));
+        textEnviBuilding2.setText(String.valueOf(ListBuildings.get(1).getEffetEnvironnemental()));
+        textEnviBuilding3.setText(String.valueOf(ListBuildings.get(2).getEffetEnvironnemental()));
+        textEnviBuilding4.setText(String.valueOf(ListBuildings.get(3).getEffetEnvironnemental()));
+        textEnviBuilding5.setText(String.valueOf(ListBuildings.get(4).getEffetEnvironnemental()));
+        textAttractBuilding1.setText(String.valueOf(ListBuildings.get(0).getEffetAttractivite()));
+        textAttractBuilding2.setText(String.valueOf(ListBuildings.get(1).getEffetAttractivite()));
+        textAttractBuilding3.setText(String.valueOf(ListBuildings.get(2).getEffetAttractivite()));
+        textAttractBuilding4.setText(String.valueOf(ListBuildings.get(3).getEffetAttractivite()));
+        textAttractBuilding5.setText(String.valueOf(ListBuildings.get(4).getEffetAttractivite()));
+        textTraficBuilding1.setText(String.valueOf(ListBuildings.get(0).getEffetFluidite()));
+        textTraficBuilding2.setText(String.valueOf(ListBuildings.get(1).getEffetFluidite()));
+        textTraficBuilding3.setText(String.valueOf(ListBuildings.get(2).getEffetFluidite()));
+        textTraficBuilding4.setText(String.valueOf(ListBuildings.get(3).getEffetFluidite()));
+        textTraficBuilding5.setText(String.valueOf(ListBuildings.get(4).getEffetFluidite()));
+
+        textPoliticalResssourcesBuilding1.setText(betPolitic1 + "/" + ListBuildings.get(0).getCoutPolitique());
+        textPoliticalResssourcesBuilding2.setText(betPolitic2 + "/" + ListBuildings.get(1).getCoutPolitique());
+        textPoliticalResssourcesBuilding3.setText(betPolitic3+ "/" + ListBuildings.get(2).getCoutPolitique());
+        textPoliticalResssourcesBuilding4.setText(betPolitic4 + "/" + ListBuildings.get(3).getCoutPolitique());
+        textPoliticalResssourcesBuilding5.setText(betPolitic5 + "/" + ListBuildings.get(4).getCoutPolitique());
+
+        textSocialRessourcesBuilding1.setText(betSocial1 + "/" + ListBuildings.get(0).getCoutSocial()) ;
+        textSocialRessourcesBuilding2.setText(betSocial2 + "/" + ListBuildings.get(1).getCoutSocial()) ;
+        textSocialRessourcesBuilding3.setText(betSocial3 + "/" + ListBuildings.get(2).getCoutSocial()) ;
+        textSocialRessourcesBuilding4.setText(betSocial4 + "/" + ListBuildings.get(3).getCoutSocial()) ;
+        textSocialRessourcesBuilding5.setText(betSocial5 + "/" + ListBuildings.get(4).getCoutSocial()) ;
+
+        textEcoResssourcesBuilding1.setText(betEco1 + "/" + ListBuildings.get(0).getCoutEconomique());
+        textEcoResssourcesBuilding2.setText(betEco2 + "/" + ListBuildings.get(1).getCoutEconomique());
+        textEcoResssourcesBuilding3.setText(betEco3 + "/" + ListBuildings.get(2).getCoutEconomique());
+        textEcoResssourcesBuilding4.setText(betEco4 + "/" + ListBuildings.get(3).getCoutEconomique());
+        textEcoResssourcesBuilding5.setText(betEco5 + "/" + ListBuildings.get(4).getCoutEconomique());
+   
+
+
+
+
     }
 
     /**

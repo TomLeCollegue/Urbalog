@@ -1,6 +1,7 @@
 package com.example.urbalog.Class;
 
 import java.io.Serializable;
+import com.example.urbalog.Json.JsonBuilding;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -9,8 +10,10 @@ public class Market implements Serializable {
     private ArrayList<Building> buildings;
 
     public Market(){
-        this.buildings = new ArrayList<Building>();
-    }
+        this.buildings = JsonBuilding.readBuilding();
+
+
+            }
 
     public ArrayList<Building> getBuildings() {
         return buildings;

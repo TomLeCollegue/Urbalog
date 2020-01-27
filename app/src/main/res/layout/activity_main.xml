@@ -53,7 +53,9 @@
                         android:id="@+id/infrastructure_1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="3dp"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -296,7 +298,9 @@
                         android:id="@+id/infrastructure_2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="3dp"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -539,7 +543,9 @@
                         android:id="@+id/infrastructure_3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="3dp"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -782,7 +788,9 @@
                         android:id="@+id/infrastructure_4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="3dp"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -1025,7 +1033,9 @@
                         android:id="@+id/infrastructure_5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="3dp"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border"
                         android:orientation="vertical">
 
                         <LinearLayout
