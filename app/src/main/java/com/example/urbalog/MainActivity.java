@@ -12,12 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import com.example.urbalog.Class.Building;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
 import com.example.urbalog.Class.TransferPackage;
-
 import java.io.IOException;
-
 public class MainActivity extends AppCompatActivity {
 
     private TextView textPoliticalResssourcesBuilding1;
@@ -132,8 +132,21 @@ public class MainActivity extends AppCompatActivity {
         textRessourceLeftRole = (TextView) findViewById(R.id.text_ressource_left_role);
         textRessourceRightRole = (TextView) findViewById(R.id.text_ressource_right_role);
 
+        Market M = new Market();
 
+        fillInfoNameBuildingsView(M);
 
+    }
+
+    void fillInfoNameBuildingsView(Market M){
+        ArrayList<Building> ListBuildings;
+        ListBuildings = M.getBuildings();
+
+        textNameBuilding1.setText(ListBuildings.get(1).getName());
+        textNameBuilding2.setText(ListBuildings.get(2).getName());
+        textNameBuilding3.setText(ListBuildings.get(3).getName());
+        textNameBuilding4.setText(ListBuildings.get(4).getName());
+        textNameBuilding5.setText(ListBuildings.get(5).getName());
     }
 
     /**
