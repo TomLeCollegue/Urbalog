@@ -94,7 +94,7 @@ public class NetworkHelper {
                 public void onPayloadTransferUpdate(String endpointId, PayloadTransferUpdate update) {
                     if(!host){
                         if(dataReceived instanceof String){
-                            //MainActivity.setDataText((String)dataReceived);
+                            //PlayerViewActivity.setDataText((String)dataReceived);
                         }
                         else if(dataReceived instanceof TransferPackage){
                             if(((TransferPackage) dataReceived).second instanceof Market)
@@ -114,7 +114,7 @@ public class NetworkHelper {
                     else if(host)
                     {
                         if(dataReceived instanceof String){
-                            //MainActivity.setDataText((String)dataReceived);
+                            //PlayerViewActivity.setDataText((String)dataReceived);
                         }
                         else if(dataReceived instanceof TransferPackage){
                             if(((TransferPackage) dataReceived).second instanceof Market)
@@ -162,7 +162,7 @@ public class NetworkHelper {
                             listPlayer.remove(i);
                         }
                     }
-                    //MainActivity.setStatusText("Connected : "+listPlayer.size()+" players");
+                    //PlayerViewActivity.setStatusText("Connected : "+listPlayer.size()+" players");
                 }
             };
 
@@ -186,7 +186,7 @@ public class NetworkHelper {
                         connectionsClient.stopDiscovery();
 
                         listPlayer.add(new Pair<>(playerName, endpointId));
-                        //MainActivity.setStatusText("Connected : "+listPlayer.size()+" players");
+                        //PlayerViewActivity.setStatusText("Connected : "+listPlayer.size()+" players");
                     } else {
                         Log.i(TAG, "onConnectionResult: connection failed");
                     }
@@ -201,14 +201,14 @@ public class NetworkHelper {
                         }
                         if(listPlayer.size() == 0){
                             stop();
-                            //MainActivity.setStatusText("Disconnected");
+                            //PlayerViewActivity.setStatusText("Disconnected");
                         }
                         else{
-                            //MainActivity.setStatusText("Connected : " + listPlayer.size() + " players");
+                            //PlayerViewActivity.setStatusText("Connected : " + listPlayer.size() + " players");
                         }
                     }
                     else {
-                        //MainActivity.setStatusText("Disconnected");
+                        //PlayerViewActivity.setStatusText("Disconnected");
                     }
                 }
             };
@@ -235,7 +235,7 @@ public class NetworkHelper {
             startAdvertising();
             advertising = true;
             host = true;
-            //MainActivity.setStatusText("Searching");
+            //PlayerViewActivity.setStatusText("Searching");
         }
     }
 
@@ -249,7 +249,7 @@ public class NetworkHelper {
             startDiscovery();
             discovering = true;
             host = false;
-            //MainActivity.setStatusText("Searching");
+            //PlayerViewActivity.setStatusText("Searching");
         }
     }
 
@@ -259,7 +259,7 @@ public class NetworkHelper {
         {
             connectionsClient.disconnectFromEndpoint(listPlayer.get(i).second);
         }
-        //MainActivity.setStatusText("Disconnected");
+        //PlayerViewActivity.setStatusText("Disconnected");
         listPlayer.clear();
         host = false;
     }

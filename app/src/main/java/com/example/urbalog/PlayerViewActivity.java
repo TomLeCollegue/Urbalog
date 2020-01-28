@@ -7,18 +7,25 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import com.example.urbalog.Class.Building;
-import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
-import com.example.urbalog.Class.TransferPackage;
-import java.io.IOException;
-public class MainActivity extends AppCompatActivity {
+import com.example.urbalog.Json.JsonBuilding;
+public class PlayerViewActivity extends AppCompatActivity {
 
     private TextView textPoliticalResssourcesBuilding1;
     private TextView textEcoResssourcesBuilding1;
@@ -73,11 +80,21 @@ public class MainActivity extends AppCompatActivity {
     private TextView textRessourceRightRole;
 
 
+    private PopupWindow popUpBet;
+    private Button buttonBetPopup;
+    private TextView textNameBuildingPopup;
+
+    private Market M;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.player_view_activity);
+        JsonBuilding.init(PlayerViewActivity.this);
+        JsonBuilding.addBuildings();
+
+        M = new Market();
+
 
 
         textPoliticalResssourcesBuilding1 = (TextView) findViewById(R.id.text_political_resssources_building_1);
@@ -132,21 +149,86 @@ public class MainActivity extends AppCompatActivity {
         textRessourceLeftRole = (TextView) findViewById(R.id.text_ressource_left_role);
         textRessourceRightRole = (TextView) findViewById(R.id.text_ressource_right_role);
 
-        Market M = new Market();
 
-        fillInfoNameBuildingsView(M);
+
+        textNameBuilding1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopUp(v);
+            }
+        });
+
+
+
+        fillInfosView();
 
     }
 
-    void fillInfoNameBuildingsView(Market M){
+    void fillInfosView(){
         ArrayList<Building> ListBuildings;
         ListBuildings = M.getBuildings();
 
-        textNameBuilding1.setText(ListBuildings.get(1).getName());
-        textNameBuilding2.setText(ListBuildings.get(2).getName());
-        textNameBuilding3.setText(ListBuildings.get(3).getName());
-        textNameBuilding4.setText(ListBuildings.get(4).getName());
-        textNameBuilding5.setText(ListBuildings.get(5).getName());
+        Integer betPolitic1 = 0;
+        Integer betPolitic2 = 0;
+        Integer betPolitic3 = 0;
+        Integer betPolitic4 = 0;
+        Integer betPolitic5 = 0;
+        Integer betEco1 = 0;
+        Integer betEco2 = 0;
+        Integer betEco3 = 0;
+        Integer betEco4 = 0;
+        Integer betEco5 = 0;
+        Integer betSocial1 = 0;
+        Integer betSocial2 = 0;
+        Integer betSocial3 = 0;
+        Integer betSocial4 = 0;
+        Integer betSocial5 = 0;
+
+
+        textNameBuilding1.setText(ListBuildings.get(0).getName());
+        textNameBuilding2.setText(ListBuildings.get(1).getName());
+        textNameBuilding3.setText(ListBuildings.get(2).getName());
+        textNameBuilding4.setText(ListBuildings.get(3).getName());
+        textNameBuilding5.setText(ListBuildings.get(4).getName());
+
+        textEnviBuilding1.setText(String.valueOf(ListBuildings.get(0).getEffetEnvironnemental()));
+        textEnviBuilding2.setText(String.valueOf(ListBuildings.get(1).getEffetEnvironnemental()));
+        textEnviBuilding3.setText(String.valueOf(ListBuildings.get(2).getEffetEnvironnemental()));
+        textEnviBuilding4.setText(String.valueOf(ListBuildings.get(3).getEffetEnvironnemental()));
+        textEnviBuilding5.setText(String.valueOf(ListBuildings.get(4).getEffetEnvironnemental()));
+        textAttractBuilding1.setText(String.valueOf(ListBuildings.get(0).getEffetAttractivite()));
+        textAttractBuilding2.setText(String.valueOf(ListBuildings.get(1).getEffetAttractivite()));
+        textAttractBuilding3.setText(String.valueOf(ListBuildings.get(2).getEffetAttractivite()));
+        textAttractBuilding4.setText(String.valueOf(ListBuildings.get(3).getEffetAttractivite()));
+        textAttractBuilding5.setText(String.valueOf(ListBuildings.get(4).getEffetAttractivite()));
+        textTraficBuilding1.setText(String.valueOf(ListBuildings.get(0).getEffetFluidite()));
+        textTraficBuilding2.setText(String.valueOf(ListBuildings.get(1).getEffetFluidite()));
+        textTraficBuilding3.setText(String.valueOf(ListBuildings.get(2).getEffetFluidite()));
+        textTraficBuilding4.setText(String.valueOf(ListBuildings.get(3).getEffetFluidite()));
+        textTraficBuilding5.setText(String.valueOf(ListBuildings.get(4).getEffetFluidite()));
+
+        textPoliticalResssourcesBuilding1.setText(betPolitic1 + "/" + ListBuildings.get(0).getCoutPolitique());
+        textPoliticalResssourcesBuilding2.setText(betPolitic2 + "/" + ListBuildings.get(1).getCoutPolitique());
+        textPoliticalResssourcesBuilding3.setText(betPolitic3+ "/" + ListBuildings.get(2).getCoutPolitique());
+        textPoliticalResssourcesBuilding4.setText(betPolitic4 + "/" + ListBuildings.get(3).getCoutPolitique());
+        textPoliticalResssourcesBuilding5.setText(betPolitic5 + "/" + ListBuildings.get(4).getCoutPolitique());
+
+        textSocialRessourcesBuilding1.setText(betSocial1 + "/" + ListBuildings.get(0).getCoutSocial()) ;
+        textSocialRessourcesBuilding2.setText(betSocial2 + "/" + ListBuildings.get(1).getCoutSocial()) ;
+        textSocialRessourcesBuilding3.setText(betSocial3 + "/" + ListBuildings.get(2).getCoutSocial()) ;
+        textSocialRessourcesBuilding4.setText(betSocial4 + "/" + ListBuildings.get(3).getCoutSocial()) ;
+        textSocialRessourcesBuilding5.setText(betSocial5 + "/" + ListBuildings.get(4).getCoutSocial()) ;
+
+        textEcoResssourcesBuilding1.setText(betEco1 + "/" + ListBuildings.get(0).getCoutEconomique());
+        textEcoResssourcesBuilding2.setText(betEco2 + "/" + ListBuildings.get(1).getCoutEconomique());
+        textEcoResssourcesBuilding3.setText(betEco3 + "/" + ListBuildings.get(2).getCoutEconomique());
+        textEcoResssourcesBuilding4.setText(betEco4 + "/" + ListBuildings.get(3).getCoutEconomique());
+        textEcoResssourcesBuilding5.setText(betEco5 + "/" + ListBuildings.get(4).getCoutEconomique());
+   
+
+
+
+
     }
 
     /**
@@ -201,4 +283,67 @@ public class MainActivity extends AppCompatActivity {
         }
         recreate();
     }
+
+
+    public void showPopUp(View v)
+    {
+        LayoutInflater inflater = (LayoutInflater)
+                getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popUpView = inflater.inflate(R.layout.bet_popup, null);
+
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+        boolean focusable = true;
+        popUpBet = new PopupWindow(popUpView, width, height, focusable);
+
+        buttonBetPopup = (Button)popUpView.findViewById(R.id.button_bet_popup);
+        textNameBuildingPopup = (TextView)popUpView.findViewById(R.id.text_name_building_popup);
+
+        textNameBuildingPopup.setText(M.getBuildings().get(0).getName());
+
+
+        popUpBet.showAtLocation(v, Gravity.CENTER, 0, 0);
+        // Assombrissement de l'arrière plan
+        dimBehind(popUpBet);
+
+        popUpView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popUpBet.dismiss();
+                return true;
+            }
+        });
+
+        buttonBetPopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popUpBet.dismiss();
+            }
+        });
+
+
+    }
+
+    private void dimBehind(PopupWindow popupWindow) {
+        View container;
+        if (popupWindow.getBackground() == null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                container = (View)popupWindow.getContentView().getParent();
+            } else {
+                container = popupWindow.getContentView();
+            }
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                container = (View)popupWindow.getContentView().getParent().getParent();
+            } else {
+                container = (View)popupWindow.getContentView().getParent();
+            }
+        }
+        Context context = popupWindow.getContentView().getContext();
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager.LayoutParams p = (WindowManager.LayoutParams) container.getLayoutParams();
+        p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        p.dimAmount = 0.5f;
+        wm.updateViewLayout(container, p);
+        }
 }
