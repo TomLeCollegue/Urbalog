@@ -19,7 +19,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import com.example.urbalog.Class.Building;
 import com.example.urbalog.Class.Market;
+import com.example.urbalog.Class.Role;
 import com.example.urbalog.Json.JsonBuilding;
+import com.example.urbalog.Json.JsonRole;
 
 public class PlayerViewActivity extends AppCompatActivity {
 
@@ -83,6 +85,7 @@ public class PlayerViewActivity extends AppCompatActivity {
     private TextView textFinancementBotPopup;
 
     private Market M;
+    private ArrayList<Role> Roles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +94,17 @@ public class PlayerViewActivity extends AppCompatActivity {
         JsonBuilding.init(PlayerViewActivity.this);
         JsonBuilding.addBuildings();
 
+        JsonRole.init(PlayerViewActivity.this);
+        JsonRole.addRoles();
+
+
+
+
         M = new Market();
+        Roles = JsonRole.readRole();
+
+
+
 
 
 
@@ -251,6 +264,31 @@ public class PlayerViewActivity extends AppCompatActivity {
         textEcoResssourcesBuilding4.setText(betEco4 + "/" + ListBuildings.get(3).getCoutEconomique());
         textEcoResssourcesBuilding5.setText(betEco5 + "/" + ListBuildings.get(4).getCoutEconomique());
    
+
+        textTitleRole.setText(Roles.get(0).getTypeRole());
+
+
+        //image du Maintenir Role
+        if(Roles.get(0).getHold().equals("Attractivité")){
+            icoObjectifLeftRole.setImageResource(R.mipmap.img_attract_city_foreground);
+        }
+        else if (Roles.get(0).getHold().equals("Environnement")){
+            icoObjectifLeftRole.setImageResource(R.mipmap.img_environment_city_foreground);
+        }
+        else{
+            icoObjectifLeftRole.setImageResource(R.mipmap.img_fluid_city_foreground);
+        }
+
+        //Image du ameliorer Role
+        if(Roles.get(0).getImprove().equals("Attractivité")){
+            icoObjectifRightRole.setImageResource(R.mipmap.img_impact_on_city_foreground);
+        }
+        else if (Roles.get(0).getImprove().equals("Environnement")){
+            icoObjectifRightRole.setImageResource(R.mipmap.img_environment_city_foreground);
+        }
+        else{
+            icoObjectifRightRole.setImageResource(R.mipmap.img_fluid_city_foreground);
+        }
 
 
 
