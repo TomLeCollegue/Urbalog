@@ -257,7 +257,7 @@ public class PlayerViewActivity extends AppCompatActivity {
 
     }
 
-    public void showPopUp(View v)
+    public void showPopUp(View v, Integer buildingNumber)
     {
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
