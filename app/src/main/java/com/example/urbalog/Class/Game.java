@@ -1,7 +1,5 @@
 package com.example.urbalog.Class;
 
-import com.example.urbalog.MainActivity;
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -91,6 +89,6 @@ public class Game implements Serializable {
     {
         setMarket(newMarket);
         //updateMarketView(); // à faire quand la vue sera implémenté
-        //MainActivity.setDataText(Integer.toString(getMarket().getBuildings().size()));
+        //PlayerViewActivity.setDataText(Integer.toString(getMarket().getBuildings().size()));
     }
 }

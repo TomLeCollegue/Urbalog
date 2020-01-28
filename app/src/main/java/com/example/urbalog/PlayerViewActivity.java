@@ -7,20 +7,25 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import com.example.urbalog.Class.Building;
-import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
-import com.example.urbalog.Class.TransferPackage;
-import java.io.IOException;
-import java.util.ArrayList;
 import com.example.urbalog.Json.JsonBuilding;
-public class MainActivity extends AppCompatActivity {
+public class PlayerViewActivity extends AppCompatActivity {
 
     private TextView textPoliticalResssourcesBuilding1;
     private TextView textEcoResssourcesBuilding1;
@@ -75,15 +80,20 @@ public class MainActivity extends AppCompatActivity {
     private TextView textRessourceRightRole;
 
 
+    private PopupWindow popUpBet;
+    private Button buttonBetPopup;
+    private TextView textNameBuildingPopup;
+
+    private Market M;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        JsonBuilding.init(MainActivity.this);
+        setContentView(R.layout.player_view_activity);
+        JsonBuilding.init(PlayerViewActivity.this);
         JsonBuilding.addBuildings();
 
-
+        M = new Market();
 
 
 
@@ -139,17 +149,22 @@ public class MainActivity extends AppCompatActivity {
         textRessourceLeftRole = (TextView) findViewById(R.id.text_ressource_left_role);
         textRessourceRightRole = (TextView) findViewById(R.id.text_ressource_right_role);
 
-        Market M = new Market();
+
+
+        textNameBuilding1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopUp(v);
+            }
+        });
 
 
 
-
-
-        fillInfosView(M);
+        fillInfosView();
 
     }
 
-    void fillInfosView(Market M){
+    void fillInfosView(){
         ArrayList<Building> ListBuildings;
         ListBuildings = M.getBuildings();
 
@@ -268,4 +283,67 @@ public class MainActivity extends AppCompatActivity {
         }
         recreate();
     }
+
+
+    public void showPopUp(View v)
+    {
+        LayoutInflater inflater = (LayoutInflater)
+                getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popUpView = inflater.inflate(R.layout.bet_popup, null);
+
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+        boolean focusable = true;
+        popUpBet = new PopupWindow(popUpView, width, height, focusable);
+
+        buttonBetPopup = (Button)popUpView.findViewById(R.id.button_bet_popup);
+        textNameBuildingPopup = (TextView)popUpView.findViewById(R.id.text_name_building_popup);
+
+        textNameBuildingPopup.setText(M.getBuildings().get(0).getName());
+
+
+        popUpBet.showAtLocation(v, Gravity.CENTER, 0, 0);
+        // Assombrissement de l'arrière plan
+        dimBehind(popUpBet);
+
+        popUpView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popUpBet.dismiss();
+                return true;
+            }
+        });
+
+        buttonBetPopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popUpBet.dismiss();
+            }
+        });
+
+
+    }
+
+    private void dimBehind(PopupWindow popupWindow) {
+        View container;
+        if (popupWindow.getBackground() == null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                container = (View)popupWindow.getContentView().getParent();
+            } else {
+                container = popupWindow.getContentView();
+            }
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                container = (View)popupWindow.getContentView().getParent().getParent();
+            } else {
+                container = (View)popupWindow.getContentView().getParent();
+            }
+        }
+        Context context = popupWindow.getContentView().getContext();
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager.LayoutParams p = (WindowManager.LayoutParams) container.getLayoutParams();
+        p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        p.dimAmount = 0.5f;
+        wm.updateViewLayout(container, p);
+        }
 }
