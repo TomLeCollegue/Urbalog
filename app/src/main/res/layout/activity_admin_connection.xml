@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:baselineAligned="true"
     android:weightSum="4"
-    tools:context=".AdminInterfaceConnection">
+    tools:context=".AdminConnectionActivity">
 
     <LinearLayout
         android:layout_width="0dp"
