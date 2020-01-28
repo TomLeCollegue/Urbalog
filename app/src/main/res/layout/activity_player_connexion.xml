@@ -49,11 +49,24 @@
                 android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/imageButton_refresh_list"
+                    android:id="@+id/button_refresh_list"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@android:drawable/stat_notify_sync_noanim"
                     android:layout_gravity="center"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Disconnected" />
             </FrameLayout>
         </LinearLayout>
 

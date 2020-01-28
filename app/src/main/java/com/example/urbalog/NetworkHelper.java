@@ -3,6 +3,7 @@ package com.example.urbalog;
 import android.Manifest;
 import android.content.Context;
 
+import android.content.Intent;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.android.gms.nearby.connection.Strategy;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +36,7 @@ import java.util.List;
  * This handle advertise/discovery, data sending, disconnection and managements of connections
  */
 
-public class NetworkHelper {
+public class NetworkHelper implements Serializable {
     private Context appContext;
 
     private boolean advertising;
@@ -95,6 +97,11 @@ public class NetworkHelper {
                     if(!host){
                         if(dataReceived instanceof String){
                             //PlayerViewActivity.setDataText((String)dataReceived);
+                        }
+                        else if(dataReceived instanceof Game){
+                            currentGame = (Game)dataReceived;
+                            Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
+                            appContext.startActivity(myIntent);
                         }
                         else if(dataReceived instanceof TransferPackage){
                             if(((TransferPackage) dataReceived).second instanceof Market)
@@ -186,7 +193,12 @@ public class NetworkHelper {
                         connectionsClient.stopDiscovery();
 
                         listPlayer.add(new Pair<>(playerName, endpointId));
-                        //PlayerViewActivity.setStatusText("Connected : "+listPlayer.size()+" players");
+                        if(host){
+                            AdminConnectionActivity.updateNbPlayers(listPlayer.size());
+                        }
+                        else{
+                            PlayerConnexionActivity.setStatus("Connected");
+                        }
                     } else {
                         Log.i(TAG, "onConnectionResult: connection failed");
                     }
@@ -199,16 +211,14 @@ public class NetworkHelper {
                             if (endpointId.equals(listPlayer.get(i).second))
                                 listPlayer.remove(i);
                         }
+                        AdminConnectionActivity.updateNbPlayers(listPlayer.size());
                         if(listPlayer.size() == 0){
                             stop();
                             //PlayerViewActivity.setStatusText("Disconnected");
                         }
-                        else{
-                            //PlayerViewActivity.setStatusText("Connected : " + listPlayer.size() + " players");
-                        }
                     }
                     else {
-                        //PlayerViewActivity.setStatusText("Disconnected");
+                        PlayerConnexionActivity.setStatus("Disconnected");
                     }
                 }
             };
@@ -227,6 +237,11 @@ public class NetworkHelper {
      */
     public void stop() {
         connectionsClient.stopAllEndpoints();
+        listPlayer.clear();
+        if(host)
+            connectionsClient.stopAdvertising();
+        else
+            connectionsClient.stopDiscovery();
     }
 
     /** Finds an opponent to play the game with using Nearby Connections. */
@@ -235,7 +250,6 @@ public class NetworkHelper {
             startAdvertising();
             advertising = true;
             host = true;
-            //PlayerViewActivity.setStatusText("Searching");
         }
     }
 
@@ -249,7 +263,7 @@ public class NetworkHelper {
             startDiscovery();
             discovering = true;
             host = false;
-            //PlayerViewActivity.setStatusText("Searching");
+            PlayerConnexionActivity.setStatus("Searching");
         }
     }
 
@@ -259,7 +273,8 @@ public class NetworkHelper {
         {
             connectionsClient.disconnectFromEndpoint(listPlayer.get(i).second);
         }
-        //PlayerViewActivity.setStatusText("Disconnected");
+        if(!host)
+            PlayerConnexionActivity.setStatus("Disconnected");
         listPlayer.clear();
         host = false;
     }
@@ -284,6 +299,10 @@ public class NetworkHelper {
 
     public static int getRequestCodeRequiredPermissions() {
         return REQUEST_CODE_REQUIRED_PERMISSIONS;
+    }
+
+    public List<Pair<String, String>> getListPlayer() {
+        return listPlayer;
     }
 
     public void setCurrentGame(Game currentGame) {

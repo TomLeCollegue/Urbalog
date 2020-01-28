@@ -18,7 +18,7 @@
         android:weightSum="100">
 
         <Button
-            android:id="@+id/searchButton"
+            android:id="@+id/stopButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="16"
@@ -45,6 +45,22 @@
             android:layout_gravity="bottom|start"
             android:layout_weight="2"
             android:text="@string/refreshButton" />
+
+        <TextView
+            android:id="@+id/nbPlayer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="0/5" />
+
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="Disconnected" />
 
 
     </LinearLayout>

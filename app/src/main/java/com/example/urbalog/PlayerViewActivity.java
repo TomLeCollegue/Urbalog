@@ -3,6 +3,7 @@ package com.example.urbalog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -91,7 +92,10 @@ public class PlayerViewActivity extends AppCompatActivity {
 
         M = new Market();
 
-
+        /*Intent extras = getIntent();
+        if(extras != null){
+            net = (NetworkHelper)extras.getSerializableExtra("net");
+        }*/
 
         textPoliticalResssourcesBuilding1 = (TextView) findViewById(R.id.text_political_resssources_building_1);
         textPoliticalResssourcesBuilding2 = (TextView) findViewById(R.id.text_political_resssources_building_2);
@@ -145,16 +149,12 @@ public class PlayerViewActivity extends AppCompatActivity {
         textRessourceLeftRole = (TextView) findViewById(R.id.text_ressource_left_role);
         textRessourceRightRole = (TextView) findViewById(R.id.text_ressource_right_role);
 
-
-
         textNameBuilding1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showPopUp(v);
             }
         });
-
-
 
         fillInfosView();
 
