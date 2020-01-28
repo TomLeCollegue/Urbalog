@@ -79,6 +79,8 @@ public class PlayerViewActivity extends AppCompatActivity {
     private PopupWindow popUpBet;
     private Button buttonBetPopup;
     private TextView textNameBuildingPopup;
+    private TextView textFinancementTopPopup;
+    private TextView textFinancementBotPopup;
 
     private Market M;
 
@@ -150,7 +152,35 @@ public class PlayerViewActivity extends AppCompatActivity {
         textNameBuilding1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopUp(v);
+                showPopUp(v, 0);
+            }
+        });
+
+        textNameBuilding2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopUp(v, 1);
+            }
+        });
+
+        textNameBuilding3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopUp(v, 2);
+            }
+        });
+
+        textNameBuilding4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopUp(v, 3);
+            }
+        });
+
+        textNameBuilding5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopUp(v, 4);
             }
         });
 
@@ -241,8 +271,14 @@ public class PlayerViewActivity extends AppCompatActivity {
         buttonBetPopup = (Button)popUpView.findViewById(R.id.button_bet_popup);
         textNameBuildingPopup = (TextView)popUpView.findViewById(R.id.text_name_building_popup);
 
-        textNameBuildingPopup.setText(M.getBuildings().get(0).getName());
+        textFinancementTopPopup = (TextView)popUpView.findViewById(R.id.text_finance_ressource_1_popup);
+        textFinancementBotPopup = (TextView)popUpView.findViewById(R.id.text_finance_ressource_2_popup);
 
+
+
+        textNameBuildingPopup.setText(M.getBuildings().get(buildingNumber).getName());
+        textFinancementTopPopup.setText("0/" + M.getBuildings().get(buildingNumber).getCoutSocial());
+        textFinancementBotPopup.setText("0/"+M.getBuildings().get(buildingNumber).getCoutEconomique());
 
         popUpBet.showAtLocation(v, Gravity.CENTER, 0, 0);
         // Assombrissement de l'arrière plan
