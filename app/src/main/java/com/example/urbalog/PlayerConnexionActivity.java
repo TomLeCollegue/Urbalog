@@ -25,7 +25,7 @@ public class PlayerConnexionActivity extends AppCompatActivity {
         this.bCancel = (Button) findViewById(R.id.button_cancel_research);
         this.bRefresh = (ImageButton) findViewById(R.id.button_refresh_list);
         this.tStatus = (TextView) findViewById(R.id.textStatus);
-        this.net = new NetworkHelper(getApplicationContext());
+        net = new NetworkHelper(this);
 
         this.bSearch.setOnClickListener(new View.OnClickListener() {
             @Override
