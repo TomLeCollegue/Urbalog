@@ -11,9 +11,7 @@ public class Market implements Serializable {
 
     public Market(){
         this.buildings = JsonBuilding.readBuilding();
-
-
-            }
+    }
 
     public ArrayList<Building> getBuildings() {
         return buildings;
