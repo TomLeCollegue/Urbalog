@@ -1,10 +1,10 @@
-package com.example.urbalog_login_joueur_interface;
+package com.example.urbalog;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+public class PlayerConnexionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

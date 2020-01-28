@@ -11,13 +11,22 @@
         android:theme="@style/AppTheme"
         android:screenOrientation="landscape">
 
-        <activity android:name=".PlayerViewActivity"
+        <activity android:name=".MainActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".PlayerViewActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".AdminConnectionActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".PlayerConnexionActivity"
+            android:screenOrientation="landscape">
         </activity>
     </application>
 
