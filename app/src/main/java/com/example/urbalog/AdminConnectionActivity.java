@@ -34,7 +34,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
 
         JsonBuilding.init(getApplicationContext());
         this.buildings = JsonBuilding.readBuilding();
-        net = new NetworkHelper(getApplicationContext());
+        net = new NetworkHelper(this);
         setContentView(R.layout.activity_admin_connection);
 
         this.bHost = (Button)findViewById(R.id.hostButton);
