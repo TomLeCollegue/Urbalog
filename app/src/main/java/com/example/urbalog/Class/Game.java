@@ -66,6 +66,9 @@ public class Game implements Serializable {
     public void addBet(Bet newBet)
     {
         this.listBet.add(newBet);
+        for (int i = 0; i < market.getBuildings().size(); i++) {
+            market.getBuildings().get(i).refresh(listBet);
+        }
     }
 
     public Market getMarket() {
