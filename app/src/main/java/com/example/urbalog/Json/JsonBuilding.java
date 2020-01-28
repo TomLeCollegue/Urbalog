@@ -41,7 +41,6 @@ public class JsonBuilding {
         Log.d("debug", "delete...");
         File file = context.getFileStreamPath(fileNameBuilding);
         file.delete();
-        init(context);
     }
 
     public static void init(Context mContext){
@@ -51,8 +50,7 @@ public class JsonBuilding {
             Log.d("debug", "le fichier existe deja");
         } else {
             Log.d("debug", "Création du fichier");
-            JSONArray jsonRoot = new JSONArray();
-            writeText(jsonRoot.toString());
+            addBuildings();
         }
     }
 
@@ -63,15 +61,21 @@ public class JsonBuilding {
 
 
     public static String readText() throws IOException {
-        InputStream is = context.openFileInput(fileNameBuilding);
-        BufferedReader br = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-        String s = null;
-        while((s = br.readLine()) != null){
-            sb.append(s);
-            sb.append("\n");
+        File file = context.getFileStreamPath(fileNameBuilding);
+        if (!file.exists()){
+            return "fichier inexistant";
         }
-        return sb.toString();
+        else{
+            InputStream is = context.openFileInput(fileNameBuilding);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            StringBuilder sb = new StringBuilder();
+            String s = null;
+            while((s = br.readLine()) != null){
+                sb.append(s);
+                sb.append("\n");
+            }
+            return sb.toString();
+        }
     }
 
 
