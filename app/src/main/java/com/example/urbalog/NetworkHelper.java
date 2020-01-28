@@ -7,6 +7,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 
+import com.example.urbalog.Class.Bet;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
 import com.example.urbalog.Class.TransferPackage;
@@ -103,6 +104,12 @@ public class NetworkHelper {
                                 }
                             }
                         }
+                        else if(((TransferPackage) dataReceived).second instanceof Bet){
+                            if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
+                            {
+                                currentGame.addBet(((Bet) ((TransferPackage) dataReceived).second));
+                            }
+                        }
                     }
                     else if(host)
                     {
@@ -112,7 +119,26 @@ public class NetworkHelper {
                         else if(dataReceived instanceof TransferPackage){
                             if(((TransferPackage) dataReceived).second instanceof Market)
                             {
-
+                                if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first))) {
+                                    currentGame.setMarket(((Market) ((TransferPackage) dataReceived).second));
+                                    try {
+                                        TransferPackage resend = new TransferPackage<Game, Market>((((Game) ((TransferPackage) dataReceived).first)), ((Market) ((TransferPackage) dataReceived).second));
+                                        sendToAllClients(resend);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                            else if(((TransferPackage) dataReceived).second instanceof Bet){
+                                if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
+                                {
+                                    currentGame.addBet(((Bet) ((TransferPackage) dataReceived).second));
+                                    try {
+                                        sendToAllClients(dataReceived);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             }
                         }
                     }

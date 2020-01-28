@@ -1,6 +1,7 @@
 package com.example.urbalog.Class;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 public class Building implements Serializable {
@@ -10,9 +11,13 @@ public class Building implements Serializable {
     private Integer coutPolitique;
     private Integer coutSocial;
     private Integer coutEconomique;
+    private Integer avancementCoutPolitique;
+    private Integer avancementCoutSocial;
+    private Integer avancementCoutEconomique;
     private Integer effetAttractivite;
     private Integer effetFluidite;
     private Integer effetEnvironnemental;
+
 
     public Building(String name, String description, Integer coutPolitique, Integer coutSocial, Integer coutEconomique, Integer effetAttractivite, Integer effetFluidite, Integer effetEnvironnemental) {
         this.name = name;
@@ -20,6 +25,9 @@ public class Building implements Serializable {
         this.coutPolitique = coutPolitique;
         this.coutSocial = coutSocial;
         this.coutEconomique = coutEconomique;
+        this.avancementCoutPolitique = 0;
+        this.avancementCoutSocial = 0;
+        this.avancementCoutEconomique = 0;
         this.effetAttractivite = effetAttractivite;
         this.effetFluidite = effetFluidite;
         this.effetEnvironnemental = effetEnvironnemental;
@@ -87,6 +95,19 @@ public class Building implements Serializable {
 
     public void setEffetEnvironnemental(Integer effetEnvironnemental) {
         this.effetEnvironnemental = effetEnvironnemental;
+    }
+
+    public void refresh(List<Bet> newBet)
+    {
+        for(int i = 0; i<newBet.size(); i++)
+        {
+            if(newBet.get(i).getBuilding().getName() == this.name)
+            {
+                this.avancementCoutEconomique += newBet.get(i).getMiseEco();
+                this.avancementCoutPolitique += newBet.get(i).getMisePolitique();
+                this.avancementCoutSocial += newBet.get(i).getMiseSocial();
+            }
+        }
     }
 
     @Override

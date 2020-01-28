@@ -3,6 +3,7 @@ package com.example.urbalog.Class;
 import com.example.urbalog.MainActivity;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 public class Game implements Serializable {
@@ -13,6 +14,7 @@ public class Game implements Serializable {
     private Integer scoreEnvironnemental;
     private Market market;
     private City city;
+    private List<Bet> listBet;
 
     public Game() {
         scoreLogistique = 0;
@@ -51,6 +53,22 @@ public class Game implements Serializable {
 
     public void setScoreEnvironnemental(Integer scoreEnvironnemental) {
         this.scoreEnvironnemental = scoreEnvironnemental;
+    }
+
+    public List<Bet> getListBet() {
+        return listBet;
+    }
+
+    public void setListBet(List<Bet> listBet) {
+        this.listBet = listBet;
+    }
+
+    public void addBet(Bet newBet)
+    {
+        this.listBet.add(newBet);
+        for (int i = 0; i < market.getBuildings().size(); i++) {
+            market.getBuildings().get(i).refresh(listBet);
+        }
     }
 
     public Market getMarket() {
