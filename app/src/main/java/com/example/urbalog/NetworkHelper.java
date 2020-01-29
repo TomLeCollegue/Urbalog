@@ -112,10 +112,10 @@ public class NetworkHelper implements Serializable {
                             }
                         }
                         else if(((TransferPackage) dataReceived).second instanceof Bet){
-                            if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
-                            {
-                                currentGame.addBet(((Bet) ((TransferPackage) dataReceived).second));
-                            }
+                            //if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
+                            //{
+                                currentGame.majBet(((Bet) ((TransferPackage) dataReceived).second));
+                            //}
                         }
                     }
                     else if(host)
@@ -129,7 +129,7 @@ public class NetworkHelper implements Serializable {
                                 if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first))) {
                                     currentGame.setMarket(((Market) ((TransferPackage) dataReceived).second));
                                     try {
-                                        TransferPackage resend = new TransferPackage<Game, Market>((((Game) ((TransferPackage) dataReceived).first)), ((Market) ((TransferPackage) dataReceived).second));
+                                        TransferPackage resend = new TransferPackage<Game, Market> ((((Game) ((TransferPackage) dataReceived).first)), ((Market) ((TransferPackage) dataReceived).second));
                                         sendToAllClients(resend);
                                     } catch (IOException e) {
                                         e.printStackTrace();
@@ -137,15 +137,19 @@ public class NetworkHelper implements Serializable {
                                 }
                             }
                             else if(((TransferPackage) dataReceived).second instanceof Bet){
-                                if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
-                                {
-                                    currentGame.addBet(((Bet) ((TransferPackage) dataReceived).second));
+                                //if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
+                                //{
+                                    currentGame.majBet(((Bet) ((TransferPackage) dataReceived).second));
                                     try {
-                                        sendToAllClients(dataReceived);
+                                        //TransferPackage resend = new TransferPackage<Game, Bet>
+                                         //       ((((Game) ((TransferPackage) dataReceived).first)), ((Bet) ((TransferPackage) dataReceived).second));
+                                        TransferPackage resend = new TransferPackage<Game, Market> ((((Game) ((TransferPackage) dataReceived).first)), ((Market) ((TransferPackage) dataReceived).second));
+                                        sendToAllClients(resend);
+                                        sendToAllClients(resend);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
-                                }
+                                //}
                             }
                         }
                     }
@@ -337,4 +341,7 @@ public class NetworkHelper implements Serializable {
         }
     }
 
+    public Game getCurrentGame() {
+        return currentGame;
+    }
 }

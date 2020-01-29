@@ -4,27 +4,19 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Bet extends Object implements Serializable {
-    private Player player;
-    private Building building;
+
     private int misePolitique;
     private int miseEco;
     private int miseSocial;
+    private int numbuilding;
 
-    public Player getPlayer() {
-        return player;
+    public Bet(int numbuilding, int misePolitique, int miseEco, int miseSocial) {
+        this.numbuilding = numbuilding;
+        this.misePolitique = misePolitique;
+        this.miseEco = miseEco;
+        this.miseSocial = miseSocial;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    public Building getBuilding() {
-        return building;
-    }
-
-    public void setBuilding(Building building) {
-        this.building = building;
-    }
 
     public int getMisePolitique() {
         return misePolitique;
@@ -50,31 +42,25 @@ public class Bet extends Object implements Serializable {
         this.miseSocial = miseSocial;
     }
 
+    public int getNumbuilding() {
+        return numbuilding;
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Bet)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Bet bet = (Bet) o;
-        return getMisePolitique() == bet.getMisePolitique() &&
-                getMiseEco() == bet.getMiseEco() &&
-                getMiseSocial() == bet.getMiseSocial() &&
-                Objects.equals(getPlayer(), bet.getPlayer()) &&
-                Objects.equals(getBuilding(), bet.getBuilding());
+        return misePolitique == bet.misePolitique &&
+                miseEco == bet.miseEco &&
+                miseSocial == bet.miseSocial &&
+                numbuilding == bet.numbuilding;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getPlayer(), getBuilding(), getMisePolitique(), getMiseEco(), getMiseSocial());
-    }
-
-    @Override
-    public String toString() {
-        return "Bet{" +
-                "player=" + player.toString() +
-                ", building=" + building.toString() +
-                ", misePolitique=" + misePolitique +
-                ", miseEco=" + miseEco +
-                ", miseSocial=" + miseSocial +
-                '}';
+        return Objects.hash(misePolitique, miseEco, miseSocial, numbuilding);
     }
 }
+

@@ -97,7 +97,9 @@ public class Building implements Serializable {
         this.effetEnvironnemental = effetEnvironnemental;
     }
 
-    public void refresh(List<Bet> newBet)
+
+
+     /*public void refresh(List<Bet> newBet)
     {
         for(int i = 0; i<newBet.size(); i++)
         {
@@ -108,7 +110,7 @@ public class Building implements Serializable {
                 this.avancementCoutSocial += newBet.get(i).getMiseSocial();
             }
         }
-    }
+    } */
 
     @Override
     public boolean equals(Object o) {
@@ -142,5 +144,25 @@ public class Building implements Serializable {
                 ", \neffetFluidite=" + effetFluidite +
                 ", \neffetEnvironnemental=" + effetEnvironnemental +
                 '}';
+    }
+
+    public Integer getAvancementCoutPolitique() {
+        return avancementCoutPolitique;
+    }
+
+    public Integer getAvancementCoutSocial() {
+        return avancementCoutSocial;
+    }
+
+    public Integer getAvancementCoutEconomique() {
+        return avancementCoutEconomique;
+    }
+
+
+    public void addAvancementSocial(int mise){
+        avancementCoutSocial = avancementCoutSocial + mise;
+    }
+    public void addAvancementEco(int mise){
+        avancementCoutSocial = avancementCoutEconomique + mise;
     }
 }

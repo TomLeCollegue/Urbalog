@@ -53,7 +53,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/text_finance_ressource_1_popup"
+                    android:id="@+id/avancement_ressource_top"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal|center_vertical"
@@ -65,14 +65,14 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/button_-_financement_top"
+                        android:id="@+id/button_minus_top"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="-" />
 
                     <Button
-                        android:id="@+id/button_plus_financement_top"
+                        android:id="@+id/button_plus_top"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -108,7 +108,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/text_finance_ressource_2_popup"
+                    android:id="@+id/avancement_ressource_bot"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal|center_vertical"
@@ -120,14 +120,14 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/button_-_financement_bot"
+                        android:id="@+id/button_minus_bot"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="-" />
 
                     <Button
-                        android:id="@+id/button_plus_financement_bot"
+                        android:id="@+id/button_plus_bot"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
