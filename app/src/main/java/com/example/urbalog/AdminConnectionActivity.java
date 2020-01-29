@@ -56,10 +56,11 @@ public class AdminConnectionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(net.getListPlayer().size()+3 == 5) {
                     currentGame = new Game();
+                    net.setCurrentGame(currentGame);
                     currentGame.setMarket(new Market());
                     try {
                         net.sendToAllClients(currentGame);
-                    } catch (IOException e) {
+                    } catch (IOException | ClassNotFoundException e) {
                         e.printStackTrace();
                     }
                 }

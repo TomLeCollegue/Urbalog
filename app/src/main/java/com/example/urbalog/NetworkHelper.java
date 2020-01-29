@@ -79,6 +79,8 @@ public class NetworkHelper implements Serializable {
                     dataReceived = new Object();
                     try {
                         dataReceived = SerializationHelper.deserialize(payload.asBytes());
+                        Log.d(TAG, "sendToAllClients: "+dataReceived.toString());
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (ClassNotFoundException e) {
@@ -98,11 +100,6 @@ public class NetworkHelper implements Serializable {
                         if(dataReceived instanceof String){
                             //PlayerViewActivity.setDataText((String)dataReceived);
                         }
-                        else if(dataReceived instanceof Game){
-                            currentGame = (Game)dataReceived;
-                            Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
-                            appContext.startActivity(myIntent);
-                        }
                         else if(dataReceived instanceof TransferPackage){
                             if(((TransferPackage) dataReceived).second instanceof Market)
                             {
@@ -118,6 +115,11 @@ public class NetworkHelper implements Serializable {
                             }
                         }
 
+                        else if(dataReceived instanceof Game){
+                            currentGame = (Game)dataReceived;
+                            Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
+                            appContext.startActivity(myIntent);
+                        }
                     }
                     else if(host)
                     {
@@ -125,35 +127,36 @@ public class NetworkHelper implements Serializable {
                             //PlayerViewActivity.setDataText((String)dataReceived);
                         }
                         else if(dataReceived instanceof TransferPackage){
-                            if(((TransferPackage) dataReceived).second instanceof Market)
-                            {
-                                if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first))) {
+                            if(((TransferPackage) dataReceived).second instanceof Market) {
+                                if (currentGame.equals(((Game) ((TransferPackage) dataReceived).first))) {
                                     currentGame.setMarket(((Market) ((TransferPackage) dataReceived).second));
                                     try {
-                                        TransferPackage resend = new TransferPackage<Game, Market> ((((Game) ((TransferPackage) dataReceived).first)), ((Market) ((TransferPackage) dataReceived).second));
+                                        TransferPackage resend = new TransferPackage<Game, Market>((((Game) ((TransferPackage) dataReceived).first)), ((Market) ((TransferPackage) dataReceived).second));
                                         sendToAllClients(resend);
-                                    } catch (IOException e) {
+                                    }
+                                    catch (IOException | ClassNotFoundException e) {
                                         e.printStackTrace();
                                     }
                                 }
-                                else if(((TransferPackage) dataReceived).second instanceof Bet){
+                            }
+                            else if(((TransferPackage) dataReceived).second instanceof Bet){
                                     //if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
                                     //{
-                                    currentGame.majBet(((Bet) ((TransferPackage) dataReceived).second));
-                                    try {
-                                        TransferPackage resend = new TransferPackage<Game, Bet>
+                                currentGame.majBet(((Bet) ((TransferPackage) dataReceived).second));
+                                try {
+                                        /*TransferPackage resend = new TransferPackage<Game, Bet>
                                                ((((Game) ((TransferPackage) dataReceived).first)), ((Bet) ((TransferPackage) dataReceived).second));
                                         /*TransferPackage resend = new TransferPackage<Game, Market> ((((Game) ((TransferPackage) dataReceived).first)), ((Market) ((TransferPackage) dataReceived).second));*/
-                                        sendToAllClients(resend);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                    //}
+                                    sendToAllClients(dataReceived);
+                                } catch (IOException | ClassNotFoundException e) {
+                                    e.printStackTrace();
                                 }
                             }
                         }
                     }
                 }
+
+
             };
 
     // Callbacks for finding other devices
@@ -334,8 +337,10 @@ public class NetworkHelper implements Serializable {
      * @param o
      * @throws IOException
      */
-    public void sendToAllClients(Object o) throws IOException {
+    public void sendToAllClients(Object o) throws IOException, ClassNotFoundException {
         Payload data = Payload.fromBytes(SerializationHelper.serialize(o));
+        Object test = SerializationHelper.deserialize(data.asBytes());
+        Log.d(TAG, "sendToAllClients: "+test.toString());
         for (int i = 0; i < listPlayer.size(); i++) {
             Nearby.getConnectionsClient(appContext).sendPayload(listPlayer.get(i).second, data);
         }

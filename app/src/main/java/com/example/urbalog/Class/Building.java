@@ -157,10 +157,13 @@ public class Building implements Serializable {
     }
 
 
-    public void addAvancementSocial(int mise){
-        avancementCoutSocial = avancementCoutSocial + mise;
+    public void addAvancementSocial(int miseSocial){
+        avancementCoutSocial = avancementCoutSocial + miseSocial;
     }
-    public void addAvancementEco(int mise){
-        avancementCoutSocial = avancementCoutEconomique + mise;
+    public void addAvancementEco(int miseEco){
+        avancementCoutEconomique = avancementCoutEconomique + miseEco;
+    }
+    public  void addAvancementPolitique(int misePoli){
+        avancementCoutPolitique = avancementCoutPolitique + misePoli;
     }
 }

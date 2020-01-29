@@ -74,6 +74,7 @@ public class Game implements Serializable {
     public void majBet(Bet bet){
         market.getBuildings().get(bet.getNumbuilding()).addAvancementSocial(bet.getMiseSocial());
         market.getBuildings().get(bet.getNumbuilding()).addAvancementEco(bet.getMiseEco());
+        market.getBuildings().get(bet.getNumbuilding()).addAvancementPolitique(bet.getMisePolitique());
     }
 
 

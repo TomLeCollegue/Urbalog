@@ -97,6 +97,9 @@ public class PlayerViewActivity extends AppCompatActivity {
 
     private Integer AjoutFinancementSocial;
     private Integer AjoutFinancementEco;
+    private Integer AjoutFinancementPolitique;
+
+    private Integer numBuildingF;
 
     private Bet Mise;
 
@@ -253,8 +256,9 @@ public class PlayerViewActivity extends AppCompatActivity {
 
     }
 
-    public void showPopUp(View v, final Integer numBuilding)
+    public void showPopUp(View v, int numBuilding)
     {
+        numBuildingF = numBuilding;
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
         View popUpView = inflater.inflate(R.layout.bet_popup, null);
@@ -278,6 +282,7 @@ public class PlayerViewActivity extends AppCompatActivity {
 
         AjoutFinancementSocial = 0;
         AjoutFinancementEco= 0;
+        AjoutFinancementPolitique=0;
 
         textNameBuildingPopup.setText(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding).getName());
         textAvancementRessourceTop.setText(String.valueOf(AjoutFinancementSocial));
@@ -327,10 +332,10 @@ public class PlayerViewActivity extends AppCompatActivity {
         buttonBetPopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Mise = new Bet(0, 0, AjoutFinancementEco, AjoutFinancementSocial);
+                Mise = new Bet(numBuildingF, AjoutFinancementPolitique, AjoutFinancementEco, AjoutFinancementSocial);
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (((Game) PlayerConnexionActivity.net.getCurrentGame()),((Bet)Mise)));
-                } catch (IOException e) {
+                } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
 
