@@ -38,6 +38,7 @@ import java.util.List;
 
 public class NetworkHelper implements Serializable {
     private Context appContext;
+    private PlayerViewActivity currentPlayerView = null;
 
     private boolean advertising;
     private boolean discovering;
@@ -76,62 +77,56 @@ public class NetworkHelper implements Serializable {
                  */
                 @Override
                 public void onPayloadReceived(String endpointId, Payload payload) {
+
+                    /* Deserialization of incoming payload */
                     dataReceived = new Object();
                     try {
                         dataReceived = SerializationHelper.deserialize(payload.asBytes());
+                        Log.d(TAG, "sendToAllClients: "+dataReceived.toString());
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
-                }
 
-                /**
-                 * Call when data transfer is finish and succeed
-                 * It check the Class and do the appropriate action
-                 * @param endpointId
-                 * @param update
-                 */
-                @Override
-                public void onPayloadTransferUpdate(String endpointId, PayloadTransferUpdate update) {
+                    /* Process data received based on this type and if it's host or not */
                     if(!host){
-                        if(dataReceived instanceof String){
-                            //PlayerViewActivity.setDataText((String)dataReceived);
-                        }
-                        else if(dataReceived instanceof Game){
-                            currentGame = (Game)dataReceived;
-                            Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
-                            appContext.startActivity(myIntent);
-                        }
-                        else if(dataReceived instanceof TransferPackage){
+                        if(dataReceived instanceof TransferPackage){
                             if(((TransferPackage) dataReceived).second instanceof Market)
                             {
                                 if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first))) {
                                     currentGame.refreshMarket(((Market) ((TransferPackage) dataReceived).second));
                                 }
                             }
-                        }
-                        else if(((TransferPackage) dataReceived).second instanceof Bet){
-                            if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
-                            {
-                                currentGame.addBet(((Bet) ((TransferPackage) dataReceived).second));
+                            else if(((TransferPackage) dataReceived).second instanceof Bet){
+                                if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
+                                {
+                                    currentGame.majBet(((Bet) ((TransferPackage) dataReceived).second));
+                                    if(currentPlayerView != null)
+                                    {
+                                        currentPlayerView.fillInfosView();
+                                    }
+                                }
                             }
+                        }
+                        else if(dataReceived instanceof Game){
+                            currentGame = (Game)dataReceived;
+                            Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
+                            appContext.startActivity(myIntent);
                         }
                     }
                     else if(host)
                     {
-                        if(dataReceived instanceof String){
-                            //PlayerViewActivity.setDataText((String)dataReceived);
-                        }
-                        else if(dataReceived instanceof TransferPackage){
-                            if(((TransferPackage) dataReceived).second instanceof Market)
-                            {
-                                if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first))) {
+                        if(dataReceived instanceof TransferPackage){
+                            if(((TransferPackage) dataReceived).second instanceof Market) {
+                                if (currentGame.equals(((Game) ((TransferPackage) dataReceived).first))) {
                                     currentGame.setMarket(((Market) ((TransferPackage) dataReceived).second));
                                     try {
                                         TransferPackage resend = new TransferPackage<Game, Market>((((Game) ((TransferPackage) dataReceived).first)), ((Market) ((TransferPackage) dataReceived).second));
                                         sendToAllClients(resend);
-                                    } catch (IOException e) {
+                                    }
+                                    catch (IOException e) {
                                         e.printStackTrace();
                                     }
                                 }
@@ -139,7 +134,7 @@ public class NetworkHelper implements Serializable {
                             else if(((TransferPackage) dataReceived).second instanceof Bet){
                                 if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
                                 {
-                                    currentGame.addBet(((Bet) ((TransferPackage) dataReceived).second));
+                                    currentGame.majBet(((Bet) ((TransferPackage) dataReceived).second));
                                     try {
                                         sendToAllClients(dataReceived);
                                     } catch (IOException e) {
@@ -149,6 +144,17 @@ public class NetworkHelper implements Serializable {
                             }
                         }
                     }
+                }
+
+                /**
+                 * Call when data transfer of a chunk is finish (Succeed or Failed)
+                 * PayloadTransferUpdate parameter contains status of the payload transfer
+                 * @param endpointId
+                 * @param update
+                 */
+                @Override
+                public void onPayloadTransferUpdate(String endpointId, PayloadTransferUpdate update) {
+
                 }
             };
 
@@ -169,7 +175,6 @@ public class NetworkHelper implements Serializable {
                             listPlayer.remove(i);
                         }
                     }
-                    //PlayerViewActivity.setStatusText("Connected : "+listPlayer.size()+" players");
                 }
             };
 
@@ -214,7 +219,6 @@ public class NetworkHelper implements Serializable {
                         AdminConnectionActivity.updateNbPlayers(listPlayer.size());
                         if(listPlayer.size() == 0){
                             stop();
-                            //PlayerViewActivity.setStatusText("Disconnected");
                         }
                     }
                     else {
@@ -308,6 +312,17 @@ public class NetworkHelper implements Serializable {
     public void setCurrentGame(Game currentGame) {
         this.currentGame = currentGame;
     }
+    public Game getCurrentGame() {
+        return currentGame;
+    }
+
+    public PlayerViewActivity getCurrentPlayerView() {
+        return currentPlayerView;
+    }
+
+    public void setCurrentPlayerView(PlayerViewActivity currentPlayerView) {
+        this.currentPlayerView = currentPlayerView;
+    }
 
     public boolean isAdvertising()
     {
@@ -336,5 +351,4 @@ public class NetworkHelper implements Serializable {
             Nearby.getConnectionsClient(appContext).sendPayload(listPlayer.get(i).second, data);
         }
     }
-
 }
