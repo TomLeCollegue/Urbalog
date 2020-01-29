@@ -101,14 +101,15 @@ public class PlayerViewActivity extends AppCompatActivity {
 
     private Integer numBuildingF;
 
-    private Bet Mise;
-
-
+    private Bet mise;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player_view_activity);
+
+        /* Link player activity to NetworkHelper */
+        PlayerConnexionActivity.net.setCurrentPlayerView(this);
 
         textPoliticalResssourcesBuilding1 = (TextView) findViewById(R.id.text_political_resssources_building_1);
         textPoliticalResssourcesBuilding2 = (TextView) findViewById(R.id.text_political_resssources_building_2);
@@ -252,8 +253,6 @@ public class PlayerViewActivity extends AppCompatActivity {
         textScoreCityAttract.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreAttractivite()));
         textScoreCityEnvi.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreEnvironnemental()));
         textScoreCityTrafic.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreFluidite()));
-
-
     }
 
     public void showPopUp(View v, int numBuilding)
@@ -278,7 +277,6 @@ public class PlayerViewActivity extends AppCompatActivity {
         buttonMinusBot= (Button) popUpView.findViewById(R.id.button_minus_bot);
         buttonPlusTop= (Button) popUpView.findViewById(R.id.button_plus_top);
         buttonPlusBot= (Button) popUpView.findViewById(R.id.button_plus_bot);
-
 
         AjoutFinancementSocial = 0;
         AjoutFinancementEco= 0;
@@ -332,13 +330,12 @@ public class PlayerViewActivity extends AppCompatActivity {
         buttonBetPopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Mise = new Bet(numBuildingF, AjoutFinancementPolitique, AjoutFinancementEco, AjoutFinancementSocial);
+                mise = new Bet(numBuildingF, AjoutFinancementPolitique, AjoutFinancementEco, AjoutFinancementSocial);
                 try {
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (((Game) PlayerConnexionActivity.net.getCurrentGame()),((Bet)Mise)));
-                } catch (IOException | ClassNotFoundException e) {
+                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
-
                 popUpBet.dismiss();
             }
         });

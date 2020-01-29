@@ -60,7 +60,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
                     currentGame.setMarket(new Market());
                     try {
                         net.sendToAllClients(currentGame);
-                    } catch (IOException | ClassNotFoundException e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }

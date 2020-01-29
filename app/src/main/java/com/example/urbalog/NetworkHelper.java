@@ -38,6 +38,7 @@ import java.util.List;
 
 public class NetworkHelper implements Serializable {
     private Context appContext;
+    private PlayerViewActivity currentPlayerView = null;
 
     private boolean advertising;
     private boolean discovering;
@@ -63,7 +64,7 @@ public class NetworkHelper implements Serializable {
 
     private static final int REQUEST_CODE_REQUIRED_PERMISSIONS = 1;
 
-    private static final Strategy STRATEGY = Strategy.P2P_CLUSTER; // Nearby connection strategie for data sending
+    private static final Strategy STRATEGY = Strategy.P2P_STAR; // Nearby connection strategie for data sending
 
     // Callbacks for receiving payloads
     private final PayloadCallback payloadCallback =
@@ -76,6 +77,8 @@ public class NetworkHelper implements Serializable {
                  */
                 @Override
                 public void onPayloadReceived(String endpointId, Payload payload) {
+
+                    /* Deserialization of incoming payload */
                     dataReceived = new Object();
                     try {
                         dataReceived = SerializationHelper.deserialize(payload.asBytes());
@@ -86,21 +89,10 @@ public class NetworkHelper implements Serializable {
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
-                }
 
-                /**
-                 * Call when data transfer is finish and succeed
-                 * It check the Class and do the appropriate action
-                 * @param endpointId
-                 * @param update
-                 */
-                @Override
-                public void onPayloadTransferUpdate(String endpointId, PayloadTransferUpdate update) {
+                    /* Process data received based on this type and if it's host or not */
                     if(!host){
-                        if(dataReceived instanceof String){
-                            //PlayerViewActivity.setDataText((String)dataReceived);
-                        }
-                        else if(dataReceived instanceof TransferPackage){
+                        if(dataReceived instanceof TransferPackage){
                             if(((TransferPackage) dataReceived).second instanceof Market)
                             {
                                 if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first))) {
@@ -108,13 +100,16 @@ public class NetworkHelper implements Serializable {
                                 }
                             }
                             else if(((TransferPackage) dataReceived).second instanceof Bet){
-                                //if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
-                                //{
-                                currentGame.majBet(((Bet) ((TransferPackage) dataReceived).second));
-                                //}
+                                if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
+                                {
+                                    currentGame.majBet(((Bet) ((TransferPackage) dataReceived).second));
+                                    if(currentPlayerView != null)
+                                    {
+                                        currentPlayerView.fillInfosView();
+                                    }
+                                }
                             }
                         }
-
                         else if(dataReceived instanceof Game){
                             currentGame = (Game)dataReceived;
                             Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
@@ -123,10 +118,7 @@ public class NetworkHelper implements Serializable {
                     }
                     else if(host)
                     {
-                        if(dataReceived instanceof String){
-                            //PlayerViewActivity.setDataText((String)dataReceived);
-                        }
-                        else if(dataReceived instanceof TransferPackage){
+                        if(dataReceived instanceof TransferPackage){
                             if(((TransferPackage) dataReceived).second instanceof Market) {
                                 if (currentGame.equals(((Game) ((TransferPackage) dataReceived).first))) {
                                     currentGame.setMarket(((Market) ((TransferPackage) dataReceived).second));
@@ -134,29 +126,36 @@ public class NetworkHelper implements Serializable {
                                         TransferPackage resend = new TransferPackage<Game, Market>((((Game) ((TransferPackage) dataReceived).first)), ((Market) ((TransferPackage) dataReceived).second));
                                         sendToAllClients(resend);
                                     }
-                                    catch (IOException | ClassNotFoundException e) {
+                                    catch (IOException e) {
                                         e.printStackTrace();
                                     }
                                 }
                             }
                             else if(((TransferPackage) dataReceived).second instanceof Bet){
-                                    //if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
-                                    //{
-                                currentGame.majBet(((Bet) ((TransferPackage) dataReceived).second));
-                                try {
-                                        /*TransferPackage resend = new TransferPackage<Game, Bet>
-                                               ((((Game) ((TransferPackage) dataReceived).first)), ((Bet) ((TransferPackage) dataReceived).second));
-                                        /*TransferPackage resend = new TransferPackage<Game, Market> ((((Game) ((TransferPackage) dataReceived).first)), ((Market) ((TransferPackage) dataReceived).second));*/
-                                    sendToAllClients(dataReceived);
-                                } catch (IOException | ClassNotFoundException e) {
-                                    e.printStackTrace();
+                                if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
+                                {
+                                    currentGame.majBet(((Bet) ((TransferPackage) dataReceived).second));
+                                    try {
+                                        sendToAllClients(dataReceived);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
                         }
                     }
                 }
 
+                /**
+                 * Call when data transfer of a chunk is finish (Succeed or Failed)
+                 * PayloadTransferUpdate parameter contains status of the payload transfer
+                 * @param endpointId
+                 * @param update
+                 */
+                @Override
+                public void onPayloadTransferUpdate(String endpointId, PayloadTransferUpdate update) {
 
+                }
             };
 
     // Callbacks for finding other devices
@@ -176,7 +175,6 @@ public class NetworkHelper implements Serializable {
                             listPlayer.remove(i);
                         }
                     }
-                    //PlayerViewActivity.setStatusText("Connected : "+listPlayer.size()+" players");
                 }
             };
 
@@ -221,7 +219,6 @@ public class NetworkHelper implements Serializable {
                         AdminConnectionActivity.updateNbPlayers(listPlayer.size());
                         if(listPlayer.size() == 0){
                             stop();
-                            //PlayerViewActivity.setStatusText("Disconnected");
                         }
                     }
                     else {
@@ -315,6 +312,17 @@ public class NetworkHelper implements Serializable {
     public void setCurrentGame(Game currentGame) {
         this.currentGame = currentGame;
     }
+    public Game getCurrentGame() {
+        return currentGame;
+    }
+
+    public PlayerViewActivity getCurrentPlayerView() {
+        return currentPlayerView;
+    }
+
+    public void setCurrentPlayerView(PlayerViewActivity currentPlayerView) {
+        this.currentPlayerView = currentPlayerView;
+    }
 
     public boolean isAdvertising()
     {
@@ -337,16 +345,10 @@ public class NetworkHelper implements Serializable {
      * @param o
      * @throws IOException
      */
-    public void sendToAllClients(Object o) throws IOException, ClassNotFoundException {
+    public void sendToAllClients(Object o) throws IOException {
         Payload data = Payload.fromBytes(SerializationHelper.serialize(o));
-        Object test = SerializationHelper.deserialize(data.asBytes());
-        Log.d(TAG, "sendToAllClients: "+test.toString());
         for (int i = 0; i < listPlayer.size(); i++) {
             Nearby.getConnectionsClient(appContext).sendPayload(listPlayer.get(i).second, data);
         }
-    }
-
-    public Game getCurrentGame() {
-        return currentGame;
     }
 }
