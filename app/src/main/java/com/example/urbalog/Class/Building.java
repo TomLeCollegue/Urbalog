@@ -97,8 +97,6 @@ public class Building implements Serializable {
         this.effetEnvironnemental = effetEnvironnemental;
     }
 
-
-
      /*public void refresh(List<Bet> newBet)
     {
         for(int i = 0; i<newBet.size(); i++)

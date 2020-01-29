@@ -63,7 +63,7 @@ public class NetworkHelper implements Serializable {
 
     private static final int REQUEST_CODE_REQUIRED_PERMISSIONS = 1;
 
-    private static final Strategy STRATEGY = Strategy.P2P_STAR; // Nearby connection strategie for data sending
+    private static final Strategy STRATEGY = Strategy.P2P_CLUSTER; // Nearby connection strategie for data sending
 
     // Callbacks for receiving payloads
     private final PayloadCallback payloadCallback =
@@ -110,13 +110,14 @@ public class NetworkHelper implements Serializable {
                                     currentGame.refreshMarket(((Market) ((TransferPackage) dataReceived).second));
                                 }
                             }
-                        }
-                        else if(((TransferPackage) dataReceived).second instanceof Bet){
-                            //if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
-                            //{
+                            else if(((TransferPackage) dataReceived).second instanceof Bet){
+                                //if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
+                                //{
                                 currentGame.majBet(((Bet) ((TransferPackage) dataReceived).second));
-                            //}
+                                //}
+                            }
                         }
+
                     }
                     else if(host)
                     {
@@ -135,21 +136,20 @@ public class NetworkHelper implements Serializable {
                                         e.printStackTrace();
                                     }
                                 }
-                            }
-                            else if(((TransferPackage) dataReceived).second instanceof Bet){
-                                //if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
-                                //{
+                                else if(((TransferPackage) dataReceived).second instanceof Bet){
+                                    //if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
+                                    //{
                                     currentGame.majBet(((Bet) ((TransferPackage) dataReceived).second));
                                     try {
-                                        //TransferPackage resend = new TransferPackage<Game, Bet>
-                                         //       ((((Game) ((TransferPackage) dataReceived).first)), ((Bet) ((TransferPackage) dataReceived).second));
-                                        TransferPackage resend = new TransferPackage<Game, Market> ((((Game) ((TransferPackage) dataReceived).first)), ((Market) ((TransferPackage) dataReceived).second));
-                                        sendToAllClients(resend);
+                                        TransferPackage resend = new TransferPackage<Game, Bet>
+                                               ((((Game) ((TransferPackage) dataReceived).first)), ((Bet) ((TransferPackage) dataReceived).second));
+                                        /*TransferPackage resend = new TransferPackage<Game, Market> ((((Game) ((TransferPackage) dataReceived).first)), ((Market) ((TransferPackage) dataReceived).second));*/
                                         sendToAllClients(resend);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
-                                //}
+                                    //}
+                                }
                             }
                         }
                     }

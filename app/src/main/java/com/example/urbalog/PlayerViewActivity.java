@@ -159,10 +159,6 @@ public class PlayerViewActivity extends AppCompatActivity {
         textRessourceLeftRole = (TextView) findViewById(R.id.text_ressource_left_role);
         textRessourceRightRole = (TextView) findViewById(R.id.text_ressource_right_role);
 
-
-
-
-
         textNameBuilding1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -231,8 +227,6 @@ public class PlayerViewActivity extends AppCompatActivity {
         Building Building3 = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(2);
         Building Building4 = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(3);
         Building Building5 = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(4);
-
-
 
         textSocialRessourcesBuilding1.setText(Building1.getAvancementCoutSocial() + "/" + Building1.getCoutSocial());
         textSocialRessourcesBuilding2.setText(Building2.getAvancementCoutSocial() + "/" + Building2.getCoutSocial());
@@ -335,20 +329,14 @@ public class PlayerViewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Mise = new Bet(0, 0, AjoutFinancementEco, AjoutFinancementSocial);
                 try {
-
-
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (((Game) PlayerConnexionActivity.net.getCurrentGame()),((Bet) (Mise))));
+                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (((Game) PlayerConnexionActivity.net.getCurrentGame()),((Bet)Mise)));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-
-
                 popUpBet.dismiss();
             }
         });
-
-
     }
 
     private void dimBehind(PopupWindow popupWindow) {
