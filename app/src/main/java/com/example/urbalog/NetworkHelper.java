@@ -64,7 +64,7 @@ public class NetworkHelper implements Serializable {
 
     private static final int REQUEST_CODE_REQUIRED_PERMISSIONS = 1;
 
-    private static final Strategy STRATEGY = Strategy.P2P_STAR; // Nearby connection strategie for data sending
+    private static final Strategy STRATEGY = Strategy.P2P_CLUSTER; // Nearby connection strategie for data sending
 
     // Callbacks for receiving payloads
     private final PayloadCallback payloadCallback =

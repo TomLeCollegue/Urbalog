@@ -54,7 +54,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
         bPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(net.getListPlayer().size()+3 == 5) {
+                if(net.getListPlayer().size()+1 == 5) {
                     currentGame = new Game();
                     net.setCurrentGame(currentGame);
                     currentGame.setMarket(new Market());
