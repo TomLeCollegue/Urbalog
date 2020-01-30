@@ -289,15 +289,27 @@ public class PlayerViewActivity extends AppCompatActivity {
         buttonPlusTop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AjoutFinancementSocial++;
-                textAvancementRessourceTop.setText(String.valueOf(AjoutFinancementSocial));
+                //AjoutFinancementSocial++;
+                //textAvancementRessourceTop.setText(String.valueOf(AjoutFinancementSocial));
+                mise = new Bet(numBuildingF, 0, 0, 1);
+                try {
+                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
         buttonMinusTop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AjoutFinancementSocial--;
-                textAvancementRessourceTop.setText(String.valueOf(AjoutFinancementSocial));
+                //AjoutFinancementSocial--;
+                //textAvancementRessourceTop.setText(String.valueOf(AjoutFinancementSocial));
+                mise = new Bet(numBuildingF, 0, 0, -1);
+                try {
+                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
         buttonPlusBot.setOnClickListener(new View.OnClickListener() {
@@ -305,6 +317,12 @@ public class PlayerViewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AjoutFinancementEco++;
                 TextAvancementRessourceBot.setText(String.valueOf(AjoutFinancementEco));
+                mise = new Bet(numBuildingF, 0, 1, 0);
+                try {
+                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
         buttonMinusBot.setOnClickListener(new View.OnClickListener() {
@@ -312,6 +330,12 @@ public class PlayerViewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AjoutFinancementEco--;
                 TextAvancementRessourceBot.setText(String.valueOf(AjoutFinancementEco));
+                mise = new Bet(numBuildingF, 0, -1, 0);
+                try {
+                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -330,12 +354,12 @@ public class PlayerViewActivity extends AppCompatActivity {
         buttonBetPopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mise = new Bet(numBuildingF, AjoutFinancementPolitique, AjoutFinancementEco, AjoutFinancementSocial);
+                /*mise = new Bet(numBuildingF, AjoutFinancementPolitique, AjoutFinancementEco, AjoutFinancementSocial);
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
+                }*/
                 popUpBet.dismiss();
             }
         });
