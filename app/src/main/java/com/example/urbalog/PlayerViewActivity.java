@@ -163,6 +163,9 @@ public class PlayerViewActivity extends AppCompatActivity {
         textRessourceLeftRole = (TextView) findViewById(R.id.text_ressource_left_role);
         textRessourceRightRole = (TextView) findViewById(R.id.text_ressource_right_role);
 
+        textTitleRole.setText(PlayerConnexionActivity.net.getPlayer().getRole().getTypeRole());
+        /* TODO : Finir d'afficher la carte role du joueur */
+
         textNameBuilding1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,13 +194,11 @@ public class PlayerViewActivity extends AppCompatActivity {
         textNameBuilding5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //showPopUp(v, 4);
-                fillInfosView();
+                showPopUp(v, 4);
             }
         });
 
         fillInfosView();
-
     }
 
     void fillInfosView(){
@@ -253,6 +254,8 @@ public class PlayerViewActivity extends AppCompatActivity {
         textScoreCityAttract.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreAttractivite()));
         textScoreCityEnvi.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreEnvironnemental()));
         textScoreCityTrafic.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreFluidite()));
+
+        /* TODO : Mettre à jour les ressources du joueur */
     }
 
     public void showPopUp(View v, int numBuilding)
@@ -286,11 +289,14 @@ public class PlayerViewActivity extends AppCompatActivity {
         textAvancementRessourceTop.setText(String.valueOf(AjoutFinancementSocial));
         TextAvancementRessourceBot.setText(String.valueOf(AjoutFinancementEco));
 
+        /* TODO : Bloquer les mises +1 si le financement est complet et pareil pour les -1 si c'est à 0 */
+        /* TODO : Afficher dans le popup les 2 bonnes ressources en fonction du role du joueur */
+        /* TODO pour le sprint 2 : Tracer les mises et empecher le joueur de récupérer celles qui ne proviennent pas de lui */
         buttonPlusTop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //AjoutFinancementSocial++;
-                //textAvancementRessourceTop.setText(String.valueOf(AjoutFinancementSocial));
+                AjoutFinancementSocial++;
+                textAvancementRessourceTop.setText(String.valueOf(AjoutFinancementSocial));
                 mise = new Bet(numBuildingF, 0, 0, 1);
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
@@ -302,8 +308,8 @@ public class PlayerViewActivity extends AppCompatActivity {
         buttonMinusTop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //AjoutFinancementSocial--;
-                //textAvancementRessourceTop.setText(String.valueOf(AjoutFinancementSocial));
+                AjoutFinancementSocial--;
+                textAvancementRessourceTop.setText(String.valueOf(AjoutFinancementSocial));
                 mise = new Bet(numBuildingF, 0, 0, -1);
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));

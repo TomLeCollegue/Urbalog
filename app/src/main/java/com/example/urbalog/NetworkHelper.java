@@ -11,6 +11,8 @@ import android.view.View;
 import com.example.urbalog.Class.Bet;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
+import com.example.urbalog.Class.Player;
+import com.example.urbalog.Class.Role;
 import com.example.urbalog.Class.TransferPackage;
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
@@ -30,6 +32,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Helper class for network interactions using Nearby Connection API
@@ -45,6 +48,7 @@ public class NetworkHelper implements Serializable {
     private boolean host;
 
     private Game currentGame;
+    private Player player;
 
     private List<Pair<String, String>> listPlayer; // Pair array for connexion information storage of connected users
 
@@ -114,6 +118,9 @@ public class NetworkHelper implements Serializable {
                             currentGame = (Game)dataReceived;
                             Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
                             appContext.startActivity(myIntent);
+                        }
+                        else if(dataReceived instanceof Role){
+                            player = new Player((Role)dataReceived);
                         }
                     }
                     else if(host)
@@ -324,6 +331,14 @@ public class NetworkHelper implements Serializable {
         this.currentPlayerView = currentPlayerView;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
     public boolean isAdvertising()
     {
         return advertising;
@@ -349,6 +364,23 @@ public class NetworkHelper implements Serializable {
         Payload data = Payload.fromBytes(SerializationHelper.serialize(o));
         for (int i = 0; i < listPlayer.size(); i++) {
             Nearby.getConnectionsClient(appContext).sendPayload(listPlayer.get(i).second, data);
+        }
+    }
+
+    /**
+     * Send random role of an ArrayList to all users connected to the host
+     * It serialize the object in parameter before sending it
+     * @param srcData
+     * @throws IOException
+     */
+    public void sendRandomRoleToAllClients(ArrayList<Role> srcData) throws IOException {
+        if(srcData.size() >= listPlayer.size()){
+            for (int i = 0; i < listPlayer.size(); i++) {
+                int randomIndex = ThreadLocalRandom.current().nextInt(0, srcData.size());
+                Payload data = Payload.fromBytes(SerializationHelper.serialize(srcData.get(randomIndex)));
+                srcData.remove(randomIndex);
+                Nearby.getConnectionsClient(appContext).sendPayload(listPlayer.get(i).second, data);
+            }
         }
     }
 }
