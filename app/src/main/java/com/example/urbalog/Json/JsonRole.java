@@ -41,6 +41,7 @@ public class JsonRole {
 
     public static void init(Context mContext){
         context = mContext;
+        deleteJson();
         if(fichierExiste())
         {
             Log.d("debug", "le fichier existe deja");

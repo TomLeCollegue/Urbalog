@@ -1,10 +1,11 @@
 package com.example.urbalog.Class;
 
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Role {
+public class Role extends Object implements Serializable {
     private String typeRole;
     private boolean[] booleanRessource;
     private Integer tokenSocial;
@@ -23,6 +24,9 @@ public class Role {
         this.objective = objective;
         this.hold = hold;
         this.improve = improve;
+    }
+    public Role(String typeRole) {
+        this.typeRole = typeRole;
     }
 
     public String getTypeRole() {
