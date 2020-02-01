@@ -68,20 +68,63 @@ public class JsonRole {
                 "      \"tokenPolitical\" : 4\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"name\": \"autre nom\",\n" +
+                "      \"name\": \"Transporteur\",\n" +
                 "      \"description\": \"Description de l'objet\",\n" +
-                "      \"hold\" : \"truc a hold\",\n" +
-                "      \"improve\" : \"a improve\",\n" +
+                "      \"hold\" : \"Attractivité\",\n" +
+                "      \"improve\" : \"Fluidité\",\n" +
                 "      \"ressources\":[\n" +
-                "        true,\n" +
                 "        false,\n" +
+                "        true,\n" +
                 "        true\n" +
                 "      ],\n" +
-                "      \"tokenSocial\" : 7,\n" +
-                "      \"tokenEconomical\" : 0,\n" +
+                "      \"tokenSocial\" : 0,\n" +
+                "      \"tokenEconomical\" : 7,\n" +
                 "      \"tokenPolitical\" : 3\n" +
                 "    }\n" +
                 "  ]\n" +
+                "    {\n" +
+                "      \"name\": \"Habitant\",\n" +
+                        "      \"description\": \"L'objectif est atteint quand ces deux conditions sont satisfaites. Le joueur marque alors un point\",\n" +
+                        "      \"hold\" : \"Fluidité\",\n" +
+                        "      \"improve\" : \"Environnement\",\n" +
+                        "      \"ressources\":[\n" +
+                        "        true,\n" +
+                        "        false,\n" +
+                        "        true\n" +
+                        "      ],\n" +
+                        "      \"tokenSocial\" : 7,\n" +
+                        "      \"tokenEconomical\" : 0,\n" +
+                        "      \"tokenPolitical\" : 3\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"name\": \"Commerçant\",\n" +
+                        "      \"description\": \"Description de l'objet\",\n" +
+                        "      \"hold\" : \"Fluidité\",\n" +
+                        "      \"improve\" : \"Attractivité\",\n" +
+                        "      \"ressources\":[\n" +
+                        "        true,\n" +
+                        "        true,\n" +
+                        "        false\n" +
+                        "      ],\n" +
+                        "      \"tokenSocial\" : 6,\n" +
+                        "      \"tokenEconomical\" : 4,\n" +
+                        "      \"tokenPolitical\" : 0\n" +
+                        "    }\n" +
+                        "    {\n" +
+                        "      \"name\": \"Opérateur de transport public\",\n" +
+                        "      \"description\": \"Description de l'objet\",\n" +
+                        "      \"hold\" : \"Environnement\",\n" +
+                        "      \"improve\" : \"Fluidité\",\n" +
+                        "      \"ressources\":[\n" +
+                        "        false,\n" +
+                        "        true,\n" +
+                        "        true\n" +
+                        "      ],\n" +
+                        "      \"tokenSocial\" : 0,\n" +
+                        "      \"tokenEconomical\" : 4,\n" +
+                        "      \"tokenPolitical\" : 6\n" +
+                        "    }\n" +
+                        "  ]\n" +
                 "}");
     }
 
