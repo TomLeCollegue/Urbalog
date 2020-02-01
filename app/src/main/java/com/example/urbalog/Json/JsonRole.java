@@ -52,80 +52,14 @@ public class JsonRole {
     }
 
     public static void addRoles(){
-        writeText("{\n" +
-                "  \"roles\": [\n" +
-                "    {\n" +
-                "      \"name\": \"Collectivité Locale\",\n" +
-                "      \"description\": \"L'objectif est atteint quand ces deux conditions sont satisfaites. Le joueur marque alors un point\",\n" +
-                "      \"hold\" : \"Environnement\",\n" +
-                "      \"improve\" : \"Attractivité\",\n" +
-                "      \"ressources\":[\n" +
-                "        false,\n" +
-                "        true,\n" +
-                "        true\n" +
-                "      ],\n" +
-                "      \"tokenSocial\" : 0,\n" +
-                "      \"tokenEconomical\" : 6,\n" +
-                "      \"tokenPolitical\" : 4\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"name\": \"Transporteur\",\n" +
-                "      \"description\": \"Description de l'objet\",\n" +
-                "      \"hold\" : \"Attractivité\",\n" +
-                "      \"improve\" : \"Fluidité\",\n" +
-                "      \"ressources\":[\n" +
-                "        false,\n" +
-                "        true,\n" +
-                "        true\n" +
-                "      ],\n" +
-                "      \"tokenSocial\" : 0,\n" +
-                "      \"tokenEconomical\" : 7,\n" +
-                "      \"tokenPolitical\" : 3\n" +
-                "    }\n" +
-                "  ]\n" +
-                "    {\n" +
-                "      \"name\": \"Habitant\",\n" +
-                        "      \"description\": \"L'objectif est atteint quand ces deux conditions sont satisfaites. Le joueur marque alors un point\",\n" +
-                        "      \"hold\" : \"Fluidité\",\n" +
-                        "      \"improve\" : \"Environnement\",\n" +
-                        "      \"ressources\":[\n" +
-                        "        true,\n" +
-                        "        false,\n" +
-                        "        true\n" +
-                        "      ],\n" +
-                        "      \"tokenSocial\" : 7,\n" +
-                        "      \"tokenEconomical\" : 0,\n" +
-                        "      \"tokenPolitical\" : 3\n" +
-                        "    },\n" +
-                        "    {\n" +
-                        "      \"name\": \"Commerçant\",\n" +
-                        "      \"description\": \"Description de l'objet\",\n" +
-                        "      \"hold\" : \"Fluidité\",\n" +
-                        "      \"improve\" : \"Attractivité\",\n" +
-                        "      \"ressources\":[\n" +
-                        "        true,\n" +
-                        "        true,\n" +
-                        "        false\n" +
-                        "      ],\n" +
-                        "      \"tokenSocial\" : 6,\n" +
-                        "      \"tokenEconomical\" : 4,\n" +
-                        "      \"tokenPolitical\" : 0\n" +
-                        "    }\n" +
-                        "    {\n" +
-                        "      \"name\": \"Opérateur de transport public\",\n" +
-                        "      \"description\": \"Description de l'objet\",\n" +
-                        "      \"hold\" : \"Environnement\",\n" +
-                        "      \"improve\" : \"Fluidité\",\n" +
-                        "      \"ressources\":[\n" +
-                        "        false,\n" +
-                        "        true,\n" +
-                        "        true\n" +
-                        "      ],\n" +
-                        "      \"tokenSocial\" : 0,\n" +
-                        "      \"tokenEconomical\" : 4,\n" +
-                        "      \"tokenPolitical\" : 6\n" +
-                        "    }\n" +
-                        "  ]\n" +
+        writeText("{ \n" +
+                "  \"roles\": [ \n" +
+                "    { \"name\": \"Collectivité Locale\", \"description\": \"L'objectif est atteint quand ces deux conditions sont satisfaites. Le joueur marque alors un point\", \"hold\" : \"Environnement\", \"improve\" : \"Attractivité\", \"ressources\":[ false, true, true ], \"tokenSocial\" : 0, \"tokenEconomical\" : 6, \"tokenPolitical\" : 4 }, \n" +
+                "    { \"name\": \"Transporteur\", \"description\": \"Description de l'objet\", \"hold\" : \"Attractivité\", \"improve\" : \"Fluidité\", \"ressources\":[ false, true, true ], \"tokenSocial\" : 0, \"tokenEconomical\" : 7, \"tokenPolitical\" : 3 }, \n" +
+                "    { \"name\": \"Habitant\", \"description\": \"L'objectif est atteint quand ces deux conditions sont satisfaites. Le joueur marque alors un point\", \"hold\" : \"Fluidité\", \"improve\" : \"Environnement\", \"ressources\":[ true, false, true ], \"tokenSocial\" : 7, \"tokenEconomical\" : 0, \"tokenPolitical\" : 3 }, \n" +
+                "    { \"name\": \"Commerçant\", \"description\": \"Description de l'objet\", \"hold\" : \"Fluidité\", \"improve\" : \"Attractivité\", \"ressources\":[ true, true, false ], \"tokenSocial\" : 6, \"tokenEconomical\" : 4, \"tokenPolitical\" : 0 }, \n" +
+                "    { \"name\": \"Opérateur de transport public\", \"description\": \"Description de l'objet\", \"hold\" : \"Environnement\", \"improve\" : \"Fluidité\", \"ressources\":[ false, true, true ], \"tokenSocial\" : 0, \"tokenEconomical\" : 4, \"tokenPolitical\" : 6 }\n" +
+                "    ]\n" +
                 "}");
     }
 
