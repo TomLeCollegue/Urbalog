@@ -40,7 +40,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/ico_ressource_top_popup"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:srcCompat="@mipmap/img_attract_city_foreground" />
@@ -95,7 +95,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/ico_ressource_bot_popup"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:srcCompat="@mipmap/img_ressource_eco_foreground" />

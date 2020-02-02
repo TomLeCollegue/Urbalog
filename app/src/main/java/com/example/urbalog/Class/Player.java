@@ -10,6 +10,7 @@ public class Player {
     private Integer age;
     private String job;
     private Integer score;
+    private Role role;
     private NetworkHelper netHelp;
 
     public Player(String name, Integer age, String job, Integer score) {
@@ -17,6 +18,10 @@ public class Player {
         this.age = age;
         this.job = job;
         this.score = score;
+    }
+
+    public Player(Role role) {
+        this.role = role;
     }
 
     public String getName() {
@@ -51,6 +56,14 @@ public class Player {
         this.score = score;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "Player{" +
@@ -58,22 +71,26 @@ public class Player {
                 ", age=" + age +
                 ", job='" + job + '\'' +
                 ", score=" + score +
+                ", role=" + role.toString() +
+                ", netHelp=" + netHelp.toString() +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Player)) return false;
         Player player = (Player) o;
         return Objects.equals(name, player.name) &&
                 Objects.equals(age, player.age) &&
                 Objects.equals(job, player.job) &&
-                Objects.equals(score, player.score);
+                Objects.equals(score, player.score) &&
+                Objects.equals(role, player.role) &&
+                Objects.equals(netHelp, player.netHelp);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, age, job, score);
+        return Objects.hash(name, age, job, score, role, netHelp);
     }
 }
