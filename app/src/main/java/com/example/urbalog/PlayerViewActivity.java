@@ -25,6 +25,7 @@ import com.example.urbalog.Class.Building;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
 import com.example.urbalog.Class.Player;
+import com.example.urbalog.Class.Role;
 import com.example.urbalog.Class.TransferPackage;
 import com.example.urbalog.Json.JsonBuilding;
 import com.example.urbalog.Json.JsonRole;
@@ -89,19 +90,26 @@ public class PlayerViewActivity extends AppCompatActivity {
     private TextView textNameBuildingPopup;
     private TextView textAvancementRessourceTop;
     private TextView TextAvancementRessourceBot;
+    private ImageView icoRessourceTopPopup;
+    private ImageView icoRessourceBotPopup;
+
 
     private Button buttonMinusTop;
     private Button buttonMinusBot;
     private Button buttonPlusTop;
     private Button buttonPlusBot;
 
-    private Integer AjoutFinancementSocial;
-    private Integer AjoutFinancementEco;
-    private Integer AjoutFinancementPolitique;
 
     private Integer numBuildingF;
 
     private Bet mise;
+
+    private String Ressource1;
+    private String Ressource2;
+
+
+    private Integer financementRessource[]= {0,0};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,7 +172,10 @@ public class PlayerViewActivity extends AppCompatActivity {
         textRessourceRightRole = (TextView) findViewById(R.id.text_ressource_right_role);
 
         textTitleRole.setText(PlayerConnexionActivity.net.getPlayer().getRole().getTypeRole());
-        /* TODO : Finir d'afficher la carte role du joueur */
+
+        fillRoleCardObjectives();
+        fillRessources();
+        fillRoleCardRessources();
 
         textNameBuilding1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,13 +201,13 @@ public class PlayerViewActivity extends AppCompatActivity {
                 showPopUp(v, 3);
             }
         });
-
         textNameBuilding5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showPopUp(v, 4);
             }
         });
+
 
         fillInfosView();
     }
@@ -275,75 +286,78 @@ public class PlayerViewActivity extends AppCompatActivity {
 
         textAvancementRessourceTop = (TextView) popUpView.findViewById(R.id.avancement_ressource_top);
         TextAvancementRessourceBot= (TextView) popUpView.findViewById(R.id.avancement_ressource_bot);
+        icoRessourceBotPopup= (ImageView) popUpView.findViewById(R.id.ico_ressource_bot_popup);
+        icoRessourceTopPopup= (ImageView) popUpView.findViewById(R.id.ico_ressource_top_popup);
 
         buttonMinusTop= (Button) popUpView.findViewById(R.id.button_minus_top);
         buttonMinusBot= (Button) popUpView.findViewById(R.id.button_minus_bot);
         buttonPlusTop= (Button) popUpView.findViewById(R.id.button_plus_top);
         buttonPlusBot= (Button) popUpView.findViewById(R.id.button_plus_bot);
 
-        AjoutFinancementSocial = 0;
-        AjoutFinancementEco= 0;
-        AjoutFinancementPolitique=0;
+
+        textAvancementRessourceTop.setText(String.valueOf(financementRessource[0]));
+        TextAvancementRessourceBot.setText(String.valueOf(financementRessource[1]));
+
 
         textNameBuildingPopup.setText(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding).getName());
-        textAvancementRessourceTop.setText(String.valueOf(AjoutFinancementSocial));
-        TextAvancementRessourceBot.setText(String.valueOf(AjoutFinancementEco));
 
-        /* TODO : Bloquer les mises +1 si le financement est complet et pareil pour les -1 si c'est à 0 */
-        /* TODO : Afficher dans le popup les 2 bonnes ressources en fonction du role du joueur */
-        /* TODO pour le sprint 2 : Tracer les mises et empecher le joueur de récupérer celles qui ne proviennent pas de lui */
+        if (Ressource1.equals("Social")){
+            icoRessourceTopPopup.setImageResource(R.mipmap.img_ressource_social_foreground);
+        }
+        else if(Ressource1.equals("Economical")){
+            icoRessourceTopPopup.setImageResource(R.mipmap.img_ressource_eco_foreground);
+        }
+        else {
+            icoRessourceTopPopup.setImageResource(R.mipmap.img_ressource_political_foreground);
+        }
+
+        if (Ressource2.equals("Social")){
+            icoRessourceBotPopup.setImageResource(R.mipmap.img_attract_city_foreground);
+        }
+        else if(Ressource2.equals("Economical")){
+            icoRessourceBotPopup.setImageResource(R.mipmap.img_ressource_eco_foreground);
+        }
+        else {
+            icoRessourceBotPopup.setImageResource(R.mipmap.img_ressource_political_foreground);
+        }
+
+
+
         buttonPlusTop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AjoutFinancementSocial++;
-                textAvancementRessourceTop.setText(String.valueOf(AjoutFinancementSocial));
-                mise = new Bet(numBuildingF, 0, 0, 1);
-                try {
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                betFromButton(numBuildingF,0,1);
+                textAvancementRessourceTop.setText(String.valueOf(financementRessource[0]));
+
             }
         });
+
         buttonMinusTop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AjoutFinancementSocial--;
-                textAvancementRessourceTop.setText(String.valueOf(AjoutFinancementSocial));
-                mise = new Bet(numBuildingF, 0, 0, -1);
-                try {
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                betFromButton(numBuildingF,0,-1);
+                textAvancementRessourceTop.setText(String.valueOf(financementRessource[0]));
+
             }
         });
+
         buttonPlusBot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AjoutFinancementEco++;
-                TextAvancementRessourceBot.setText(String.valueOf(AjoutFinancementEco));
-                mise = new Bet(numBuildingF, 0, 1, 0);
-                try {
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                betFromButton(numBuildingF,1,1);
+                TextAvancementRessourceBot.setText(String.valueOf(financementRessource[1]));
             }
         });
+
         buttonMinusBot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AjoutFinancementEco--;
-                TextAvancementRessourceBot.setText(String.valueOf(AjoutFinancementEco));
-                mise = new Bet(numBuildingF, 0, -1, 0);
-                try {
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                betFromButton(numBuildingF,1,-1);
+                TextAvancementRessourceBot.setText(String.valueOf(financementRessource[1]));
+
             }
         });
+
 
         popUpBet.showAtLocation(v, Gravity.CENTER, 0, 0);
         // Assombrissement de l'arrière plan
@@ -371,7 +385,8 @@ public class PlayerViewActivity extends AppCompatActivity {
         });
     }
 
-    private void dimBehind(PopupWindow popupWindow) {
+    private void dimBehind(PopupWindow popupWindow)
+    {
         View container;
         if (popupWindow.getBackground() == null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -392,5 +407,187 @@ public class PlayerViewActivity extends AppCompatActivity {
         p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         p.dimAmount = 0.5f;
         wm.updateViewLayout(container, p);
+    }
+
+    private void fillRoleCardObjectives(){
+
+        Role RoleInfo = PlayerConnexionActivity.net.getPlayer().getRole();
+
+        if (RoleInfo.getHold().equals("Attractivité")){
+           icoObjectifLeftRole.setImageResource(R.mipmap.img_impact_on_city_foreground);
         }
+        else if (RoleInfo.getHold().equals("Fluidité")){
+            icoObjectifLeftRole.setImageResource(R.mipmap.img_fluid_city_foreground);
+        }
+        else {
+            icoObjectifLeftRole.setImageResource(R.mipmap.img_environment_city_foreground);
+        }
+
+        if (RoleInfo.getImprove().equals("Attractivité")){
+            icoObjectifRightRole.setImageResource(R.mipmap.img_impact_on_city_foreground);
+        }
+        else if (RoleInfo.getImprove().equals("Fluidité")){
+            icoObjectifRightRole.setImageResource(R.mipmap.img_fluid_city_foreground);
+        }
+        else {
+            icoObjectifRightRole.setImageResource(R.mipmap.img_environment_city_foreground);
+        }
+    }
+
+    private void fillRessources(){
+        Role RoleInfo = PlayerConnexionActivity.net.getPlayer().getRole();
+
+        if (RoleInfo.getBooleanRessource()[0] == false){
+            Ressource1 = "Economical";
+            Ressource2 = "Political";
+        }
+        if (RoleInfo.getBooleanRessource()[1] == false){
+            Ressource1 = "Social";
+            Ressource2 = "Political";
+
+        }
+        if (RoleInfo.getBooleanRessource()[2] == false){
+            Ressource1 = "Social";
+            Ressource2 = "Economical";
+        }
+
+
+    }
+
+    private void fillRoleCardRessources(){
+
+        Role RoleInfo = PlayerConnexionActivity.net.getPlayer().getRole();
+
+        if (Ressource1.equals("Social")){
+            icoRessourceLeftRole.setImageResource(R.mipmap.img_ressource_social_foreground);
+            textRessourceLeftRole.setText(String.valueOf(RoleInfo.getTokenSocial()));
+        }
+        else if(Ressource1.equals("Economical")){
+            icoRessourceLeftRole.setImageResource(R.mipmap.img_ressource_eco_foreground);
+            textRessourceLeftRole.setText(String.valueOf(RoleInfo.getTokenEconomical()));
+        }
+        else {
+            icoRessourceLeftRole.setImageResource(R.mipmap.img_ressource_political_foreground);
+            textRessourceLeftRole.setText(String.valueOf(RoleInfo.getTokenPolitical()));
+        }
+
+        if (Ressource2.equals("Social")){
+            icoRessourceRightRole.setImageResource(R.mipmap.img_attract_city_foreground);
+            textRessourceRightRole.setText(String.valueOf(RoleInfo.getTokenSocial()));
+        }
+        else if(Ressource2.equals("Economical")){
+            icoRessourceRightRole.setImageResource(R.mipmap.img_ressource_eco_foreground);
+            textRessourceRightRole.setText(String.valueOf(RoleInfo.getTokenEconomical()));
+        }
+        else {
+            icoRessourceRightRole.setImageResource(R.mipmap.img_ressource_political_foreground);
+            textRessourceRightRole.setText(String.valueOf(RoleInfo.getTokenPolitical()));
+        }
+    }
+
+    private void betFromButton(int numBuilding, int ressource, int Value){
+
+
+        Role RoleInfo = PlayerConnexionActivity.net.getPlayer().getRole();
+        Building building= PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding);
+        String valeurRessource;
+        if (ressource == 0){
+            valeurRessource = Ressource1;
+        }
+        else {
+            valeurRessource = Ressource2;
+        }
+
+
+
+
+            if(valeurRessource.equals("Social")){
+
+                    if(((Value == 1) && (RoleInfo.getTokenSocial() > 0)) && (building.getAvancementCoutSocial() < building.getCoutSocial())){
+                        mise = new Bet(numBuilding, 0, 0, 1);
+                        try {
+                            PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                            RoleInfo.lessSocial();
+                            fillRoleCardRessources();
+                            financementRessource[ressource]++;
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else if ((Value == -1)&&(building.getAvancementCoutSocial() > 0)) {
+                        mise = new Bet(numBuilding, 0, 0, -1);
+                        try {
+                            PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                            RoleInfo.addSocial();
+                            fillRoleCardRessources();
+                            financementRessource[ressource]--;
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+            }
+            if(valeurRessource.equals("Economical")){
+
+                if(((Value == 1) && (RoleInfo.getTokenEconomical() > 0)) && (building.getAvancementCoutEconomique() < building.getCoutEconomique())){
+                    mise = new Bet(numBuilding, 0, 1, 0);
+                    try {
+                        PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                        RoleInfo.lessEco();
+                        fillRoleCardRessources();
+                        financementRessource[ressource]++;
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if ((Value == -1)&&(building.getAvancementCoutEconomique() > 0)) {
+                    mise = new Bet(numBuilding, 0, -1, 0);
+                    try {
+                        PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                        RoleInfo.addEco();
+                        fillRoleCardRessources();
+                        financementRessource[ressource]--;
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+            if(valeurRessource.equals("Political")){
+
+                if(((Value == 1) && (RoleInfo.getTokenPolitical() > 0)) && (building.getAvancementCoutPolitique() < building.getCoutPolitique())){
+                    mise = new Bet(numBuilding, 1, 0, 0);
+                    try {
+                        PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                        RoleInfo.lessPolitical();
+                        fillRoleCardRessources();
+                        financementRessource[ressource]++;
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if ((Value == -1)&&(building.getAvancementCoutPolitique() > 0)) {
+                    mise = new Bet(numBuilding, -1, 0, 0);
+                    try {
+                        PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                        RoleInfo.addPolitical();
+                        fillRoleCardRessources();
+                        financementRessource[ressource]--;
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        }
+
+
+
+
 }
