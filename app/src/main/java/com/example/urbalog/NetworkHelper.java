@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -375,12 +376,22 @@ public class NetworkHelper implements Serializable {
      */
     public void sendRandomRoleToAllClients(ArrayList<Role> srcData) throws IOException {
         if(srcData.size() >= listPlayer.size()){
+            int randomIndex = 0;
+            Payload data;
             for (int i = 0; i < listPlayer.size(); i++) {
-                int randomIndex = ThreadLocalRandom.current().nextInt(0, srcData.size());
-                Payload data = Payload.fromBytes(SerializationHelper.serialize(srcData.get(randomIndex)));
-                srcData.remove(randomIndex);
+                data = Payload.fromBytes(SerializationHelper.serialize(srcData.get(i)));
                 Nearby.getConnectionsClient(appContext).sendPayload(listPlayer.get(i).second, data);
             }
         }
+    }
+
+    private int randomIndex(int min, int max)
+    {
+        if (min >= max) {
+            throw new IllegalArgumentException("max must be greater than min");
+        }
+
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
     }
 }

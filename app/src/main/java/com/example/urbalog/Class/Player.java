@@ -1,7 +1,5 @@
 package com.example.urbalog.Class;
 
-import com.example.urbalog.NetworkHelper;
-
 import java.util.Objects;
 
 public class Player {
@@ -11,7 +9,6 @@ public class Player {
     private String job;
     private Integer score;
     private Role role;
-    private NetworkHelper netHelp;
 
     public Player(String name, Integer age, String job, Integer score) {
         this.name = name;
@@ -72,7 +69,6 @@ public class Player {
                 ", job='" + job + '\'' +
                 ", score=" + score +
                 ", role=" + role.toString() +
-                ", netHelp=" + netHelp.toString() +
                 '}';
     }
 
@@ -85,12 +81,10 @@ public class Player {
                 Objects.equals(age, player.age) &&
                 Objects.equals(job, player.job) &&
                 Objects.equals(score, player.score) &&
-                Objects.equals(role, player.role) &&
-                Objects.equals(netHelp, player.netHelp);
-    }
+                Objects.equals(role, player.role); }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, age, job, score, role, netHelp);
+        return Objects.hash(name, age, job, score, role);
     }
 }

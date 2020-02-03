@@ -40,12 +40,6 @@ public class AdminConnectionActivity extends AppCompatActivity {
 
         JsonRole.init(getApplicationContext());
         this.roles = JsonRole.readRole();
-        /*this.roles.add(new Role("Camionneur"));
-        this.roles.add(new Role("Habitant"));
-        this.roles.add(new Role("Commerçant"));
-        this.roles.add(new Role("Maire"));
-        this.roles.add(new Role("Dev de génie"));
-        this.roles.add(new Role("Expert pluridiciplinaire"));*/
 
         net = new NetworkHelper(this);
         setContentView(R.layout.activity_admin_connection);
@@ -67,16 +61,16 @@ public class AdminConnectionActivity extends AppCompatActivity {
         bPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(net.getListPlayer().size()+3 == 5) {
+                if(net.getListPlayer().size() == 5) {
                     currentGame = new Game();
                     net.setCurrentGame(currentGame);
                     currentGame.setMarket(new Market());
                     try {
                         net.sendToAllClients(currentGame);
+                        randomRoleAssignment();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    randomRoleAssignment();
                 }
             }
         });
