@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Urbalog</string>
+    <string name="searchButton">Stop</string>
+    <string name="hostButton">Host</string>
+    <string name="playButton">Play</string>
+    <string name="refreshButton">Refresh</string>
 </resources>
