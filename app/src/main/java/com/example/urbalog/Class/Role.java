@@ -128,4 +128,24 @@ public class Role extends Object implements Serializable {
                 ", improve='" + improve + '\'' +
                 '}';
     }
+
+
+    public void addSocial(){
+        tokenSocial++;
+    }
+    public  void lessSocial(){
+        tokenSocial--;
+    }
+    public void addEco(){
+        tokenEconomical++;
+    }
+    public  void lessEco(){
+        tokenEconomical--;
+    }
+    public void addPolitical(){
+        tokenPolitical++;
+    }
+    public  void lessPolitical(){
+        tokenPolitical--;
+    }
 }
