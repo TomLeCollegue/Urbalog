@@ -84,7 +84,6 @@ public class PlayerViewActivity extends AppCompatActivity {
     private TextView textRessourceLeftRole;
     private TextView textRessourceRightRole;
 
-
     private PopupWindow popUpBet;
     private Button buttonBetPopup;
     private TextView textNameBuildingPopup;
@@ -93,12 +92,10 @@ public class PlayerViewActivity extends AppCompatActivity {
     private ImageView icoRessourceTopPopup;
     private ImageView icoRessourceBotPopup;
 
-
     private Button buttonMinusTop;
     private Button buttonMinusBot;
     private Button buttonPlusTop;
     private Button buttonPlusBot;
-
 
     private Integer numBuildingF;
 
@@ -107,9 +104,7 @@ public class PlayerViewActivity extends AppCompatActivity {
     private String Ressource1;
     private String Ressource2;
 
-
     private Integer financementRessource[]= {0,0};
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

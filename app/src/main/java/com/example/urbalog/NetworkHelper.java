@@ -33,7 +33,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Helper class for network interactions using Nearby Connection API
@@ -69,7 +68,7 @@ public class NetworkHelper implements Serializable {
 
     private static final int REQUEST_CODE_REQUIRED_PERMISSIONS = 1;
 
-    private static final Strategy STRATEGY = Strategy.P2P_CLUSTER; // Nearby connection strategie for data sending
+    private static final Strategy STRATEGY = Strategy.P2P_STAR; // Nearby connection strategie for data sending
 
     // Callbacks for receiving payloads
     private final PayloadCallback payloadCallback =
@@ -117,11 +116,11 @@ public class NetworkHelper implements Serializable {
                         }
                         else if(dataReceived instanceof Game){
                             currentGame = (Game)dataReceived;
-                            Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
-                            appContext.startActivity(myIntent);
                         }
                         else if(dataReceived instanceof Role){
                             player = new Player((Role)dataReceived);
+                            Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
+                            appContext.startActivity(myIntent);
                         }
                     }
                     else if(host)
@@ -203,7 +202,7 @@ public class NetworkHelper implements Serializable {
                     if (result.getStatus().isSuccess()) {
                         Log.i(TAG, "onConnectionResult: connection successful");
 
-                        connectionsClient.stopDiscovery();
+                        //connectionsClient.stopDiscovery();
 
                         listPlayer.add(new Pair<>(playerName, endpointId));
                         if(host){
