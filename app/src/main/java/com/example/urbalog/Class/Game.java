@@ -78,17 +78,20 @@ public class Game implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Game)) return false;
         Game game = (Game) o;
-        return Objects.equals(scoreLogistique, game.scoreLogistique) &&
-                Objects.equals(scoreAttractivite, game.scoreAttractivite) &&
-                Objects.equals(scoreFluidite, game.scoreFluidite) &&
-                Objects.equals(scoreEnvironnemental, game.scoreEnvironnemental);
+        return Objects.equals(getScoreLogistique(), game.getScoreLogistique()) &&
+                Objects.equals(getScoreAttractivite(), game.getScoreAttractivite()) &&
+                Objects.equals(getScoreFluidite(), game.getScoreFluidite()) &&
+                Objects.equals(getScoreEnvironnemental(), game.getScoreEnvironnemental()) &&
+                Objects.equals(getMarket(), game.getMarket()) &&
+                Objects.equals(city, game.city) &&
+                Objects.equals(getListBet(), game.getListBet());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(scoreLogistique, scoreAttractivite, scoreFluidite, scoreEnvironnemental);
+        return Objects.hash(getScoreLogistique(), getScoreAttractivite(), getScoreFluidite(), getScoreEnvironnemental(), getMarket(), city, getListBet());
     }
 
     @Override
