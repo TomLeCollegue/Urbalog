@@ -110,6 +110,13 @@ public class Building implements Serializable {
         }
     } */
 
+     public void reset(){
+         avancementCoutEconomique = 0;
+         avancementCoutPolitique = 0;
+         avancementCoutSocial = 0;
+     }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -165,5 +172,13 @@ public class Building implements Serializable {
     }
     public  void addAvancementPolitique(int misePoli){
         avancementCoutPolitique = avancementCoutPolitique + misePoli;
+    }
+
+    public boolean isFilled()
+    {
+        if((avancementCoutSocial == coutSocial) && (avancementCoutPolitique == coutPolitique) && (avancementCoutEconomique == coutEconomique))
+            return true;
+        else
+            return false;
     }
 }

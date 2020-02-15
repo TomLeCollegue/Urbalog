@@ -1,5 +1,8 @@
 package com.example.urbalog.Class;
 
-public enum Signal {
-    NEXT_TURN;
+import java.io.Serializable;
+
+public enum Signal implements Serializable {
+    NEXT_TURN,
+    CANCEL_NEXT_TURN;
 }
