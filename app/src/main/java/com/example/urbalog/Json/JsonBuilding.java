@@ -21,7 +21,6 @@ public class JsonBuilding {
     private static String fileNameBuilding = "buildings.json";
     private static Context context;
 
-
     public static boolean fichierExiste()
     {
         File file = context.getFileStreamPath(fileNameBuilding);

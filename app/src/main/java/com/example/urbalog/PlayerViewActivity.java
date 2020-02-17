@@ -26,6 +26,7 @@ import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
 import com.example.urbalog.Class.Player;
 import com.example.urbalog.Class.Role;
+import com.example.urbalog.Class.Signal;
 import com.example.urbalog.Class.TransferPackage;
 import com.example.urbalog.Json.JsonBuilding;
 import com.example.urbalog.Json.JsonRole;
@@ -73,6 +74,8 @@ public class PlayerViewActivity extends AppCompatActivity {
     private TextView textScoreCityEnvi;
     private TextView textScoreCityTrafic;
     private TextView textScoreCityAttract;
+    private Button bTurn;
+    private boolean nextTurn;
 
     private ImageView icoObjectifLeftRole;
     private ImageView icoObjectifRightRole;
@@ -84,7 +87,6 @@ public class PlayerViewActivity extends AppCompatActivity {
     private TextView textRessourceLeftRole;
     private TextView textRessourceRightRole;
 
-
     private PopupWindow popUpBet;
     private Button buttonBetPopup;
     private TextView textNameBuildingPopup;
@@ -93,12 +95,10 @@ public class PlayerViewActivity extends AppCompatActivity {
     private ImageView icoRessourceTopPopup;
     private ImageView icoRessourceBotPopup;
 
-
     private Button buttonMinusTop;
     private Button buttonMinusBot;
     private Button buttonPlusTop;
     private Button buttonPlusBot;
-
 
     private Integer numBuildingF;
 
@@ -107,9 +107,7 @@ public class PlayerViewActivity extends AppCompatActivity {
     private String Ressource1;
     private String Ressource2;
 
-
     private Integer financementRessource[]= {0,0};
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +154,7 @@ public class PlayerViewActivity extends AppCompatActivity {
         textScoreCityEnvi = (TextView) findViewById(R.id.text_score_city_envi);
         textScoreCityAttract = (TextView) findViewById(R.id.text_score_city_attract);
         textScoreCityTrafic = (TextView) findViewById(R.id.text_score_city_trafic);
+        bTurn = (Button) findViewById(R.id.button_turn);
 
         textNameBuilding1 = (TextView) findViewById(R.id.text_name_building_1);
         textNameBuilding2 = (TextView) findViewById(R.id.text_name_building_2);
@@ -205,6 +204,33 @@ public class PlayerViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showPopUp(v, 4);
+            }
+        });
+
+        nextTurn = false;
+        bTurn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!nextTurn){
+                    try {
+                        PlayerConnexionActivity.net.sendToAllClients(Signal.NEXT_TURN);
+                        bTurn.setText("Annuler");
+                        nextTurn = true;
+                    }
+                    catch(IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    try {
+                        PlayerConnexionActivity.net.sendToAllClients(Signal.CANCEL_NEXT_TURN);
+                        bTurn.setText("Tour suivant");
+                        nextTurn = false;
+                    }
+                    catch(IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
 
@@ -487,7 +513,6 @@ public class PlayerViewActivity extends AppCompatActivity {
 
     private void betFromButton(int numBuilding, int ressource, int Value){
 
-
         Role RoleInfo = PlayerConnexionActivity.net.getPlayer().getRole();
         Building building= PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding);
         String valeurRessource;
@@ -498,44 +523,13 @@ public class PlayerViewActivity extends AppCompatActivity {
             valeurRessource = Ressource2;
         }
 
+        if(valeurRessource.equals("Social")){
 
-
-
-            if(valeurRessource.equals("Social")){
-
-                    if(((Value == 1) && (RoleInfo.getTokenSocial() > 0)) && (building.getAvancementCoutSocial() < building.getCoutSocial())){
-                        mise = new Bet(numBuilding, 0, 0, 1);
-                        try {
-                            PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
-                            RoleInfo.lessSocial();
-                            fillRoleCardRessources();
-                            financementRessource[ressource]++;
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    else if ((Value == -1)&&(building.getAvancementCoutSocial() > 0)) {
-                        mise = new Bet(numBuilding, 0, 0, -1);
-                        try {
-                            PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
-                            RoleInfo.addSocial();
-                            fillRoleCardRessources();
-                            financementRessource[ressource]--;
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-            }
-            if(valeurRessource.equals("Economical")){
-
-                if(((Value == 1) && (RoleInfo.getTokenEconomical() > 0)) && (building.getAvancementCoutEconomique() < building.getCoutEconomique())){
-                    mise = new Bet(numBuilding, 0, 1, 0);
+                if(((Value == 1) && (RoleInfo.getTokenSocial() > 0)) && (building.getAvancementCoutSocial() < building.getCoutSocial())){
+                    mise = new Bet(numBuilding, 0, 0, 1);
                     try {
                         PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
-                        RoleInfo.lessEco();
+                        RoleInfo.lessSocial();
                         fillRoleCardRessources();
                         financementRessource[ressource]++;
 
@@ -543,11 +537,11 @@ public class PlayerViewActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                else if ((Value == -1)&&(building.getAvancementCoutEconomique() > 0)) {
-                    mise = new Bet(numBuilding, 0, -1, 0);
+                else if ((Value == -1) && (building.getAvancementCoutSocial() > 0)) {
+                    mise = new Bet(numBuilding, 0, 0, -1);
                     try {
                         PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
-                        RoleInfo.addEco();
+                        RoleInfo.addSocial();
                         fillRoleCardRessources();
                         financementRessource[ressource]--;
 
@@ -556,38 +550,72 @@ public class PlayerViewActivity extends AppCompatActivity {
                     }
                 }
 
-            }
-            if(valeurRessource.equals("Political")){
-
-                if(((Value == 1) && (RoleInfo.getTokenPolitical() > 0)) && (building.getAvancementCoutPolitique() < building.getCoutPolitique())){
-                    mise = new Bet(numBuilding, 1, 0, 0);
-                    try {
-                        PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
-                        RoleInfo.lessPolitical();
-                        fillRoleCardRessources();
-                        financementRessource[ressource]++;
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                else if ((Value == -1)&&(building.getAvancementCoutPolitique() > 0)) {
-                    mise = new Bet(numBuilding, -1, 0, 0);
-                    try {
-                        PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
-                        RoleInfo.addPolitical();
-                        fillRoleCardRessources();
-                        financementRessource[ressource]--;
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
         }
+        if(valeurRessource.equals("Economical")){
+
+            if(((Value == 1) && (RoleInfo.getTokenEconomical() > 0)) && (building.getAvancementCoutEconomique() < building.getCoutEconomique())){
+                mise = new Bet(numBuilding, 0, 1, 0);
+                try {
+                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                    RoleInfo.lessEco();
+                    fillRoleCardRessources();
+                    financementRessource[ressource]++;
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else if ((Value == -1)&&(building.getAvancementCoutEconomique() > 0)) {
+                mise = new Bet(numBuilding, 0, -1, 0);
+                try {
+                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                    RoleInfo.addEco();
+                    fillRoleCardRessources();
+                    financementRessource[ressource]--;
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+        if(valeurRessource.equals("Political")){
+
+            if(((Value == 1) && (RoleInfo.getTokenPolitical() > 0)) && (building.getAvancementCoutPolitique() < building.getCoutPolitique())){
+                mise = new Bet(numBuilding, 1, 0, 0);
+                try {
+                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                    RoleInfo.lessPolitical();
+                    fillRoleCardRessources();
+                    financementRessource[ressource]++;
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else if ((Value == -1)&&(building.getAvancementCoutPolitique() > 0)) {
+                mise = new Bet(numBuilding, -1, 0, 0);
+                try {
+                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                    RoleInfo.addPolitical();
+                    fillRoleCardRessources();
+                    financementRessource[ressource]--;
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
 
 
-
+        public void resetTurnButton()
+        {
+            nextTurn = false;
+            bTurn.setText("Tour suivant");
+            financementRessource[0] = 0;
+            financementRessource[1] = 0;
+        }
 
 }

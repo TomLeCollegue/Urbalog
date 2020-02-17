@@ -1,5 +1,6 @@
 package com.example.urbalog.Class;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Player {
@@ -59,6 +60,11 @@ public class Player {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public void checkGoals(ArrayList<Building> newBuildings){
+        if(role.goalsAchieve(newBuildings))
+            score++;
     }
 
     @Override

@@ -1,9 +1,10 @@
 package com.example.urbalog.Class;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class City {
+public class City implements Serializable {
     private ArrayList<Building> buildings;
 
     public City() {
@@ -16,6 +17,10 @@ public class City {
 
     public void setBuildings(ArrayList<Building> buildings) {
         this.buildings = buildings;
+    }
+
+    public void addBuilding(Building b) {
+        buildings.add(b);
     }
 
     @Override
