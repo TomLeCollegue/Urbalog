@@ -2,13 +2,10 @@ package com.example.urbalog.Json;
 
 import android.content.Context;
 import android.util.Log;
-
 import com.example.urbalog.Class.Building;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -48,6 +45,8 @@ public class JsonBuilding {
         if(fichierExiste())
         {
             Log.d("debug", "le fichier existe deja");
+            deleteJson();
+            init(mContext);
         } else {
             Log.d("debug", "Création du fichier");
             addBuildings();
@@ -55,8 +54,90 @@ public class JsonBuilding {
     }
 
     public static void addBuildings(){
-        writeText(" {\"buildings\" : [{\"name\":\"Piste cyclable\",\"description\":\"Voie réservée aux cyclistes et protégée du reste de la circulation\",\"Couts\":{\"politique\":3,\"social\":2,\"economique\":2},\"Effets\":{\"attractivite\":0,\"fluidite\":1,\"environnemental\":1}},{\"name\":\"Borne vélo\",\"description\":\"Borne permettant d'emprunter un vélo en libre service\",\"Couts\":{\"politique\":2,\"social\":2,\"economique\":1},\"Effets\":{\"attractivite\":1,\"fluidite\":-1,\"environnemental\":1}},{\"name\":\"Terasse\",\"description\":\"Terasse de café ou de restaurant\",\"Couts\":{\"politique\":1,\"social\":2,\"economique\":1},\"Effets\":{\"attractivite\":1,\"fluidite\":-2,\"environnemental\":1}},{\"name\":\"Petit magasin\",\"description\":\"Petit commerce (-20 salariés)\",\"Couts\":{\"politique\":1,\"social\":4,\"economique\":2},\"Effets\":{\"attractivite\":2,\"fluidite\":1,\"environnemental\":0}},{\"name\":\"Poste\",\"description\":\"Bureau de poste\",\"Couts\":{\"politique\":1,\"social\":1,\"economique\":2},\"Effets\":{\"attractivite\":0,\"fluidite\":2,\"environnemental\":-1}}]\n" +
-                " }");
+        writeText("{\n" +
+                "  \"buildings\": [\n" +
+                "    {\n" +
+                "      \"name\": \"Piste cyclable\",\n" +
+                "      \"description\": \"Voie réservée aux cyclistes et protégée du reste de la circulation\",\n" +
+                "      \"Couts\": {\n" +
+                "        \"politique\": 3,\n" +
+                "        \"social\": 2,\n" +
+                "        \"economique\": 2\n" +
+                "      },\n" +
+                "      \"Effets\": {\n" +
+                "        \"attractivite\": 0,\n" +
+                "        \"fluidite\": 1,\n" +
+                "        \"environnemental\": 1\n" +
+                "      },\n" +
+                "      \"scoreLogistique\" : 9,\n" +
+                "      \"explicationLogistique\": \"test\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Borne vélo\",\n" +
+                "      \"description\": \"Borne permettant d'emprunter un vélo en libre service\",\n" +
+                "      \"Couts\": {\n" +
+                "        \"politique\": 2,\n" +
+                "        \"social\": 2,\n" +
+                "        \"economique\": 1\n" +
+                "      },\n" +
+                "      \"Effets\": {\n" +
+                "        \"attractivite\": 1,\n" +
+                "        \"fluidite\": -1,\n" +
+                "        \"environnemental\": 1\n" +
+                "      },\n" +
+                "      \"scoreLogistique\" : 9,\n" +
+                "      \"explicationLogistique\": \"test\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Terasse\",\n" +
+                "      \"description\": \"Terasse de café ou de restaurant\",\n" +
+                "      \"Couts\": {\n" +
+                "        \"politique\": 1,\n" +
+                "        \"social\": 2,\n" +
+                "        \"economique\": 1\n" +
+                "      },\n" +
+                "      \"Effets\": {\n" +
+                "        \"attractivite\": 1,\n" +
+                "        \"fluidite\": -2,\n" +
+                "        \"environnemental\": 1\n" +
+                "      },\n" +
+                "      \"scoreLogistique\" : 9,\n" +
+                "      \"explicationLogistique\": \"test\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Petit magasin\",\n" +
+                "      \"description\": \"Petit commerce (-20 salariés)\",\n" +
+                "      \"Couts\": {\n" +
+                "        \"politique\": 1,\n" +
+                "        \"social\": 4,\n" +
+                "        \"economique\": 2\n" +
+                "      },\n" +
+                "      \"Effets\": {\n" +
+                "        \"attractivite\": 2,\n" +
+                "        \"fluidite\": 1,\n" +
+                "        \"environnemental\": 0\n" +
+                "      },\n" +
+                "      \"scoreLogistique\" : 9,\n" +
+                "      \"explicationLogistique\": \"test\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Poste\",\n" +
+                "      \"description\": \"Bureau de poste\",\n" +
+                "      \"Couts\": {\n" +
+                "        \"politique\": 1,\n" +
+                "        \"social\": 1,\n" +
+                "        \"economique\": 2\n" +
+                "      },\n" +
+                "      \"Effets\": {\n" +
+                "        \"attractivite\": 0,\n" +
+                "        \"fluidite\": 2,\n" +
+                "        \"environnemental\": -1\n" +
+                "      },\n" +
+                "      \"scoreLogistique\" : 9,\n" +
+                "      \"explicationLogistique\": \"test\"\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
     }
 
 
@@ -104,7 +185,6 @@ public class JsonBuilding {
 
     public static ArrayList<Building> readBuilding(){
         Log.d("debug", "readBuilding...");
-        File file = new File(fileNameBuilding);
         String jsonText = null;
         JSONObject jsonRoot = null;
         JSONArray jsonBuildings = null;
@@ -128,8 +208,9 @@ public class JsonBuilding {
                 Integer effetAttractivite = Integer.parseInt(jsonEffets.getString("attractivite"));
                 Integer effetFluidite = Integer.parseInt(jsonEffets.getString("fluidite"));
                 Integer effetEnvironnemental = Integer.parseInt(jsonEffets.getString("environnemental"));
-                Building building = new Building(name, description, coutPolitique, coutSocial, coutEconomique, effetAttractivite, effetFluidite, effetEnvironnemental);
-                Log.d("debug", building.toString());
+                Integer scoreLogistique = jsonBuilding.getInt("scoreLogistique");
+                String explicationLogistique = jsonBuilding.getString("explicationLogistique");
+                Building building = new Building(name, description, coutPolitique, coutSocial, coutEconomique, effetAttractivite, effetFluidite, effetEnvironnemental, scoreLogistique, explicationLogistique);
                 listeBuilding.add(building);
             }
         } catch (IOException | JSONException e) {
@@ -138,4 +219,92 @@ public class JsonBuilding {
         return listeBuilding;
     }
 
+    public static void modificationBuilding(Building building, String name){
+        Log.d("debug", "modificationBuilding...");
+        removeBuilding(name);
+        writeBuilding(building);
+    }
+
+    public static void writeBuilding(Building building){
+        Log.d("debug", "writeBuilding...");
+        String jsonText = null;
+        JSONObject jsonRoot = null;
+        JSONArray jsonBuildings = null;
+        try {
+            JSONObject object = new JSONObject();
+            object.put("name", building.getName());
+            object.put("description", building.getDescription());
+            JSONObject couts = new JSONObject();
+            couts.put("politique", building.getCoutPolitique());
+            couts.put("social", building.getCoutSocial());
+            couts.put("economique", building.getCoutEconomique());
+            object.put("Couts", couts);
+            JSONObject effets = new JSONObject();
+            effets.put("attractivite", building.getEffetAttractivite());
+            effets.put("fluidite", building.getEffetFluidite());
+            effets.put("environnemental", building.getEffetEnvironnemental());
+            object.put("Effets", effets);
+
+            object.put("scoreLogistique", building.getScoreLogistique());
+            object.put("explicationLogistique", building.getExplicationLogistique());
+
+            jsonText = readText();
+            jsonRoot = new JSONObject(jsonText);
+            jsonBuildings = jsonRoot.getJSONArray("buildings");
+            jsonBuildings.put(object);
+            Log.d("debug", jsonBuildings.toString());
+            writeText(jsonRoot.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void removeBuilding(String name){
+        Log.d("debug", "removeBuilding...");
+        String jsonText = null;
+        JSONObject jsonRoot = null;
+        JSONArray jsonBuildings = null;
+        JSONObject jsonBuilding = null;
+        try {
+            jsonText = readText();
+            jsonRoot = new JSONObject(jsonText);
+            jsonBuildings = jsonRoot.getJSONArray("buildings");
+            for(int i=0; i<jsonBuildings.length(); i++){
+                jsonBuilding = jsonBuildings.getJSONObject(i);
+                if((jsonBuilding.getString("name").replaceAll("([A-Z])", "$1").toLowerCase()).equals(name.replaceAll("([A-Z])", "$1").toLowerCase())){
+                    Log.d("debug", "==> " + i);
+                    jsonBuildings.remove(i);
+                }
+            }
+            writeText(jsonRoot.toString());
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean buildingAlreadyInList(String name){
+        Log.d("debug", "buildingAlreadyInList...");
+        String jsonText = null;
+        JSONObject jsonRoot = null;
+        JSONArray jsonBuildings = null;
+        JSONObject jsonBuilding = null;
+        try {
+            jsonText = readText();
+            jsonRoot = new JSONObject(jsonText);
+            jsonBuildings = jsonRoot.getJSONArray("buildings");
+            for(int i=0; i<jsonBuildings.length(); i++){
+                jsonBuilding = jsonBuildings.getJSONObject(i);
+
+                if((jsonBuilding.getString("name").replaceAll("([A-Z])", "$1").toLowerCase()).equals(name.replaceAll("([A-Z])", "$1").toLowerCase()) || (jsonBuilding.getString("name").replaceAll("([A-Z])", "$1").toLowerCase()).equals(name.replaceAll("([A-Z])", "$1").toLowerCase())){
+                    return true;
+                }
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

@@ -25,7 +25,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
     private ArrayList<Role> roles;
     private Button bHost;
     private Button bPlay;
-    private Button bRefresh;
+    private Button buildingsButton;
     private Button bStop;
     private static TextView tPlayers;
     private TextView tStatus;
@@ -46,7 +46,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
 
         this.bHost = (Button)findViewById(R.id.hostButton);
         this.bPlay = (Button)findViewById(R.id.playButton);
-        this.bRefresh = (Button)findViewById(R.id.refreshButton);
+        this.buildingsButton = (Button)findViewById(R.id.buildingsButton);
         this.bStop = (Button)findViewById(R.id.stopButton);
         tPlayers = (TextView) findViewById(R.id.nbPlayer);
         this.tStatus = (TextView) findViewById(R.id.statusText);
@@ -80,6 +80,14 @@ public class AdminConnectionActivity extends AppCompatActivity {
                 net.stop();
                 updateStatus("Disconnected");
                 updateNbPlayers(0);
+            }
+        });
+
+        buildingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminConnectionActivity.this, ListBuildingsActivity.class);
+                startActivity(intent);
             }
         });
 
