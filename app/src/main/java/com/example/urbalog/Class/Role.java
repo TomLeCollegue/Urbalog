@@ -2,6 +2,7 @@ package com.example.urbalog.Class;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -91,6 +92,13 @@ public class Role extends Object implements Serializable {
 
     public void setImprove(String improve) {
         this.improve = improve;
+    }
+
+    public boolean goalsAchieve(ArrayList<Building> newBuildings)
+    {
+        //TODO : Check if newBuildings is not null and after check if new buildings stats achieve goals of player
+        // else return false
+        return false;
     }
 
     @Override

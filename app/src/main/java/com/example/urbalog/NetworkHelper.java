@@ -54,7 +54,6 @@ public class NetworkHelper implements Serializable {
     private Player player;
 
     private List<Pair<String, String>> listPlayer; // Pair array for connexion information storage of connected users
-    private ArrayList<Building> buildings;
     private int nTurn;
     private int nextTurnVotes = 0;
 
@@ -118,6 +117,14 @@ public class NetworkHelper implements Serializable {
                                     }
                                 }
                             }
+                            else if(((TransferPackage) dataReceived).first instanceof Signal){
+                               switch((Signal)((TransferPackage) dataReceived).first)
+                               {
+                                   case CHECK_GOALS:
+                                       player.checkGoals((ArrayList<Building>)((TransferPackage) dataReceived).second);
+                                       break;
+                               }
+                            }
                         }
                         else if(dataReceived instanceof Game){
                             currentGame = (Game)dataReceived;
@@ -170,12 +177,22 @@ public class NetworkHelper implements Serializable {
                                 case CANCEL_NEXT_TURN:
                                     nextTurnVotes--;
                                     break;
+
+                                default:
+                                    break;
                             }
                             if(nextTurnVotes == NB_PLAYERS)
                             {
+                                ArrayList<Building> newBuildings = new ArrayList<Building>();
                                 for(int i = 0; i < currentGame.getMarket().getBuildings().size(); i++) {
                                     if(currentGame.getMarket().getBuildings().get(i).isFilled())
                                         currentGame.getCity().addBuilding(currentGame.getMarket().getBuildings().get(i));
+                                        newBuildings.add(currentGame.getMarket().getBuildings().get(i));
+                                }
+                                try {
+                                    sendToAllClients(new TransferPackage<Signal, ArrayList<Building>>(Signal.CHECK_GOALS, newBuildings));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                                 }
                                 if(currentGame.getCity().getBuildings().size() < 6) {
                                     currentGame.refreshMarket();
