@@ -4,4 +4,5 @@
     <string name="hostButton">Host</string>
     <string name="playButton">Play</string>
     <string name="refreshButton">Refresh</string>
+    <string name="buildingsButton">Batiments</string>
 </resources>

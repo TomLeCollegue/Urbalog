@@ -17,15 +17,11 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LogisticActivity"
-            android:screenOrientation="sensorLandscape">
-        </activity>
-        <activity
-            android:name=".EditBuildingActivity"
-            android:screenOrientation="landscape" />
+        <activity android:name=".EditBuildingActivity"
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,13 +30,16 @@
         </activity>
         <activity
             android:name=".PlayerViewActivity"
-            android:screenOrientation="sensorLandscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".AdminConnectionActivity"
-            android:screenOrientation="sensorLandscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".PlayerConnexionActivity"
-            android:screenOrientation="sensorLandscape"></activity>
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ListBuildingsActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
