@@ -3,4 +3,10 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!-- Hugo Hersemeule -->
+    <color name="lightPink">#f5e7da</color>
+    <color name="mediumPink">#f3d7be</color>
+    <color name="lightGray">#c0c0c0</color>
+    <color name="darkGray">#B4B4B4</color>
 </resources>
