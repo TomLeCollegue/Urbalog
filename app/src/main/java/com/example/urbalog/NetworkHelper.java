@@ -9,10 +9,12 @@ import android.util.Pair;
 import android.view.View;
 
 import com.example.urbalog.Class.Bet;
+import com.example.urbalog.Class.Building;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
 import com.example.urbalog.Class.Player;
 import com.example.urbalog.Class.Role;
+import com.example.urbalog.Class.Signal;
 import com.example.urbalog.Class.TransferPackage;
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
@@ -46,11 +48,14 @@ public class NetworkHelper implements Serializable {
     private boolean advertising;
     private boolean discovering;
     private boolean host;
+    private static int NB_PLAYERS;
 
     private Game currentGame;
     private Player player;
 
     private List<Pair<String, String>> listPlayer; // Pair array for connexion information storage of connected users
+    private int nTurn;
+    private int nextTurnVotes = 0;
 
     private ConnectionsClient connectionsClient;
     private static final String TAG = "UrbalogGame"; // Tag for log
@@ -99,9 +104,8 @@ public class NetworkHelper implements Serializable {
                         if(dataReceived instanceof TransferPackage){
                             if(((TransferPackage) dataReceived).second instanceof Market)
                             {
-                                if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first))) {
-                                    currentGame.refreshMarket(((Market) ((TransferPackage) dataReceived).second));
-                                }
+                                currentGame.setMarket(((Market) ((TransferPackage) dataReceived).second));
+                                currentPlayerView.fillInfosView();
                             }
                             else if(((TransferPackage) dataReceived).second instanceof Bet){
                                 if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
@@ -113,9 +117,21 @@ public class NetworkHelper implements Serializable {
                                     }
                                 }
                             }
+                            else if(((TransferPackage) dataReceived).first instanceof Signal){
+                               switch((Signal)((TransferPackage) dataReceived).first)
+                               {
+                                   case CHECK_GOALS:
+                                       player.checkGoals((ArrayList<Building>)((TransferPackage) dataReceived).second);
+                                       break;
+                               }
+                            }
                         }
                         else if(dataReceived instanceof Game){
                             currentGame = (Game)dataReceived;
+                            if(currentPlayerView != null) {
+                                currentPlayerView.fillInfosView();
+                                currentPlayerView.resetTurnButton();
+                            }
                         }
                         else if(dataReceived instanceof Role){
                             player = new Player((Role)dataReceived);
@@ -143,10 +159,50 @@ public class NetworkHelper implements Serializable {
                                 {
                                     currentGame.majBet(((Bet) ((TransferPackage) dataReceived).second));
                                     try {
-                                        sendToAllClients(dataReceived);
+                                        sendToAllClients(new TransferPackage<Game, Market>(currentGame, currentGame.getMarket()));
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
+                                }
+                            }
+                        }
+                        else if(dataReceived instanceof Signal)
+                        {
+                            switch ((Signal)dataReceived)
+                            {
+                                case NEXT_TURN:
+                                    nextTurnVotes++;
+                                    break;
+
+                                case CANCEL_NEXT_TURN:
+                                    nextTurnVotes--;
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                            if(nextTurnVotes == NB_PLAYERS)
+                            {
+                                ArrayList<Building> newBuildings = new ArrayList<Building>();
+                                for(int i = 0; i < currentGame.getMarket().getBuildings().size(); i++) {
+                                    if(currentGame.getMarket().getBuildings().get(i).isFilled())
+                                        currentGame.getCity().addBuilding(currentGame.getMarket().getBuildings().get(i));
+                                        newBuildings.add(currentGame.getMarket().getBuildings().get(i));
+                                }
+                                try {
+                                    sendToAllClients(new TransferPackage<Signal, ArrayList<Building>>(Signal.CHECK_GOALS, newBuildings));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                if(currentGame.getCity().getBuildings().size() < 6) {
+                                    currentGame.refreshMarket();
+                                    try {
+                                        sendToAllClients(currentGame);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    nTurn++;
+                                    nextTurnVotes = 0;
                                 }
                             }
                         }
@@ -236,6 +292,8 @@ public class NetworkHelper implements Serializable {
 
     public NetworkHelper(Context c) {
         appContext = c;
+        NB_PLAYERS = 2;
+        nTurn = 1;
         discovering = false;
         advertising = false;
         host = false;
@@ -337,6 +395,14 @@ public class NetworkHelper implements Serializable {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public static int getNbPlayers() {
+        return NB_PLAYERS;
+    }
+
+    public static void setNbPlayers(int nbPlayers) {
+        NB_PLAYERS = nbPlayers;
     }
 
     public boolean isAdvertising()

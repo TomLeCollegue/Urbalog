@@ -21,7 +21,6 @@ import java.util.ArrayList;
 public class AdminConnectionActivity extends AppCompatActivity {
     public static NetworkHelper net; // Temporary until class can be parcelable and send in intent
 
-    private ArrayList<Building> buildings;
     private ArrayList<Role> roles;
     private Button bHost;
     private Button bPlay;
@@ -36,8 +35,6 @@ public class AdminConnectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         JsonBuilding.init(getApplicationContext());
-        this.buildings = JsonBuilding.readBuilding();
-
         JsonRole.init(getApplicationContext());
         this.roles = JsonRole.readRole();
 
@@ -61,10 +58,10 @@ public class AdminConnectionActivity extends AppCompatActivity {
         bPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(net.getListPlayer().size() == 5) {
+                if(net.getListPlayer().size() == NetworkHelper.getNbPlayers()) {
                     currentGame = new Game();
-                    net.setCurrentGame(currentGame);
                     currentGame.setMarket(new Market());
+                    net.setCurrentGame(currentGame);
                     try {
                         net.sendToAllClients(currentGame);
                         randomRoleAssignment();
