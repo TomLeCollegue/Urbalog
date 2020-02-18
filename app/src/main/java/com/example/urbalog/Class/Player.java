@@ -10,12 +10,15 @@ public class Player {
     private String job;
     private Integer score;
     private Role role;
+    private Integer financementRessource[][]= {{0,0},{0,0},{0,0},{0,0},{0,0}};
 
-    public Player(String name, Integer age, String job, Integer score) {
+    public Player(String name, Integer age, String job, Integer score, Role role, Integer[][] financementRessource) {
         this.name = name;
         this.age = age;
         this.job = job;
         this.score = score;
+        this.role = role;
+        this.financementRessource = financementRessource;
     }
 
     public Player(Role role) {
@@ -65,6 +68,14 @@ public class Player {
     public void checkGoals(ArrayList<Building> newBuildings){
         if(role.goalsAchieve(newBuildings))
             score++;
+    }
+
+    public Integer[][] getFinancementRessource() {
+        return financementRessource;
+    }
+
+    public void setFinancementRessource(Integer[][] financementRessource) {
+        this.financementRessource = financementRessource;
     }
 
     @Override

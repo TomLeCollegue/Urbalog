@@ -108,7 +108,8 @@ public class PlayerViewActivity extends AppCompatActivity {
     private String Ressource1;
     private String Ressource2;
 
-    private Integer financementRessource[]= {0,0};
+    private Integer financementRessource[][];
+    boolean buttonState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +118,10 @@ public class PlayerViewActivity extends AppCompatActivity {
 
         /* Link player activity to NetworkHelper */
         PlayerConnexionActivity.net.setCurrentPlayerView(this);
+        buttonState = true;
+
+
+        financementRessource = PlayerConnexionActivity.net.getPlayer().getFinancementRessource();
 
         textPoliticalResssourcesBuilding1 = (TextView) findViewById(R.id.text_political_resssources_building_1);
         textPoliticalResssourcesBuilding2 = (TextView) findViewById(R.id.text_political_resssources_building_2);
@@ -325,8 +330,10 @@ public class PlayerViewActivity extends AppCompatActivity {
         buttonPlusBot= (Button) popUpView.findViewById(R.id.button_plus_bot);
 
 
-        textAvancementRessourceTop.setText(String.valueOf(financementRessource[0]));
-        TextAvancementRessourceBot.setText(String.valueOf(financementRessource[1]));
+        textAvancementRessourceTop.setText(String.valueOf(financementRessource[numBuildingF][0]));
+        TextAvancementRessourceBot.setText(String.valueOf(financementRessource[numBuildingF][1]));
+
+        setEnabledBetButtons(buttonState);
 
 
         textNameBuildingPopup.setText(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding).getName());
@@ -357,8 +364,6 @@ public class PlayerViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 betFromButton(numBuildingF,0,1);
-                textAvancementRessourceTop.setText(String.valueOf(financementRessource[0]));
-
             }
         });
 
@@ -366,8 +371,6 @@ public class PlayerViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 betFromButton(numBuildingF,0,-1);
-                textAvancementRessourceTop.setText(String.valueOf(financementRessource[0]));
-
             }
         });
 
@@ -375,7 +378,6 @@ public class PlayerViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 betFromButton(numBuildingF,1,1);
-                TextAvancementRessourceBot.setText(String.valueOf(financementRessource[1]));
             }
         });
 
@@ -383,13 +385,11 @@ public class PlayerViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 betFromButton(numBuildingF,1,-1);
-                TextAvancementRessourceBot.setText(String.valueOf(financementRessource[1]));
-
             }
         });
 
 
-        popUpBet.showAtLocation(v, Gravity.CENTER, 0, 0);
+        popUpBet.showAtLocation(v, Gravity.RIGHT, 0, 0);
         // Assombrissement de l'arrière plan
         dimBehind(popUpBet);
 
@@ -529,24 +529,28 @@ public class PlayerViewActivity extends AppCompatActivity {
         if(valeurRessource.equals("Social")){
 
                 if(((Value == 1) && (RoleInfo.getTokenSocial() > 0)) && (building.getAvancementCoutSocial() < building.getCoutSocial())){
+                    buttonState = false;
+                    setEnabledBetButtons(buttonState);
                     mise = new Bet(numBuilding, 0, 0, 1);
                     try {
                         PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
                         RoleInfo.lessSocial();
                         fillRoleCardRessources();
-                        financementRessource[ressource]++;
+                        financementRessource[numBuilding][ressource]++;
 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 else if ((Value == -1) && (building.getAvancementCoutSocial() > 0)) {
+                    buttonState = false;
+                    setEnabledBetButtons(buttonState);
                     mise = new Bet(numBuilding, 0, 0, -1);
                     try {
                         PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
                         RoleInfo.addSocial();
                         fillRoleCardRessources();
-                        financementRessource[ressource]--;
+                        financementRessource[numBuilding][ressource]--;
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -557,24 +561,28 @@ public class PlayerViewActivity extends AppCompatActivity {
         if(valeurRessource.equals("Economical")){
 
             if(((Value == 1) && (RoleInfo.getTokenEconomical() > 0)) && (building.getAvancementCoutEconomique() < building.getCoutEconomique())){
+                buttonState = false;
+                setEnabledBetButtons(buttonState);
                 mise = new Bet(numBuilding, 0, 1, 0);
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
                     RoleInfo.lessEco();
                     fillRoleCardRessources();
-                    financementRessource[ressource]++;
+                    financementRessource[numBuilding][ressource]++;
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
             else if ((Value == -1)&&(building.getAvancementCoutEconomique() > 0)) {
+                buttonState = false;
+                setEnabledBetButtons(buttonState);
                 mise = new Bet(numBuilding, 0, -1, 0);
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
                     RoleInfo.addEco();
                     fillRoleCardRessources();
-                    financementRessource[ressource]--;
+                    financementRessource[numBuilding][ressource]--;
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -585,24 +593,28 @@ public class PlayerViewActivity extends AppCompatActivity {
         if(valeurRessource.equals("Political")){
 
             if(((Value == 1) && (RoleInfo.getTokenPolitical() > 0)) && (building.getAvancementCoutPolitique() < building.getCoutPolitique())){
+                buttonState = false;
+                setEnabledBetButtons(buttonState);
                 mise = new Bet(numBuilding, 1, 0, 0);
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
                     RoleInfo.lessPolitical();
                     fillRoleCardRessources();
-                    financementRessource[ressource]++;
+                    financementRessource[numBuilding][ressource]++;
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
             else if ((Value == -1)&&(building.getAvancementCoutPolitique() > 0)) {
+                buttonState = false;
+                setEnabledBetButtons(buttonState);
                 mise = new Bet(numBuilding, -1, 0, 0);
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
                     RoleInfo.addPolitical();
                     fillRoleCardRessources();
-                    financementRessource[ressource]--;
+                    financementRessource[numBuilding][ressource]--;
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -610,6 +622,10 @@ public class PlayerViewActivity extends AppCompatActivity {
             }
 
         }
+        PlayerConnexionActivity.net.getPlayer().setFinancementRessource(financementRessource);
+        textAvancementRessourceTop.setText(String.valueOf(financementRessource[numBuildingF][0]));
+        TextAvancementRessourceBot.setText(String.valueOf(financementRessource[numBuildingF][1]));
+
     }
 
 
@@ -617,8 +633,19 @@ public class PlayerViewActivity extends AppCompatActivity {
         {
             nextTurn = false;
             bTurn.setText("Tour suivant");
-            financementRessource[0] = 0;
-            financementRessource[1] = 0;
+            Integer[][] financementRessourceReset= {{0,0},{0,0},{0,0},{0,0},{0,0}};
+            financementRessource = financementRessourceReset;
+            PlayerConnexionActivity.net.getPlayer().setFinancementRessource(financementRessource);
         }
 
+    public void setEnabledBetButtons(boolean bool){
+        buttonMinusTop.setEnabled(bool);
+        buttonPlusTop.setEnabled(bool);
+        buttonMinusBot.setEnabled(bool);
+        buttonPlusBot.setEnabled(bool);
+    }
+
+    public void setButtonState(boolean buttonState) {
+        this.buttonState = buttonState;
+    }
 }

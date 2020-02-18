@@ -102,6 +102,8 @@ public class NetworkHelper implements Serializable {
                             {
                                 currentGame.setMarket(((Market) ((TransferPackage) dataReceived).second));
                                 currentPlayerView.fillInfosView();
+                                currentPlayerView.setButtonState(true);
+                                currentPlayerView.setEnabledBetButtons(true);
                             }
                             else if(((TransferPackage) dataReceived).second instanceof Bet){
                                 if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
