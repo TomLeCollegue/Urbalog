@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.urbalog.Adapter.BuildingBuiltAdapter;
 import com.example.urbalog.Adapter.BuildingInfluenceAdapter;
 import com.example.urbalog.Class.Building;
 import com.example.urbalog.Json.JsonBuilding;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 public class EndGameActivity extends AppCompatActivity {
 
     public static ArrayList<Building> buildings = new ArrayList<Building>();
-    public static RecyclerView rv;
+    public static RecyclerView rv1;
     private TextView textScorePlayer;
 
     private TextView textAttractivityScore;
@@ -47,17 +48,17 @@ public class EndGameActivity extends AppCompatActivity {
         logisticButton = (Button) findViewById(R.id.logisticButton);
 
         Log.d("debug", buildings.toString());
-        rv = (RecyclerView) findViewById(R.id.recyclerListBuildingInfluence);
-        rv.setLayoutManager(new LinearLayoutManager(EndGameActivity.this, LinearLayoutManager.VERTICAL, false));
+        rv1 = (RecyclerView) findViewById(R.id.recyclerListBuildingBuilt);
+        rv1.setLayoutManager(new LinearLayoutManager(EndGameActivity.this, LinearLayoutManager.VERTICAL, false));
 
-        BuildingInfluenceAdapter mMyadapter= new BuildingInfluenceAdapter(buildings);
-        rv.setAdapter(mMyadapter);
+        BuildingBuiltAdapter MyAdapter= new BuildingBuiltAdapter(buildings);
+        rv1.setAdapter(MyAdapter);
 
-        textScorePlayer.setText("Score : " + String.valueOf(PlayerConnexionActivity.net.getPlayer().getScore()));
+        /*textScorePlayer.setText("Score : " + String.valueOf(PlayerConnexionActivity.net.getPlayer().getScore()));
 
         textAttractivityScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreAttractivite()));
         textEnvironmentScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreEnvironnemental()));
-        textFluidityScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreFluidite()));
+        textFluidityScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreFluidite()));*/
 
         logisticButton.setOnClickListener(new View.OnClickListener() {
             @Override
