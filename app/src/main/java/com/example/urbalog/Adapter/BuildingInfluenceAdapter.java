@@ -41,17 +41,24 @@ public class BuildingInfluenceAdapter extends RecyclerView.Adapter<BuildingInflu
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView nomTest;
+        private final TextView buildingName;
+        private final TextView buildingInfluenceSentence;
+        private final TextView buildingInfluenceScore;
 
         public MyViewHolder(@NonNull final View itemView) {
             super(itemView);
 
-            nomTest = itemView.findViewById(R.id.nomTest);
+            buildingName = itemView.findViewById(R.id.buildingName);
+            buildingInfluenceSentence = itemView.findViewById(R.id.buildingInfluenceSentence);
+            buildingInfluenceScore = itemView.findViewById(R.id.buildingInfluenceScore);
+
         }
 
         public void display(Building building) {
 
-            nomTest.setText(building.getName());
+            buildingName.setText(building.getName());
+            buildingInfluenceSentence.setText(building.getExplicationLogistique());
+            buildingInfluenceScore.setText(building.getScoreLogistique().toString());
 
         }
     }
