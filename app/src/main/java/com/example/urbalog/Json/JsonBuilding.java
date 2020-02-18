@@ -68,7 +68,7 @@ public class JsonBuilding {
                 "        \"fluidite\": 1,\n" +
                 "        \"environnemental\": 1\n" +
                 "      },\n" +
-                "      \"scoreLogistique\" : 9,\n" +
+                "      \"scoreLogistique\": 2,\n" +
                 "      \"explicationLogistique\": \"test\"\n" +
                 "    },\n" +
                 "    {\n" +
@@ -84,7 +84,7 @@ public class JsonBuilding {
                 "        \"fluidite\": -1,\n" +
                 "        \"environnemental\": 1\n" +
                 "      },\n" +
-                "      \"scoreLogistique\" : 9,\n" +
+                "      \"scoreLogistique\": 9,\n" +
                 "      \"explicationLogistique\": \"test\"\n" +
                 "    },\n" +
                 "    {\n" +
@@ -100,7 +100,7 @@ public class JsonBuilding {
                 "        \"fluidite\": -2,\n" +
                 "        \"environnemental\": 1\n" +
                 "      },\n" +
-                "      \"scoreLogistique\" : 9,\n" +
+                "      \"scoreLogistique\": -3,\n" +
                 "      \"explicationLogistique\": \"test\"\n" +
                 "    },\n" +
                 "    {\n" +
@@ -116,7 +116,7 @@ public class JsonBuilding {
                 "        \"fluidite\": 1,\n" +
                 "        \"environnemental\": 0\n" +
                 "      },\n" +
-                "      \"scoreLogistique\" : 9,\n" +
+                "      \"scoreLogistique\": 0,\n" +
                 "      \"explicationLogistique\": \"test\"\n" +
                 "    },\n" +
                 "    {\n" +
@@ -132,7 +132,183 @@ public class JsonBuilding {
                 "        \"fluidite\": 2,\n" +
                 "        \"environnemental\": -1\n" +
                 "      },\n" +
-                "      \"scoreLogistique\" : 9,\n" +
+                "      \"scoreLogistique\": 1,\n" +
+                "      \"explicationLogistique\": \"test\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Grand magasin\",\n" +
+                "      \"description\": \"Supermarché ou grande surface spécialisée(+ de 20 salariés)\",\n" +
+                "      \"Couts\": {\n" +
+                "        \"politique\": 2,\n" +
+                "        \"social\": 6,\n" +
+                "        \"economique\": 3\n" +
+                "      },\n" +
+                "      \"Effets\": {\n" +
+                "        \"attractivite\": 5,\n" +
+                "        \"fluidite\": -2,\n" +
+                "        \"environnemental\": -1\n" +
+                "      },\n" +
+                "      \"scoreLogistique\": -2,\n" +
+                "      \"explicationLogistique\": \"test\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Zone de rencontre\",\n" +
+                "      \"description\": \"Une zone de rencontre est une zone apaisée où la vitesse est limitée à 20km/h, sans trottoirs où tous les usagers de la voirie oeuvent se croiser(vélo, autos, piétons, camions, etc.)\",\n" +
+                "      \"Couts\": {\n" +
+                "        \"politique\": 2,\n" +
+                "        \"social\": 2,\n" +
+                "        \"economique\": 2\n" +
+                "      },\n" +
+                "      \"Effets\": {\n" +
+                "        \"attractivite\": 1,\n" +
+                "        \"fluidite\": -1,\n" +
+                "        \"environnemental\": 2\n" +
+                "      },\n" +
+                "      \"scoreLogistique\": 0,\n" +
+                "      \"explicationLogistique\": \"test\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Réseau de consignes\",\n" +
+                "      \"description\": \"Un réseau de consignes automatiques est composé de boites sécurisées permettant le retrait de colis à toute heure\",\n" +
+                "      \"Couts\": {\n" +
+                "        \"politique\": 2,\n" +
+                "        \"social\": 3,\n" +
+                "        \"economique\": 2\n" +
+                "      },\n" +
+                "      \"Effets\": {\n" +
+                "        \"attractivite\": 0,\n" +
+                "        \"fluidite\": 2,\n" +
+                "        \"environnemental\": 0\n" +
+                "      },\n" +
+                "      \"scoreLogistique\": 2,\n" +
+                "      \"explicationLogistique\": \"test\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Dispositif anti-bélier\",\n" +
+                "      \"description\": \"Plots en béton disposés devant les batiments pour éviter l'usage de voiture-bélier\",\n" +
+                "      \"Couts\": {\n" +
+                "        \"politique\": 1,\n" +
+                "        \"social\": 1,\n" +
+                "        \"economique\": 1\n" +
+                "      },\n" +
+                "      \"Effets\": {\n" +
+                "        \"attractivite\": 1,\n" +
+                "        \"fluidite\": -2,\n" +
+                "        \"environnemental\": 0\n" +
+                "      },\n" +
+                "      \"scoreLogistique\": -2,\n" +
+                "      \"explicationLogistique\": \"test\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Aire de livraison\",\n" +
+                "      \"description\": \"Emplacement réservé à l'arrêt des véhicules pour réaliser une livraison ou un enlèvement de marchandise\",\n" +
+                "      \"Couts\": {\n" +
+                "        \"politique\": 2,\n" +
+                "        \"social\": 1,\n" +
+                "        \"economique\": 3\n" +
+                "      },\n" +
+                "      \"Effets\": {\n" +
+                "        \"attractivite\": -1,\n" +
+                "        \"fluidite\": 2,\n" +
+                "        \"environnemental\": -1\n" +
+                "      },\n" +
+                "      \"scoreLogistique\": 1,\n" +
+                "      \"explicationLogistique\": \"test\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"CDU\",\n" +
+                "      \"description\": \"Un Centre de Distribution Urbaine est un entrepôt situé en ville qui facilite les livraisons\",\n" +
+                "      \"Couts\": {\n" +
+                "        \"politique\": 2,\n" +
+                "        \"social\": 2,\n" +
+                "        \"economique\": 3\n" +
+                "      },\n" +
+                "      \"Effets\": {\n" +
+                "        \"attractivite\": -1,\n" +
+                "        \"fluidite\": 4,\n" +
+                "        \"environnemental\": 2\n" +
+                "      },\n" +
+                "      \"scoreLogistique\": 1,\n" +
+                "      \"explicationLogistique\": \"test\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"PAV\",\n" +
+                "      \"description\": \"Un Point d'Accueil des Véhicules est une grande aire de livraison équipée de moyens de manutention à la disposition des livreurs\",\n" +
+                "      \"Couts\": {\n" +
+                "        \"politique\": 1,\n" +
+                "        \"social\": 2,\n" +
+                "        \"economique\": 2\n" +
+                "      },\n" +
+                "      \"Effets\": {\n" +
+                "        \"attractivite\": -3,\n" +
+                "        \"fluidite\": 4,\n" +
+                "        \"environnemental\": -1\n" +
+                "      },\n" +
+                "      \"scoreLogistique\": 2,\n" +
+                "      \"explicationLogistique\": \"test\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Station GAZ GNV\",\n" +
+                "      \"description\": \"Station de recharge au gaz naturel utilisée pour recharger des camions plus propres\",\n" +
+                "      \"Couts\": {\n" +
+                "        \"politique\": 1,\n" +
+                "        \"social\": 3,\n" +
+                "        \"economique\": 2\n" +
+                "      },\n" +
+                "      \"Effets\": {\n" +
+                "        \"attractivite\": -1,\n" +
+                "        \"fluidite\": 0,\n" +
+                "        \"environnemental\": 2\n" +
+                "      },\n" +
+                "      \"scoreLogistique\": 1,\n" +
+                "      \"explicationLogistique\": \"test\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Banc\",\n" +
+                "      \"description\": \"2 bancs\",\n" +
+                "      \"Couts\": {\n" +
+                "        \"politique\": 1,\n" +
+                "        \"social\": 1,\n" +
+                "        \"economique\": 1\n" +
+                "      },\n" +
+                "      \"Effets\": {\n" +
+                "        \"attractivite\": 0,\n" +
+                "        \"fluidite\": -1,\n" +
+                "        \"environnemental\": 1\n" +
+                "      },\n" +
+                "      \"scoreLogistique\": -1,\n" +
+                "      \"explicationLogistique\": \"test\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Zone végétalisée\",\n" +
+                "      \"description\": \"Espace vert\",\n" +
+                "      \"Couts\": {\n" +
+                "        \"politique\": 2,\n" +
+                "        \"social\": 2,\n" +
+                "        \"economique\": 1\n" +
+                "      },\n" +
+                "      \"Effets\": {\n" +
+                "        \"attractivite\":1,\n" +
+                "        \"fluidite\": -4,\n" +
+                "        \"environnemental\": 4\n" +
+                "      },\n" +
+                "      \"scoreLogistique\": -2,\n" +
+                "      \"explicationLogistique\": \"test\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Borne vélo\",\n" +
+                "      \"description\": \"Borne permettant d'emprunter un vélo en libre service\",\n" +
+                "      \"Couts\": {\n" +
+                "        \"politique\": 2,\n" +
+                "        \"social\": 2,\n" +
+                "        \"economique\": 1\n" +
+                "      },\n" +
+                "      \"Effets\": {\n" +
+                "        \"attractivite\":1,\n" +
+                "        \"fluidite\": -1,\n" +
+                "        \"environnemental\": 1\n" +
+                "      },\n" +
+                "      \"scoreLogistique\": -1,\n" +
                 "      \"explicationLogistique\": \"test\"\n" +
                 "    }\n" +
                 "  ]\n" +
