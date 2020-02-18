@@ -10,7 +10,7 @@ public class Player {
     private String job;
     private Integer score;
     private Role role;
-    private Integer financementRessource[][]= {{0,0},{0,0},{0,0},{0,0},{0,0}};
+    private Integer[][] financementRessource;
 
     public Player(String name, Integer age, String job, Integer score, Role role, Integer[][] financementRessource) {
         this.name = name;
@@ -22,7 +22,9 @@ public class Player {
     }
 
     public Player(Role role) {
+        this.score = 0;
         this.role = role;
+        this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
     }
 
     public String getName() {
