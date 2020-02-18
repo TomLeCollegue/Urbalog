@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.urbalog.Adapter.BuildingInfluenceAdapter;
-import com.example.urbalog.Adapter.ListBuildingsAdapter;
 import com.example.urbalog.Class.Building;
 import com.example.urbalog.Json.JsonBuilding;
 
