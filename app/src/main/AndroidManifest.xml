@@ -20,6 +20,7 @@
         <activity android:name=".LogisticActivity"
             android:screenOrientation="sensorLandscape">
         </activity>
+        <activity android:name=".EndGameActivity"></activity>
         <activity
             android:name=".EditBuildingActivity"
             android:screenOrientation="landscape" />
