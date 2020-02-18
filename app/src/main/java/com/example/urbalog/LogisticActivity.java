@@ -49,7 +49,16 @@ public class LogisticActivity extends AppCompatActivity {
         totalLogisticScoreSentence = (TextView) findViewById(R.id.LogisticSentence_TextView);
         
         if (iLogisticScore <= -2) {
-            totalLogisticScoreSentence.setText("Pas ouf la fluidité");
+            totalLogisticScoreSentence.setText("D'un point de vue logistique, l'organisation de votre ville est à revoir.");
+        }
+        else if ( -2 < iLogisticScore &&  iLogisticScore<= 0) {
+            totalLogisticScoreSentence.setText("Dans votre ville, les transports de marchandises se font avec quelques difficultés mineures.");
+        }
+        else if (0 < iLogisticScore && iLogisticScore<= 2){
+            totalLogisticScoreSentence.setText("D'un point de vue logistique, votre ville s'en sort plutôt bien, la plupart des livraisons se font sans encombre.");
+        }
+        else {
+            totalLogisticScoreSentence.setText("Le transport de marchandise se fait très facilement dans votre ville.");
         }
 
 
@@ -58,7 +67,7 @@ public class LogisticActivity extends AppCompatActivity {
         JsonBuilding.init(LogisticActivity.this);
         buildings = JsonBuilding.readBuilding();
 
-        //Version finale
+        //Version finale qu'on ne peut pas tester.
         //buildings = PlayerConnexionActivity.net.getCurrentGame().getCity().getBuildings();
 
         //Log.d("debug", buildings.toString());
