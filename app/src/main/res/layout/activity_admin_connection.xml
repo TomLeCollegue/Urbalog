@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:baselineAligned="true"
     android:weightSum="4"
+    android:background="@color/lightPink"
     tools:context=".AdminConnectionActivity">
 
     <LinearLayout
