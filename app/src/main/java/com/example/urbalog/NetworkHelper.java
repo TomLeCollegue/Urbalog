@@ -234,8 +234,9 @@ public class NetworkHelper implements Serializable {
                 public void onEndpointLost(String endpointId) {
                     for (int i = 0; i<listPlayer.size(); i++)
                     {
-                        if(listPlayer.get(i).second == endpointId) {
+                        if(listPlayer.get(i).second.equals(endpointId)) {
                             listPlayer.remove(i);
+                            break;
                         }
                     }
                 }
@@ -276,13 +277,13 @@ public class NetworkHelper implements Serializable {
                 public void onDisconnected(String endpointId) {
                     if(host) {
                         for (int i = 0; i < listPlayer.size(); i++) {
-                            if (endpointId.equals(listPlayer.get(i).second))
+                            if (endpointId.equals(listPlayer.get(i).second)) {
                                 listPlayer.remove(i);
+                                break;
+                            }
+
                         }
                         AdminConnectionActivity.updateNbPlayers(listPlayer.size());
-                        if(listPlayer.size() == 0){
-                            stop();
-                        }
                     }
                     else {
                         PlayerConnexionActivity.setStatus("Disconnected");
