@@ -9,13 +9,13 @@
 
 
     <LinearLayout
-        android:id="@+id/fullScreenLayout"
+        android:id="@+id/fullScreenLayout_score"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <FrameLayout
-            android:id="@+id/TitleLayout"
+            android:id="@+id/TitleLayout_score"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="6"
@@ -29,72 +29,145 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="Partie Terminée : Logistique" />
+                android:text="Partie Terminée" />
         </FrameLayout>
 
         <LinearLayout
-            android:id="@+id/LogisticInfosLayout"
+            android:id="@+id/EndGameInfosLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
             <LinearLayout
-                android:id="@+id/LogisticScoreLayout"
+                android:id="@+id/score_player_layoutv1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <FrameLayout
-                    android:id="@+id/LogisticTitleLayout"
+                    android:id="@+id/PlayerScoreTitleLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.5"
+                    android:layout_weight="2.075"
                     android:background="#B4B4B4">
 
                     <TextView
-                        android:id="@+id/LogisticScoreTitleLayout"
+                        android:id="@+id/PlayerScoreText"
                         style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="Score Logistique de la ville" />
+                        android:text="Écran des scores" />
 
-                    <ImageView
-                        android:id="@+id/LogisticIcon"
-                        android:layout_width="54dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        tools:src="@tools:sample/avatars[0]" />
                 </FrameLayout>
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.5">
 
-                    <Button
-                        android:id="@+id/button2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Button" />
-                </FrameLayout>
-
-                <FrameLayout
+                <LinearLayout
                     android:id="@+id/TotalScoreLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/TotalScore_TextView"
-                        style="@style/TextAppearance.AppCompat.Large"
+                    <LinearLayout
+                        android:id="@+id/city_score_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <FrameLayout
+                            android:id="@+id/environment_score_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:id="@+id/environment_image"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                app:srcCompat="@mipmap/img_environment_city_foreground" />
+                            <TextView
+                                android:id="@+id/environment_score"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal|bottom"
+                                android:text="test"
+                                />
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:id="@+id/fluidity_score_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:id="@+id/fluidity_image"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                app:srcCompat="@mipmap/img_fluid_city_foreground" />
+                            <TextView
+                                android:id="@+id/fluidity_score"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal|bottom"
+                                android:text="test"
+                                />
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:id="@+id/attractivity_score_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:id="@+id/attractivity_image"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                app:srcCompat="@mipmap/img_impact_on_city_foreground" />
+                            <TextView
+                                android:id="@+id/attractivity_score"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal|bottom"
+                                android:text="test"
+                                />
+                        </FrameLayout>
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:id="@+id/endgame_score_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2">
+
+                        <TextView
+                            android:id="@+id/text_score_player"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Score : " />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/logisticButtonLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.75">
+
+                    <Button
+                        android:id="@+id/logisticButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="+3" />
+                        android:text="Score Logistique de la ville" />
                 </FrameLayout>
 
             </LinearLayout>
