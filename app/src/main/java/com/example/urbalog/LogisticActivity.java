@@ -33,10 +33,6 @@ public class LogisticActivity extends AppCompatActivity {
         BuildingInfluenceAdapter mMyadapter= new BuildingInfluenceAdapter(buildings);
         rv.setAdapter(mMyadapter);
 
-
-
-
     }
-
-
+    
 }

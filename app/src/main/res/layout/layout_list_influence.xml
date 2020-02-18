@@ -1,15 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/nomTest"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
+        android:id="@+id/buildingName"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="test"/>
+        android:layout_gravity="center"
+        android:layout_weight="1.9"
+        android:gravity="center"
+        android:text="test" />
+
+    <TextView
+        android:id="@+id/buildingInfluenceSentence"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="phrase test" />
+
+    <TextView
+        android:id="@+id/buildingInfluenceScore"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="score test" />
 </LinearLayout>
