@@ -522,6 +522,7 @@ public class PlayerViewActivity extends AppCompatActivity {
         if(valeurRessource.equals("Social")){
 
                 if(((Value == 1) && (RoleInfo.getTokenSocial() > 0)) && (building.getAvancementCoutSocial() < building.getCoutSocial())){
+                    setEnabledBetButtons(false);
                     mise = new Bet(numBuilding, 0, 0, 1);
                     try {
                         PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
@@ -534,6 +535,7 @@ public class PlayerViewActivity extends AppCompatActivity {
                     }
                 }
                 else if ((Value == -1) && (building.getAvancementCoutSocial() > 0)) {
+                    setEnabledBetButtons(false);
                     mise = new Bet(numBuilding, 0, 0, -1);
                     try {
                         PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
@@ -550,6 +552,7 @@ public class PlayerViewActivity extends AppCompatActivity {
         if(valeurRessource.equals("Economical")){
 
             if(((Value == 1) && (RoleInfo.getTokenEconomical() > 0)) && (building.getAvancementCoutEconomique() < building.getCoutEconomique())){
+                setEnabledBetButtons(false);
                 mise = new Bet(numBuilding, 0, 1, 0);
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
@@ -562,6 +565,7 @@ public class PlayerViewActivity extends AppCompatActivity {
                 }
             }
             else if ((Value == -1)&&(building.getAvancementCoutEconomique() > 0)) {
+                setEnabledBetButtons(false);
                 mise = new Bet(numBuilding, 0, -1, 0);
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
@@ -578,6 +582,7 @@ public class PlayerViewActivity extends AppCompatActivity {
         if(valeurRessource.equals("Political")){
 
             if(((Value == 1) && (RoleInfo.getTokenPolitical() > 0)) && (building.getAvancementCoutPolitique() < building.getCoutPolitique())){
+                setEnabledBetButtons(false);
                 mise = new Bet(numBuilding, 1, 0, 0);
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
@@ -590,6 +595,7 @@ public class PlayerViewActivity extends AppCompatActivity {
                 }
             }
             else if ((Value == -1)&&(building.getAvancementCoutPolitique() > 0)) {
+                setEnabledBetButtons(false);
                 mise = new Bet(numBuilding, -1, 0, 0);
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
@@ -605,7 +611,7 @@ public class PlayerViewActivity extends AppCompatActivity {
         }
         PlayerConnexionActivity.net.getPlayer().setFinancementRessource(financementRessource);
         textAvancementRessourceTop.setText(String.valueOf(financementRessource[numBuildingF][0]));
-        TextAvancementRessourceBot.setText(String.valueOf(financementRessource[numBuildingF][0]));
+        TextAvancementRessourceBot.setText(String.valueOf(financementRessource[numBuildingF][1]));
 
     }
 
@@ -618,5 +624,12 @@ public class PlayerViewActivity extends AppCompatActivity {
             financementRessource = financementRessourceReset;
             PlayerConnexionActivity.net.getPlayer().setFinancementRessource(financementRessource);
         }
+
+    public void setEnabledBetButtons(boolean bool){
+        buttonMinusTop.setEnabled(bool);
+        buttonPlusTop.setEnabled(bool);
+        buttonMinusBot.setEnabled(bool);
+        buttonPlusBot.setEnabled(bool);
+    }
 
 }
