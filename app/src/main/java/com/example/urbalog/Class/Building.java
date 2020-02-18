@@ -128,6 +128,12 @@ public class Building implements Serializable {
         this.effetEnvironnemental = effetEnvironnemental;
     }
 
+     public void reset(){
+         avancementCoutEconomique = 0;
+         avancementCoutPolitique = 0;
+         avancementCoutSocial = 0;
+     }
+  
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
