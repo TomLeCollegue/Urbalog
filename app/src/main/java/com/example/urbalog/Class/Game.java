@@ -14,13 +14,14 @@ public class Game implements Serializable {
     private Market market;
     private City city;
     private List<Bet> listBet;
-    private ArrayList<Building> deck;
+    private int nTurn;
 
     public Game() {
         scoreLogistique = 0;
         scoreAttractivite = 0;
         scoreFluidite = 0;
         scoreEnvironnemental = 0;
+        nTurn = 1;
         city = new City();
     }
 
@@ -84,6 +85,19 @@ public class Game implements Serializable {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public int getnTurn() {
+        return nTurn;
+    }
+
+    public void setnTurn(int nTurn) {
+        this.nTurn = nTurn;
+    }
+
+    public void incrTurn()
+    {
+        nTurn++;
     }
 
     @Override

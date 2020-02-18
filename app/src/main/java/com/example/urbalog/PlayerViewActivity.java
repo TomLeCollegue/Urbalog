@@ -74,6 +74,7 @@ public class PlayerViewActivity extends AppCompatActivity {
     private TextView textScoreCityEnvi;
     private TextView textScoreCityTrafic;
     private TextView textScoreCityAttract;
+    private TextView textScore;
     private Button bTurn;
     private boolean nextTurn;
 
@@ -155,6 +156,7 @@ public class PlayerViewActivity extends AppCompatActivity {
         textScoreCityAttract = (TextView) findViewById(R.id.text_score_city_attract);
         textScoreCityTrafic = (TextView) findViewById(R.id.text_score_city_trafic);
         bTurn = (Button) findViewById(R.id.button_turn);
+        textScore = (TextView) findViewById(R.id.text_score);
 
         textNameBuilding1 = (TextView) findViewById(R.id.text_name_building_1);
         textNameBuilding2 = (TextView) findViewById(R.id.text_name_building_2);
@@ -291,6 +293,8 @@ public class PlayerViewActivity extends AppCompatActivity {
         textScoreCityAttract.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreAttractivite()));
         textScoreCityEnvi.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreEnvironnemental()));
         textScoreCityTrafic.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreFluidite()));
+
+        textScore.setText("Tour n°"+PlayerConnexionActivity.net.getCurrentGame().getnTurn());
 
         /* TODO : Mettre à jour les ressources du joueur */
     }
@@ -470,7 +474,6 @@ public class PlayerViewActivity extends AppCompatActivity {
         if (RoleInfo.getBooleanRessource()[1] == false){
             Ressource1 = "Social";
             Ressource2 = "Political";
-
         }
         if (RoleInfo.getBooleanRessource()[2] == false){
             Ressource1 = "Social";

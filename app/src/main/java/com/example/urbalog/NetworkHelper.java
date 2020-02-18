@@ -54,14 +54,12 @@ public class NetworkHelper implements Serializable {
     private Player player;
 
     private List<Pair<String, String>> listPlayer; // Pair array for connexion information storage of connected users
-    private int nTurn;
     private int nextTurnVotes = 0;
 
     private ConnectionsClient connectionsClient;
     private static final String TAG = "UrbalogGame"; // Tag for log
     private final String codeName = CodenameGenerator.generate();
 
-    private Object dataReceived;
     private static final String[] REQUIRED_PERMISSIONS =
             new String[] {
                     Manifest.permission.BLUETOOTH,
@@ -88,14 +86,12 @@ public class NetworkHelper implements Serializable {
                 public void onPayloadReceived(String endpointId, Payload payload) {
 
                     /* Deserialization of incoming payload */
-                    dataReceived = new Object();
+                    Object dataReceived = new Object();
                     try {
                         dataReceived = SerializationHelper.deserialize(payload.asBytes());
-                        Log.d(TAG, "sendToAllClients: "+dataReceived.toString());
+                        Log.d(TAG, "sendToAllClients: "+ dataReceived.toString());
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
+                    } catch (IOException | ClassNotFoundException e) {
                         e.printStackTrace();
                     }
 
@@ -127,19 +123,19 @@ public class NetworkHelper implements Serializable {
                             }
                         }
                         else if(dataReceived instanceof Game){
-                            currentGame = (Game)dataReceived;
+                            currentGame = (Game) dataReceived;
                             if(currentPlayerView != null) {
                                 currentPlayerView.fillInfosView();
                                 currentPlayerView.resetTurnButton();
                             }
                         }
                         else if(dataReceived instanceof Role){
-                            player = new Player((Role)dataReceived);
+                            player = new Player((Role) dataReceived);
                             Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
                             appContext.startActivity(myIntent);
                         }
                     }
-                    else if(host)
+                    else
                     {
                         if(dataReceived instanceof TransferPackage){
                             if(((TransferPackage) dataReceived).second instanceof Market) {
@@ -168,7 +164,7 @@ public class NetworkHelper implements Serializable {
                         }
                         else if(dataReceived instanceof Signal)
                         {
-                            switch ((Signal)dataReceived)
+                            switch ((Signal) dataReceived)
                             {
                                 case NEXT_TURN:
                                     nextTurnVotes++;
@@ -196,12 +192,12 @@ public class NetworkHelper implements Serializable {
                                 }
                                 if(currentGame.getCity().getBuildings().size() < 6) {
                                     currentGame.refreshMarket();
+                                    currentGame.incrTurn();
                                     try {
                                         sendToAllClients(currentGame);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
-                                    nTurn++;
                                     nextTurnVotes = 0;
                                 }
                             }
@@ -259,7 +255,7 @@ public class NetworkHelper implements Serializable {
                     if (result.getStatus().isSuccess()) {
                         Log.i(TAG, "onConnectionResult: connection successful");
 
-                        //connectionsClient.stopDiscovery();
+                        connectionsClient.stopDiscovery();
 
                         listPlayer.add(new Pair<>(playerName, endpointId));
                         if(host){
@@ -294,7 +290,6 @@ public class NetworkHelper implements Serializable {
     public NetworkHelper(Context c) {
         appContext = c;
         NB_PLAYERS = 2;
-        nTurn = 1;
         discovering = false;
         advertising = false;
         host = false;
@@ -316,7 +311,7 @@ public class NetworkHelper implements Serializable {
 
     /** Finds an opponent to play the game with using Nearby Connections. */
     public void hostGame(View view) {
-        if (discovering != true) {
+        if (!discovering) {
             startAdvertising();
             advertising = true;
             host = true;
@@ -328,7 +323,7 @@ public class NetworkHelper implements Serializable {
      * @param view
      */
     public void searchGame(View view) {
-        if (advertising != true)
+        if (!advertising)
         {
             startDiscovery();
             discovering = true;
