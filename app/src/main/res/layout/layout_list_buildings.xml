@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginVertical="50dp"
-    android:layout_marginHorizontal="10dp"
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="450dp"
+    android:layout_height="fill_parent"
+    android:gravity="center_vertical">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:elevation="5dp"
-        app:cardCornerRadius="10dp"
-        app:cardUseCompatPadding="true">
+        app:cardCornerRadius="5dp"
+        android:layout_margin="40dp">
+
 
         <RelativeLayout
-
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -30,6 +29,7 @@
                 android:textSize="30dp" />
 
             <TextView
+                android:layout_marginTop="10dp"
                 android:id="@+id/descriptionBuilding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,6 +38,7 @@
                 android:textColor="#000000" />
 
             <LinearLayout
+                android:paddingTop="30dp"
                 android:weightSum="2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -56,6 +57,7 @@
                         android:text="couts : "></TextView>
 
                     <TextView
+                        android:layout_marginTop="10dp"
                         android:id="@+id/coutPolitiqueBuilding"
                         android:textColor="@color/dark"
                         android:layout_gravity="center"
@@ -64,6 +66,7 @@
                         android:text="0"></TextView>
 
                     <TextView
+                        android:layout_marginTop="10dp"
                         android:id="@+id/coutSocialBuilding"
                         android:textColor="@color/dark"
                         android:layout_gravity="center"
@@ -72,6 +75,7 @@
                         android:text="0"></TextView>
 
                     <TextView
+                        android:layout_marginTop="10dp"
                         android:id="@+id/coutEconomiqueBuilding"
                         android:textColor="@color/dark"
                         android:layout_gravity="center"
@@ -93,6 +97,7 @@
                         android:text="Effets :"></TextView>
 
                     <TextView
+                        android:layout_marginTop="10dp"
                         android:id="@+id/effetAttractiviteBuilding"
                         android:textColor="@color/dark"
                         android:layout_gravity="center"
@@ -101,6 +106,7 @@
                         android:text="0"></TextView>
 
                     <TextView
+                        android:layout_marginTop="10dp"
                         android:id="@+id/effetFluiditeBuilding"
                         android:textColor="@color/dark"
                         android:layout_gravity="center"
@@ -109,6 +115,7 @@
                         android:text="0"></TextView>
 
                     <TextView
+                        android:layout_marginTop="10dp"
                         android:id="@+id/effetEnvironnementBuilding"
                         android:textColor="@color/dark"
                         android:layout_gravity="center"
@@ -116,8 +123,6 @@
                         android:layout_height="wrap_content"
                         android:text="0"></TextView>
                 </LinearLayout>
-
-
             </LinearLayout>
 
         </RelativeLayout>
