@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="450dp"
+    android:layout_height="fill_parent"
+    android:gravity="center_vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="5dp"
+        android:layout_margin="40dp">
+
+
+        <RelativeLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/nameBuilding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nom du batiment"
+                android:textColor="#000000"
+                android:textSize="30dp" />
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/descriptionBuilding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nameBuilding"
+                android:text="description du batiment"
+                android:textColor="#000000" />
+
+            <LinearLayout
+                android:paddingTop="30dp"
+                android:weightSum="2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/descriptionBuilding"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="couts : "></TextView>
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/coutPolitiqueBuilding"
+                        android:textColor="@color/dark"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"></TextView>
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/coutSocialBuilding"
+                        android:textColor="@color/dark"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"></TextView>
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/coutEconomiqueBuilding"
+                        android:textColor="@color/dark"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"></TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Effets :"></TextView>
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/effetAttractiviteBuilding"
+                        android:textColor="@color/dark"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"></TextView>
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/effetFluiditeBuilding"
+                        android:textColor="@color/dark"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"></TextView>
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/effetEnvironnementBuilding"
+                        android:textColor="@color/dark"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"></TextView>
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
