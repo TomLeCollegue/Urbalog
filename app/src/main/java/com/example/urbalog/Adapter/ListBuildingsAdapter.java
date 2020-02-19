@@ -16,6 +16,7 @@ public class ListBuildingsAdapter extends RecyclerView.Adapter<ListBuildingsAdap
     public ArrayList<Building> buildings;
     private OnItemClickListener mListener;
 
+
     public ListBuildingsAdapter(ArrayList<Building> buildings){
         this.buildings = buildings;
     }
@@ -62,6 +63,7 @@ public class ListBuildingsAdapter extends RecyclerView.Adapter<ListBuildingsAdap
         private final TextView fluidite;
         private final TextView environnnement;
 
+
         public MyViewHolder(@NonNull final View itemView) {
             super(itemView);
 
@@ -87,6 +89,10 @@ public class ListBuildingsAdapter extends RecyclerView.Adapter<ListBuildingsAdap
             });
         }
 
+        /**
+         *
+         * @param building
+         */
         public void display(Building building) {
 
             name.setText(building.getName());

@@ -69,7 +69,7 @@ public class JsonBuilding {
                 "        \"environnemental\": 1\n" +
                 "      },\n" +
                 "      \"scoreLogistique\": 2,\n" +
-                "      \"explicationLogistique\": \"test\"\n" +
+                "      \"explicationLogistique\": \"Toute la voie étant protégée de la circulation, cet aménagement crée un obstacle pour la livraison en limitant l'accès au trottoir.\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Borne vélo\",\n" +
@@ -84,8 +84,8 @@ public class JsonBuilding {
                 "        \"fluidite\": -1,\n" +
                 "        \"environnemental\": 1\n" +
                 "      },\n" +
-                "      \"scoreLogistique\": 9,\n" +
-                "      \"explicationLogistique\": \"test\"\n" +
+                "      \"scoreLogistique\": -1,\n" +
+                "      \"explicationLogistique\": \"Ces structures créent des obstacles ponctuels pour la livraison en limitant l'accès au trottoir.\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Terasse\",\n" +
@@ -101,7 +101,7 @@ public class JsonBuilding {
                 "        \"environnemental\": 1\n" +
                 "      },\n" +
                 "      \"scoreLogistique\": -3,\n" +
-                "      \"explicationLogistique\": \"test\"\n" +
+                "      \"explicationLogistique\": \"Cet aménagement limite l'accès à l'établissement tout en empiétant sur le trottoir et sur le stationnement.\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Petit magasin\",\n" +
@@ -116,8 +116,8 @@ public class JsonBuilding {
                 "        \"fluidite\": 1,\n" +
                 "        \"environnemental\": 0\n" +
                 "      },\n" +
-                "      \"scoreLogistique\": 0,\n" +
-                "      \"explicationLogistique\": \"test\"\n" +
+                "      \"scoreLogistique\": -1,\n" +
+                "      \"explicationLogistique\": \"Cet aménagement génère du trafic de marchandises : livraisons et déplacement d'achats.\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Poste\",\n" +
@@ -133,7 +133,7 @@ public class JsonBuilding {
                 "        \"environnemental\": -1\n" +
                 "      },\n" +
                 "      \"scoreLogistique\": 1,\n" +
-                "      \"explicationLogistique\": \"test\"\n" +
+                "      \"explicationLogistique\": \"Cet aménagement permet la livraison des colis en l'absence des destinataires, les flux sont donc consolidés, mais les horaires d'ouverture sont restreints.\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Grand magasin\",\n" +
@@ -149,7 +149,7 @@ public class JsonBuilding {
                 "        \"environnemental\": -1\n" +
                 "      },\n" +
                 "      \"scoreLogistique\": -2,\n" +
-                "      \"explicationLogistique\": \"test\"\n" +
+                "      \"explicationLogistique\": \"Ce lieu génère du trafic de marchandises : livraisons et déplacements d'achats.\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Zone de rencontre\",\n" +
@@ -165,7 +165,7 @@ public class JsonBuilding {
                 "        \"environnemental\": 2\n" +
                 "      },\n" +
                 "      \"scoreLogistique\": 0,\n" +
-                "      \"explicationLogistique\": \"test\"\n" +
+                "      \"explicationLogistique\": \"L'absence de trottoires facilite l'accès aux établissements pour les véhicules de livraisons, mais la vitesse limitée réduit l'accessibilité.\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Réseau de consignes\",\n" +
@@ -181,7 +181,7 @@ public class JsonBuilding {
                 "        \"environnemental\": 0\n" +
                 "      },\n" +
                 "      \"scoreLogistique\": 2,\n" +
-                "      \"explicationLogistique\": \"test\"\n" +
+                "      \"explicationLogistique\": \"Accessible à toute heure, cet aménagement permet la livraison des colis en l'absence des destinataires. Il limite le nombre de véhicules de livraisons grâce à la consolidation permises.\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Dispositif anti-bélier\",\n" +
@@ -197,7 +197,7 @@ public class JsonBuilding {
                 "        \"environnemental\": 0\n" +
                 "      },\n" +
                 "      \"scoreLogistique\": -2,\n" +
-                "      \"explicationLogistique\": \"test\"\n" +
+                "      \"explicationLogistique\": \"Ce système interdit l'accès des véhicules aux établissements économiques et aux logements des particuliers.\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Aire de livraison\",\n" +
@@ -213,7 +213,7 @@ public class JsonBuilding {
                 "        \"environnemental\": -1\n" +
                 "      },\n" +
                 "      \"scoreLogistique\": 1,\n" +
-                "      \"explicationLogistique\": \"test\"\n" +
+                "      \"explicationLogistique\": \"Cet aménagement offre aux véhicules de livraison la possibilité de stationner. Tout en décongestionnant la voirie, il facilite le travail du livreur.\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"CDU\",\n" +
@@ -229,7 +229,7 @@ public class JsonBuilding {
                 "        \"environnemental\": 2\n" +
                 "      },\n" +
                 "      \"scoreLogistique\": 1,\n" +
-                "      \"explicationLogistique\": \"test\"\n" +
+                "      \"explicationLogistique\": \"Cet aménagement permet la mutualisation des flux des particuliers et des activités. La livraison finale est réalisée avec des véhicules propres. Peut s'articuler avec les autres espaces logistiques (PAV, consignes).\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"PAV\",\n" +
@@ -245,7 +245,7 @@ public class JsonBuilding {
                 "        \"environnemental\": -1\n" +
                 "      },\n" +
                 "      \"scoreLogistique\": 2,\n" +
-                "      \"explicationLogistique\": \"test\"\n" +
+                "      \"explicationLogistique\": \"Le stationnement et la manutention sont facilités. La livraison est donc plus efficace et les conditions de travail du chauffeur améliorées.\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Station GAZ GNV\",\n" +
@@ -261,7 +261,7 @@ public class JsonBuilding {
                 "        \"environnemental\": 2\n" +
                 "      },\n" +
                 "      \"scoreLogistique\": 1,\n" +
-                "      \"explicationLogistique\": \"test\"\n" +
+                "      \"explicationLogistique\": \"Ce dispositif permet aux véhicules au gaz de se recharger et aux transporteurs de rouler même lors des pics de pollution.\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Banc\",\n" +
@@ -277,7 +277,7 @@ public class JsonBuilding {
                 "        \"environnemental\": 1\n" +
                 "      },\n" +
                 "      \"scoreLogistique\": -1,\n" +
-                "      \"explicationLogistique\": \"test\"\n" +
+                "      \"explicationLogistique\": \"Cet aménagement  constitue un obstacle ponctuel pour la livraison en limitant l'accès au trottoir.\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Zone végétalisée\",\n" +
@@ -288,34 +288,23 @@ public class JsonBuilding {
                 "        \"economique\": 1\n" +
                 "      },\n" +
                 "      \"Effets\": {\n" +
-                "        \"attractivite\":1,\n" +
+                "        \"attractivite\": 1,\n" +
                 "        \"fluidite\": -4,\n" +
                 "        \"environnemental\": 4\n" +
                 "      },\n" +
                 "      \"scoreLogistique\": -2,\n" +
-                "      \"explicationLogistique\": \"test\"\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"name\": \"Borne vélo\",\n" +
-                "      \"description\": \"Borne permettant d'emprunter un vélo en libre service\",\n" +
-                "      \"Couts\": {\n" +
-                "        \"politique\": 2,\n" +
-                "        \"social\": 2,\n" +
-                "        \"economique\": 1\n" +
-                "      },\n" +
-                "      \"Effets\": {\n" +
-                "        \"attractivite\":1,\n" +
-                "        \"fluidite\": -1,\n" +
-                "        \"environnemental\": 1\n" +
-                "      },\n" +
-                "      \"scoreLogistique\": -1,\n" +
-                "      \"explicationLogistique\": \"test\"\n" +
+                "      \"explicationLogistique\": \"Cette zone, non franchissables avec des outils de manutention, gêne la livraison.\"\n" +
                 "    }\n" +
                 "  ]\n" +
                 "}");
     }
 
-
+    /**
+     *Fonction qui lit le fichier Joson
+     * renvoie une chaine de caractere contenant le fichier JSON
+     * @return String
+     * @throws IOException
+     */
     public static String readText() throws IOException {
         File file = context.getFileStreamPath(fileNameBuilding);
         if (!file.exists()){
