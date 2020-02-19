@@ -98,7 +98,28 @@ public class Role extends Object implements Serializable {
     {
         //TODO : Check if newBuildings is not null and after check if new buildings stats achieve goals of player
         // else return false
-        return false;
+        if (newBuildings != null){
+            int totalAttractivite = 0;
+            int totalEnv = 0;
+            int totalFluidite = 0;
+            for(int i=0;i<newBuildings.size();i++){
+                    totalAttractivite += newBuildings.get(i).getEffetAttractivite();
+                    totalEnv += newBuildings.get(i).getEffetEnvironnemental();
+                    totalFluidite += newBuildings.get(i).getEffetFluidite();
+            }
+            if ((totalAttractivite >0 && improve.equals("Attractivité")) &&
+                    ((totalEnv == 0 && hold.equals("Environnement")) || (totalFluidite == 0 && hold.equals("Fluidité"))))
+                return true;
+            else if ((totalEnv >0 && improve.equals("Environnement"))&&
+                    ((totalAttractivite == 0 && hold.equals("Attractivité")) ||(totalFluidite == 0 && hold.equals("Fluidité"))))
+                return true;
+            else if((totalFluidite >0 && improve.equals("Fluidité"))&&
+                    (((totalAttractivite == 0 && hold.equals("Attractivité"))) ||(totalEnv == 0 && hold.equals("Environnement"))))
+                return true;
+            else return false;
+        }else{
+            return false;
+        }
     }
 
     @Override

@@ -101,6 +101,8 @@ public class PlayerViewActivity extends AppCompatActivity {
     private Button buttonPlusTop;
     private Button buttonPlusBot;
 
+    private TextView textScorePlayer;
+
     private Integer numBuildingF;
 
     private Bet mise;
@@ -176,6 +178,8 @@ public class PlayerViewActivity extends AppCompatActivity {
         icoRessourceRightRole = (ImageView) findViewById(R.id.ico_ressource_right_role);
         textRessourceLeftRole = (TextView) findViewById(R.id.text_ressource_left_role);
         textRessourceRightRole = (TextView) findViewById(R.id.text_ressource_right_role);
+
+        textScorePlayer = (TextView) findViewById(R.id.text_score_player);
 
         textTitleRole.setText(PlayerConnexionActivity.net.getPlayer().getRole().getTypeRole());
 
@@ -299,8 +303,8 @@ public class PlayerViewActivity extends AppCompatActivity {
         textScoreCityEnvi.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreEnvironnemental()));
         textScoreCityTrafic.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreFluidite()));
 
+        textScorePlayer.setText("Score : " + String.valueOf(PlayerConnexionActivity.net.getPlayer().getScore()));
         textScore.setText("Tour n°"+PlayerConnexionActivity.net.getCurrentGame().getnTurn());
-
         /* TODO : Mettre à jour les ressources du joueur */
     }
 
@@ -629,7 +633,7 @@ public class PlayerViewActivity extends AppCompatActivity {
     }
 
 
-        public void resetTurnButton()
+    public void resetTurnButton()
         {
             nextTurn = false;
             bTurn.setText("Tour suivant");
