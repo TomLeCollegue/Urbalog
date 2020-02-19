@@ -299,7 +299,12 @@ public class JsonBuilding {
                 "}");
     }
 
-
+    /**
+     *Fonction qui lit le fichier Joson
+     * renvoie une chaine de caractere contenant le fichier JSON
+     * @return String
+     * @throws IOException
+     */
     public static String readText() throws IOException {
         File file = context.getFileStreamPath(fileNameBuilding);
         if (!file.exists()){
