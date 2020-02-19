@@ -209,12 +209,13 @@
 
 
                     <LinearLayout
+                        android:id="@+id/caption_layout"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <TextView
-                            android:id="@+id/buildingNameScore"
+                            android:id="@+id/buildingNameCaption"
                             style="@style/TextAppearance.AppCompat.Small"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -224,7 +225,7 @@
                             android:text="Nom" />
 
                         <TextView
-                            android:id="@+id/rv_environment_score"
+                            android:id="@+id/caption_environment_score"
                             style="@style/TextAppearance.AppCompat.Small"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -234,7 +235,7 @@
                             android:text="Env." />
 
                         <TextView
-                            android:id="@+id/rv_fluidity_score"
+                            android:id="@+id/caption_fluidity_score"
                             style="@style/TextAppearance.AppCompat.Small"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -243,7 +244,7 @@
                             android:gravity="center"
                             android:text="Fluidité" />
                         <TextView
-                            android:id="@+id/rv_attractivity_score"
+                            android:id="@+id/caption_attractivity_score"
                             style="@style/TextAppearance.AppCompat.Small"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -254,6 +255,7 @@
                     </LinearLayout>
 
                     <FrameLayout
+                        android:id="@+id/rv_frame"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
