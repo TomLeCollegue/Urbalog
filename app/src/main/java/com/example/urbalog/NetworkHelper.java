@@ -121,6 +121,12 @@ public class NetworkHelper implements Serializable {
                                    case CHECK_GOALS:
                                        player.checkGoals((ArrayList<Building>)((TransferPackage) dataReceived).second);
                                        break;
+                                   case GAME_OVER:
+                                       currentGame = (Game)((TransferPackage) dataReceived).second;
+                                       currentPlayerView.finish();
+                                       Intent myIntent = new Intent(appContext, EndGameActivity.class);
+                                       appContext.startActivity(myIntent);
+                                       break;
                                    default:
                                        break;
                                }
@@ -137,17 +143,6 @@ public class NetworkHelper implements Serializable {
                             player = new Player((Role) dataReceived);
                             Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
                             appContext.startActivity(myIntent);
-                        }
-                        else if(dataReceived instanceof Signal){
-                            switch((Signal) dataReceived)
-                            {
-                                case GAME_OVER:
-                                    Intent myIntent = new Intent(appContext, EndGameActivity.class);
-                                    appContext.startActivity(myIntent);
-                                    break;
-                                default:
-                                    break;
-                            }
                         }
                     }
                     else
@@ -196,17 +191,18 @@ public class NetworkHelper implements Serializable {
                             {
                                 ArrayList<Building> newBuildings = new ArrayList<Building>();
                                 for(int i = 0; i < currentGame.getMarket().getBuildings().size(); i++) {
-                                    if(currentGame.getMarket().getBuildings().get(i).isFilled())
+                                    if(currentGame.getMarket().getBuildings().get(i).isFilled()) {
                                         currentGame.getCity().addBuilding(currentGame.getMarket().getBuildings().get(i));
                                         newBuildings.add(currentGame.getMarket().getBuildings().get(i));
                                         currentGame.getMarket().deleteBuilding(currentGame.getMarket().getBuildings().get(i));
-
+                                    }
                                 }
                                 try {
                                     sendToAllClients(new TransferPackage<Signal, ArrayList<Building>>(Signal.CHECK_GOALS, newBuildings));
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
+                                currentGame.updateAllGameScores();
                                 if(currentGame.getCity().getBuildings().size() < 1) {
                                     currentGame.refreshMarket();
                                     currentGame.incrTurn();
@@ -216,11 +212,10 @@ public class NetworkHelper implements Serializable {
                                         e.printStackTrace();
                                     }
                                     nextTurnVotes = 0;
-                                    currentGame.updateAllGameScores();
                                 }
                                 else {
                                     try {
-                                        sendToAllClients(Signal.GAME_OVER);
+                                        sendToAllClients(new TransferPackage<Signal, Game>(Signal.GAME_OVER, currentGame));
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }

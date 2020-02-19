@@ -26,25 +26,19 @@ public class LogisticActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("debug", "LogisticActivity creation");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logistic);
 
-        /*** Print the logistic score at the end of the game ***/
+        Log.d("debug", "LogisticActivity creation after super ");
+
+        /*** Print the logistic score at the end of the game ***//*
 
         totalLogisticScore = (TextView) findViewById(R.id.TotalScore_TextView);
-        //Version de test
-        //totalLogisticScore.setText("-3");
-
-        //Version finale
-        //Ne peut être testée qu'avec une partie finie
         totalLogisticScore.setText(PlayerConnexionActivity.net.getCurrentGame().getScoreLogistique());
 
-        /*** Choose and print the sentence below the Logistic Score ***/
-        //version de test
-        //iLogisticScore = -3;
-
-
-        //version final qu'on ne peut pas tester
+        *//*** Choose and print the sentence below the Logistic Score ***//*
         iLogisticScore = PlayerConnexionActivity.net.getCurrentGame().getScoreLogistique();
         totalLogisticScoreSentence = (TextView) findViewById(R.id.LogisticSentence_TextView);
         
@@ -62,12 +56,7 @@ public class LogisticActivity extends AppCompatActivity {
         }
 
 
-         /*** Put the city buildings in the recycler view ***/
-        //Version de test
-        //JsonBuilding.init(LogisticActivity.this);
-        //buildings = JsonBuilding.readBuilding();
-
-        //Version finale qu'on ne peut pas tester.
+         *//*** Put the city buildings in the recycler view ***//*
         buildings = PlayerConnexionActivity.net.getCurrentGame().getCity().getBuildings();
 
         //Log.d("debug", buildings.toString());
@@ -75,7 +64,7 @@ public class LogisticActivity extends AppCompatActivity {
         rv.setLayoutManager(new LinearLayoutManager(LogisticActivity.this, LinearLayoutManager.VERTICAL, false));
 
         BuildingInfluenceAdapter mMyadapter= new BuildingInfluenceAdapter(buildings);
-        rv.setAdapter(mMyadapter);
+        rv.setAdapter(mMyadapter);*/
 
     }
     

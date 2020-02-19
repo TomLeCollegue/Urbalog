@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -115,13 +116,13 @@ public class PlayerViewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("debug", "PlayerViewActivity creation");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player_view_activity);
 
         /* Link player activity to NetworkHelper */
         PlayerConnexionActivity.net.setCurrentPlayerView(this);
         buttonState = true;
-
 
         financementRessource = PlayerConnexionActivity.net.getPlayer().getFinancementRessource();
 

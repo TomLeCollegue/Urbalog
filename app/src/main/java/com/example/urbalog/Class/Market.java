@@ -29,9 +29,9 @@ public class Market implements Serializable {
     public void deleteBuilding(Building b){
         int index = 0;
         do {
-            if(deck.get(index).getName() == b.getName())
+            if(deck.get(index).getName().equals(b.getName()))
                 deck.remove(index);
-        }while(++index < deck.size() && deck.get(index).getName() != b.getName());
+        }while(++index < deck.size() && !deck.get(index).getName().equals(b.getName()));
     }
 
     public void updateMarket()

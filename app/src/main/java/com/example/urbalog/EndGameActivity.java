@@ -20,8 +20,8 @@ import java.util.ArrayList;
 
 public class EndGameActivity extends AppCompatActivity {
 
-    public static ArrayList<Building> buildings = new ArrayList<Building>();
-    public static RecyclerView rv1;
+    private ArrayList<Building> buildings = new ArrayList<Building>();
+    private RecyclerView rv1;
     private TextView textScorePlayer;
 
     private TextView textAttractivityScore;
@@ -59,15 +59,24 @@ public class EndGameActivity extends AppCompatActivity {
         textEnvironmentScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreEnvironnemental()));
         textFluidityScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreFluidite()));
 
-        logisticButton.setOnClickListener(new View.OnClickListener() {
+        /*logisticButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent MyIntent = new Intent(EndGameActivity.this,LogisticActivity.class);
+                Log.d("debug", "Listener");
+                Intent MyIntent = new Intent(EndGameActivity.this, LogisticActivity.class);
+                Log.d("debug", "Before startActivity");
                 startActivity(MyIntent);
             }
-        });
+        });*/
 
 
 
+    }
+
+    public void scoreLog(View view) {
+        Log.d("debug", "Listener");
+        Intent MyIntent = new Intent(EndGameActivity.this, LogisticActivity.class);
+        Log.d("debug", "Before startActivity");
+        startActivity(MyIntent);
     }
 }
