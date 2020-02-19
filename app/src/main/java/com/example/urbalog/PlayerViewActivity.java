@@ -639,10 +639,12 @@ public class PlayerViewActivity extends AppCompatActivity {
         }
 
     public void setEnabledBetButtons(boolean bool){
-        buttonMinusTop.setEnabled(bool);
-        buttonPlusTop.setEnabled(bool);
-        buttonMinusBot.setEnabled(bool);
-        buttonPlusBot.setEnabled(bool);
+        if(buttonMinusTop != null && buttonMinusBot != null && buttonPlusBot != null && buttonPlusTop != null) {
+            buttonMinusTop.setEnabled(bool);
+            buttonPlusTop.setEnabled(bool);
+            buttonMinusBot.setEnabled(bool);
+            buttonPlusBot.setEnabled(bool);
+        }
     }
 
     public void setButtonState(boolean buttonState) {
