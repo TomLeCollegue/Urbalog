@@ -65,7 +65,7 @@ public class Game implements Serializable {
         this.listBet = listBet;
     }
 
-    public void majBet(Bet bet){
+    public void majBet(Bet bet) {
         market.getBuildings().get(bet.getNumbuilding()).addAvancementSocial(bet.getMiseSocial());
         market.getBuildings().get(bet.getNumbuilding()).addAvancementEco(bet.getMiseEco());
         market.getBuildings().get(bet.getNumbuilding()).addAvancementPolitique(bet.getMisePolitique());
@@ -129,8 +129,19 @@ public class Game implements Serializable {
                 '}';
     }
 
-    public void refreshMarket()
-    {
+    public void refreshMarket() {
         market.updateMarket();
+    }
+
+    /*
+    * When called, this method update all the game scores with the methods
+    * from city.
+    *
+     */
+    public void updateAllGameScores() {
+        this.scoreLogistique = city.updateLogisticScore();
+        this.scoreAttractivite = city.updateAttractiviteScore();
+        this.scoreFluidite = city.updateFluiditeScore();
+        this.scoreEnvironnemental = city.updateEnvironnementalScore();
     }
 }

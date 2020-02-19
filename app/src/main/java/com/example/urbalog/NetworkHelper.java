@@ -216,6 +216,7 @@ public class NetworkHelper implements Serializable {
                                         e.printStackTrace();
                                     }
                                     nextTurnVotes = 0;
+                                    currentGame.updateAllGameScores();
                                 }
                                 else {
                                     try {
