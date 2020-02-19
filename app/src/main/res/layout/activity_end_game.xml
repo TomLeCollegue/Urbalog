@@ -196,22 +196,75 @@
                         android:text="Batiments construits au cours de la partie" />
                 </FrameLayout>
 
-                <FrameLayout
+                <LinearLayout
                     android:id="@+id/RecyclerViewBuildingInfluenceLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:orientation="vertical"
                     android:paddingLeft="30dip"
                     android:paddingTop="25dip"
                     android:paddingRight="30dip"
                     android:paddingBottom="25dip">
 
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerListBuildingBuilt"
+                    <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </FrameLayout>
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/buildingNameScore"
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1.9"
+                            android:gravity="center"
+                            android:text="Nom" />
+
+                        <TextView
+                            android:id="@+id/rv_environment_score"
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="2"
+                            android:gravity="center"
+                            android:text="Env." />
+
+                        <TextView
+                            android:id="@+id/rv_fluidity_score"
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="2"
+                            android:gravity="center"
+                            android:text="Fluidité" />
+                        <TextView
+                            android:id="@+id/rv_attractivity_score"
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="2"
+                            android:gravity="center"
+                            android:text="Attractivité" />
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerListBuildingBuilt"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </FrameLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
