@@ -36,8 +36,7 @@ public class EndGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_game);
 
-        JsonBuilding.init(EndGameActivity.this);
-        buildings = JsonBuilding.readBuilding();
+        buildings = PlayerConnexionActivity.net.getCurrentGame().getCity().getBuildings();
 
         textScorePlayer = (TextView) findViewById(R.id.text_score_player);
 
@@ -47,18 +46,18 @@ public class EndGameActivity extends AppCompatActivity {
 
         logisticButton = (Button) findViewById(R.id.logisticButton);
 
-        Log.d("debug", buildings.toString());
+        //Log.d("debug", buildings.toString());
         rv1 = (RecyclerView) findViewById(R.id.recyclerListBuildingBuilt);
         rv1.setLayoutManager(new LinearLayoutManager(EndGameActivity.this, LinearLayoutManager.VERTICAL, false));
 
         BuildingBuiltAdapter MyAdapter= new BuildingBuiltAdapter(buildings);
         rv1.setAdapter(MyAdapter);
 
-        /*textScorePlayer.setText("Score : " + String.valueOf(PlayerConnexionActivity.net.getPlayer().getScore()));
+        textScorePlayer.setText("Score : " + String.valueOf(PlayerConnexionActivity.net.getPlayer().getScore()));
 
         textAttractivityScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreAttractivite()));
         textEnvironmentScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreEnvironnemental()));
-        textFluidityScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreFluidite()));*/
+        textFluidityScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreFluidite()));
 
         logisticButton.setOnClickListener(new View.OnClickListener() {
             @Override
