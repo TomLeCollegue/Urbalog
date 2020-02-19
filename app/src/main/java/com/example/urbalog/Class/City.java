@@ -42,4 +42,39 @@ public class City implements Serializable {
                 "buildings=" + buildings +
                 '}';
     }
+
+    /*
+    * This function is called at the end of the game and changes the logistic score
+    * of the game with the sum of the logistic scores of all the buildings.
+    *
+    *
+     */
+    public int updateLogisticScore(){
+        int res = 0;
+        for(Building building : buildings){
+            res = res + building.getScoreLogistique();
+        }
+        return res;
+    }
+    public int updateAttractiviteScore(){
+        int res = 0;
+        for(Building building : buildings){
+            res = res + building.getEffetAttractivite();
+        }
+        return res;
+    }
+    public int updateFluiditeScore(){
+        int res = 0;
+        for(Building building : buildings){
+            res = res + building.getEffetFluidite();
+        }
+        return res;
+    }
+    public int updateEnvironnementalScore(){
+        int res = 0;
+        for(Building building : buildings){
+            res = res + building.getEffetEnvironnemental();
+        }
+        return res;
+    }
 }

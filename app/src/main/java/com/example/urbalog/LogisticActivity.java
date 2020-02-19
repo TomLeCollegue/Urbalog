@@ -33,19 +33,19 @@ public class LogisticActivity extends AppCompatActivity {
 
         totalLogisticScore = (TextView) findViewById(R.id.TotalScore_TextView);
         //Version de test
-        totalLogisticScore.setText("-3");
+        //totalLogisticScore.setText("-3");
 
-        //Version fin
+        //Version finale
         //Ne peut être testée qu'avec une partie finie
-        //totalLogisticScore.setText(PlayerConnexionActivity.net.getCurrentGame().getScoreLogistique());
+        totalLogisticScore.setText(PlayerConnexionActivity.net.getCurrentGame().getScoreLogistique());
 
         /*** Choose and print the sentence below the Logistic Score ***/
         //version de test
-        iLogisticScore = -3;
+        //iLogisticScore = -3;
 
 
         //version final qu'on ne peut pas tester
-        //iLogisticScore = PlayerConnexionActivity.net.getCurrentGame().getScoreLogistique();
+        iLogisticScore = PlayerConnexionActivity.net.getCurrentGame().getScoreLogistique();
         totalLogisticScoreSentence = (TextView) findViewById(R.id.LogisticSentence_TextView);
         
         if (iLogisticScore <= -2) {
@@ -58,17 +58,17 @@ public class LogisticActivity extends AppCompatActivity {
             totalLogisticScoreSentence.setText("D'un point de vue logistique, votre ville s'en sort plutôt bien, la plupart des livraisons se font sans encombre.");
         }
         else {
-            totalLogisticScoreSentence.setText("Le transport de marchandise se fait très facilement dans votre ville.");
+            totalLogisticScoreSentence.setText("Le transport de marchandises se fait très facilement dans votre ville.");
         }
 
 
          /*** Put the city buildings in the recycler view ***/
         //Version de test
-        JsonBuilding.init(LogisticActivity.this);
-        buildings = JsonBuilding.readBuilding();
+        //JsonBuilding.init(LogisticActivity.this);
+        //buildings = JsonBuilding.readBuilding();
 
         //Version finale qu'on ne peut pas tester.
-        //buildings = PlayerConnexionActivity.net.getCurrentGame().getCity().getBuildings();
+        buildings = PlayerConnexionActivity.net.getCurrentGame().getCity().getBuildings();
 
         //Log.d("debug", buildings.toString());
         rv = (RecyclerView) findViewById(R.id.recyclerListBuildingInfluence);

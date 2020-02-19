@@ -194,7 +194,9 @@ public class NetworkHelper implements Serializable {
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
+
                                 if(currentGame.getCity().getBuildings().size() < 6) {
+                                    //this is what happens at the end of a turn
                                     currentGame.refreshMarket();
                                     try {
                                         sendToAllClients(currentGame);
@@ -203,6 +205,11 @@ public class NetworkHelper implements Serializable {
                                     }
                                     nTurn++;
                                     nextTurnVotes = 0;
+                                    currentGame.updateAllGameScores();
+                                }
+                                else {
+                                    //We update the scores when this is the last turn.
+                                    currentGame.updateAllGameScores();
                                 }
                             }
                         }
