@@ -121,6 +121,8 @@ public class NetworkHelper implements Serializable {
                                    case CHECK_GOALS:
                                        player.checkGoals((ArrayList<Building>)((TransferPackage) dataReceived).second);
                                        break;
+                                   default:
+                                       break;
                                }
                             }
                         }
@@ -135,6 +137,17 @@ public class NetworkHelper implements Serializable {
                             player = new Player((Role) dataReceived);
                             Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
                             appContext.startActivity(myIntent);
+                        }
+                        else if(dataReceived instanceof Signal){
+                            switch((Signal) dataReceived)
+                            {
+                                case GAME_OVER:
+                                    Intent myIntent = new Intent(appContext, EndGameActivity.class);
+                                    appContext.startActivity(myIntent);
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     }
                     else
@@ -186,13 +199,15 @@ public class NetworkHelper implements Serializable {
                                     if(currentGame.getMarket().getBuildings().get(i).isFilled())
                                         currentGame.getCity().addBuilding(currentGame.getMarket().getBuildings().get(i));
                                         newBuildings.add(currentGame.getMarket().getBuildings().get(i));
+                                        currentGame.getMarket().deleteBuilding(currentGame.getMarket().getBuildings().get(i));
+
                                 }
                                 try {
                                     sendToAllClients(new TransferPackage<Signal, ArrayList<Building>>(Signal.CHECK_GOALS, newBuildings));
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-                                if(currentGame.getCity().getBuildings().size() < 6) {
+                                if(currentGame.getCity().getBuildings().size() < 1) {
                                     currentGame.refreshMarket();
                                     currentGame.incrTurn();
                                     try {
@@ -201,6 +216,13 @@ public class NetworkHelper implements Serializable {
                                         e.printStackTrace();
                                     }
                                     nextTurnVotes = 0;
+                                }
+                                else {
+                                    try {
+                                        sendToAllClients(Signal.GAME_OVER);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
                         }
