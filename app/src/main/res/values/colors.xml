@@ -10,11 +10,11 @@
     <color name="dark">#000000</color>
     <color name="game">#f3d7bf</color>
 
-
-    <!-- Hugo Hersemeule -->
     <color name="lightPink">#f5e7da</color>
     <color name="mediumPink">#f3d7be</color>
     <color name="lightGray">#c0c0c0</color>
     <color name="darkGray">#B4B4B4</color>
+
+    <color name="colorDelete">#CB1A08</color>
 
 </resources>

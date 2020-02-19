@@ -1,12 +1,19 @@
 package com.example.urbalog.Adapter;
 
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.urbalog.Class.Building;
+import com.example.urbalog.Json.JsonBuilding;
+import com.example.urbalog.ListBuildingsActivity;
 import com.example.urbalog.R;
 
 import java.util.ArrayList;
@@ -15,7 +22,7 @@ public class ListBuildingsAdapter extends RecyclerView.Adapter<ListBuildingsAdap
 
     public ArrayList<Building> buildings;
     private OnItemClickListener mListener;
-
+    private OnItemLongClickListener mListener2;
 
     public ListBuildingsAdapter(ArrayList<Building> buildings){
         this.buildings = buildings;
@@ -30,6 +37,13 @@ public class ListBuildingsAdapter extends RecyclerView.Adapter<ListBuildingsAdap
         mListener = listener;
     }
 
+    public interface OnItemLongClickListener {
+        void onItemLongClick(int position);
+    }
+
+    public void setonItemLongClickListener(OnItemLongClickListener listener2) {
+        mListener2 = listener2;
+    }
 
     @NonNull
     @Override
@@ -85,6 +99,37 @@ public class ListBuildingsAdapter extends RecyclerView.Adapter<ListBuildingsAdap
                             mListener.onItemClick(position);
                         }
                     }
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Log.d("debug", "onlongClick = ok");
+                    final int position = getAdapterPosition();
+                    Button buttonDelete = itemView.findViewById(R.id.buttonDeleteBuilding);
+                    buttonDelete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.d("debug", "supprimer -> " + position);
+                            TextView textView = itemView.findViewById(R.id.nameBuilding);
+                            JsonBuilding.removeBuilding(textView.getText().toString());
+                            Intent i = new Intent(itemView.getContext(), ListBuildingsActivity.class);
+                            itemView.getContext().startActivity(i);
+                            Toast.makeText(itemView.getContext(), textView.getText().toString() + " a été supprimé", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    mListener2.onItemLongClick(position);
+                    Log.d("debug", "onlongClick position -> " + position);
+                    if(buttonDelete.getVisibility() == View.GONE)
+                    {
+                        buttonDelete.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        buttonDelete.setVisibility(View.GONE);
+                    }
+                    return true;
                 }
             });
         }
