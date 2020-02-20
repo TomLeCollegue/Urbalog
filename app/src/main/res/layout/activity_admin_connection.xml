@@ -40,11 +40,11 @@
             android:text="@string/playButton" />
 
         <Button
-            android:id="@+id/buildingsButton"
+            android:id="@+id/configurationButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="16"
-            android:text="@string/buildingsButton" />
+            android:text="@string/configButton" />
 
         <TextView
             android:id="@+id/nbPlayer"
