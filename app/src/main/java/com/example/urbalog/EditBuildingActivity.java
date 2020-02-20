@@ -100,6 +100,7 @@ public class EditBuildingActivity extends AppCompatActivity {
                 JsonBuilding.modificationBuilding(newBuilding, name.getHint().toString());
                 Intent intent = new Intent(EditBuildingActivity.this, ListBuildingsActivity.class);
                 startActivity(intent);
+                finish();
             }
             else{
                 if(JsonBuilding.buildingAlreadyInList(name.getText().toString())){
@@ -114,5 +115,12 @@ public class EditBuildingActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public void onBackPressed(){
+        Intent intent = new Intent(EditBuildingActivity.this, ListBuildingsActivity.class);
+        startActivity(intent);
+        finish();
+        return;
     }
 }

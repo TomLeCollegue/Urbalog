@@ -21,6 +21,11 @@ public class JsonBuilding {
     private static String fileNameBuilding = "buildings.json";
     private static Context context;
 
+    /**
+     * Check if json file exist
+     *
+     * @return boolean
+     */
     public static boolean fichierExiste()
     {
         File file = context.getFileStreamPath(fileNameBuilding);
@@ -32,6 +37,9 @@ public class JsonBuilding {
         }
     }
 
+    /**
+     * delete json JsonBuilding file
+     */
     public static void deleteJson()
     {
         Log.d("debug", "delete...");
@@ -39,19 +47,40 @@ public class JsonBuilding {
         file.delete();
     }
 
+    /**
+     * init the jsonBuilding file
+     * create it if it doesn't exist on this phone
+     *
+     * @param mContext
+     */
     public static void init(Context mContext){
         context = mContext;
         if(fichierExiste())
         {
             Log.d("debug", "le fichier existe deja");
-            deleteJson();
-            init(mContext);
+            //deleteJson();
+            //init(mContext);
         } else {
             Log.d("debug", "Création du fichier");
             addBuildings();
         }
     }
 
+    /**
+     * delete the current JsonBuilding file
+     * create a new JsonBuilding file with initial building
+     *
+     * @param mContext
+     */
+    public static void recreate(Context mContext){
+        context = mContext;
+        deleteJson();
+        init(mContext);
+    }
+
+    /**
+     * Add initial buildings to JsonBuilding file
+     */
     public static void addBuildings(){
         writeText("{\n" +
                 "  \"buildings\": [\n" +
@@ -323,7 +352,11 @@ public class JsonBuilding {
         }
     }
 
-
+    /**
+     * write a string into real file on phone
+     *
+     * @param data
+     */
     public static void writeText(String data){
         FileOutputStream fOut = null;
         OutputStreamWriter osw = null;
@@ -347,6 +380,12 @@ public class JsonBuilding {
         }
     }
 
+    /**
+     * read the JsonBuilding file
+     * return all buildings
+     *
+     * @return Arraylist<Building>
+     */
     public static ArrayList<Building> readBuilding(){
         Log.d("debug", "readBuilding...");
         String jsonText = null;
@@ -383,12 +422,24 @@ public class JsonBuilding {
         return listeBuilding;
     }
 
+    /**
+     * Mofication of a building in the json File
+     *
+     * @param building
+     * @param name
+     */
     public static void modificationBuilding(Building building, String name){
         Log.d("debug", "modificationBuilding...");
         removeBuilding(name);
         writeBuilding(building);
     }
 
+
+    /**
+     * Write building in Json File
+     *
+     * @param building
+     */
     public static void writeBuilding(Building building){
         Log.d("debug", "writeBuilding...");
         String jsonText = null;
@@ -425,7 +476,12 @@ public class JsonBuilding {
         }
     }
 
-
+    /**
+     * remove a Building from Json file with the name of the building
+     * check in all the file if it exist
+     *
+     * @param name
+     */
     public static void removeBuilding(String name){
         Log.d("debug", "removeBuilding...");
         String jsonText = null;
@@ -449,6 +505,13 @@ public class JsonBuilding {
         }
     }
 
+    /**
+     * check if a building exist in the json file
+     * with the name of the building
+     *
+     * @param name
+     * @return
+     */
     public static boolean buildingAlreadyInList(String name){
         Log.d("debug", "buildingAlreadyInList...");
         String jsonText = null;

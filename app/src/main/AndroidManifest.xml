@@ -17,7 +17,11 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LogisticActivity"
+        <activity android:name=".ConfigurationActivity"
+            android:screenOrientation="sensorLandscape">
+        </activity>
+        <activity
+            android:name=".LogisticActivity"
             android:screenOrientation="sensorLandscape">
         </activity>
         <activity

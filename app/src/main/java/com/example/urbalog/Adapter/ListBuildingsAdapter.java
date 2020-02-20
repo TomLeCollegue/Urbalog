@@ -1,10 +1,11 @@
 package com.example.urbalog.Adapter;
 
-import android.content.Intent;
-import android.util.Log;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,9 +24,15 @@ public class ListBuildingsAdapter extends RecyclerView.Adapter<ListBuildingsAdap
     public ArrayList<Building> buildings;
     private OnItemClickListener mListener;
     private OnItemLongClickListener mListener2;
+    private Context mContext;
 
     public ListBuildingsAdapter(ArrayList<Building> buildings){
         this.buildings = buildings;
+    }
+
+    public ListBuildingsAdapter(ArrayList<Building> buildings, Context mContext){
+        this.buildings = buildings;
+        this.mContext = mContext;
     }
 
     public interface OnItemClickListener{
@@ -58,6 +65,8 @@ public class ListBuildingsAdapter extends RecyclerView.Adapter<ListBuildingsAdap
     public void onBindViewHolder(@NonNull ListBuildingsAdapter.MyViewHolder holder, int position) {
         Building building = buildings.get(position);
         holder.display(building);
+
+        holder.hideDeleteButton(position);
     }
 
     @Override
@@ -76,6 +85,7 @@ public class ListBuildingsAdapter extends RecyclerView.Adapter<ListBuildingsAdap
         private final TextView attractivite;
         private final TextView fluidite;
         private final TextView environnnement;
+        private final Button buttonDelete;
 
 
         public MyViewHolder(@NonNull final View itemView) {
@@ -89,6 +99,8 @@ public class ListBuildingsAdapter extends RecyclerView.Adapter<ListBuildingsAdap
             attractivite = ((TextView) itemView.findViewById(R.id.effetAttractiviteBuilding));
             fluidite = ((TextView) itemView.findViewById(R.id.effetFluiditeBuilding));
             environnnement = ((TextView) itemView.findViewById(R.id.effetEnvironnementBuilding));
+
+            buttonDelete = itemView.findViewById(R.id.buttonDeleteBuilding);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -105,28 +117,33 @@ public class ListBuildingsAdapter extends RecyclerView.Adapter<ListBuildingsAdap
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Log.d("debug", "onlongClick = ok");
                     final int position = getAdapterPosition();
-                    Button buttonDelete = itemView.findViewById(R.id.buttonDeleteBuilding);
+
                     buttonDelete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Log.d("debug", "supprimer -> " + position);
                             TextView textView = itemView.findViewById(R.id.nameBuilding);
                             JsonBuilding.removeBuilding(textView.getText().toString());
-                            Intent i = new Intent(itemView.getContext(), ListBuildingsActivity.class);
-                            itemView.getContext().startActivity(i);
+                            if(mContext instanceof ListBuildingsActivity){
+                                ((ListBuildingsActivity) mContext).refreshAdapter(position);
+
+
+                            }
                             Toast.makeText(itemView.getContext(), textView.getText().toString() + " a été supprimé", Toast.LENGTH_LONG).show();
+
                         }
                     });
                     mListener2.onItemLongClick(position);
-                    Log.d("debug", "onlongClick position -> " + position);
                     if(buttonDelete.getVisibility() == View.GONE)
                     {
                         buttonDelete.setVisibility(View.VISIBLE);
+                        Animation test = AnimationUtils.loadAnimation(mContext, R.anim.fadein);
+                        buttonDelete.startAnimation(test);
                     }
                     else
                     {
+                        Animation test = AnimationUtils.loadAnimation(mContext, R.anim.fadeout);
+                        buttonDelete.startAnimation(test);
                         buttonDelete.setVisibility(View.GONE);
                     }
                     return true;
@@ -140,6 +157,8 @@ public class ListBuildingsAdapter extends RecyclerView.Adapter<ListBuildingsAdap
          */
         public void display(Building building) {
 
+            buttonDelete.setVisibility(View.GONE);
+
             name.setText(building.getName());
             description.setText(building.getDescription());
             politique.setText(String.valueOf(building.getCoutPolitique()));
@@ -148,6 +167,10 @@ public class ListBuildingsAdapter extends RecyclerView.Adapter<ListBuildingsAdap
             attractivite.setText(String.valueOf(building.getEffetAttractivite()));
             fluidite.setText(String.valueOf(building.getEffetFluidite()));
             environnnement.setText(String.valueOf(building.getEffetEnvironnemental()));
+        }
+
+        public void hideDeleteButton(int position) {
+
         }
     }
 }
