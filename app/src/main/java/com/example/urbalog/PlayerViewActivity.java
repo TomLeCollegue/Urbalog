@@ -304,7 +304,7 @@ public class PlayerViewActivity extends AppCompatActivity {
         textScoreCityEnvi.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreEnvironnemental()));
         textScoreCityTrafic.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreFluidite()));
 
-        textScorePlayer.setText("Score : " + String.valueOf(PlayerConnexionActivity.net.getPlayer().getScore()));
+        textScorePlayer.setText("Score : " + PlayerConnexionActivity.net.getPlayer().getScore());
         textScore.setText("Tour n°"+PlayerConnexionActivity.net.getCurrentGame().getnTurn());
         /* TODO : Mettre à jour les ressources du joueur */
     }

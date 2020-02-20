@@ -203,7 +203,7 @@ public class NetworkHelper implements Serializable {
                                     e.printStackTrace();
                                 }
                                 currentGame.updateAllGameScores();
-                                if(currentGame.getCity().getBuildings().size() < 1) {
+                                if(currentGame.getCity().getBuildings().size() < 6) {
                                     currentGame.refreshMarket();
                                     currentGame.incrTurn();
                                     try {
@@ -309,7 +309,7 @@ public class NetworkHelper implements Serializable {
 
     public NetworkHelper(Context c) {
         appContext = c;
-        NB_PLAYERS = 2;
+        NB_PLAYERS = 5;
         discovering = false;
         advertising = false;
         host = false;
