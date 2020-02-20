@@ -44,7 +44,7 @@
             </TextView>
 
             <EditText
-                android:inputType="number"
+                android:inputType="numberSigned"
                 android:textAlignment="center"
                 android:layout_gravity="center"
                 android:id="@+id/politiqueBuildingEdit"
@@ -54,7 +54,7 @@
             </EditText>
 
             <EditText
-                android:inputType="number"
+                android:inputType="numberSigned"
                 android:textAlignment="center"
                 android:layout_gravity="center"
                 android:id="@+id/socialBuildingEdit"
@@ -64,7 +64,7 @@
             </EditText>
 
             <EditText
-                android:inputType="number"
+                android:inputType="numberSigned"
                 android:textAlignment="center"
                 android:layout_gravity="center"
                 android:id="@+id/economiqueBuildingEdit"
@@ -83,7 +83,7 @@
             </TextView>
 
             <EditText
-                android:inputType="number"
+                android:inputType="numberSigned"
                 android:textAlignment="center"
                 android:layout_gravity="center"
                 android:id="@+id/attractiviteBuildingEdit"
@@ -93,7 +93,7 @@
             </EditText>
 
             <EditText
-                android:inputType="number"
+                android:inputType="numberSigned"
                 android:textAlignment="center"
                 android:layout_gravity="center"
                 android:id="@+id/fluiditeBuildingEdit"
@@ -103,7 +103,7 @@
             </EditText>
 
             <EditText
-                android:inputType="number"
+                android:inputType="numberSigned"
                 android:textAlignment="center"
                 android:layout_gravity="center"
                 android:id="@+id/environnementalBuildingEdit"
@@ -114,7 +114,7 @@
 
             <EditText
                 android:layout_marginTop="40dp"
-                android:inputType="number"
+                android:inputType="numberSigned"
                 android:textAlignment="center"
                 android:layout_gravity="center"
                 android:id="@+id/scoreLogistiqueBuildingEdit"
