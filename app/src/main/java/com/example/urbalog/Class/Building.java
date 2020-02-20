@@ -17,9 +17,10 @@ public class Building implements Serializable {
     private Integer effetAttractivite;
     private Integer effetFluidite;
     private Integer effetEnvironnemental;
+    private Integer scoreLogistique;
+    private String explicationLogistique;
 
-
-    public Building(String name, String description, Integer coutPolitique, Integer coutSocial, Integer coutEconomique, Integer effetAttractivite, Integer effetFluidite, Integer effetEnvironnemental) {
+    public Building(String name, String description, Integer coutPolitique, Integer coutSocial, Integer coutEconomique, Integer effetAttractivite, Integer effetFluidite, Integer effetEnvironnemental, Integer scoreLogistique, String explicationLogistique) {
         this.name = name;
         this.description = description;
         this.coutPolitique = coutPolitique;
@@ -31,6 +32,36 @@ public class Building implements Serializable {
         this.effetAttractivite = effetAttractivite;
         this.effetFluidite = effetFluidite;
         this.effetEnvironnemental = effetEnvironnemental;
+        this.scoreLogistique = scoreLogistique;
+        this.explicationLogistique = explicationLogistique;
+    }
+
+    public void setAvancementCoutPolitique(Integer avancementCoutPolitique) {
+        this.avancementCoutPolitique = avancementCoutPolitique;
+    }
+
+    public void setAvancementCoutSocial(Integer avancementCoutSocial) {
+        this.avancementCoutSocial = avancementCoutSocial;
+    }
+
+    public void setAvancementCoutEconomique(Integer avancementCoutEconomique) {
+        this.avancementCoutEconomique = avancementCoutEconomique;
+    }
+
+    public Integer getScoreLogistique() {
+        return scoreLogistique;
+    }
+
+    public void setScoreLogistique(Integer scoreLogistique) {
+        this.scoreLogistique = scoreLogistique;
+    }
+
+    public String getExplicationLogistique() {
+        return explicationLogistique;
+    }
+
+    public void setExplicationLogistique(String explicationLogistique) {
+        this.explicationLogistique = explicationLogistique;
     }
 
     public String getName() {
@@ -97,19 +128,12 @@ public class Building implements Serializable {
         this.effetEnvironnemental = effetEnvironnemental;
     }
 
-     /*public void refresh(List<Bet> newBet)
-    {
-        for(int i = 0; i<newBet.size(); i++)
-        {
-            if(newBet.get(i).getBuilding().getName() == this.name)
-            {
-                this.avancementCoutEconomique += newBet.get(i).getMiseEco();
-                this.avancementCoutPolitique += newBet.get(i).getMisePolitique();
-                this.avancementCoutSocial += newBet.get(i).getMiseSocial();
-            }
-        }
-    } */
-
+     public void reset(){
+         avancementCoutEconomique = 0;
+         avancementCoutPolitique = 0;
+         avancementCoutSocial = 0;
+     }
+  
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -165,5 +189,13 @@ public class Building implements Serializable {
     }
     public  void addAvancementPolitique(int misePoli){
         avancementCoutPolitique = avancementCoutPolitique + misePoli;
+    }
+
+    public boolean isFilled()
+    {
+        if((avancementCoutPolitique == coutPolitique) && (avancementCoutEconomique == coutEconomique))
+            return true;
+        else
+            return false;
     }
 }

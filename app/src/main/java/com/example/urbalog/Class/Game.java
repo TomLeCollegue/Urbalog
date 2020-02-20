@@ -1,6 +1,7 @@
 package com.example.urbalog.Class;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,12 +14,15 @@ public class Game implements Serializable {
     private Market market;
     private City city;
     private List<Bet> listBet;
+    private int nTurn;
 
     public Game() {
         scoreLogistique = 0;
         scoreAttractivite = 0;
         scoreFluidite = 0;
         scoreEnvironnemental = 0;
+        nTurn = 1;
+        city = new City();
     }
 
     public Integer getScoreLogistique() {
@@ -61,7 +65,7 @@ public class Game implements Serializable {
         this.listBet = listBet;
     }
 
-    public void majBet(Bet bet){
+    public void majBet(Bet bet) {
         market.getBuildings().get(bet.getNumbuilding()).addAvancementSocial(bet.getMiseSocial());
         market.getBuildings().get(bet.getNumbuilding()).addAvancementEco(bet.getMiseEco());
         market.getBuildings().get(bet.getNumbuilding()).addAvancementPolitique(bet.getMisePolitique());
@@ -75,20 +79,44 @@ public class Game implements Serializable {
         this.market = market;
     }
 
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public int getnTurn() {
+        return nTurn;
+    }
+
+    public void setnTurn(int nTurn) {
+        this.nTurn = nTurn;
+    }
+
+    public void incrTurn()
+    {
+        nTurn++;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Game)) return false;
         Game game = (Game) o;
-        return Objects.equals(scoreLogistique, game.scoreLogistique) &&
-                Objects.equals(scoreAttractivite, game.scoreAttractivite) &&
-                Objects.equals(scoreFluidite, game.scoreFluidite) &&
-                Objects.equals(scoreEnvironnemental, game.scoreEnvironnemental);
+        return Objects.equals(getScoreLogistique(), game.getScoreLogistique()) &&
+                Objects.equals(getScoreAttractivite(), game.getScoreAttractivite()) &&
+                Objects.equals(getScoreFluidite(), game.getScoreFluidite()) &&
+                Objects.equals(getScoreEnvironnemental(), game.getScoreEnvironnemental()) &&
+                Objects.equals(getMarket(), game.getMarket()) &&
+                Objects.equals(city, game.city) &&
+                Objects.equals(getListBet(), game.getListBet());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(scoreLogistique, scoreAttractivite, scoreFluidite, scoreEnvironnemental);
+        return Objects.hash(getScoreLogistique(), getScoreAttractivite(), getScoreFluidite(), getScoreEnvironnemental(), getMarket(), city, getListBet());
     }
 
     @Override
@@ -101,10 +129,19 @@ public class Game implements Serializable {
                 '}';
     }
 
-    public void refreshMarket(Market newMarket)
-    {
-        setMarket(newMarket);
-        //updateMarketView(); // à faire quand la vue sera implémenté
-        //PlayerViewActivity.setDataText(Integer.toString(getMarket().getBuildings().size()));
+    public void refreshMarket() {
+        market.updateMarket();
+    }
+
+    /*
+    * When called, this method update all the game scores with the methods
+    * from city.
+    *
+     */
+    public void updateAllGameScores() {
+        this.scoreLogistique = city.updateLogisticScore();
+        this.scoreAttractivite = city.updateAttractiviteScore();
+        this.scoreFluidite = city.updateFluiditeScore();
+        this.scoreEnvironnemental = city.updateEnvironnementalScore();
     }
 }

@@ -9,10 +9,12 @@ import android.util.Pair;
 import android.view.View;
 
 import com.example.urbalog.Class.Bet;
+import com.example.urbalog.Class.Building;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
 import com.example.urbalog.Class.Player;
 import com.example.urbalog.Class.Role;
+import com.example.urbalog.Class.Signal;
 import com.example.urbalog.Class.TransferPackage;
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
@@ -33,7 +35,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Helper class for network interactions using Nearby Connection API
@@ -47,17 +48,18 @@ public class NetworkHelper implements Serializable {
     private boolean advertising;
     private boolean discovering;
     private boolean host;
+    private static int NB_PLAYERS;
 
     private Game currentGame;
     private Player player;
 
     private List<Pair<String, String>> listPlayer; // Pair array for connexion information storage of connected users
+    private int nextTurnVotes = 0;
 
     private ConnectionsClient connectionsClient;
     private static final String TAG = "UrbalogGame"; // Tag for log
     private final String codeName = CodenameGenerator.generate();
 
-    private Object dataReceived;
     private static final String[] REQUIRED_PERMISSIONS =
             new String[] {
                     Manifest.permission.BLUETOOTH,
@@ -69,7 +71,7 @@ public class NetworkHelper implements Serializable {
 
     private static final int REQUEST_CODE_REQUIRED_PERMISSIONS = 1;
 
-    private static final Strategy STRATEGY = Strategy.P2P_CLUSTER; // Nearby connection strategie for data sending
+    private static final Strategy STRATEGY = Strategy.P2P_STAR; // Nearby connection strategie for data sending
 
     // Callbacks for receiving payloads
     private final PayloadCallback payloadCallback =
@@ -84,14 +86,12 @@ public class NetworkHelper implements Serializable {
                 public void onPayloadReceived(String endpointId, Payload payload) {
 
                     /* Deserialization of incoming payload */
-                    dataReceived = new Object();
+                    Object dataReceived = new Object();
                     try {
                         dataReceived = SerializationHelper.deserialize(payload.asBytes());
-                        Log.d(TAG, "sendToAllClients: "+dataReceived.toString());
+                        Log.d(TAG, "sendToAllClients: "+ dataReceived.toString());
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
+                    } catch (IOException | ClassNotFoundException e) {
                         e.printStackTrace();
                     }
 
@@ -100,9 +100,10 @@ public class NetworkHelper implements Serializable {
                         if(dataReceived instanceof TransferPackage){
                             if(((TransferPackage) dataReceived).second instanceof Market)
                             {
-                                if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first))) {
-                                    currentGame.refreshMarket(((Market) ((TransferPackage) dataReceived).second));
-                                }
+                                currentGame.setMarket(((Market) ((TransferPackage) dataReceived).second));
+                                currentPlayerView.fillInfosView();
+                                currentPlayerView.setButtonState(true);
+                                currentPlayerView.setEnabledBetButtons(true);
                             }
                             else if(((TransferPackage) dataReceived).second instanceof Bet){
                                 if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
@@ -114,17 +115,37 @@ public class NetworkHelper implements Serializable {
                                     }
                                 }
                             }
+                            else if(((TransferPackage) dataReceived).first instanceof Signal){
+                               switch((Signal)((TransferPackage) dataReceived).first)
+                               {
+                                   case CHECK_GOALS:
+                                       player.checkGoals((ArrayList<Building>)((TransferPackage) dataReceived).second);
+                                       break;
+                                   case GAME_OVER:
+                                       currentGame = (Game)((TransferPackage) dataReceived).second;
+                                       currentPlayerView.finish();
+                                       Intent myIntent = new Intent(appContext, EndGameActivity.class);
+                                       appContext.startActivity(myIntent);
+                                       break;
+                                   default:
+                                       break;
+                               }
+                            }
                         }
                         else if(dataReceived instanceof Game){
-                            currentGame = (Game)dataReceived;
+                            currentGame = (Game) dataReceived;
+                            if(currentPlayerView != null) {
+                                currentPlayerView.fillInfosView();
+                                currentPlayerView.resetTurnButton();
+                            }
+                        }
+                        else if(dataReceived instanceof Role){
+                            player = new Player((Role) dataReceived);
                             Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
                             appContext.startActivity(myIntent);
                         }
-                        else if(dataReceived instanceof Role){
-                            player = new Player((Role)dataReceived);
-                        }
                     }
-                    else if(host)
+                    else
                     {
                         if(dataReceived instanceof TransferPackage){
                             if(((TransferPackage) dataReceived).second instanceof Market) {
@@ -144,7 +165,57 @@ public class NetworkHelper implements Serializable {
                                 {
                                     currentGame.majBet(((Bet) ((TransferPackage) dataReceived).second));
                                     try {
-                                        sendToAllClients(dataReceived);
+                                        sendToAllClients(new TransferPackage<Game, Market>(currentGame, currentGame.getMarket()));
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        }
+                        else if(dataReceived instanceof Signal)
+                        {
+                            switch ((Signal) dataReceived)
+                            {
+                                case NEXT_TURN:
+                                    nextTurnVotes++;
+                                    break;
+
+                                case CANCEL_NEXT_TURN:
+                                    nextTurnVotes--;
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                            if(nextTurnVotes == NB_PLAYERS)
+                            {
+                                ArrayList<Building> newBuildings = new ArrayList<Building>();
+                                for(int i = 0; i < currentGame.getMarket().getBuildings().size(); i++) {
+                                    if(currentGame.getMarket().getBuildings().get(i).isFilled()) {
+                                        currentGame.getCity().addBuilding(currentGame.getMarket().getBuildings().get(i));
+                                        newBuildings.add(currentGame.getMarket().getBuildings().get(i));
+                                        currentGame.getMarket().deleteBuilding(currentGame.getMarket().getBuildings().get(i));
+                                    }
+                                }
+                                try {
+                                    sendToAllClients(new TransferPackage<Signal, ArrayList<Building>>(Signal.CHECK_GOALS, newBuildings));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                currentGame.updateAllGameScores();
+                                if(currentGame.getCity().getBuildings().size() < 1) {
+                                    currentGame.refreshMarket();
+                                    currentGame.incrTurn();
+                                    try {
+                                        sendToAllClients(currentGame);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    nextTurnVotes = 0;
+                                }
+                                else {
+                                    try {
+                                        sendToAllClients(new TransferPackage<Signal, Game>(Signal.GAME_OVER, currentGame));
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -179,8 +250,9 @@ public class NetworkHelper implements Serializable {
                 public void onEndpointLost(String endpointId) {
                     for (int i = 0; i<listPlayer.size(); i++)
                     {
-                        if(listPlayer.get(i).second == endpointId) {
+                        if(listPlayer.get(i).second.equals(endpointId)) {
                             listPlayer.remove(i);
+                            break;
                         }
                     }
                 }
@@ -221,13 +293,13 @@ public class NetworkHelper implements Serializable {
                 public void onDisconnected(String endpointId) {
                     if(host) {
                         for (int i = 0; i < listPlayer.size(); i++) {
-                            if (endpointId.equals(listPlayer.get(i).second))
+                            if (endpointId.equals(listPlayer.get(i).second)) {
                                 listPlayer.remove(i);
+                                break;
+                            }
+
                         }
                         AdminConnectionActivity.updateNbPlayers(listPlayer.size());
-                        if(listPlayer.size() == 0){
-                            stop();
-                        }
                     }
                     else {
                         PlayerConnexionActivity.setStatus("Disconnected");
@@ -237,6 +309,7 @@ public class NetworkHelper implements Serializable {
 
     public NetworkHelper(Context c) {
         appContext = c;
+        NB_PLAYERS = 2;
         discovering = false;
         advertising = false;
         host = false;
@@ -258,7 +331,7 @@ public class NetworkHelper implements Serializable {
 
     /** Finds an opponent to play the game with using Nearby Connections. */
     public void hostGame(View view) {
-        if (discovering != true) {
+        if (!discovering) {
             startAdvertising();
             advertising = true;
             host = true;
@@ -270,7 +343,7 @@ public class NetworkHelper implements Serializable {
      * @param view
      */
     public void searchGame(View view) {
-        if (advertising != true)
+        if (!advertising)
         {
             startDiscovery();
             discovering = true;
@@ -338,6 +411,14 @@ public class NetworkHelper implements Serializable {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public static int getNbPlayers() {
+        return NB_PLAYERS;
+    }
+
+    public static void setNbPlayers(int nbPlayers) {
+        NB_PLAYERS = nbPlayers;
     }
 
     public boolean isAdvertising()

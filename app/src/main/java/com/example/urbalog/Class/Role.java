@@ -2,6 +2,7 @@ package com.example.urbalog.Class;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -91,6 +92,32 @@ public class Role extends Object implements Serializable {
 
     public void setImprove(String improve) {
         this.improve = improve;
+    }
+
+    public boolean goalsAchieve(ArrayList<Building> newBuildings)
+    {
+        if (newBuildings != null){
+            int totalAttractivite = 0;
+            int totalEnv = 0;
+            int totalFluidite = 0;
+            for(int i=0;i<newBuildings.size();i++){
+                    totalAttractivite += newBuildings.get(i).getEffetAttractivite();
+                    totalEnv += newBuildings.get(i).getEffetEnvironnemental();
+                    totalFluidite += newBuildings.get(i).getEffetFluidite();
+            }
+            if ((totalAttractivite >0 && improve.equals("Attractivité")) &&
+                    ((totalEnv >= 0 && hold.equals("Environnement")) || (totalFluidite >= 0 && hold.equals("Fluidité"))))
+                return true;
+            else if ((totalEnv >0 && improve.equals("Environnement"))&&
+                    ((totalAttractivite >= 0 && hold.equals("Attractivité")) ||(totalFluidite >= 0 && hold.equals("Fluidité"))))
+                return true;
+            else if((totalFluidite >0 && improve.equals("Fluidité"))&&
+                    (((totalAttractivite >= 0 && hold.equals("Attractivité"))) ||(totalEnv >= 0 && hold.equals("Environnement"))))
+                return true;
+            else return false;
+        }else{
+            return false;
+        }
     }
 
     @Override

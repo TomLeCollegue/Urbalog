@@ -3,4 +3,21 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="red">#FF0000</color>
+    <color name="blue">#0000FF</color>
+    <color name="green">#00FF00</color>
+    <color name="white">#FFFFFF</color>
+    <color name="dark">#000000</color>
+    <color name="game">#f3d7bf</color>
+
+
+    <!-- Hugo Hersemeule -->
+    <color name="evenLighterPink">#faf2eb</color>
+    <color name="lightPink">#f5e7da</color>
+    <color name="mediumPink">#f3d7be</color>
+    <color name="lightGray">#c0c0c0</color>
+    <color name="darkGray">#B4B4B4</color>
+
+    <color name="colorDelete">#CB1A08</color>
+
 </resources>

@@ -1,9 +1,10 @@
 package com.example.urbalog.Class;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class City {
+public class City implements Serializable {
     private ArrayList<Building> buildings;
 
     public City() {
@@ -16,6 +17,10 @@ public class City {
 
     public void setBuildings(ArrayList<Building> buildings) {
         this.buildings = buildings;
+    }
+
+    public void addBuilding(Building b) {
+        buildings.add(b);
     }
 
     @Override
@@ -36,5 +41,40 @@ public class City {
         return "City{" +
                 "buildings=" + buildings +
                 '}';
+    }
+
+    /*
+    * This function is called at the end of the game and changes the logistic score
+    * of the game with the sum of the logistic scores of all the buildings.
+    *
+    *
+     */
+    public int updateLogisticScore(){
+        int res = 0;
+        for(Building building : buildings){
+            res = res + building.getScoreLogistique();
+        }
+        return res;
+    }
+    public int updateAttractiviteScore(){
+        int res = 0;
+        for(Building building : buildings){
+            res = res + building.getEffetAttractivite();
+        }
+        return res;
+    }
+    public int updateFluiditeScore(){
+        int res = 0;
+        for(Building building : buildings){
+            res = res + building.getEffetFluidite();
+        }
+        return res;
+    }
+    public int updateEnvironnementalScore(){
+        int res = 0;
+        for(Building building : buildings){
+            res = res + building.getEffetEnvironnemental();
+        }
+        return res;
     }
 }
