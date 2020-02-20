@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -74,6 +75,7 @@ public class PlayerViewActivity extends AppCompatActivity {
     private TextView textScoreCityEnvi;
     private TextView textScoreCityTrafic;
     private TextView textScoreCityAttract;
+    private TextView textScore;
     private Button bTurn;
     private boolean nextTurn;
 
@@ -100,6 +102,8 @@ public class PlayerViewActivity extends AppCompatActivity {
     private Button buttonPlusTop;
     private Button buttonPlusBot;
 
+    private TextView textScorePlayer;
+
     private Integer numBuildingF;
 
     private Bet mise;
@@ -107,15 +111,20 @@ public class PlayerViewActivity extends AppCompatActivity {
     private String Ressource1;
     private String Ressource2;
 
-    private Integer financementRessource[]= {0,0};
+    private Integer financementRessource[][];
+    boolean buttonState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("debug", "PlayerViewActivity creation");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player_view_activity);
 
         /* Link player activity to NetworkHelper */
         PlayerConnexionActivity.net.setCurrentPlayerView(this);
+        buttonState = true;
+
+        financementRessource = PlayerConnexionActivity.net.getPlayer().getFinancementRessource();
 
         textPoliticalResssourcesBuilding1 = (TextView) findViewById(R.id.text_political_resssources_building_1);
         textPoliticalResssourcesBuilding2 = (TextView) findViewById(R.id.text_political_resssources_building_2);
@@ -155,6 +164,7 @@ public class PlayerViewActivity extends AppCompatActivity {
         textScoreCityAttract = (TextView) findViewById(R.id.text_score_city_attract);
         textScoreCityTrafic = (TextView) findViewById(R.id.text_score_city_trafic);
         bTurn = (Button) findViewById(R.id.button_turn);
+        textScore = (TextView) findViewById(R.id.text_score);
 
         textNameBuilding1 = (TextView) findViewById(R.id.text_name_building_1);
         textNameBuilding2 = (TextView) findViewById(R.id.text_name_building_2);
@@ -169,6 +179,8 @@ public class PlayerViewActivity extends AppCompatActivity {
         icoRessourceRightRole = (ImageView) findViewById(R.id.ico_ressource_right_role);
         textRessourceLeftRole = (TextView) findViewById(R.id.text_ressource_left_role);
         textRessourceRightRole = (TextView) findViewById(R.id.text_ressource_right_role);
+
+        textScorePlayer = (TextView) findViewById(R.id.text_score_player);
 
         textTitleRole.setText(PlayerConnexionActivity.net.getPlayer().getRole().getTypeRole());
 
@@ -292,6 +304,8 @@ public class PlayerViewActivity extends AppCompatActivity {
         textScoreCityEnvi.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreEnvironnemental()));
         textScoreCityTrafic.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreFluidite()));
 
+        textScorePlayer.setText("Score : " + String.valueOf(PlayerConnexionActivity.net.getPlayer().getScore()));
+        textScore.setText("Tour n°"+PlayerConnexionActivity.net.getCurrentGame().getnTurn());
         /* TODO : Mettre à jour les ressources du joueur */
     }
 
@@ -321,8 +335,10 @@ public class PlayerViewActivity extends AppCompatActivity {
         buttonPlusBot= (Button) popUpView.findViewById(R.id.button_plus_bot);
 
 
-        textAvancementRessourceTop.setText(String.valueOf(financementRessource[0]));
-        TextAvancementRessourceBot.setText(String.valueOf(financementRessource[1]));
+        textAvancementRessourceTop.setText(String.valueOf(financementRessource[numBuildingF][0]));
+        TextAvancementRessourceBot.setText(String.valueOf(financementRessource[numBuildingF][1]));
+
+        setEnabledBetButtons(buttonState);
 
 
         textNameBuildingPopup.setText(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding).getName());
@@ -353,8 +369,6 @@ public class PlayerViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 betFromButton(numBuildingF,0,1);
-                textAvancementRessourceTop.setText(String.valueOf(financementRessource[0]));
-
             }
         });
 
@@ -362,8 +376,6 @@ public class PlayerViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 betFromButton(numBuildingF,0,-1);
-                textAvancementRessourceTop.setText(String.valueOf(financementRessource[0]));
-
             }
         });
 
@@ -371,7 +383,6 @@ public class PlayerViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 betFromButton(numBuildingF,1,1);
-                TextAvancementRessourceBot.setText(String.valueOf(financementRessource[1]));
             }
         });
 
@@ -379,13 +390,11 @@ public class PlayerViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 betFromButton(numBuildingF,1,-1);
-                TextAvancementRessourceBot.setText(String.valueOf(financementRessource[1]));
-
             }
         });
 
 
-        popUpBet.showAtLocation(v, Gravity.CENTER, 0, 0);
+        popUpBet.showAtLocation(v, Gravity.RIGHT, 0, 0);
         // Assombrissement de l'arrière plan
         dimBehind(popUpBet);
 
@@ -470,7 +479,6 @@ public class PlayerViewActivity extends AppCompatActivity {
         if (RoleInfo.getBooleanRessource()[1] == false){
             Ressource1 = "Social";
             Ressource2 = "Political";
-
         }
         if (RoleInfo.getBooleanRessource()[2] == false){
             Ressource1 = "Social";
@@ -526,24 +534,28 @@ public class PlayerViewActivity extends AppCompatActivity {
         if(valeurRessource.equals("Social")){
 
                 if(((Value == 1) && (RoleInfo.getTokenSocial() > 0)) && (building.getAvancementCoutSocial() < building.getCoutSocial())){
+                    buttonState = false;
+                    setEnabledBetButtons(buttonState);
                     mise = new Bet(numBuilding, 0, 0, 1);
                     try {
                         PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
                         RoleInfo.lessSocial();
                         fillRoleCardRessources();
-                        financementRessource[ressource]++;
+                        financementRessource[numBuilding][ressource]++;
 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 else if ((Value == -1) && (building.getAvancementCoutSocial() > 0)) {
+                    buttonState = false;
+                    setEnabledBetButtons(buttonState);
                     mise = new Bet(numBuilding, 0, 0, -1);
                     try {
                         PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
                         RoleInfo.addSocial();
                         fillRoleCardRessources();
-                        financementRessource[ressource]--;
+                        financementRessource[numBuilding][ressource]--;
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -554,24 +566,28 @@ public class PlayerViewActivity extends AppCompatActivity {
         if(valeurRessource.equals("Economical")){
 
             if(((Value == 1) && (RoleInfo.getTokenEconomical() > 0)) && (building.getAvancementCoutEconomique() < building.getCoutEconomique())){
+                buttonState = false;
+                setEnabledBetButtons(buttonState);
                 mise = new Bet(numBuilding, 0, 1, 0);
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
                     RoleInfo.lessEco();
                     fillRoleCardRessources();
-                    financementRessource[ressource]++;
+                    financementRessource[numBuilding][ressource]++;
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
             else if ((Value == -1)&&(building.getAvancementCoutEconomique() > 0)) {
+                buttonState = false;
+                setEnabledBetButtons(buttonState);
                 mise = new Bet(numBuilding, 0, -1, 0);
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
                     RoleInfo.addEco();
                     fillRoleCardRessources();
-                    financementRessource[ressource]--;
+                    financementRessource[numBuilding][ressource]--;
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -582,24 +598,28 @@ public class PlayerViewActivity extends AppCompatActivity {
         if(valeurRessource.equals("Political")){
 
             if(((Value == 1) && (RoleInfo.getTokenPolitical() > 0)) && (building.getAvancementCoutPolitique() < building.getCoutPolitique())){
+                buttonState = false;
+                setEnabledBetButtons(buttonState);
                 mise = new Bet(numBuilding, 1, 0, 0);
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
                     RoleInfo.lessPolitical();
                     fillRoleCardRessources();
-                    financementRessource[ressource]++;
+                    financementRessource[numBuilding][ressource]++;
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
             else if ((Value == -1)&&(building.getAvancementCoutPolitique() > 0)) {
+                buttonState = false;
+                setEnabledBetButtons(buttonState);
                 mise = new Bet(numBuilding, -1, 0, 0);
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
                     RoleInfo.addPolitical();
                     fillRoleCardRessources();
-                    financementRessource[ressource]--;
+                    financementRessource[numBuilding][ressource]--;
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -607,15 +627,32 @@ public class PlayerViewActivity extends AppCompatActivity {
             }
 
         }
+        PlayerConnexionActivity.net.getPlayer().setFinancementRessource(financementRessource);
+        textAvancementRessourceTop.setText(String.valueOf(financementRessource[numBuildingF][0]));
+        TextAvancementRessourceBot.setText(String.valueOf(financementRessource[numBuildingF][1]));
+
     }
 
 
-        public void resetTurnButton()
+    public void resetTurnButton()
         {
             nextTurn = false;
             bTurn.setText("Tour suivant");
-            financementRessource[0] = 0;
-            financementRessource[1] = 0;
+            Integer[][] financementRessourceReset= {{0,0},{0,0},{0,0},{0,0},{0,0}};
+            financementRessource = financementRessourceReset;
+            PlayerConnexionActivity.net.getPlayer().setFinancementRessource(financementRessource);
         }
 
+    public void setEnabledBetButtons(boolean bool){
+        if(buttonMinusTop != null && buttonMinusBot != null && buttonPlusBot != null && buttonPlusTop != null) {
+            buttonMinusTop.setEnabled(bool);
+            buttonPlusTop.setEnabled(bool);
+            buttonMinusBot.setEnabled(bool);
+            buttonPlusBot.setEnabled(bool);
+        }
+    }
+
+    public void setButtonState(boolean buttonState) {
+        this.buttonState = buttonState;
+    }
 }

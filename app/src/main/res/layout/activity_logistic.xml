@@ -50,7 +50,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1.5"
-                    android:background="#B4B4B4">
+                    android:background="#B4B4B4"
+                    >
 
                     <TextView
                         android:id="@+id/LogisticScoreTitleLayout"
@@ -66,7 +67,8 @@
                         android:layout_width="54dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        tools:src="@tools:sample/avatars[0]" />
+                        android:visibility="visible"
+                        android:src="@mipmap/icon_logistic_foreground" />
                 </FrameLayout>
 
                 <FrameLayout

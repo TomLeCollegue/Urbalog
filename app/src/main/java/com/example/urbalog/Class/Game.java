@@ -14,13 +14,14 @@ public class Game implements Serializable {
     private Market market;
     private City city;
     private List<Bet> listBet;
-    private ArrayList<Building> deck;
+    private int nTurn;
 
     public Game() {
         scoreLogistique = 0;
         scoreAttractivite = 0;
         scoreFluidite = 0;
         scoreEnvironnemental = 0;
+        nTurn = 1;
         city = new City();
     }
 
@@ -64,7 +65,7 @@ public class Game implements Serializable {
         this.listBet = listBet;
     }
 
-    public void majBet(Bet bet){
+    public void majBet(Bet bet) {
         market.getBuildings().get(bet.getNumbuilding()).addAvancementSocial(bet.getMiseSocial());
         market.getBuildings().get(bet.getNumbuilding()).addAvancementEco(bet.getMiseEco());
         market.getBuildings().get(bet.getNumbuilding()).addAvancementPolitique(bet.getMisePolitique());
@@ -84,6 +85,19 @@ public class Game implements Serializable {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public int getnTurn() {
+        return nTurn;
+    }
+
+    public void setnTurn(int nTurn) {
+        this.nTurn = nTurn;
+    }
+
+    public void incrTurn()
+    {
+        nTurn++;
     }
 
     @Override
@@ -115,8 +129,19 @@ public class Game implements Serializable {
                 '}';
     }
 
-    public void refreshMarket()
-    {
+    public void refreshMarket() {
         market.updateMarket();
+    }
+
+    /*
+    * When called, this method update all the game scores with the methods
+    * from city.
+    *
+     */
+    public void updateAllGameScores() {
+        this.scoreLogistique = city.updateLogisticScore();
+        this.scoreAttractivite = city.updateAttractiviteScore();
+        this.scoreFluidite = city.updateFluiditeScore();
+        this.scoreEnvironnemental = city.updateEnvironnementalScore();
     }
 }
