@@ -309,7 +309,7 @@ public class NetworkHelper implements Serializable {
 
     public NetworkHelper(Context c) {
         appContext = c;
-        NB_PLAYERS = 5;
+        NB_PLAYERS = 2;
         discovering = false;
         advertising = false;
         host = false;

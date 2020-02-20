@@ -96,8 +96,6 @@ public class Role extends Object implements Serializable {
 
     public boolean goalsAchieve(ArrayList<Building> newBuildings)
     {
-        //TODO : Check if newBuildings is not null and after check if new buildings stats achieve goals of player
-        // else return false
         if (newBuildings != null){
             int totalAttractivite = 0;
             int totalEnv = 0;
@@ -108,13 +106,13 @@ public class Role extends Object implements Serializable {
                     totalFluidite += newBuildings.get(i).getEffetFluidite();
             }
             if ((totalAttractivite >0 && improve.equals("Attractivité")) &&
-                    ((totalEnv == 0 && hold.equals("Environnement")) || (totalFluidite == 0 && hold.equals("Fluidité"))))
+                    ((totalEnv >= 0 && hold.equals("Environnement")) || (totalFluidite >= 0 && hold.equals("Fluidité"))))
                 return true;
             else if ((totalEnv >0 && improve.equals("Environnement"))&&
-                    ((totalAttractivite == 0 && hold.equals("Attractivité")) ||(totalFluidite == 0 && hold.equals("Fluidité"))))
+                    ((totalAttractivite >= 0 && hold.equals("Attractivité")) ||(totalFluidite >= 0 && hold.equals("Fluidité"))))
                 return true;
             else if((totalFluidite >0 && improve.equals("Fluidité"))&&
-                    (((totalAttractivite == 0 && hold.equals("Attractivité"))) ||(totalEnv == 0 && hold.equals("Environnement"))))
+                    (((totalAttractivite >= 0 && hold.equals("Attractivité"))) ||(totalEnv >= 0 && hold.equals("Environnement"))))
                 return true;
             else return false;
         }else{

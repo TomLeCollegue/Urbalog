@@ -33,22 +33,22 @@ public class LogisticActivity extends AppCompatActivity {
 
         Log.d("debug", "LogisticActivity creation after super ");
 
-        /*** Print the logistic score at the end of the game ***//*
+        /*** Print the logistic score at the end of the game ***/
 
         totalLogisticScore = (TextView) findViewById(R.id.TotalScore_TextView);
-        totalLogisticScore.setText(PlayerConnexionActivity.net.getCurrentGame().getScoreLogistique());
+        totalLogisticScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreLogistique()));
 
-        *//*** Choose and print the sentence below the Logistic Score ***//*
+        /*** Choose and print the sentence below the Logistic Score ***/
         iLogisticScore = PlayerConnexionActivity.net.getCurrentGame().getScoreLogistique();
         totalLogisticScoreSentence = (TextView) findViewById(R.id.LogisticSentence_TextView);
         
         if (iLogisticScore <= -2) {
             totalLogisticScoreSentence.setText("D'un point de vue logistique, l'organisation de votre ville est à revoir.");
         }
-        else if ( -2 < iLogisticScore &&  iLogisticScore<= 0) {
+        else if ((iLogisticScore > -2) && (iLogisticScore <= 0)) {
             totalLogisticScoreSentence.setText("Dans votre ville, les transports de marchandises se font avec quelques difficultés mineures.");
         }
-        else if (0 < iLogisticScore && iLogisticScore<= 2){
+        else if ((iLogisticScore > 0) && (iLogisticScore <= 2)){
             totalLogisticScoreSentence.setText("D'un point de vue logistique, votre ville s'en sort plutôt bien, la plupart des livraisons se font sans encombre.");
         }
         else {
@@ -56,7 +56,7 @@ public class LogisticActivity extends AppCompatActivity {
         }
 
 
-         *//*** Put the city buildings in the recycler view ***//*
+        /*** Put the city buildings in the recycler view ***/
         buildings = PlayerConnexionActivity.net.getCurrentGame().getCity().getBuildings();
 
         //Log.d("debug", buildings.toString());
@@ -64,8 +64,7 @@ public class LogisticActivity extends AppCompatActivity {
         rv.setLayoutManager(new LinearLayoutManager(LogisticActivity.this, LinearLayoutManager.VERTICAL, false));
 
         BuildingInfluenceAdapter mMyadapter= new BuildingInfluenceAdapter(buildings);
-        rv.setAdapter(mMyadapter);*/
-
+        rv.setAdapter(mMyadapter);
     }
     
 }
