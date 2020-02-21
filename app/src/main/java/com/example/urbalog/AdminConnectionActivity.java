@@ -51,6 +51,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
         bHost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                configurationButton.setEnabled(false);
                 net.hostGame(getCurrentFocus());
                 updateStatus("Searching...");
             }
@@ -58,6 +59,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
         bPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                configurationButton.setEnabled(false);
                 if(net.getListPlayer().size() == NetworkHelper.getNbPlayers()) {
                     currentGame = new Game();
                     currentGame.setMarket(new Market());
@@ -74,6 +76,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
         bStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                configurationButton.setEnabled(true);
                 net.stop();
                 updateStatus("Disconnected");
                 updateNbPlayers(0);

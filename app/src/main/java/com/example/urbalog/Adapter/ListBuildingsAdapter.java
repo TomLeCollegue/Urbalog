@@ -1,16 +1,19 @@
 package com.example.urbalog.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.urbalog.Class.Building;
 import com.example.urbalog.Json.JsonBuilding;
@@ -56,7 +59,6 @@ public class ListBuildingsAdapter extends RecyclerView.Adapter<ListBuildingsAdap
     @Override
     public ListBuildingsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-
         final View view = inflater.inflate(R.layout.layout_list_buildings, parent, false);
         return new MyViewHolder(view);
     }
@@ -65,7 +67,6 @@ public class ListBuildingsAdapter extends RecyclerView.Adapter<ListBuildingsAdap
     public void onBindViewHolder(@NonNull ListBuildingsAdapter.MyViewHolder holder, int position) {
         Building building = buildings.get(position);
         holder.display(building);
-
         holder.hideDeleteButton(position);
     }
 
@@ -134,16 +135,20 @@ public class ListBuildingsAdapter extends RecyclerView.Adapter<ListBuildingsAdap
                         }
                     });
                     mListener2.onItemLongClick(position);
+                    CardView cardView = itemView.findViewById(R.id.card_view);
                     if(buttonDelete.getVisibility() == View.GONE)
                     {
+                        Animation shake = AnimationUtils.loadAnimation(mContext, R.anim.shake);
+                        cardView.startAnimation(shake);
                         buttonDelete.setVisibility(View.VISIBLE);
-                        Animation test = AnimationUtils.loadAnimation(mContext, R.anim.fadein);
-                        buttonDelete.startAnimation(test);
+                        Animation fade = AnimationUtils.loadAnimation(mContext, R.anim.fadein);
+                        buttonDelete.startAnimation(fade);
                     }
                     else
                     {
-                        Animation test = AnimationUtils.loadAnimation(mContext, R.anim.fadeout);
-                        buttonDelete.startAnimation(test);
+                        cardView.clearAnimation();
+                        Animation fade = AnimationUtils.loadAnimation(mContext, R.anim.fadeout);
+                        buttonDelete.startAnimation(fade);
                         buttonDelete.setVisibility(View.GONE);
                     }
                     return true;
