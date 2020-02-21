@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -44,23 +45,18 @@ public class ListBuildingsActivity extends AppCompatActivity implements ListBuil
         mMyadapter.setonItemClickListener(ListBuildingsActivity.this);
         mMyadapter.setonItemLongClickListener(ListBuildingsActivity.this);
         
-        /*rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                Log.d("debug", "== " + newState);
-            }
-        });*/
-        
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if(dx > 200 || dx < -200){
-                    //mMyadapter.notifyDataSetChanged();
+                if(dx > 20 || dx < -20){
+                    mMyadapter.notifyDataSetChanged();
                 }
             }
         });
+
+
+        
     }
 
 
@@ -81,7 +77,6 @@ public class ListBuildingsActivity extends AppCompatActivity implements ListBuil
         buildings.remove(position);
         mMyadapter.notifyItemRemoved(position);
         mMyadapter.notifyItemRangeChanged(position, buildings.size());
-        
     }
 
     public void onBackPressed(){
