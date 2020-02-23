@@ -316,7 +316,7 @@ public class PlayerViewActivity extends AppCompatActivity {
                 getSystemService(LAYOUT_INFLATER_SERVICE);
         View popUpView = inflater.inflate(R.layout.bet_popup, null);
 
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int width = LinearLayout.LayoutParams.MATCH_PARENT;
         int height = LinearLayout.LayoutParams.MATCH_PARENT;
         boolean focusable = true;
         popUpBet = new PopupWindow(popUpView, width, height, focusable);
@@ -394,7 +394,7 @@ public class PlayerViewActivity extends AppCompatActivity {
         });
 
 
-        popUpBet.showAtLocation(v, Gravity.RIGHT, 0, 0);
+        popUpBet.showAtLocation(v, Gravity.CENTER, 0, 0);
         // Assombrissement de l'arrière plan
         //dimBehind(popUpBet);
 
