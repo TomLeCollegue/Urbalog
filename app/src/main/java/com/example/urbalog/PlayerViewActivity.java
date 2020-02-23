@@ -321,7 +321,7 @@ public class PlayerViewActivity extends AppCompatActivity {
         boolean focusable = true;
         popUpBet = new PopupWindow(popUpView, width, height, focusable);
 
-        buttonBetPopup = (Button)popUpView.findViewById(R.id.button_bet_popup);
+        buttonBetPopup = (Button)popUpView.findViewById(R.id.button_X);
         textNameBuildingPopup = (TextView)popUpView.findViewById(R.id.text_name_building_popup);
 
         textAvancementRessourceTop = (TextView) popUpView.findViewById(R.id.avancement_ressource_top);
@@ -396,25 +396,12 @@ public class PlayerViewActivity extends AppCompatActivity {
 
         popUpBet.showAtLocation(v, Gravity.RIGHT, 0, 0);
         // Assombrissement de l'arrière plan
-        dimBehind(popUpBet);
+        //dimBehind(popUpBet);
 
-        popUpView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                popUpBet.dismiss();
-                return true;
-            }
-        });
 
         buttonBetPopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*mise = new Bet(numBuildingF, AjoutFinancementPolitique, AjoutFinancementEco, AjoutFinancementSocial);
-                try {
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
                 popUpBet.dismiss();
             }
         });
