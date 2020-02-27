@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -114,6 +116,16 @@ public class PlayerViewActivity extends AppCompatActivity {
     private Integer financementRessource[][];
     boolean buttonState;
 
+
+    private LinearLayout B1;
+    private LinearLayout B2;
+    private LinearLayout B3;
+    private LinearLayout B4;
+    private LinearLayout B5;
+
+
+
+    private TextView descriptionBuildingPopUp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("debug", "PlayerViewActivity creation");
@@ -123,6 +135,15 @@ public class PlayerViewActivity extends AppCompatActivity {
         /* Link player activity to NetworkHelper */
         PlayerConnexionActivity.net.setCurrentPlayerView(this);
         buttonState = true;
+
+
+        B1 = (LinearLayout) findViewById(R.id.infrastructure_1);
+        B2 = (LinearLayout) findViewById(R.id.infrastructure_2);
+        B3 = (LinearLayout) findViewById(R.id.infrastructure_3);
+        B4 = (LinearLayout) findViewById(R.id.infrastructure_4);
+        B5 = (LinearLayout) findViewById(R.id.infrastructure_5);
+
+
 
         financementRessource = PlayerConnexionActivity.net.getPlayer().getFinancementRessource();
 
@@ -316,18 +337,20 @@ public class PlayerViewActivity extends AppCompatActivity {
                 getSystemService(LAYOUT_INFLATER_SERVICE);
         View popUpView = inflater.inflate(R.layout.bet_popup, null);
 
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int width = LinearLayout.LayoutParams.MATCH_PARENT;
         int height = LinearLayout.LayoutParams.MATCH_PARENT;
         boolean focusable = true;
         popUpBet = new PopupWindow(popUpView, width, height, focusable);
 
-        buttonBetPopup = (Button)popUpView.findViewById(R.id.button_bet_popup);
+        buttonBetPopup = (Button)popUpView.findViewById(R.id.button_X);
         textNameBuildingPopup = (TextView)popUpView.findViewById(R.id.text_name_building_popup);
 
         textAvancementRessourceTop = (TextView) popUpView.findViewById(R.id.avancement_ressource_top);
         TextAvancementRessourceBot= (TextView) popUpView.findViewById(R.id.avancement_ressource_bot);
         icoRessourceBotPopup= (ImageView) popUpView.findViewById(R.id.ico_ressource_bot_popup);
         icoRessourceTopPopup= (ImageView) popUpView.findViewById(R.id.ico_ressource_top_popup);
+
+        descriptionBuildingPopUp = (TextView) popUpView.findViewById(R.id.text_desc_building_popup);
 
         buttonMinusTop= (Button) popUpView.findViewById(R.id.button_minus_top);
         buttonMinusBot= (Button) popUpView.findViewById(R.id.button_minus_bot);
@@ -337,6 +360,7 @@ public class PlayerViewActivity extends AppCompatActivity {
 
         textAvancementRessourceTop.setText(String.valueOf(financementRessource[numBuildingF][0]));
         TextAvancementRessourceBot.setText(String.valueOf(financementRessource[numBuildingF][1]));
+        descriptionBuildingPopUp.setText(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding).getDescription());
 
         setEnabledBetButtons(buttonState);
 
@@ -394,27 +418,14 @@ public class PlayerViewActivity extends AppCompatActivity {
         });
 
 
-        popUpBet.showAtLocation(v, Gravity.RIGHT, 0, 0);
+        popUpBet.showAtLocation(v, Gravity.CENTER, 0, 0);
         // Assombrissement de l'arrière plan
-        dimBehind(popUpBet);
+        //dimBehind(popUpBet);
 
-        popUpView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                popUpBet.dismiss();
-                return true;
-            }
-        });
 
         buttonBetPopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*mise = new Bet(numBuildingF, AjoutFinancementPolitique, AjoutFinancementEco, AjoutFinancementSocial);
-                try {
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
                 popUpBet.dismiss();
             }
         });
@@ -654,5 +665,44 @@ public class PlayerViewActivity extends AppCompatActivity {
 
     public void setButtonState(boolean buttonState) {
         this.buttonState = buttonState;
+    }
+
+
+    public void colorBuildingBet(){
+        Market M = PlayerConnexionActivity.net.getCurrentGame().getMarket();
+        if( M.getBuildings().get(0).isFilled()){
+            B1.setBackgroundColor(Color.parseColor("#bcc87f"));
+        }
+        else {
+            B1.setBackgroundColor(Color.parseColor("#f5e7da"));
+        }
+
+        if( M.getBuildings().get(1).isFilled()){
+            B2.setBackgroundColor(Color.parseColor("#bcc87f"));
+        }
+        else {
+            B2.setBackgroundColor(Color.parseColor("#f5e7da"));
+        }
+
+        if( M.getBuildings().get(2).isFilled()){
+            B3.setBackgroundColor(Color.parseColor("#bcc87f"));
+        }
+        else {
+            B3.setBackgroundColor(Color.parseColor("#f5e7da"));
+        }
+
+        if( M.getBuildings().get(3).isFilled()){
+            B4.setBackgroundColor(Color.parseColor("#bcc87f"));
+        }
+        else {
+            B4.setBackgroundColor(Color.parseColor("#f5e7da"));
+        }
+
+        if( M.getBuildings().get(4).isFilled()){
+            B5.setBackgroundColor(Color.parseColor("#bcc87f"));
+        }
+        else {
+            B5.setBackgroundColor(Color.parseColor("#f5e7da"));
+        }
     }
 }

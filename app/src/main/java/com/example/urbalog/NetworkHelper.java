@@ -104,6 +104,7 @@ public class NetworkHelper implements Serializable {
                                 currentPlayerView.fillInfosView();
                                 currentPlayerView.setButtonState(true);
                                 currentPlayerView.setEnabledBetButtons(true);
+                                currentPlayerView.colorBuildingBet();
                             }
                             else if(((TransferPackage) dataReceived).second instanceof Bet){
                                 if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
@@ -112,6 +113,7 @@ public class NetworkHelper implements Serializable {
                                     if(currentPlayerView != null)
                                     {
                                         currentPlayerView.fillInfosView();
+
                                     }
                                 }
                             }
@@ -309,7 +311,7 @@ public class NetworkHelper implements Serializable {
 
     public NetworkHelper(Context c) {
         appContext = c;
-        NB_PLAYERS = 5;
+        NB_PLAYERS = 2;
         discovering = false;
         advertising = false;
         host = false;
