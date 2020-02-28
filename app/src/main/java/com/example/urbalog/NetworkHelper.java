@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 
 import android.content.Intent;
-import android.os.Build;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
@@ -101,8 +100,11 @@ public class NetworkHelper implements Serializable {
                     }
 
                     /* Process data received based on this type and if it's host or not */
+                    /* If it's a player device */
                     if(!host){
+                        /* Manage TransferPackage data */
                         if(dataReceived instanceof TransferPackage){
+                            /* If host have send Market, usually used for respond to player bet with updated state of Market */
                             if(((TransferPackage) dataReceived).second instanceof Market)
                             {
                                 currentGame.setMarket(((Market) ((TransferPackage) dataReceived).second));
@@ -110,6 +112,7 @@ public class NetworkHelper implements Serializable {
                                 currentPlayerView.setButtonState(true);
                                 currentPlayerView.setEnabledBetButtons(true);
                             }
+                            /* If host have send Bet, no longer used for the moment */
                             else if(((TransferPackage) dataReceived).second instanceof Bet){
                                 if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
                                 {
@@ -120,12 +123,15 @@ public class NetworkHelper implements Serializable {
                                     }
                                 }
                             }
+                            /* If host have send Signal, used for communicate with players without data transfer */
                             else if(((TransferPackage) dataReceived).first instanceof Signal){
                                switch((Signal)((TransferPackage) dataReceived).first)
                                {
+                                   /* Ask player to check if his goals are completed */
                                    case CHECK_GOALS:
                                        player.checkGoals((ArrayList<Building>)((TransferPackage) dataReceived).second);
                                        break;
+                                   /* Report to player the end of the game */
                                    case GAME_OVER:
                                        currentGame = (Game)((TransferPackage) dataReceived).second;
                                        currentPlayerView.finish();
@@ -137,6 +143,7 @@ public class NetworkHelper implements Serializable {
                                }
                             }
                         }
+                        /* If host have send Game, used for returning player, when the game start or at new turn */
                         else if(dataReceived instanceof Game){
                             currentGame = (Game) dataReceived;
                             if(currentPlayerView != null) {
@@ -144,15 +151,19 @@ public class NetworkHelper implements Serializable {
                                 currentPlayerView.resetTurnButton();
                             }
                         }
+                        /* If host have send Role, used on game start for role attribution */
                         else if(dataReceived instanceof Role){
                             player = new Player((Role) dataReceived);
                             Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
                             appContext.startActivity(myIntent);
                         }
                     }
+                    /* If it's the host device */
                     else
                     {
+                        /* If received payload is a instance of TransferPackage */
                         if(dataReceived instanceof TransferPackage){
+                            /* If player have send Market, no longer used for the moment */
                             if(((TransferPackage) dataReceived).second instanceof Market) {
                                 if (currentGame.equals(((Game) ((TransferPackage) dataReceived).first))) {
                                     currentGame.setMarket(((Market) ((TransferPackage) dataReceived).second));
@@ -165,6 +176,8 @@ public class NetworkHelper implements Serializable {
                                     }
                                 }
                             }
+                            /* If player have send Bet, always used when player put or remove a bet on a building in the market
+                            *  after updating the host market with this Bet, it will resend it to all clients */
                             else if(((TransferPackage) dataReceived).second instanceof Bet){
                                 if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
                                 {
@@ -177,6 +190,7 @@ public class NetworkHelper implements Serializable {
                                 }
                             }
                         }
+                        /* If player have send Player, used on client connection to the host and often during the game */
                         else if(dataReceived instanceof Player){
                             for (int i = 0; i < playersInformations.size(); i++) {
                                 if(playersInformations.get(i).getThird().equals(endpointId)){
@@ -185,13 +199,16 @@ public class NetworkHelper implements Serializable {
                                 }
                             }
                         }
+                        /* If player have send Signal, used for communicate with the host without data transfer */
                         else if(dataReceived instanceof Signal){
                             switch ((Signal) dataReceived)
                             {
+                                /* Report to host a next turn vote */
                                 case NEXT_TURN:
                                     nextTurnVotes++;
                                     break;
 
+                                /* Report to host the cancellation of a next turn vote */
                                 case CANCEL_NEXT_TURN:
                                     nextTurnVotes--;
                                     break;
@@ -199,13 +216,16 @@ public class NetworkHelper implements Serializable {
                                 default:
                                     break;
                             }
+                            /* If all players have voted for next turn */
                             if(nextTurnVotes == NB_PLAYERS)
                             {
+                                /* Check market and build financed building */
                                 ArrayList<Building> newBuildings = new ArrayList<Building>();
                                 for(int i = 0; i < currentGame.getMarket().getBuildings().size(); i++) {
                                     if(currentGame.getMarket().getBuildings().get(i).isFilled()) {
                                         currentGame.getCity().addBuilding(currentGame.getMarket().getBuildings().get(i));
                                         newBuildings.add(currentGame.getMarket().getBuildings().get(i));
+                                        // Delete build buildings to deck
                                         currentGame.getMarket().deleteBuilding(currentGame.getMarket().getBuildings().get(i));
                                     }
                                 }
@@ -215,6 +235,8 @@ public class NetworkHelper implements Serializable {
                                     e.printStackTrace();
                                 }
                                 currentGame.updateAllGameScores();
+                                /* Check if the game is finish */
+                                // If not, refresh market and update game instance of players
                                 if(currentGame.getCity().getBuildings().size() < 6) {
                                     currentGame.refreshMarket();
                                     currentGame.incrTurn();
@@ -280,11 +302,14 @@ public class NetworkHelper implements Serializable {
 
                 @Override
                 public void onConnectionInitiated(String endpointId, ConnectionInfo connectionInfo) {
+                    /* If game isn't start and room isn't full */
                     if((!gameStarted) && (listPlayer.size() < NB_PLAYERS)) {
                         Log.i(TAG, "onConnectionInitiated: accepting new connection");
                         connectionsClient.acceptConnection(endpointId, payloadCallback);
                         playerName = connectionInfo.getEndpointName();
                     }
+                    /* If game started and room not full
+                    * host will check if it's a returning player, if tyes it's will accept connection */
                     else if((gameStarted) && (listPlayer.size() < NB_PLAYERS))
                     {
                         for (int i = 0; i < playersInformations.size(); i++) {
@@ -294,9 +319,15 @@ public class NetworkHelper implements Serializable {
                                 Log.i(TAG, "onConnectionInitiated: accepting connection of returning player");
                                 connectionsClient.acceptConnection(endpointId, payloadCallback);
                                 playerName = connectionInfo.getEndpointName();
+                                break;
                             }
                         }
+                        if(!returnPlayer){
+                            Log.i(TAG, "onConnectionInitiated: game started but rejecting connection");
+                            connectionsClient.rejectConnection(endpointId);
+                        }
                     }
+                    /* Reject connection if room is full */
                     else{
                         Log.i(TAG, "onConnectionInitiated: rejecting connection");
                         connectionsClient.rejectConnection(endpointId);
