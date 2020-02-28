@@ -119,7 +119,9 @@ public class NetworkHelper implements Serializable {
                                switch((Signal)((TransferPackage) dataReceived).first)
                                {
                                    case CHECK_GOALS:
-                                       player.checkGoals((ArrayList<Building>)((TransferPackage) dataReceived).second);
+                                       if(player.checkGoals((ArrayList<Building>)((TransferPackage) dataReceived).second));{
+
+                                       }
                                        break;
                                    case GAME_OVER:
                                        currentGame = (Game)((TransferPackage) dataReceived).second;
