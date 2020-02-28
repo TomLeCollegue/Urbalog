@@ -61,6 +61,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 configurationButton.setEnabled(false);
                 if(net.getListPlayer().size() == NetworkHelper.getNbPlayers()) {
+                    net.setGameStarted(true);
                     currentGame = new Game();
                     currentGame.setMarket(new Market());
                     net.setCurrentGame(currentGame);

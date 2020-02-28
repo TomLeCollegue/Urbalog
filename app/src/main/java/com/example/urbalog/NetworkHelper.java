@@ -53,10 +53,11 @@ public class NetworkHelper implements Serializable {
     private static int NB_PLAYERS;
 
     private Game currentGame;
+    private boolean gameStarted;
     private Player player;
 
-    private List<Pair<String, String>> listPlayer; // Pair array for connexion information storage of connected users
-    private List<Triplet<Player, String, String>> playersInformations; // Pair array with Player instance of clients
+    private ArrayList<Pair<String, String>> listPlayer; // Pair array for connexion information storage of connected users
+    private ArrayList<Triplet<Player, String, String>> playersInformations; // Pair array with Player instance of clients
 
     private int nextTurnVotes = 0;
 
@@ -227,6 +228,7 @@ public class NetworkHelper implements Serializable {
                                 else {
                                     try {
                                         sendToAllClients(new TransferPackage<Signal, Game>(Signal.GAME_OVER, currentGame));
+                                        gameStarted = false;
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -273,12 +275,32 @@ public class NetworkHelper implements Serializable {
     private final ConnectionLifecycleCallback connectionLifecycleCallback =
             new ConnectionLifecycleCallback() {
                 private String playerName;
+                private boolean returnPlayer = false;
+                private int playerIndex;
 
                 @Override
                 public void onConnectionInitiated(String endpointId, ConnectionInfo connectionInfo) {
-                    Log.i(TAG, "onConnectionInitiated: accepting connection");
-                    connectionsClient.acceptConnection(endpointId, payloadCallback);
-                    playerName = connectionInfo.getEndpointName();
+                    if((!gameStarted) && (listPlayer.size() < NB_PLAYERS)) {
+                        Log.i(TAG, "onConnectionInitiated: accepting new connection");
+                        connectionsClient.acceptConnection(endpointId, payloadCallback);
+                        playerName = connectionInfo.getEndpointName();
+                    }
+                    else if((gameStarted) && (listPlayer.size() < NB_PLAYERS))
+                    {
+                        for (int i = 0; i < playersInformations.size(); i++) {
+                            if(playersInformations.get(i).getSecond().equals(connectionInfo.getEndpointName())){
+                                returnPlayer = true;
+                                playerIndex = i;
+                                Log.i(TAG, "onConnectionInitiated: accepting connection of returning player");
+                                connectionsClient.acceptConnection(endpointId, payloadCallback);
+                                playerName = connectionInfo.getEndpointName();
+                            }
+                        }
+                    }
+                    else{
+                        Log.i(TAG, "onConnectionInitiated: rejecting connection");
+                        connectionsClient.rejectConnection(endpointId);
+                    }
                 }
 
                 @Override
@@ -314,12 +336,20 @@ public class NetworkHelper implements Serializable {
                                 listPlayer.remove(i);
                                 break;
                             }
-
                         }
-                        AdminConnectionActivity.updateNbPlayers(listPlayer.size());
+                        if(!gameStarted){
+                            for (int i = 0; i < playersInformations.size(); i++) {
+                                if (endpointId.equals(playersInformations.get(i).getThird())) {
+                                    playersInformations.remove(i);
+                                    break;
+                                }
+                            }
+                            AdminConnectionActivity.updateNbPlayers(listPlayer.size());
+                        }
                     }
                     else {
                         PlayerConnexionActivity.setStatus("Disconnected");
+                        listPlayer.clear();
                     }
                 }
             };
@@ -330,7 +360,9 @@ public class NetworkHelper implements Serializable {
         discovering = false;
         advertising = false;
         host = false;
+        gameStarted = false;
         listPlayer = new ArrayList<>();
+        playersInformations = new ArrayList<>();
         connectionsClient = Nearby.getConnectionsClient(c);
     }
 
@@ -340,6 +372,7 @@ public class NetworkHelper implements Serializable {
     public void stop() {
         connectionsClient.stopAllEndpoints();
         listPlayer.clear();
+        playersInformations.clear();
         if(host)
             connectionsClient.stopAdvertising();
         else
@@ -378,6 +411,7 @@ public class NetworkHelper implements Serializable {
         if(!host)
             PlayerConnexionActivity.setStatus("Disconnected");
         listPlayer.clear();
+        playersInformations.clear();
         host = false;
     }
 
@@ -432,6 +466,14 @@ public class NetworkHelper implements Serializable {
 
     public static int getNbPlayers() {
         return NB_PLAYERS;
+    }
+
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
+
+    public void setGameStarted(boolean gameStarted) {
+        this.gameStarted = gameStarted;
     }
 
     public static void setNbPlayers(int nbPlayers) {
