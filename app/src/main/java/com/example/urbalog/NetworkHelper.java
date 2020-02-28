@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.example.urbalog.Class.Player;
 import com.example.urbalog.Class.Role;
 import com.example.urbalog.Class.Signal;
 import com.example.urbalog.Class.TransferPackage;
+import com.example.urbalog.Class.Triplet;
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
 import com.google.android.gms.nearby.connection.ConnectionInfo;
@@ -54,6 +56,8 @@ public class NetworkHelper implements Serializable {
     private Player player;
 
     private List<Pair<String, String>> listPlayer; // Pair array for connexion information storage of connected users
+    private List<Triplet<Player, String, String>> playersInformations; // Pair array with Player instance of clients
+
     private int nextTurnVotes = 0;
 
     private ConnectionsClient connectionsClient;
@@ -172,8 +176,15 @@ public class NetworkHelper implements Serializable {
                                 }
                             }
                         }
-                        else if(dataReceived instanceof Signal)
-                        {
+                        else if(dataReceived instanceof Player){
+                            for (int i = 0; i < playersInformations.size(); i++) {
+                                if(playersInformations.get(i).getThird().equals(endpointId)){
+                                    playersInformations.get(i).setFirst((Player)dataReceived);
+                                    break;
+                                }
+                            }
+                        }
+                        else if(dataReceived instanceof Signal){
                             switch ((Signal) dataReceived)
                             {
                                 case NEXT_TURN:
@@ -280,9 +291,15 @@ public class NetworkHelper implements Serializable {
                         listPlayer.add(new Pair<>(playerName, endpointId));
                         if(host){
                             AdminConnectionActivity.updateNbPlayers(listPlayer.size());
+                            playersInformations.add(new Triplet<Player, String, String>(null, playerName, endpointId));
                         }
                         else{
                             PlayerConnexionActivity.setStatus("Connected");
+                            try {
+                                sendToAllClients(SerializationHelper.serialize(player));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     } else {
                         Log.i(TAG, "onConnectionResult: connection failed");
@@ -309,7 +326,7 @@ public class NetworkHelper implements Serializable {
 
     public NetworkHelper(Context c) {
         appContext = c;
-        NB_PLAYERS = 5;
+        NB_PLAYERS = 3;
         discovering = false;
         advertising = false;
         host = false;

@@ -1,9 +1,10 @@
 package com.example.urbalog.Class;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Player {
+public class Player extends Object implements Serializable {
 
     private String name;
     private Integer age;
