@@ -10,6 +10,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.example.urbalog.Class.Bet;
 import com.example.urbalog.Class.Building;
@@ -129,6 +130,9 @@ public class NetworkHelper implements Serializable {
                                            LayoutInflater inflater = getCurrentPlayerView().getLayoutInflater();
 
                                            final AlertDialog alertScoreDialog = scoreDialog.create();
+                                           int width = LinearLayout.LayoutParams.MATCH_PARENT;
+                                           int height = LinearLayout.LayoutParams.MATCH_PARENT;
+
 
                                            scoreDialog.setView(inflater.inflate(R.layout.score_dialog,null))
                                                   .setNegativeButton(R.string.closeDialog, new DialogInterface.OnClickListener() {
