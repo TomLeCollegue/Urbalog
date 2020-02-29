@@ -80,20 +80,49 @@ public class EditBuildingActivity extends AppCompatActivity {
     }
 
     public void validerBuildingEdit(View view) {
-        if(name.getText().toString().matches("") ||
-                description.getText().toString().matches("") ||
-                politique.getText().toString().matches("") ||
-                social.getText().toString().matches("") ||
-                economique.getText().toString().matches("") ||
-                attractivite.getText().toString().matches("") ||
-                fluidite.getText().toString().matches("") ||
-                environnemental.getText().toString().matches("") ||
-                scoreLogistique.getText().toString().matches("") ||
-                explicationLogistique.getText().toString().matches("")
-                )
-        {
-            Toast.makeText(this, "impossible", Toast.LENGTH_SHORT).show();
-        }else{
+        boolean finish = true;
+        if(name.getText().toString().matches("")){
+            name.setError("champs vide");
+            finish = false;
+        }
+        if(description.getText().toString().matches("")){
+            description.setError("champs vide");
+            finish = false;
+        }
+        if(politique.getText().toString().matches("")){
+            politique.setError("champs vide");
+            finish = false;
+        }
+        if(social.getText().toString().matches("")){
+            social.setError("champs vide");
+            finish = false;
+        }
+        if(economique.getText().toString().matches("")){
+            economique.setError("champs vide");
+            finish = false;
+        }
+        if(attractivite.getText().toString().matches("")){
+            attractivite.setError("champs vide");
+            finish = false;
+        }
+        if(fluidite.getText().toString().matches("")){
+            fluidite.setError("champs vide");
+            finish = false;
+        }
+        if(environnemental.getText().toString().matches("")){
+            environnemental.setError("champs vide");
+            finish = false;
+        }
+        if(scoreLogistique.getText().toString().matches("")){
+            scoreLogistique.setError("champs vide");
+            finish = false;
+        }
+        if(explicationLogistique.getText().toString().matches("")){
+            explicationLogistique.setError("champs vide");
+            finish = false;
+        }
+
+        if(finish == true){
             if((name.getHint().toString()).equals(name.getText().toString()))
             {
                 Building newBuilding = new Building(name.getText().toString(), description.getText().toString(), Integer.parseInt(politique.getText().toString()), Integer.parseInt(social.getText().toString()),  Integer.parseInt(economique.getText().toString()), Integer.parseInt(attractivite.getText().toString()), Integer.parseInt(fluidite.getText().toString()), Integer.parseInt(environnemental.getText().toString()), Integer.parseInt(scoreLogistique.getText().toString()), explicationLogistique.getText().toString() );

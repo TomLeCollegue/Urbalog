@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_margin="20dp"
+        android:paddingBottom="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="20dp"
+                android:textColor="@color/dark"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:text="Nom :">
+            </TextView>
+
+            <EditText
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:id="@+id/nameBuildingEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="nom">
+            </EditText>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="20dp"
+                android:textColor="@color/dark"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:text="Description :">
+            </TextView>
+
+            <EditText
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:id="@+id/descriptionBuildingEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="description">
+            </EditText>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Couts : ">
+        </TextView>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="20dp"
+                android:textColor="@color/dark"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:text="Politique :">
+            </TextView>
+
+
+            <EditText
+                android:inputType="numberSigned"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:id="@+id/politiqueBuildingEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="0">
+            </EditText>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="20dp"
+                android:textColor="@color/dark"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:text="Social :">
+            </TextView>
+
+            <EditText
+                android:inputType="numberSigned"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:id="@+id/socialBuildingEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="0">
+            </EditText>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="20dp"
+                android:textColor="@color/dark"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:text="Economique :">
+            </TextView>
+
+            <EditText
+                android:inputType="numberSigned"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:id="@+id/economiqueBuildingEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="0">
+            </EditText>
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Effets : ">
+        </TextView>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="20dp"
+                android:textColor="@color/dark"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:text="Attractivité :">
+            </TextView>
+
+            <EditText
+                android:inputType="numberSigned"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:id="@+id/attractiviteBuildingEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="0">
+            </EditText>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="20dp"
+                android:textColor="@color/dark"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:text="Fluidité :">
+            </TextView>
+
+            <EditText
+                android:inputType="numberSigned"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:id="@+id/fluiditeBuildingEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="0">
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="20dp"
+                android:textColor="@color/dark"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:text="Environnemental :">
+            </TextView>
+
+            <EditText
+                android:inputType="numberSigned"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:id="@+id/environnementalBuildingEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="0">
+            </EditText>
+        </LinearLayout>
+
+
+
+        <TextView
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logistique : ">
+        </TextView>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="20dp"
+                android:textColor="@color/dark"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:text="Score :">
+            </TextView>
+
+            <EditText
+                android:inputType="numberSigned"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:id="@+id/scoreLogistiqueBuildingEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="0">
+            </EditText>
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="20dp"
+                android:textColor="@color/dark"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:text="Description :">
+            </TextView>
+
+            <EditText
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:id="@+id/explicationLogistiqueBuildingEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="description">
+            </EditText>
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/ButtonBuildingEdit"
+            android:text="Ajouter"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/button_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="validerBuildingAdd">
+        </Button>
+
+
+
+    </LinearLayout>
+
+</ScrollView>
