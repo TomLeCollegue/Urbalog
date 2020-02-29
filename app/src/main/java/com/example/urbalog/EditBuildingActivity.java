@@ -141,6 +141,7 @@ public class EditBuildingActivity extends AppCompatActivity {
                     JsonBuilding.modificationBuilding(newBuilding, name.getHint().toString());
                     Intent intent = new Intent(EditBuildingActivity.this, ListBuildingsActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }
         }

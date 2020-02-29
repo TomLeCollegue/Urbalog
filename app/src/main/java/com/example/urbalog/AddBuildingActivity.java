@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.urbalog.Class.Building;
+import com.example.urbalog.Json.JsonBuilding;
+
 import static java.lang.String.valueOf;
 
 public class AddBuildingActivity extends AppCompatActivity {
@@ -39,13 +42,6 @@ public class AddBuildingActivity extends AppCompatActivity {
         environnemental = findViewById(R.id.environnementalBuildingEdit);
         scoreLogistique = findViewById(R.id.scoreLogistiqueBuildingEdit);
         explicationLogistique = findViewById(R.id.explicationLogistiqueBuildingEdit);
-    }
-
-    public void onBackPressed(){
-        Intent intent = new Intent(AddBuildingActivity.this, ConfigurationActivity.class);
-        startActivity(intent);
-        finish();
-        return;
     }
 
     public void validerBuildingAdd(View view) {
@@ -92,8 +88,24 @@ public class AddBuildingActivity extends AppCompatActivity {
         }
 
         if(finish == true){
-            Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+            if(JsonBuilding.buildingAlreadyInList(name.getText().toString())){
+                Toast.makeText(this, "Il y a deja un batiment avec le meme nom", Toast.LENGTH_SHORT).show();
+            }else{
+                Building newBuilding = new Building(name.getText().toString(), description.getText().toString(), Integer.parseInt(politique.getText().toString()), Integer.parseInt(social.getText().toString()),  Integer.parseInt(economique.getText().toString()), Integer.parseInt(attractivite.getText().toString()), Integer.parseInt(fluidite.getText().toString()), Integer.parseInt(environnemental.getText().toString()), Integer.parseInt(scoreLogistique.getText().toString()), explicationLogistique.getText().toString() );
+                JsonBuilding.writeBuilding(newBuilding);
+                Toast.makeText(this, "Le batiment à été ajouté", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AddBuildingActivity.this, ConfigurationActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
 
+    }
+
+    public void onBackPressed(){
+        Intent intent = new Intent(AddBuildingActivity.this, ConfigurationActivity.class);
+        startActivity(intent);
+        finish();
+        return;
     }
 }
