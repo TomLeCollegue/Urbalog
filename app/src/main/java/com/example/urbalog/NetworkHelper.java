@@ -1,11 +1,14 @@
 package com.example.urbalog;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.util.Pair;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import com.example.urbalog.Class.Bet;
@@ -122,7 +125,19 @@ public class NetworkHelper implements Serializable {
                                {
                                    case CHECK_GOALS:
                                        if(player.checkGoals((ArrayList<Building>)((TransferPackage) dataReceived).second));{
+                                           AlertDialog.Builder scoreDialog = new AlertDialog.Builder(getCurrentPlayerView());
+                                           LayoutInflater inflater = getCurrentPlayerView().getLayoutInflater();
 
+                                           final AlertDialog alertScoreDialog = scoreDialog.create();
+
+                                           scoreDialog.setView(inflater.inflate(R.layout.score_dialog,null))
+                                                  .setNegativeButton(R.string.closeDialog, new DialogInterface.OnClickListener() {
+                                                      @Override
+                                                      public void onClick(DialogInterface dialogInterface, int i) {
+                                                          alertScoreDialog.dismiss();
+                                                      }
+                                                  });
+                                           alertScoreDialog.show();
                                        }
                                        break;
                                    case GAME_OVER:
@@ -313,7 +328,7 @@ public class NetworkHelper implements Serializable {
 
     public NetworkHelper(Context c) {
         appContext = c;
-        NB_PLAYERS = 2;
+        NB_PLAYERS = 1;
         discovering = false;
         advertising = false;
         host = false;

@@ -6,4 +6,5 @@
     <string name="refreshButton">Refresh</string>
     <string name="buildingsButton">Batiments</string>
     <string name="configButton">configuration</string>
+    <string name="closeDialog">Fermer</string>
 </resources>
