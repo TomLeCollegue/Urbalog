@@ -17,8 +17,7 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".CityProgressionActivity"
+        <activity android:name=".EndTurnActivity"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,20 +26,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ConfigurationActivity"
+            android:name=".CityProgressionActivity"
             android:screenOrientation="sensorLandscape">
+
         </activity>
         <activity
-            android:name=".LogisticActivity"
+            android:name=".ConfigurationActivity"
             android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".LogisticActivity"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".EditBuildingActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".PlayerViewActivity"
             android:screenOrientation="landscape" />
