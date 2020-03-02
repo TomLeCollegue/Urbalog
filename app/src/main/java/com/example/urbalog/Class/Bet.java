@@ -8,7 +8,7 @@ public class Bet extends Object implements Serializable {
     private int misePolitique;
     private int miseEco;
     private int miseSocial;
-    private int numbuilding;
+    private int numbuilding;à
 
     public Bet(int numbuilding, int misePolitique, int miseEco, int miseSocial) {
         this.numbuilding = numbuilding;
