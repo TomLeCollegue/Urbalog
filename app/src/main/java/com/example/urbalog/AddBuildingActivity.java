@@ -99,7 +99,6 @@ public class AddBuildingActivity extends AppCompatActivity {
                 finish();
             }
         }
-
     }
 
     public void onBackPressed(){
