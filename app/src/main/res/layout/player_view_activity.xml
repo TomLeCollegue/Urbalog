@@ -56,7 +56,7 @@
                         android:layout_height="match_parent"
                         android:layout_margin="3dp"
                         android:layout_weight="1"
-                        android:background="@drawable/style_market_view_green"
+                        android:background="@drawable/style_market_view"
                         android:orientation="vertical"
                         android:padding="5dp">
 
@@ -1358,8 +1358,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="#dadada"
-                    android:orientation="horizontal"
-                    android:padding="5dp">
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="match_parent"

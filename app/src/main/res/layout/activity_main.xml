@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:background="@color/lightPink">
+    android:background="@color/lightPink"
+    android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,6 +17,7 @@
             android:layout_width="250dp"
             android:layout_height="200dp"
             android:background="@drawable/button_style"
+            android:fontFamily="@font/caracteres_l1_regular"
             android:onClick="changeActivityAdmin"
             android:text="Admin"
             android:textSize="20dp" />
@@ -30,13 +31,14 @@
         android:orientation="vertical">
 
         <Button
-            android:textSize="20dp"
-            android:background="@drawable/button_style"
-            android:onClick="changeActivityPlayer"
             android:id="@+id/buttonJoueur"
             android:layout_width="250dp"
             android:layout_height="200dp"
-            android:text="Joueur" />
+            android:background="@drawable/button_style"
+            android:fontFamily="@font/caractere_l1"
+            android:onClick="changeActivityPlayer"
+            android:text="Joueur"
+            android:textSize="20dp" />
     </LinearLayout>
 </LinearLayout>
 
