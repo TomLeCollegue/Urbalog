@@ -29,6 +29,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:background="@drawable/button_style"
+                    android:fontFamily="@font/caractere_l1"
                     android:text="Annuler la recherche" />
             </FrameLayout>
 
@@ -44,6 +45,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:background="@drawable/button_style"
+                    android:fontFamily="@font/caractere_l1"
                     android:text="Chercher un hôte" />
             </FrameLayout>
 
@@ -72,6 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:fontFamily="@font/caractere_l1"
                     android:text="Disconnected"
                     android:textSize="20dp" />
             </FrameLayout>

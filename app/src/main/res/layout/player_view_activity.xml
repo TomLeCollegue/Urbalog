@@ -37,6 +37,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/caractere_l1"
                         android:text="MARCHE"
                         android:textAlignment="center"
                         android:textSize="30dp" />
@@ -95,6 +96,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_weight="0"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="4/5" />
                                 </LinearLayout>
@@ -129,6 +131,7 @@
                                         android:id="@+id/text_eco_resssources_building_1"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="4/5" />
                                 </LinearLayout>
@@ -163,6 +166,7 @@
                                         android:id="@+id/text_social_ressources_building_1"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="4/5" />
                                 </LinearLayout>
@@ -181,8 +185,9 @@
                                 android:id="@+id/text_name_building_1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/caractere_l1"
                                 android:text="Magasin"
-                                android:textSize="10sp" />
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -221,6 +226,7 @@
                                         android:id="@+id/text_attract_building_1"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="+5" />
                                 </LinearLayout>
@@ -255,6 +261,7 @@
                                         android:id="@+id/text_envi_building_1"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="-3" />
                                 </LinearLayout>
@@ -289,6 +296,7 @@
                                         android:id="@+id/text_trafic_building_1"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="0" />
                                 </LinearLayout>
@@ -343,6 +351,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_weight="0"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="4/5" />
                                 </LinearLayout>
@@ -377,6 +386,7 @@
                                         android:id="@+id/text_eco_resssources_building_2"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="4/5" />
                                 </LinearLayout>
@@ -411,6 +421,7 @@
                                         android:id="@+id/text_social_ressources_building_2"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="4/5" />
                                 </LinearLayout>
@@ -430,8 +441,9 @@
                                 android:id="@+id/text_name_building_2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/caractere_l1"
                                 android:text="Magasin"
-                                android:textSize="10sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -469,6 +481,7 @@
                                         android:id="@+id/text_attract_building_2"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="+5" />
                                 </LinearLayout>
@@ -503,6 +516,7 @@
                                         android:id="@+id/text_envi_building_2"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="-3" />
                                 </LinearLayout>
@@ -537,6 +551,7 @@
                                         android:id="@+id/text_trafic_building_2"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="0" />
                                 </LinearLayout>
@@ -591,6 +606,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_weight="0"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="4/5" />
                                 </LinearLayout>
@@ -625,6 +641,7 @@
                                         android:id="@+id/text_eco_resssources_building_3"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="4/5" />
                                 </LinearLayout>
@@ -659,6 +676,7 @@
                                         android:id="@+id/text_social_ressources_building_3"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="4/5" />
                                 </LinearLayout>
@@ -677,8 +695,9 @@
                                 android:id="@+id/text_name_building_3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/caractere_l1"
                                 android:text="Magasin"
-                                android:textSize="10sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -716,6 +735,7 @@
                                         android:id="@+id/text_attract_building_3"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="+5" />
                                 </LinearLayout>
@@ -750,6 +770,7 @@
                                         android:id="@+id/text_envi_building_3"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="-3" />
                                 </LinearLayout>
@@ -784,6 +805,7 @@
                                         android:id="@+id/text_trafic_building_3"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="0" />
                                 </LinearLayout>
@@ -838,6 +860,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_weight="0"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="4/5" />
                                 </LinearLayout>
@@ -872,6 +895,7 @@
                                         android:id="@+id/text_eco_resssources_building_4"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="4/5" />
                                 </LinearLayout>
@@ -906,6 +930,7 @@
                                         android:id="@+id/text_social_ressources_building_4"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="4/5" />
                                 </LinearLayout>
@@ -924,8 +949,9 @@
                                 android:id="@+id/text_name_building_4"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/caractere_l1"
                                 android:text="Magasin"
-                                android:textSize="10sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -963,6 +989,7 @@
                                         android:id="@+id/text_attract_building_4"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="+5" />
                                 </LinearLayout>
@@ -997,6 +1024,7 @@
                                         android:id="@+id/text_envi_building_4"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="-3" />
                                 </LinearLayout>
@@ -1031,6 +1059,7 @@
                                         android:id="@+id/text_trafic_building_4"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="0" />
                                 </LinearLayout>
@@ -1085,6 +1114,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_weight="0"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="4/5" />
                                 </LinearLayout>
@@ -1119,6 +1149,7 @@
                                         android:id="@+id/text_eco_resssources_building_5"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="4/5" />
                                 </LinearLayout>
@@ -1153,6 +1184,7 @@
                                         android:id="@+id/text_social_ressources_building_5"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="4/5" />
                                 </LinearLayout>
@@ -1171,8 +1203,9 @@
                                 android:id="@+id/text_name_building_5"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/caractere_l1"
                                 android:text="Magasin"
-                                android:textSize="10sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -1210,6 +1243,7 @@
                                         android:id="@+id/text_attract_building_5"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="+5" />
                                 </LinearLayout>
@@ -1244,6 +1278,7 @@
                                         android:id="@+id/text_envi_building_5"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="-3" />
                                 </LinearLayout>
@@ -1278,6 +1313,7 @@
                                         android:id="@+id/text_trafic_building_5"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:fontFamily="@font/caractere_l1"
                                         android:gravity="center"
                                         android:text="0" />
                                 </LinearLayout>
@@ -1309,6 +1345,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:fontFamily="@font/caractere_l1"
                         android:gravity="center"
                         android:text="Score de la Ville"
                         android:textAlignment="center"
@@ -1368,6 +1405,7 @@
                                 android:id="@+id/text_score_city_envi"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:fontFamily="@font/caractere_l1"
                                 android:gravity="center_vertical"
                                 android:text="+5" />
                         </LinearLayout>
@@ -1403,6 +1441,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:fontFamily="@font/caractere_l1"
                                 android:gravity="center_vertical"
                                 android:text="+2" />
                         </LinearLayout>
@@ -1437,6 +1476,7 @@
                                 android:id="@+id/text_score_city_attract"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:fontFamily="@font/caractere_l1"
                                 android:gravity="center_vertical"
                                 android:text="-1" />
                         </LinearLayout>
@@ -1491,6 +1531,7 @@
                         android:id="@+id/text_title_role"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/caractere_l1"
                         android:text="COMMERCANT"
                         android:textAlignment="center"
                         android:textSize="30dp" />
@@ -1514,6 +1555,7 @@
                             android:id="@+id/text_maintenir"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/caractere_l2"
                             android:text="MAINTENIR"
                             android:textAlignment="center"
                             android:textSize="15dp" />
@@ -1537,6 +1579,7 @@
                             android:id="@+id/text_ameliorer"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/caractere_l2"
                             android:text="AMELIORER"
                             android:textAlignment="center"
                             android:textSize="15dp" />
@@ -1560,6 +1603,7 @@
                         android:id="@+id/title_objective"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/caractere_l2"
                         android:text="OBJECTIF"
                         android:textAlignment="center"
                         android:textSize="18dp" />
@@ -1568,6 +1612,7 @@
                         android:id="@+id/text_text_objective"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/ariali"
                         android:text="L'objectif est atteint quand ces deux conditions sont satisfaites. Le joueur marque alors un point."
                         android:textAlignment="center" />
                 </LinearLayout>
@@ -1593,14 +1638,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="bottom"
+                        android:gravity="center_vertical"
                         android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/ico_ressource_left_role"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:padding="5dp"
                             android:src="@mipmap/img_ressource_political_foreground"></ImageView>
 
@@ -1608,6 +1652,7 @@
                             android:id="@+id/text_ressource_left_role"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/caractere_l1"
                             android:gravity="center_horizontal"
                             android:text="4" />
                     </LinearLayout>
@@ -1616,14 +1661,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="bottom"
+                        android:gravity="center_vertical"
                         android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/ico_ressource_right_role"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:padding="5dp"
                             android:src="@mipmap/img_ressource_eco_foreground"></ImageView>
 
@@ -1631,6 +1675,7 @@
                             android:id="@+id/text_ressource_right_role"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/caractere_l1"
                             android:gravity="center_horizontal"
                             android:text="6" />
                     </LinearLayout>
@@ -1645,6 +1690,7 @@
                         android:id="@+id/text_score_player"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:fontFamily="@font/caractere_l1"
                         android:gravity="center|center"
                         android:text="Score" />
                 </LinearLayout>
