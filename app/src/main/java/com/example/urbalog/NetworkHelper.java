@@ -10,6 +10,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.example.urbalog.Class.Bet;
@@ -125,22 +126,18 @@ public class NetworkHelper implements Serializable {
                                switch((Signal)((TransferPackage) dataReceived).first)
                                {
                                    case CHECK_GOALS:
-                                       if(player.checkGoals((ArrayList<Building>)((TransferPackage) dataReceived).second));{
-                                           AlertDialog.Builder scoreDialog = new AlertDialog.Builder(getCurrentPlayerView());
+                                       if(player.checkGoals((ArrayList<Building>)((TransferPackage) dataReceived).second)){
+                                           final AlertDialog.Builder scoreDialog = new AlertDialog.Builder(getCurrentPlayerView());
                                            LayoutInflater inflater = getCurrentPlayerView().getLayoutInflater();
-
-                                           final AlertDialog alertScoreDialog = scoreDialog.create();
-                                           int width = LinearLayout.LayoutParams.MATCH_PARENT;
-                                           int height = LinearLayout.LayoutParams.MATCH_PARENT;
-
 
                                            scoreDialog.setView(inflater.inflate(R.layout.score_dialog,null))
                                                   .setNegativeButton(R.string.closeDialog, new DialogInterface.OnClickListener() {
                                                       @Override
                                                       public void onClick(DialogInterface dialogInterface, int i) {
-                                                          alertScoreDialog.dismiss();
+                                                          dialogInterface.dismiss();
                                                       }
                                                   });
+                                           final AlertDialog alertScoreDialog = scoreDialog.create();
                                            alertScoreDialog.show();
                                        }
                                        break;

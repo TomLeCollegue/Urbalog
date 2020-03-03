@@ -193,8 +193,7 @@ public class Building implements Serializable {
 
     public boolean isFilled()
     {
-        if(
-                //(avancementCoutSocial == coutSocial)
+        if(//(avancementCoutSocial == coutSocial)
                         //&&
                         (avancementCoutPolitique == coutPolitique)
                         && (avancementCoutEconomique == coutEconomique))
