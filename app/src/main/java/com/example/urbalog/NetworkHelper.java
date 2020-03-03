@@ -129,7 +129,7 @@ public class NetworkHelper implements Serializable {
                                        if(player.checkGoals((ArrayList<Building>)((TransferPackage) dataReceived).second)){
 
                                            final AlertDialog.Builder scoreDialog = new AlertDialog.Builder(getCurrentPlayerView());
-                                           
+
                                            LayoutInflater inflater = getCurrentPlayerView().getLayoutInflater();
 
                                            scoreDialog.setView(inflater.inflate(R.layout.score_dialog,null))
