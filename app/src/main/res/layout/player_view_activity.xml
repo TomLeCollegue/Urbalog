@@ -55,7 +55,7 @@
                         android:layout_height="match_parent"
                         android:layout_margin="3dp"
                         android:layout_weight="1"
-                        android:background="@drawable/layout_border"
+                        android:background="#f5e7da"
                         android:orientation="vertical">
 
                         <LinearLayout
