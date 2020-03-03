@@ -24,10 +24,12 @@
 
                 <Button
                     android:id="@+id/button_cancel_research"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Annuler la recherche"
-                    android:layout_gravity="center"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button_style"
+                    android:text="Annuler la recherche" />
             </FrameLayout>
 
             <FrameLayout
@@ -37,10 +39,12 @@
 
                 <Button
                     android:id="@+id/button_research"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Chercher un hôte"
-                    android:layout_gravity="center"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button_style"
+                    android:text="Chercher un hôte" />
             </FrameLayout>
 
             <FrameLayout
@@ -50,10 +54,12 @@
 
                 <ImageButton
                     android:id="@+id/button_refresh_list"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/stat_notify_sync_noanim"
-                    android:layout_gravity="center"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button_style"
+                    app:srcCompat="@android:drawable/stat_notify_sync_noanim" />
             </FrameLayout>
 
             <FrameLayout
@@ -66,7 +72,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Disconnected" />
+                    android:text="Disconnected"
+                    android:textSize="20dp" />
             </FrameLayout>
         </LinearLayout>
 
