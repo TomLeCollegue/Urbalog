@@ -6,6 +6,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,13 +31,18 @@ import com.example.urbalog.R;
 
 import java.util.Arrays;
 
-public class FormAdapter extends PagerAdapter implements NumberPicker.OnValueChangeListener{
+public class FormAdapter extends PagerAdapter{
 
     private Context context;
     private LayoutInflater layoutInflater;
     private Button pcs;
     private NumberPicker age;
     private EditText response;
+
+    private int finalAge;
+    private String finalName;
+    private String finalPcs;
+
 
     public FormAdapter(Context context){
         this.context = context;
@@ -66,7 +74,6 @@ public class FormAdapter extends PagerAdapter implements NumberPicker.OnValueCha
     };
 
 
-
     @Override
     public int getCount() {
         return slide_titles.length;
@@ -87,6 +94,22 @@ public class FormAdapter extends PagerAdapter implements NumberPicker.OnValueCha
         title.setText(slide_titles[position]);
 
         response = view.findViewById(R.id.slide_res);
+        response.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                finalName = s.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         pcs = view.findViewById(R.id.button_form_pcs);
         pcs.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +124,7 @@ public class FormAdapter extends PagerAdapter implements NumberPicker.OnValueCha
                             public void onClick(DialogInterface dialog, int which) {
                                 String selectedItem = Arrays.asList(slide_pcs).get(which);
                                 pcs.setText(selectedItem);
+                                finalPcs = selectedItem;
                             }
                         });
                 builder.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
@@ -119,6 +143,12 @@ public class FormAdapter extends PagerAdapter implements NumberPicker.OnValueCha
         age = (NumberPicker) view.findViewById(R.id.slide_age);
         age.setMinValue(1);
         age.setMaxValue(99);
+        age.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                finalAge = newVal;
+            }
+        });
 
         switch(position){
             case 0:
@@ -146,9 +176,15 @@ public class FormAdapter extends PagerAdapter implements NumberPicker.OnValueCha
         container.removeView((LinearLayout)object);
     }
 
+    public int getAge(){
+        return finalAge;
+    }
 
-    @Override
-    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-        Toast.makeText(context, String.valueOf(newVal), Toast.LENGTH_SHORT).show();
+    public String getName(){
+        return finalName;
+    }
+
+    public String getPcs(){
+        return finalPcs;
     }
 }
