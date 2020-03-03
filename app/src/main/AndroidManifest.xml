@@ -26,7 +26,7 @@
         </activity>
         <activity
             android:name=".EditBuildingActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="sensorLandscape">
@@ -38,19 +38,19 @@
         </activity>
         <activity
             android:name=".PlayerViewActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".AdminConnectionActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".PlayerConnexionActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ListBuildingsActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".EndGameActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="sensorLandscape" />
 
         <meta-data
             android:name="preloaded_fonts"
