@@ -184,10 +184,14 @@
                             <Button
                                 android:id="@+id/text_name_building_1"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="50dp"
                                 android:fontFamily="@font/caractere_l1"
                                 android:text="Magasin"
-                                android:textSize="14sp" />
+                                android:autoSizeTextType="uniform"
+                                android:autoSizeMinTextSize="5sp"
+                                android:autoSizeMaxTextSize="100sp"
+                                android:autoSizeStepGranularity="2sp"
+                                />
 
                         </LinearLayout>
 
@@ -440,10 +444,13 @@
                             <Button
                                 android:id="@+id/text_name_building_2"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="50dp"
                                 android:fontFamily="@font/caractere_l1"
                                 android:text="Magasin"
-                                android:textSize="14sp" />
+                                android:autoSizeTextType="uniform"
+                                android:autoSizeMinTextSize="5sp"
+                                android:autoSizeMaxTextSize="100sp"
+                                android:autoSizeStepGranularity="2sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -694,10 +701,14 @@
                             <Button
                                 android:id="@+id/text_name_building_3"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="50dp"
                                 android:fontFamily="@font/caractere_l1"
                                 android:text="Magasin"
-                                android:textSize="14sp" />
+                                android:autoSizeTextType="uniform"
+                                android:autoSizeMinTextSize="5sp"
+                                android:autoSizeMaxTextSize="100sp"
+                                android:autoSizeStepGranularity="2sp"
+                                />
                         </LinearLayout>
 
                         <LinearLayout
@@ -948,10 +959,14 @@
                             <Button
                                 android:id="@+id/text_name_building_4"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="50dp"
                                 android:fontFamily="@font/caractere_l1"
                                 android:text="Magasin"
-                                android:textSize="14sp" />
+                                android:autoSizeTextType="uniform"
+                                android:autoSizeMinTextSize="5sp"
+                                android:autoSizeMaxTextSize="100sp"
+                                android:autoSizeStepGranularity="2sp"
+                                />
                         </LinearLayout>
 
                         <LinearLayout
@@ -1202,10 +1217,14 @@
                             <Button
                                 android:id="@+id/text_name_building_5"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="50dp"
                                 android:fontFamily="@font/caractere_l1"
                                 android:text="Magasin"
-                                android:textSize="14sp" />
+                                android:autoSizeTextType="uniform"
+                                android:autoSizeMinTextSize="5sp"
+                                android:autoSizeMaxTextSize="15sp"
+                                android:autoSizeStepGranularity="2sp"
+                                />
                         </LinearLayout>
 
                         <LinearLayout
@@ -1491,11 +1510,16 @@
                         <Button
                             android:id="@+id/button_turn"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_weight="1"
+
+                            android:fontFamily="@font/caractere_l1"
                             android:text="Tour suivant"
-                            android:textSize="10sp" />
+                            android:autoSizeTextType="uniform"
+                            android:autoSizeMinTextSize="5sp"
+                            android:autoSizeMaxTextSize="30sp"
+                            android:autoSizeStepGranularity="2sp"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -1529,11 +1553,14 @@
                     <TextView
                         android:id="@+id/text_title_role"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="35dp"
                         android:fontFamily="@font/caractere_l1"
                         android:text="COMMERCANT"
                         android:textAlignment="center"
-                        android:textSize="30dp" />
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMinTextSize="12sp"
+                        android:autoSizeMaxTextSize="100sp"
+                        android:autoSizeStepGranularity="2sp"/>
                 </LinearLayout>
 
                 <LinearLayout
