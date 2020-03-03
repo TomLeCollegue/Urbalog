@@ -52,6 +52,9 @@
         <activity
             android:name=".EndGameActivity"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".FormActivity"
+            android:screenOrientation="sensorLandscape"></activity>
     </application>
 
 </manifest>
