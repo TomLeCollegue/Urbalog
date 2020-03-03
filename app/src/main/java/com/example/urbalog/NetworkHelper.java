@@ -133,7 +133,7 @@ public class NetworkHelper implements Serializable {
                                            LayoutInflater inflater = getCurrentPlayerView().getLayoutInflater();
 
                                            scoreDialog.setView(inflater.inflate(R.layout.score_dialog,null))
-                                                  .setNegativeButton(R.string.closeDialog, new DialogInterface.OnClickListener() {
+                                                  .setNegativeButton("Fermé", new DialogInterface.OnClickListener() {
                                                       @Override
                                                       public void onClick(DialogInterface dialogInterface, int i) {
                                                           dialogInterface.dismiss();

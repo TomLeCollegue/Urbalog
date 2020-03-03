@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,19 +14,19 @@ import com.example.urbalog.Json.JsonBuilding;
 
 import static java.lang.String.valueOf;
 
-public class EditBuildingActivity extends AppCompatActivity {
+public class AddBuildingActivity extends AppCompatActivity {
 
-    private TextView name;
-    private TextView description;
-    private TextView politique;
-    private TextView social;
-    private TextView economique;
-    private TextView attractivite;
-    private TextView fluidite;
-    private TextView environnemental;
+    public TextView name;
+    public TextView description;
+    public TextView politique;
+    public TextView social;
+    public TextView economique;
+    public TextView attractivite;
+    public TextView fluidite;
+    public TextView environnemental;
 
-    private TextView scoreLogistique;
-    private TextView explicationLogistique;
+    public TextView scoreLogistique;
+    public TextView explicationLogistique;
 
     private Button mbPolitiqueBuilding;
     private Button pbPolitiqueBuilding;
@@ -46,28 +45,17 @@ public class EditBuildingActivity extends AppCompatActivity {
     private Button mbScoreLogistiqueBuilding;
     private Button pbScoreLogistiqueBuilding;
 
-
-
-    public Building building;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        setContentView(R.layout.activity_edit_building);
-
-        building = (Building) getIntent().getSerializableExtra("building");
+        setContentView(R.layout.activity_add_building);
 
         name = findViewById(R.id.nameBuildingEdit);
-        name.setText(building.getName());
-        name.setHint(building.getName());
 
         description = findViewById(R.id.descriptionBuildingEdit);
-        description.setText(building.getDescription());
-        description.setHint(building.getName());
 
         politique = findViewById(R.id.politiqueBuildingEdit);
-        politique.setText(valueOf(building.getCoutPolitique()));
+        politique.setText("0");
         mbPolitiqueBuilding = findViewById(R.id.mbPolitiqueBuilding);
         mbPolitiqueBuilding.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,9 +71,8 @@ public class EditBuildingActivity extends AppCompatActivity {
             }
         });
 
-
         social = findViewById(R.id.socialBuildingEdit);
-        social.setText(valueOf(building.getCoutSocial()));
+        social.setText("0");
         mbSocialBuilding = findViewById(R.id.mbSocialBuilding);
         mbSocialBuilding.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,9 +88,8 @@ public class EditBuildingActivity extends AppCompatActivity {
             }
         });
 
-
         economique = findViewById(R.id.economiqueBuildingEdit);
-        economique.setText(valueOf(building.getCoutEconomique()));
+        economique.setText("0");
         mbEconomiqueBuilding = findViewById(R.id.mbEconomiqueBuilding);
         mbEconomiqueBuilding.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,9 +105,8 @@ public class EditBuildingActivity extends AppCompatActivity {
             }
         });
 
-
         attractivite = findViewById(R.id.attractiviteBuildingEdit);
-        attractivite.setText(valueOf(building.getEffetAttractivite()));
+        attractivite.setText("0");
         mbAttractiviteBuilding = findViewById(R.id.mbAttractiviteBuilding);
         mbAttractiviteBuilding.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,9 +122,8 @@ public class EditBuildingActivity extends AppCompatActivity {
             }
         });
 
-
         fluidite = findViewById(R.id.fluiditeBuildingEdit);
-        fluidite.setText(valueOf(building.getEffetFluidite()));
+        fluidite.setText("0");
         mbFluiditeBuilding = findViewById(R.id.mbFluiditeBuilding);
         mbFluiditeBuilding.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,9 +139,8 @@ public class EditBuildingActivity extends AppCompatActivity {
             }
         });
 
-
         environnemental = findViewById(R.id.environnementalBuildingEdit);
-        environnemental.setText(valueOf(building.getEffetEnvironnemental()));
+        environnemental.setText("0");
         mbEnvironnementalBuilding = findViewById(R.id.mbEnvironnementalBuilding);
         mbEnvironnementalBuilding.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,7 +157,7 @@ public class EditBuildingActivity extends AppCompatActivity {
         });
 
         scoreLogistique = findViewById(R.id.scoreLogistiqueBuildingEdit);
-        scoreLogistique.setText(valueOf(building.getScoreLogistique()));
+        scoreLogistique.setText("0");
         mbScoreLogistiqueBuilding = findViewById(R.id.mbScoreLogistiqueBuilding);
         mbScoreLogistiqueBuilding.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,24 +173,45 @@ public class EditBuildingActivity extends AppCompatActivity {
             }
         });
 
-
         explicationLogistique = findViewById(R.id.explicationLogistiqueBuildingEdit);
-        explicationLogistique.setText(building.getExplicationLogistique());
-        explicationLogistique.setHint(building.getExplicationLogistique());
     }
 
-    public void validerBuildingEdit(View view) {
+    public void validerBuildingAdd(View view) {
         boolean finish = true;
-        if(name.getText().toString().matches("") ||
-                name.getText().toString().matches(" ") ||
-                name.getText().toString().matches("\n")){
+        if(name.getText().toString().matches("")){
             name.setError("champs vide");
             finish = false;
         }
-        if(description.getText().toString().matches("") ||
-                description.getText().toString().matches(" ") ||
-                description.getText().toString().matches("\n")){
+        if(description.getText().toString().matches("")){
             description.setError("champs vide");
+            finish = false;
+        }
+        if(politique.getText().toString().matches("")){
+            politique.setError("champs vide");
+            finish = false;
+        }
+        if(social.getText().toString().matches("")){
+            social.setError("champs vide");
+            finish = false;
+        }
+        if(economique.getText().toString().matches("")){
+            economique.setError("champs vide");
+            finish = false;
+        }
+        if(attractivite.getText().toString().matches("")){
+            attractivite.setError("champs vide");
+            finish = false;
+        }
+        if(fluidite.getText().toString().matches("")){
+            fluidite.setError("champs vide");
+            finish = false;
+        }
+        if(environnemental.getText().toString().matches("")){
+            environnemental.setError("champs vide");
+            finish = false;
+        }
+        if(scoreLogistique.getText().toString().matches("")){
+            scoreLogistique.setError("champs vide");
             finish = false;
         }
         if(explicationLogistique.getText().toString().matches("")){
@@ -216,49 +220,23 @@ public class EditBuildingActivity extends AppCompatActivity {
         }
 
         if(finish == true){
-            if((building.getName()).equals(name.getText().toString()))
-            {
+            if(JsonBuilding.buildingAlreadyInList(name.getText().toString())){
+                name.setError("Il y a déja un batiment avec le même nom");
+            }else{
                 Building newBuilding = new Building(name.getText().toString(), description.getText().toString(), Integer.parseInt(politique.getText().toString()), Integer.parseInt(social.getText().toString()),  Integer.parseInt(economique.getText().toString()), Integer.parseInt(attractivite.getText().toString()), Integer.parseInt(fluidite.getText().toString()), Integer.parseInt(environnemental.getText().toString()), Integer.parseInt(scoreLogistique.getText().toString()), explicationLogistique.getText().toString() );
-                JsonBuilding.modificationBuilding(newBuilding, name.getHint().toString());
-                Intent intent = new Intent(EditBuildingActivity.this, ListBuildingsActivity.class);
+                JsonBuilding.writeBuilding(newBuilding);
+                Toast.makeText(this, "Le batiment à été ajouté", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AddBuildingActivity.this, ConfigurationActivity.class);
                 startActivity(intent);
                 finish();
-            }
-            else{
-                if(JsonBuilding.buildingAlreadyInList(name.getText().toString())){
-                    name.setError("Il y a déja un batiment avec le même nom");
-                }
-                else{
-                    Toast.makeText(this, "Le batiment a été modifié", Toast.LENGTH_SHORT).show();
-                    Building newBuilding = new Building(name.getText().toString(), description.getText().toString(), Integer.parseInt(politique.getText().toString()), Integer.parseInt(social.getText().toString()),  Integer.parseInt(economique.getText().toString()), Integer.parseInt(attractivite.getText().toString()), Integer.parseInt(fluidite.getText().toString()), Integer.parseInt(environnemental.getText().toString()), Integer.parseInt(scoreLogistique.getText().toString()), explicationLogistique.getText().toString());
-                    JsonBuilding.modificationBuilding(newBuilding, name.getHint().toString());
-                    Intent intent = new Intent(EditBuildingActivity.this, ListBuildingsActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
             }
         }
     }
 
-
     public void onBackPressed(){
-        Intent intent = new Intent(EditBuildingActivity.this, ListBuildingsActivity.class);
+        Intent intent = new Intent(AddBuildingActivity.this, ConfigurationActivity.class);
         startActivity(intent);
         finish();
         return;
-    }
-
-    public void initBuildingEdit(View view) {
-        name.setText(building.getName());
-        description.setText(building.getDescription());
-        politique.setText(valueOf(building.getCoutPolitique()));
-        social.setText(valueOf(building.getCoutSocial()));
-        economique.setText(valueOf(building.getCoutEconomique()));
-        attractivite.setText(valueOf(building.getEffetAttractivite()));
-        fluidite.setText(valueOf(building.getEffetFluidite()));
-        environnemental.setText(valueOf(building.getEffetEnvironnemental()));
-        scoreLogistique.setText(valueOf(building.getScoreLogistique()));
-        explicationLogistique.setText(building.getExplicationLogistique());
-        Toast.makeText(this, "Valeurs réinitialisées", Toast.LENGTH_SHORT).show();
     }
 }

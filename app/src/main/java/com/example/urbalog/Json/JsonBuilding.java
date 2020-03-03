@@ -117,7 +117,7 @@ public class JsonBuilding {
                 "      \"explicationLogistique\": \"Ces structures créent des obstacles ponctuels pour la livraison en limitant l'accès au trottoir.\"\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"name\": \"Terasse\",\n" +
+                "      \"name\": \"Terrasse\",\n" +
                 "      \"description\": \"Terasse de café ou de restaurant\",\n" +
                 "      \"Couts\": {\n" +
                 "        \"politique\": 1,\n" +

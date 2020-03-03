@@ -48,12 +48,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <ImageButton
-                    android:id="@+id/button_refresh_list"
+                <TextView
+                    android:id="@+id/player_name"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/stat_notify_sync_noanim"
-                    android:layout_gravity="center"/>
+                    android:layout_height="wrap_content">
+                </TextView>
             </FrameLayout>
 
             <FrameLayout

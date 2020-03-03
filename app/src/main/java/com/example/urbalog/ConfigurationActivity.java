@@ -15,6 +15,7 @@ public class ConfigurationActivity extends AppCompatActivity {
 
     private Button modificationBuilding;
     private Button initBuilding;
+    private Button addBuilding;
     private Context mContext;
 
     @Override
@@ -26,6 +27,7 @@ public class ConfigurationActivity extends AppCompatActivity {
 
         modificationBuilding = (Button) findViewById(R.id.modificationBuilding);
         initBuilding = (Button) findViewById(R.id.initBuilding);
+        addBuilding = (Button) findViewById(R.id.addBuilding);
 
         modificationBuilding.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +43,15 @@ public class ConfigurationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 JsonBuilding.recreate(mContext);
                 Toast.makeText(mContext, "Les batiments on été réinitialisé", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        addBuilding.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ConfigurationActivity.this, AddBuildingActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 

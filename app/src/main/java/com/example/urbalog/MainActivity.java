@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void changeActivityPlayer(View view) {
-        Intent myIntent = new Intent(this, PlayerConnexionActivity.class);
+        Intent myIntent = new Intent(this, FormActivity.class);
         startActivity(myIntent);
     }
 
