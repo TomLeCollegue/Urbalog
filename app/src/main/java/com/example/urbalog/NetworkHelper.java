@@ -127,7 +127,9 @@ public class NetworkHelper implements Serializable {
                                {
                                    case CHECK_GOALS:
                                        if(player.checkGoals((ArrayList<Building>)((TransferPackage) dataReceived).second)){
+
                                            final AlertDialog.Builder scoreDialog = new AlertDialog.Builder(getCurrentPlayerView());
+                                           
                                            LayoutInflater inflater = getCurrentPlayerView().getLayoutInflater();
 
                                            scoreDialog.setView(inflater.inflate(R.layout.score_dialog,null))
@@ -137,8 +139,11 @@ public class NetworkHelper implements Serializable {
                                                           dialogInterface.dismiss();
                                                       }
                                                   });
+
                                            final AlertDialog alertScoreDialog = scoreDialog.create();
+
                                            alertScoreDialog.show();
+
                                        }
                                        break;
                                    case GAME_OVER:
