@@ -1,9 +1,10 @@
 package com.example.urbalog.Class;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Player {
+public class Player implements Serializable {
 
     private String name;
     private Integer age;
@@ -11,6 +12,7 @@ public class Player {
     private Integer score;
     private Role role;
     private Integer[][] financementRessource;
+
 
     public Player(String name, Integer age, String job, Integer score, Role role, Integer[][] financementRessource) {
         this.name = name;

@@ -1,39 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".EditBuildingActivity">
-
     <ScrollView
-        android:layout_margin="20dp"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:layout_margin="20dp"
+            android:paddingBottom="60dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
 
-            <EditText
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:id="@+id/nameBuildingEdit"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="name">
-            </EditText>
+                android:layout_height="wrap_content">
 
-            <EditText
-                android:layout_marginTop="40dp"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:id="@+id/descriptionBuildingEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="description">
-            </EditText>
+                <TextView
+                    android:textSize="30dp"
+                    android:textColor="@color/dark"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:layout_width="170dp"
+                    android:layout_height="match_parent"
+                    android:text="Nom :">
+                </TextView>
+
+                <EditText
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:id="@+id/nameBuildingEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="name">
+                </EditText>
+            </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="30dp"
+            android:textColor="@color/dark"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_width="170dp"
+            android:layout_height="match_parent"
+            android:text="Description :">
+        </TextView>
+
+        <EditText
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:id="@+id/descriptionBuildingEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="description">
+        </EditText>
+
+    </LinearLayout>
 
 
             <TextView
@@ -43,35 +73,202 @@
                 android:text="Couts : ">
             </TextView>
 
-            <EditText
-                android:inputType="numberSigned"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:id="@+id/politiqueBuildingEdit"
+            <LinearLayout
+                android:weightSum="10"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="0">
-            </EditText>
+                android:layout_height="40dp">
 
-            <EditText
-                android:inputType="numberSigned"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:id="@+id/socialBuildingEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="0">
-            </EditText>
+                <TextView
+                    android:gravity="center"
+                    android:textSize="30dp"
+                    android:textColor="@color/dark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Politique :"
+                    android:layout_weight="3">
+                </TextView>
 
-            <EditText
-                android:inputType="numberSigned"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:id="@+id/economiqueBuildingEdit"
+                <LinearLayout
+                    android:weightSum="5"
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6">
+
+                    <View
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                    </View>
+
+                    <Button
+                        android:textAlignment="center"
+                        android:textColor="@color/dark"
+                        android:textSize="30dp"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/mbPolitiqueBuilding"
+                        android:text="-"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                    </Button>
+
+
+                    <TextView
+                        android:textSize="25dp"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:id="@+id/politiqueBuildingEdit"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:hint="0">
+                    </TextView>
+
+                    <Button
+                        android:textAlignment="center"
+                        android:textColor="@color/dark"
+                        android:textSize="30dp"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/pbPolitiqueBuilding"
+                        android:text="+"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                    </Button>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:weightSum="10"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="0">
-            </EditText>
+                android:layout_height="40dp">
+                <TextView
+                    android:gravity="center"
+                    android:textSize="30dp"
+                    android:textColor="@color/dark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Social :"
+                    android:layout_weight="3">
+                </TextView>
+
+                <LinearLayout
+                    android:weightSum="5"
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6">
+
+                    <View
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                    </View>
+
+                    <Button
+                        android:textAlignment="center"
+                        android:textColor="@color/dark"
+                        android:textSize="30dp"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/mbSocialBuilding"
+                        android:text="-"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                    </Button>
+
+                    <TextView
+                        android:textSize="25dp"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:id="@+id/socialBuildingEdit"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:hint="0">
+                    </TextView>
+
+                    <Button
+                        android:textAlignment="center"
+                        android:textColor="@color/dark"
+                        android:textSize="30dp"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/pbSocialBuilding"
+                        android:text="+"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                    </Button>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:weightSum="10"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+                <TextView
+                    android:gravity="center"
+                    android:textSize="30dp"
+                    android:textColor="@color/dark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Economique :"
+                    android:layout_weight="3">
+                </TextView>
+
+                <LinearLayout
+                    android:weightSum="5"
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6">
+
+                    <View
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                    </View>
+
+                    <Button
+                        android:textAlignment="center"
+                        android:textColor="@color/dark"
+                        android:textSize="30dp"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/mbEconomiqueBuilding"
+                        android:text="-"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                    </Button>
+
+                    <TextView
+                        android:textSize="25dp"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:id="@+id/economiqueBuildingEdit"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:hint="0">
+                    </TextView>
+
+                    <Button
+                        android:textAlignment="center"
+                        android:textColor="@color/dark"
+                        android:textSize="30dp"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/pbEconomiqueBuilding"
+                        android:text="+"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                    </Button>
+                </LinearLayout>
+            </LinearLayout>
 
 
 
@@ -82,72 +279,350 @@
                 android:text="Effets : ">
             </TextView>
 
-            <EditText
-                android:inputType="numberSigned"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:id="@+id/attractiviteBuildingEdit"
+            <LinearLayout
+                android:weightSum="10"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="0">
-            </EditText>
+                android:layout_height="40dp">
+                <TextView
+                    android:gravity="center"
+                    android:textSize="30dp"
+                    android:textColor="@color/dark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Attractivité :"
+                    android:layout_weight="3">
+                </TextView>
 
-            <EditText
-                android:inputType="numberSigned"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:id="@+id/fluiditeBuildingEdit"
+                <LinearLayout
+                    android:weightSum="5"
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6">
+
+                    <View
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                    </View>
+
+                    <Button
+                        android:textAlignment="center"
+                        android:textColor="@color/dark"
+                        android:textSize="30dp"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/mbAttractiviteBuilding"
+                        android:text="-"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                    </Button>
+
+                    <TextView
+                        android:textSize="25dp"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:id="@+id/attractiviteBuildingEdit"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:hint="0">
+                    </TextView>
+
+                    <Button
+                        android:textAlignment="center"
+                        android:textColor="@color/dark"
+                        android:textSize="30dp"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/pbAttractiviteBuilding"
+                        android:text="+"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                    </Button>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:weightSum="10"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="0">
-            </EditText>
+                android:layout_height="40dp">
+                <TextView
+                    android:gravity="center"
+                    android:textSize="30dp"
+                    android:textColor="@color/dark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Fluidité :"
+                    android:layout_weight="3">
+                </TextView>
 
-            <EditText
-                android:inputType="numberSigned"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:id="@+id/environnementalBuildingEdit"
+                <LinearLayout
+                    android:weightSum="5"
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6">
+
+                    <View
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                    </View>
+
+                    <Button
+                        android:textAlignment="center"
+                        android:textColor="@color/dark"
+                        android:textSize="30dp"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/mbFluiditeBuilding"
+                        android:text="-"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                    </Button>
+
+                    <TextView
+                        android:textSize="25dp"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:id="@+id/fluiditeBuildingEdit"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:hint="0">
+                    </TextView>
+
+                    <Button
+                        android:textAlignment="center"
+                        android:textColor="@color/dark"
+                        android:textSize="30dp"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/pbFluiditeBuilding"
+                        android:text="+"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                    </Button>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:weightSum="10"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="0">
-            </EditText>
+                android:layout_height="40dp">
+                <TextView
+                    android:gravity="center"
+                    android:textSize="30dp"
+                    android:textColor="@color/dark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Environnemental :"
+                    android:layout_weight="3">
+                </TextView>
 
-            <EditText
+                <LinearLayout
+                    android:weightSum="5"
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6">
+
+                    <View
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                    </View>
+
+                    <Button
+                        android:textAlignment="center"
+                        android:textColor="@color/dark"
+                        android:textSize="30dp"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/mbEnvironnementalBuilding"
+                        android:text="-"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                    </Button>
+
+                    <TextView
+                        android:textSize="25dp"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:id="@+id/environnementalBuildingEdit"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:hint="0">
+                    </TextView>
+
+                    <Button
+                        android:textAlignment="center"
+                        android:textColor="@color/dark"
+                        android:textSize="30dp"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/pbEnvironnementalBuilding"
+                        android:text="+"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                    </Button>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <TextView
                 android:layout_marginTop="40dp"
-                android:inputType="numberSigned"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:id="@+id/scoreLogistiqueBuildingEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="0">
-            </EditText>
+                android:text="Logistique : ">
+            </TextView>
 
-            <EditText
-                android:layout_marginTop="40dp"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:id="@+id/explicationLogistiqueBuildingEdit"
+            <LinearLayout
+                android:weightSum="10"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="description">
-            </EditText>
+                android:layout_height="40dp">
+                <TextView
+                    android:gravity="center"
+                    android:textSize="30dp"
+                    android:textColor="@color/dark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Politique :"
+                    android:layout_weight="3">
+                </TextView>
 
-            <Button
-                android:id="@+id/ButtonBuildingEdit"
-                android:text="Valider"
+                <LinearLayout
+                    android:weightSum="5"
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6">
+
+                    <View
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                    </View>
+
+                    <Button
+                        android:textAlignment="center"
+                        android:textColor="@color/dark"
+                        android:textSize="30dp"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/mbScoreLogistiqueBuilding"
+                        android:text="-"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                    </Button>
+
+                    <TextView
+                        android:textSize="25dp"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:id="@+id/scoreLogistiqueBuildingEdit"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:hint="0">
+                    </TextView>
+
+                    <Button
+                        android:textAlignment="center"
+                        android:textColor="@color/dark"
+                        android:textSize="30dp"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/pbScoreLogistiqueBuilding"
+                        android:text="+"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                    </Button>
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textSize="30dp"
+                    android:textColor="@color/dark"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:layout_width="170dp"
+                    android:layout_height="match_parent"
+                    android:text="Description :">
+                </TextView>
+
+                <EditText
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:id="@+id/explicationLogistiqueBuildingEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="description">
+                </EditText>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:weightSum="5"
                 android:layout_marginTop="40dp"
-                android:background="@drawable/button_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:onClick="validerBuildingEdit">
-            </Button>
+                android:layout_marginBottom="40dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
 
+                <View
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                </View>
 
+                <Button
+                    android:layout_weight="1"
+                    android:id="@+id/ButtonBuildingInit"
+                    android:text="Réinitialiser"
+                    android:background="@drawable/button_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:onClick="initBuildingEdit">
+                </Button>
+
+                <View
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                </View>
+
+                <Button
+                    android:layout_weight="1"
+                    android:id="@+id/ButtonBuildingEdit"
+                    android:text="Valider"
+                    android:background="@drawable/button_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:onClick="validerBuildingEdit">
+                </Button>
+
+                <View
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                </View>
+
+            </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
-
-</LinearLayout>
