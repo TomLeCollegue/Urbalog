@@ -8,6 +8,7 @@ import android.text.Html;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.urbalog.Adapter.FormAdapter;
 
@@ -44,14 +45,13 @@ public class FormActivity extends AppCompatActivity {
         for (int i=0; i < mDots.length; i++){
             mDots[i] = new TextView(this);
             mDots[i].setText(Html.fromHtml("&#8226;"));
-            mDots[i].setTextSize(35);
-            mDots[i].setTextColor(getResources().getColor(R.color.blue));
-
+            mDots[i].setTextSize(50);
+            mDots[i].setTextColor(getResources().getColor(R.color.white));
             mDotsLayout.addView(mDots[i]);
         }
 
         if(mDots.length > 0){
-            mDots[position].setTextColor(getResources().getColor(R.color.colorDelete));
+            mDots[position].setTextColor(getResources().getColor(R.color.mediumPink));
         }
     }
 
