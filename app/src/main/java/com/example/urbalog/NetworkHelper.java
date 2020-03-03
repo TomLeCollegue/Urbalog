@@ -93,7 +93,7 @@ public class NetworkHelper implements Serializable {
                     Object dataReceived = new Object();
                     try {
                         dataReceived = SerializationHelper.deserialize(payload.asBytes());
-                        Log.d(TAG, "sendToAllClients: "+ dataReceived.toString());
+                        Log.i(TAG, "sendToAllClients: "+ dataReceived.toString());
 
                     } catch (IOException | ClassNotFoundException e) {
                         e.printStackTrace();
@@ -123,6 +123,16 @@ public class NetworkHelper implements Serializable {
                                     }
                                 }
                             }
+                            /* If host have send PLayer and Game instances for returning player */
+                            else if(((TransferPackage) dataReceived).first instanceof Game){
+                                Log.i(TAG, "Restart game");
+                                currentGame = ((Game)((TransferPackage) dataReceived).first);
+                                player = ((Player)((TransferPackage) dataReceived).second);
+                                gameStarted = true;
+                                Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
+                                appContext.startActivity(myIntent);
+
+                            }
                             /* If host have send Signal, used for communicate with players without data transfer */
                             else if(((TransferPackage) dataReceived).first instanceof Signal){
                                switch((Signal)((TransferPackage) dataReceived).first)
@@ -150,6 +160,8 @@ public class NetworkHelper implements Serializable {
                                 currentPlayerView.fillInfosView();
                                 currentPlayerView.resetTurnButton();
                             }
+                            else
+                                gameStarted = true;
                         }
                         /* If host have send Role, used on game start for role attribution */
                         else if(dataReceived instanceof Role){
@@ -173,6 +185,49 @@ public class NetworkHelper implements Serializable {
                                     }
                                     catch (IOException e) {
                                         e.printStackTrace();
+                                    }
+                                }
+                                else if(((TransferPackage) dataReceived).first instanceof Player){
+                                    if(!gameStarted) {
+                                        Log.i(TAG, "gameStarted");
+                                        for (int i = 0; i < playersInformations.size(); i++) {
+                                            if (playersInformations.get(i).getSecond().equals(((String) ((TransferPackage) dataReceived).second))) {
+                                                try {
+                                                    Log.i(TAG, "returning player");
+                                                    sendToClient(new TransferPackage<Game, Player>(currentGame, playersInformations.get(i).getFirst()), endpointId);
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    else{
+                                        Log.i(TAG, "!gameStarted: ");
+                                        for (int i = 0; i < playersInformations.size(); i++) {
+                                            if(playersInformations.get(i).getThird().equals(endpointId)){
+                                                playersInformations.get(i).setFirst(((Player) ((TransferPackage) dataReceived).first));
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                else if(((TransferPackage) dataReceived).second instanceof Signal){
+                                    switch(((Signal) ((TransferPackage) dataReceived).second)){
+                                        case RETURN_PLAYER:
+                                            for(int i = 0; i < playersInformations.size(); i++) {
+                                                if(playersInformations.get(i).getSecond().equals(((String) ((TransferPackage) dataReceived).second))){
+                                                    try {
+                                                        sendToClient(new TransferPackage<Game, Player>(currentGame, playersInformations.get(i).getFirst()), endpointId);
+                                                    } catch (IOException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                    break;
+                                                }
+                                            }
+                                            break;
+                                        default:
+                                            break;
                                     }
                                 }
                             }
@@ -298,7 +353,6 @@ public class NetworkHelper implements Serializable {
             new ConnectionLifecycleCallback() {
                 private String playerName;
                 private boolean returnPlayer = false;
-                private int playerIndex;
 
                 @Override
                 public void onConnectionInitiated(String endpointId, ConnectionInfo connectionInfo) {
@@ -315,7 +369,6 @@ public class NetworkHelper implements Serializable {
                         for (int i = 0; i < playersInformations.size(); i++) {
                             if(playersInformations.get(i).getSecond().equals(connectionInfo.getEndpointName())){
                                 returnPlayer = true;
-                                playerIndex = i;
                                 Log.i(TAG, "onConnectionInitiated: accepting connection of returning player");
                                 connectionsClient.acceptConnection(endpointId, payloadCallback);
                                 playerName = connectionInfo.getEndpointName();
@@ -344,12 +397,14 @@ public class NetworkHelper implements Serializable {
                         listPlayer.add(new Pair<>(playerName, endpointId));
                         if(host){
                             AdminConnectionActivity.updateNbPlayers(listPlayer.size());
-                            playersInformations.add(new Triplet<Player, String, String>(null, playerName, endpointId));
+                            if(!gameStarted)
+                                playersInformations.add(new Triplet<Player, String, String>(null, playerName, endpointId));
                         }
                         else{
+                            Log.i(TAG, "onConnectionResult: player");
                             PlayerConnexionActivity.setStatus("Connected");
                             try {
-                                sendToAllClients(SerializationHelper.serialize(player));
+                                sendToClient(SerializationHelper.serialize(new TransferPackage<Player, String>(player, playerName)), endpointId);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -365,29 +420,28 @@ public class NetworkHelper implements Serializable {
                         for (int i = 0; i < listPlayer.size(); i++) {
                             if (endpointId.equals(listPlayer.get(i).second)) {
                                 listPlayer.remove(i);
-                                break;
                             }
                         }
                         if(!gameStarted){
                             for (int i = 0; i < playersInformations.size(); i++) {
                                 if (endpointId.equals(playersInformations.get(i).getThird())) {
                                     playersInformations.remove(i);
-                                    break;
                                 }
                             }
-                            AdminConnectionActivity.updateNbPlayers(listPlayer.size());
                         }
+                        AdminConnectionActivity.updateNbPlayers(listPlayer.size());
                     }
                     else {
                         PlayerConnexionActivity.setStatus("Disconnected");
-                        listPlayer.clear();
+                        if(listPlayer.size() != 0)
+                            listPlayer.clear();
                     }
                 }
             };
 
     public NetworkHelper(Context c) {
         appContext = c;
-        NB_PLAYERS = 3;
+        NB_PLAYERS = 2;
         discovering = false;
         advertising = false;
         host = false;
@@ -401,11 +455,16 @@ public class NetworkHelper implements Serializable {
      * Ends and disconnect from all endpoints
      */
     public void stop() {
-        connectionsClient.stopAllEndpoints();
+        for (int i = 0; i < listPlayer.size(); i++) {
+            connectionsClient.disconnectFromEndpoint(listPlayer.get(i).second);
+        }
         listPlayer.clear();
         playersInformations.clear();
-        if(host)
+        gameStarted = false;
+        if(host) {
             connectionsClient.stopAdvertising();
+            host = false;
+        }
         else
             connectionsClient.stopDiscovery();
     }
@@ -537,6 +596,18 @@ public class NetworkHelper implements Serializable {
         for (int i = 0; i < listPlayer.size(); i++) {
             Nearby.getConnectionsClient(appContext).sendPayload(listPlayer.get(i).second, data);
         }
+    }
+
+    /**
+     * Send data to specific client connected to the host
+     * It serialize the object in parameter before sending it
+     * @param o
+     * @param id
+     * @throws IOException
+     */
+    public void sendToClient(Object o, String id) throws IOException {
+        Payload data = Payload.fromBytes(SerializationHelper.serialize(o));
+        Nearby.getConnectionsClient(appContext).sendPayload(id, data);
     }
 
     /**

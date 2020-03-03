@@ -72,12 +72,14 @@ public class AdminConnectionActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+                bPlay.setEnabled(false);
             }
         });
         bStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 configurationButton.setEnabled(true);
+                bPlay.setEnabled(true);
                 net.stop();
                 updateStatus("Disconnected");
                 updateNbPlayers(0);
