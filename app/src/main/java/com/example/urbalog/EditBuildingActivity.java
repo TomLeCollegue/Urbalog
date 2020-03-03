@@ -80,8 +80,8 @@ public class EditBuildingActivity extends AppCompatActivity {
     }
 
     public void validerBuildingEdit(View view) {
-        if(name.getText().toString().matches("") ||
-                description.getText().toString().matches("") ||
+        if(name.getText().toString().matches("^([\\s]*(.*)[\\s]+|[\\s]+(.*)[\\s]*|[\\s]+(.*)[\\s]+)$") ||
+                description.getText().toString().matches("^([\\s]*(.*)[\\s]+|[\\s]+(.*)[\\s]*|[\\s]+(.*)[\\s]+)$") ||
                 politique.getText().toString().matches("") ||
                 social.getText().toString().matches("") ||
                 economique.getText().toString().matches("") ||

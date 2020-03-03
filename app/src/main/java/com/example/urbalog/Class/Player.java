@@ -67,9 +67,12 @@ public class Player {
         this.role = role;
     }
 
-    public void checkGoals(ArrayList<Building> newBuildings){
-        if(role.goalsAchieve(newBuildings))
+    public boolean checkGoals(ArrayList<Building> newBuildings){
+        if(role.goalsAchieve(newBuildings)) {
             score++;
+            return true;
+        }
+        return false;
     }
 
     public Integer[][] getFinancementRessource() {
