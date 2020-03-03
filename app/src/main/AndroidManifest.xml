@@ -17,17 +17,22 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddBuildingActivity"
-            android:screenOrientation="landscape"></activity>
+        <activity android:name=".StatsActivity"></activity>
+        <activity
+            android:name=".FormActivity"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".AddBuildingActivity"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ConfigurationActivity"
-            android:screenOrientation="sensorLandscape"></activity>
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".LogisticActivity"
-            android:screenOrientation="sensorLandscape"></activity>
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".EditBuildingActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="sensorLandscape">
@@ -39,16 +44,16 @@
         </activity>
         <activity
             android:name=".PlayerViewActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".AdminConnectionActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".PlayerConnexionActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ListBuildingsActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".EndGameActivity"
             android:screenOrientation="landscape" />
