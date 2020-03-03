@@ -3,18 +3,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    >
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="20dp"
-        android:paddingBottom="20dp">
+        android:paddingBottom="20dp"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:background="@drawable/layout_border_logistic_influence">
 
             <LinearLayout
                 android:id="@+id/bNameLayout"
@@ -112,12 +115,14 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
                 android:id="@+id/bDescription"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1.5"
-                android:orientation="horizontal"></LinearLayout>
+                android:text="Ouech"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"></TextView>
         </LinearLayout>
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
