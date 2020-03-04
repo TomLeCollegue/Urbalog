@@ -36,7 +36,7 @@ public class PlayerConnexionActivity extends AppCompatActivity {
         this.bCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                net.stop();
+                net.disconnectFromAllEndpoints();
                 setStatus("Disconnected");
             }
         });

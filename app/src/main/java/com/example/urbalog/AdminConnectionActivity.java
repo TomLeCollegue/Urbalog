@@ -80,7 +80,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 configurationButton.setEnabled(true);
                 bPlay.setEnabled(true);
-                net.stop();
+                net.stopAll();
                 updateStatus("Disconnected");
                 updateNbPlayers(0);
             }

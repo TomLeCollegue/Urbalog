@@ -498,21 +498,6 @@ public class NetworkHelper implements Serializable {
         connectionsClient = Nearby.getConnectionsClient(c);
     }
 
-    /**
-     * Ends and disconnect from all endpoints
-     */
-    public void stop() {
-        connectionsClient.stopAdvertising();
-        connectionsClient.stopDiscovery();
-        connectionsClient.stopAllEndpoints();
-        listPlayer.clear();
-        gameStarted = false;
-        if(host) {
-            playersInformations.clear();
-            host = false;
-        }
-    }
-
     /** Finds an opponent to play the game with using Nearby Connections. */
     public void hostGame(View view) {
         if (!discovering) {
@@ -531,16 +516,48 @@ public class NetworkHelper implements Serializable {
     }
 
     /** Disconnects from the opponent and reset the player list. */
-    public void disconnect(View view) {
+    public void disconnect(String endpointId) {
+        for (int i = 0; i<listPlayer.size(); i++)
+        {
+            if(endpointId.equals(listPlayer.get(i).second)){
+                connectionsClient.disconnectFromEndpoint(listPlayer.get(i).second);
+                listPlayer.remove(i);
+                if(host) playersInformations.remove(i);
+                break;
+            }
+        }
+        if(!host)
+            PlayerConnexionActivity.setStatus("Disconnected");
+    }
+
+    /** Disconnects from the opponent and reset the player list. */
+    public void disconnectFromAllEndpoints() {
+        connectionsClient.stopDiscovery();
+        discovering = false;
         for (int i = 0; i<listPlayer.size(); i++)
         {
             connectionsClient.disconnectFromEndpoint(listPlayer.get(i).second);
         }
-        if(!host)
+        if(!host) {
+            playersInformations.clear();
             PlayerConnexionActivity.setStatus("Disconnected");
+        }
         listPlayer.clear();
-        playersInformations.clear();
-        host = false;
+    }
+
+    /**
+     * Ends and disconnect from all endpoints
+     */
+    public void stopAll() {
+        connectionsClient.stopAdvertising();
+        connectionsClient.stopDiscovery();
+        connectionsClient.stopAllEndpoints();
+        listPlayer.clear();
+        gameStarted = false;
+        if(host) {
+            playersInformations.clear();
+            host = false;
+        }
     }
 
     /** Starts looking for other players using Nearby Connections. */
