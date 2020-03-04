@@ -8,6 +8,8 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 import com.example.urbalog.Class.Bet;
 import com.example.urbalog.Class.Building;
 import com.example.urbalog.Class.Game;
@@ -30,6 +32,8 @@ import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.android.gms.nearby.connection.Strategy;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -87,7 +91,7 @@ public class NetworkHelper implements Serializable {
                  * @param payload
                  */
                 @Override
-                public void onPayloadReceived(String endpointId, Payload payload) {
+                public void onPayloadReceived(@NonNull String endpointId, Payload payload) {
 
                     /* Deserialization of incoming payload */
                     Object dataReceived = new Object();
@@ -187,31 +191,6 @@ public class NetworkHelper implements Serializable {
                                         e.printStackTrace();
                                     }
                                 }
-                                else if(((TransferPackage) dataReceived).first instanceof Player){
-                                    if(!gameStarted) {
-                                        Log.i(TAG, "gameStarted");
-                                        for (int i = 0; i < playersInformations.size(); i++) {
-                                            if (playersInformations.get(i).getSecond().equals(((String) ((TransferPackage) dataReceived).second))) {
-                                                try {
-                                                    Log.i(TAG, "returning player");
-                                                    sendToClient(new TransferPackage<Game, Player>(currentGame, playersInformations.get(i).getFirst()), endpointId);
-                                                } catch (IOException e) {
-                                                    e.printStackTrace();
-                                                }
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    else{
-                                        Log.i(TAG, "!gameStarted: ");
-                                        for (int i = 0; i < playersInformations.size(); i++) {
-                                            if(playersInformations.get(i).getThird().equals(endpointId)){
-                                                playersInformations.get(i).setFirst(((Player) ((TransferPackage) dataReceived).first));
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
                                 else if(((TransferPackage) dataReceived).second instanceof Signal){
                                     switch(((Signal) ((TransferPackage) dataReceived).second)){
                                         case RETURN_PLAYER:
@@ -228,6 +207,31 @@ public class NetworkHelper implements Serializable {
                                             break;
                                         default:
                                             break;
+                                    }
+                                }
+                            }
+                            else if(((TransferPackage) dataReceived).first instanceof Player){
+                                if(gameStarted) {
+                                    Log.i(TAG, "gameStarted");
+                                    for (int i = 0; i < playersInformations.size(); i++) {
+                                        if (playersInformations.get(i).getSecond().equals(((String) ((TransferPackage) dataReceived).second))) {
+                                            try {
+                                                Log.i(TAG, "returning player");
+                                                sendToClient(new TransferPackage<Game, Player>(currentGame, playersInformations.get(i).getFirst()), endpointId);
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                                else{
+                                    Log.i(TAG, "!gameStarted: ");
+                                    for (int i = 0; i < playersInformations.size(); i++) {
+                                        if(playersInformations.get(i).getThird().equals(endpointId)){
+                                            playersInformations.get(i).setFirst(((Player) ((TransferPackage) dataReceived).first));
+                                            break;
+                                        }
                                     }
                                 }
                             }
@@ -322,8 +326,9 @@ public class NetworkHelper implements Serializable {
                  * @param update
                  */
                 @Override
-                public void onPayloadTransferUpdate(String endpointId, PayloadTransferUpdate update) {
-
+                public void onPayloadTransferUpdate(@NonNull String endpointId, @NonNull PayloadTransferUpdate update) {
+                    Log.i(TAG, String.format(
+                            "onPayloadTransferUpdate(endpointId=%s, update=%s)", endpointId, update));
                 }
             };
 
@@ -331,13 +336,21 @@ public class NetworkHelper implements Serializable {
     private final EndpointDiscoveryCallback endpointDiscoveryCallback =
             new EndpointDiscoveryCallback() {
                 @Override
-                public void onEndpointFound(String endpointId, DiscoveredEndpointInfo info) {
+                public void onEndpointFound(@NonNull String endpointId, @NonNull DiscoveredEndpointInfo info) {
                     Log.i(TAG, "onEndpointFound: endpoint found, connecting");
-                    connectionsClient.requestConnection(codeName, endpointId, connectionLifecycleCallback);
+                    connectionsClient
+                            .requestConnection(codeName, endpointId, connectionLifecycleCallback)
+                            .addOnFailureListener(
+                                    new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w(TAG,"requestConnection() failed.", e);
+                                        }
+                                    });
                 }
 
                 @Override
-                public void onEndpointLost(String endpointId) {
+                public void onEndpointLost(@NonNull String endpointId) {
                     for (int i = 0; i<listPlayer.size(); i++)
                     {
                         if(listPlayer.get(i).second.equals(endpointId)) {
@@ -355,11 +368,19 @@ public class NetworkHelper implements Serializable {
                 private boolean returnPlayer = false;
 
                 @Override
-                public void onConnectionInitiated(String endpointId, ConnectionInfo connectionInfo) {
+                public void onConnectionInitiated(@NonNull String endpointId, @NonNull ConnectionInfo connectionInfo) {
                     /* If game isn't start and room isn't full */
                     if((!gameStarted) && (listPlayer.size() < NB_PLAYERS)) {
                         Log.i(TAG, "onConnectionInitiated: accepting new connection");
-                        connectionsClient.acceptConnection(endpointId, payloadCallback);
+                        connectionsClient
+                                .acceptConnection(endpointId, payloadCallback)
+                                .addOnFailureListener(
+                                    new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w(TAG,"acceptConnection() failed.", e);
+                                        }
+                                    });
                         playerName = connectionInfo.getEndpointName();
                     }
                     /* If game started and room not full
@@ -370,25 +391,49 @@ public class NetworkHelper implements Serializable {
                             if(playersInformations.get(i).getSecond().equals(connectionInfo.getEndpointName())){
                                 returnPlayer = true;
                                 Log.i(TAG, "onConnectionInitiated: accepting connection of returning player");
-                                connectionsClient.acceptConnection(endpointId, payloadCallback);
+                                connectionsClient
+                                        .acceptConnection(endpointId, payloadCallback)
+                                        .addOnFailureListener(
+                                                new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.w(TAG,"acceptConnection() failed.", e);
+                                                    }
+                                                });
                                 playerName = connectionInfo.getEndpointName();
                                 break;
                             }
                         }
                         if(!returnPlayer){
                             Log.i(TAG, "onConnectionInitiated: game started but rejecting connection");
-                            connectionsClient.rejectConnection(endpointId);
+                            connectionsClient
+                                    .rejectConnection(endpointId)
+                                    .addOnFailureListener(
+                                            new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w(TAG,"rejectConnection() failed.", e);
+                                                }
+                                            });
                         }
                     }
                     /* Reject connection if room is full */
                     else{
                         Log.i(TAG, "onConnectionInitiated: rejecting connection");
-                        connectionsClient.rejectConnection(endpointId);
+                        connectionsClient
+                                .rejectConnection(endpointId)
+                                .addOnFailureListener(
+                                        new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG,"rejectConnection() failed.", e);
+                                            }
+                                        });
                     }
                 }
 
                 @Override
-                public void onConnectionResult(String endpointId, ConnectionResolution result) {
+                public void onConnectionResult(@NonNull String endpointId, ConnectionResolution result) {
                     if (result.getStatus().isSuccess()) {
                         Log.i(TAG, "onConnectionResult: connection successful");
 
@@ -415,17 +460,19 @@ public class NetworkHelper implements Serializable {
                 }
 
                 @Override
-                public void onDisconnected(String endpointId) {
+                public void onDisconnected(@NonNull String endpointId) {
                     if(host) {
                         for (int i = 0; i < listPlayer.size(); i++) {
                             if (endpointId.equals(listPlayer.get(i).second)) {
                                 listPlayer.remove(i);
+                                break;
                             }
                         }
                         if(!gameStarted){
                             for (int i = 0; i < playersInformations.size(); i++) {
                                 if (endpointId.equals(playersInformations.get(i).getThird())) {
                                     playersInformations.remove(i);
+                                    break;
                                 }
                             }
                         }
@@ -455,26 +502,21 @@ public class NetworkHelper implements Serializable {
      * Ends and disconnect from all endpoints
      */
     public void stop() {
-        for (int i = 0; i < listPlayer.size(); i++) {
-            connectionsClient.disconnectFromEndpoint(listPlayer.get(i).second);
-        }
+        connectionsClient.stopAdvertising();
+        connectionsClient.stopDiscovery();
+        connectionsClient.stopAllEndpoints();
         listPlayer.clear();
-        playersInformations.clear();
         gameStarted = false;
         if(host) {
-            connectionsClient.stopAdvertising();
+            playersInformations.clear();
             host = false;
         }
-        else
-            connectionsClient.stopDiscovery();
     }
 
     /** Finds an opponent to play the game with using Nearby Connections. */
     public void hostGame(View view) {
         if (!discovering) {
             startAdvertising();
-            advertising = true;
-            host = true;
         }
     }
 
@@ -483,12 +525,8 @@ public class NetworkHelper implements Serializable {
      * @param view
      */
     public void searchGame(View view) {
-        if (!advertising)
-        {
+        if (!advertising) {
             startDiscovery();
-            discovering = true;
-            host = false;
-            PlayerConnexionActivity.setStatus("Searching");
         }
     }
 
@@ -507,16 +545,54 @@ public class NetworkHelper implements Serializable {
 
     /** Starts looking for other players using Nearby Connections. */
     private void startDiscovery() {
-        connectionsClient.startDiscovery(
-                appContext.getPackageName(), endpointDiscoveryCallback,
-                new DiscoveryOptions.Builder().setStrategy(STRATEGY).build());
+        connectionsClient
+                .startDiscovery(
+                    appContext.getPackageName(), endpointDiscoveryCallback,
+                    new DiscoveryOptions.Builder().setStrategy(STRATEGY).build())
+                .addOnSuccessListener(
+                        new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unusedResult) {
+                                discovering = true;
+                                Log.d(TAG, "Now discovering endpoint " + codeName);
+                                PlayerConnexionActivity.setStatus("Searching");
+                            }
+                        })
+                .addOnFailureListener(
+                        new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                discovering = false;
+                                Log.w(TAG, "startAdvertising() failed.", e);
+                                PlayerConnexionActivity.setStatus("Disconnected");
+                            }
+                        });;
     }
 
     /** Broadcasts our presence using Nearby Connections so other players can find us. */
     private void startAdvertising() {
-        connectionsClient.startAdvertising(
-                codeName, appContext.getPackageName(), connectionLifecycleCallback,
-                new AdvertisingOptions.Builder().setStrategy(STRATEGY).build());
+        connectionsClient
+                .startAdvertising(
+                    codeName, appContext.getPackageName(), connectionLifecycleCallback,
+                    new AdvertisingOptions.Builder().setStrategy(STRATEGY).build())
+                .addOnSuccessListener(
+                        new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unusedResult) {
+                                advertising = true;
+                                host = true;
+                                Log.d(TAG, "Now advertising endpoint " + codeName);
+                            }
+                        })
+                .addOnFailureListener(
+                        new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                advertising = false;
+                                host = false;
+                                Log.w(TAG, "startAdvertising() failed.", e);
+                            }
+                        });
     }
 
     public static String[] getRequiredPermissions() {
@@ -594,7 +670,15 @@ public class NetworkHelper implements Serializable {
     public void sendToAllClients(Object o) throws IOException {
         Payload data = Payload.fromBytes(SerializationHelper.serialize(o));
         for (int i = 0; i < listPlayer.size(); i++) {
-            Nearby.getConnectionsClient(appContext).sendPayload(listPlayer.get(i).second, data);
+            connectionsClient
+                    .sendPayload(listPlayer.get(i).second, data)
+                    .addOnFailureListener(
+                            new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG,"sendPayload() failed.", e);
+                                }
+                            });
         }
     }
 
@@ -607,7 +691,15 @@ public class NetworkHelper implements Serializable {
      */
     public void sendToClient(Object o, String id) throws IOException {
         Payload data = Payload.fromBytes(SerializationHelper.serialize(o));
-        Nearby.getConnectionsClient(appContext).sendPayload(id, data);
+        connectionsClient
+                .sendPayload(id, data)
+                .addOnFailureListener(
+                        new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG,"sendPayload() failed.", e);
+                            }
+                        });
     }
 
     /**
@@ -622,7 +714,15 @@ public class NetworkHelper implements Serializable {
             Payload data;
             for (int i = 0; i < listPlayer.size(); i++) {
                 data = Payload.fromBytes(SerializationHelper.serialize(srcData.get(i)));
-                Nearby.getConnectionsClient(appContext).sendPayload(listPlayer.get(i).second, data);
+                connectionsClient
+                        .sendPayload(listPlayer.get(i).second, data)
+                        .addOnFailureListener(
+                                new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG,"sendPayload() failed.", e);
+                                    }
+                                });
             }
         }
     }
