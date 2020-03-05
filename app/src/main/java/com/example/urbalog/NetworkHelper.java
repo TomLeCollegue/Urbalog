@@ -150,10 +150,20 @@ public class NetworkHelper implements Serializable {
                                    /* Ask player to check if his goals are completed */
                                    case CHECK_GOALS:
                                        player.checkGoals((ArrayList<Building>)((TransferPackage) dataReceived).second);
+                                       try {
+                                           sendToClient(new Triplet<Signal, String, Player>(Signal.UPDATE_PLAYER, playerUUID, player), endpointId);
+                                       } catch (IOException e) {
+                                           e.printStackTrace();
+                                       }
                                        break;
                                    /* Report to player the end of the game */
                                    case GAME_OVER:
                                        currentGame = (Game)((TransferPackage) dataReceived).second;
+                                       try {
+                                           sendToClient(new Triplet<Signal, String, Player>(Signal.UPDATE_PLAYER, playerUUID, player), endpointId);
+                                       } catch (IOException e) {
+                                           e.printStackTrace();
+                                       }
                                        currentPlayerView.finish();
                                        Intent myIntent = new Intent(appContext, EndGameActivity.class);
                                        appContext.startActivity(myIntent);
