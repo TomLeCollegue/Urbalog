@@ -112,6 +112,11 @@ public class NetworkHelper implements Serializable {
                             /* If host have send Market, usually used for respond to player bet with updated state of Market */
                             if(((TransferPackage) dataReceived).second instanceof Market)
                             {
+                                try {
+                                    sendToClient(new Triplet<Signal, String, Player>(Signal.UPDATE_PLAYER, playerUUID, player), endpointId);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 currentGame.setMarket(((Market) ((TransferPackage) dataReceived).second));
                                 currentPlayerView.fillInfosView();
                                 currentPlayerView.setButtonState(true);
