@@ -7,5 +7,6 @@ public enum Signal implements Serializable {
     CANCEL_NEXT_TURN,
     CHECK_GOALS,
     GAME_OVER,
+    UPDATE_PLAYER,
     RETURN_PLAYER;
 }

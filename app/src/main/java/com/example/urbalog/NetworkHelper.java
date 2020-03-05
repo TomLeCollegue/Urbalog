@@ -67,6 +67,7 @@ public class NetworkHelper implements Serializable {
     private ConnectionsClient connectionsClient;
     private static final String TAG = "UrbalogGame"; // Tag for log
     private final String codeName = CodenameGenerator.generate();
+    private final String playerUUID;
 
     private static final String[] REQUIRED_PERMISSIONS =
             new String[] {
@@ -170,6 +171,11 @@ public class NetworkHelper implements Serializable {
                         /* If host have send Role, used on game start for role attribution */
                         else if(dataReceived instanceof Role){
                             player = new Player((Role) dataReceived);
+                            try {
+                                sendToClient(new Triplet<Signal, String, Player>(Signal.UPDATE_PLAYER, playerUUID, player), endpointId);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
                             appContext.startActivity(myIntent);
                         }
@@ -246,6 +252,22 @@ public class NetworkHelper implements Serializable {
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
+                                }
+                            }
+                        }
+                        /* if player have send Triplet data set */
+                        else if(dataReceived instanceof Triplet){
+                            if(((Triplet)dataReceived).getFirst() instanceof Signal){
+                                switch((Signal)(((Triplet)dataReceived).getFirst())){
+                                    case UPDATE_PLAYER:
+                                        for (int i = 0; i < playersInformations.size(); i++) {
+                                            if (playersInformations.get(i).getSecond().equals((String)(((Triplet)dataReceived).getSecond()))){
+                                                playersInformations.get(i).setFirst((Player)(((Triplet)dataReceived).getThird()));
+                                            }
+                                        }
+                                        break;
+                                    default:
+                                        break;
                                 }
                             }
                         }
@@ -339,7 +361,7 @@ public class NetworkHelper implements Serializable {
                 public void onEndpointFound(@NonNull String endpointId, @NonNull DiscoveredEndpointInfo info) {
                     Log.i(TAG, "onEndpointFound: endpoint found, connecting");
                     connectionsClient
-                            .requestConnection(codeName, endpointId, connectionLifecycleCallback)
+                            .requestConnection(playerUUID, endpointId, connectionLifecycleCallback)
                             .addOnFailureListener(
                                     new OnFailureListener() {
                                         @Override
@@ -365,68 +387,84 @@ public class NetworkHelper implements Serializable {
     private final ConnectionLifecycleCallback connectionLifecycleCallback =
             new ConnectionLifecycleCallback() {
                 private String playerName;
-                private boolean returnPlayer = false;
 
                 @Override
-                public void onConnectionInitiated(@NonNull String endpointId, @NonNull ConnectionInfo connectionInfo) {
-                    /* If game isn't start and room isn't full */
-                    if((!gameStarted) && (listPlayer.size() < NB_PLAYERS)) {
-                        Log.i(TAG, "onConnectionInitiated: accepting new connection");
-                        connectionsClient
-                                .acceptConnection(endpointId, payloadCallback)
-                                .addOnFailureListener(
-                                    new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w(TAG,"acceptConnection() failed.", e);
-                                        }
-                                    });
-                        playerName = connectionInfo.getEndpointName();
-                    }
-                    /* If game started and room not full
-                    * host will check if it's a returning player, if tyes it's will accept connection */
-                    else if((gameStarted) && (listPlayer.size() < NB_PLAYERS))
-                    {
-                        for (int i = 0; i < playersInformations.size(); i++) {
-                            if(playersInformations.get(i).getSecond().equals(connectionInfo.getEndpointName())){
-                                returnPlayer = true;
-                                Log.i(TAG, "onConnectionInitiated: accepting connection of returning player");
+                public void onConnectionInitiated(@NonNull String endpointId, @NonNull ConnectionInfo connectionInfo)
+                {
+                    if(host){
+                        boolean returnPlayer = false;
+                        /* If game isn't start and room isn't full */
+                        if ((!gameStarted) && (listPlayer.size() < NB_PLAYERS)) {
+                            Log.i(TAG, "onConnectionInitiated: accepting new connection");
+                            playerName = connectionInfo.getEndpointName();
+                            connectionsClient
+                                    .acceptConnection(endpointId, payloadCallback)
+                                    .addOnFailureListener(
+                                            new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w(TAG, "acceptConnection() failed.", e);
+                                                }
+                                            });
+                        }
+                        /* If game started and room not full
+                         * host will check if it's a returning player, if tyes it's will accept connection */
+                        else if ((gameStarted) && (listPlayer.size() < NB_PLAYERS)) {
+                            for (int i = 0; i < playersInformations.size(); i++) {
+                                if (playersInformations.get(i).getSecond().equals(connectionInfo.getEndpointName())) {
+                                    returnPlayer = true;
+                                    Log.i(TAG, "onConnectionInitiated: accepting connection of returning player");
+                                    playerName = connectionInfo.getEndpointName();
+                                    connectionsClient
+                                            .acceptConnection(endpointId, payloadCallback)
+                                            .addOnFailureListener(
+                                                    new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.w(TAG, "acceptConnection() failed.", e);
+                                                        }
+                                                    });
+                                    break;
+                                }
+                            }
+                            if (!returnPlayer) {
+                                Log.i(TAG, "onConnectionInitiated: game started but rejecting connection");
                                 connectionsClient
-                                        .acceptConnection(endpointId, payloadCallback)
+                                        .rejectConnection(endpointId)
                                         .addOnFailureListener(
                                                 new OnFailureListener() {
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
-                                                        Log.w(TAG,"acceptConnection() failed.", e);
+                                                        Log.w(TAG, "rejectConnection() failed.", e);
                                                     }
                                                 });
-                                playerName = connectionInfo.getEndpointName();
-                                break;
                             }
                         }
-                        if(!returnPlayer){
-                            Log.i(TAG, "onConnectionInitiated: game started but rejecting connection");
+                        /* Reject connection if room is full */
+                        else {
+                            Log.i(TAG, "onConnectionInitiated: rejecting connection");
                             connectionsClient
                                     .rejectConnection(endpointId)
                                     .addOnFailureListener(
                                             new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
-                                                    Log.w(TAG,"rejectConnection() failed.", e);
+                                                    Log.w(TAG, "rejectConnection() failed.", e);
                                                 }
                                             });
                         }
                     }
-                    /* Reject connection if room is full */
-                    else{
-                        Log.i(TAG, "onConnectionInitiated: rejecting connection");
+                    /* Accepting connection in any case for client */
+                    else {
+                        Log.i(TAG, "onConnectionInitiated: accepting connection to host");
+                        playerName = playerUUID;
                         connectionsClient
-                                .rejectConnection(endpointId)
+                                .acceptConnection(endpointId, payloadCallback)
                                 .addOnFailureListener(
                                         new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Log.w(TAG,"rejectConnection() failed.", e);
+                                                Log.w(TAG, "acceptConnection() failed.", e);
                                             }
                                         });
                     }
@@ -442,14 +480,16 @@ public class NetworkHelper implements Serializable {
                         listPlayer.add(new Pair<>(playerName, endpointId));
                         if(host){
                             AdminConnectionActivity.updateNbPlayers(listPlayer.size());
-                            if(!gameStarted)
+                            if(!gameStarted) {
                                 playersInformations.add(new Triplet<Player, String, String>(null, playerName, endpointId));
+                                Log.i(TAG, "onConnectionResult: add player");
+                            }
                         }
                         else{
                             Log.i(TAG, "onConnectionResult: player");
                             PlayerConnexionActivity.setStatus("Connected");
                             try {
-                                sendToClient(SerializationHelper.serialize(new TransferPackage<Player, String>(player, playerName)), endpointId);
+                                sendToClient(new TransferPackage<Player, String>(player, playerName), endpointId);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -488,14 +528,16 @@ public class NetworkHelper implements Serializable {
 
     public NetworkHelper(Context c) {
         appContext = c;
-        NB_PLAYERS = 2;
+        NB_PLAYERS = 1;
         discovering = false;
         advertising = false;
         host = false;
         gameStarted = false;
+        player = new Player(null);
         listPlayer = new ArrayList<>();
         playersInformations = new ArrayList<>();
         connectionsClient = Nearby.getConnectionsClient(c);
+        playerUUID = UUIDHelper.id(appContext);
     }
 
     /** Finds an opponent to play the game with using Nearby Connections. */
@@ -571,7 +613,7 @@ public class NetworkHelper implements Serializable {
                             @Override
                             public void onSuccess(Void unusedResult) {
                                 discovering = true;
-                                Log.d(TAG, "Now discovering endpoint " + codeName);
+                                Log.d(TAG, "Now discovering endpoint " + playerUUID);
                                 PlayerConnexionActivity.setStatus("Searching");
                             }
                         })
@@ -590,7 +632,7 @@ public class NetworkHelper implements Serializable {
     private void startAdvertising() {
         connectionsClient
                 .startAdvertising(
-                    codeName, appContext.getPackageName(), connectionLifecycleCallback,
+                    playerUUID, appContext.getPackageName(), connectionLifecycleCallback,
                     new AdvertisingOptions.Builder().setStrategy(STRATEGY).build())
                 .addOnSuccessListener(
                         new OnSuccessListener<Void>() {
@@ -598,7 +640,7 @@ public class NetworkHelper implements Serializable {
                             public void onSuccess(Void unusedResult) {
                                 advertising = true;
                                 host = true;
-                                Log.d(TAG, "Now advertising endpoint " + codeName);
+                                Log.d(TAG, "Now advertising endpoint " + playerUUID);
                             }
                         })
                 .addOnFailureListener(

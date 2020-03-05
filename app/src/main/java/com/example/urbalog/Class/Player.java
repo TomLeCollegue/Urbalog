@@ -88,7 +88,6 @@ public class Player extends Object implements Serializable {
                 ", age=" + age +
                 ", job='" + job + '\'' +
                 ", score=" + score +
-                ", role=" + role.toString() +
                 '}';
     }
 
