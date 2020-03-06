@@ -189,10 +189,6 @@ public class PlayerViewActivity extends AppCompatActivity {
         textScoreCityTrafic = (TextView) findViewById(R.id.text_score_city_trafic);
         bTurn = (Button) findViewById(R.id.button_turn);
 
-        //open the buildings view for testing
-        bTestBuilding = (Button) findViewById(R.id.testBuildingsButton);
-
-
         textScore = (TextView) findViewById(R.id.text_score);
 
         textNameBuilding1 = (Button) findViewById(R.id.text_name_building_1);
@@ -277,13 +273,6 @@ public class PlayerViewActivity extends AppCompatActivity {
 
 
         fillInfosView();
-
-        bTestBuilding.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(PlayerViewActivity.this, CityProgressionActivity.class));
-            }
-        });
     }
 
     //button to test the building view
