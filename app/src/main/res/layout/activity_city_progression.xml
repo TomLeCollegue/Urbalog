@@ -21,23 +21,15 @@
             android:layout_weight="4.5"
             android:background="@color/darkGray">
 
-            <Button
-                android:id="@+id/button_returnToMarket"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="retour"
-                />
-
             <TextView
                 android:id="@+id/titleCityProgression"
+                style="@style/TextAppearance.AppCompat.Display1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ville"
                 android:layout_gravity="center"
+                android:fontFamily="@font/caractere_l2"
                 android:gravity="center"
-                style="@style/TextAppearance.AppCompat.Display1"
-                />
+                android:text="VILLE" />
         </FrameLayout>
 
         <LinearLayout
@@ -93,11 +85,12 @@
 
                     <TextView
                         android:id="@+id/text_score_city_envi"
+                        style="@style/TextAppearance.AppCompat.Large"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:fontFamily="@font/caractere_l1"
                         android:gravity="center_vertical"
-                        android:text="+5"
-                        style="@style/TextAppearance.AppCompat.Large"/>
+                        android:text="+5" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -129,12 +122,13 @@
 
                     <TextView
                         android:id="@+id/text_score_city_trafic"
+                        style="@style/TextAppearance.AppCompat.Large"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:fontFamily="@font/caractere_l1"
                         android:gravity="center_vertical"
-                        android:text="+2"
-                        style="@style/TextAppearance.AppCompat.Large"/>
+                        android:text="+2" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -166,11 +160,12 @@
 
                     <TextView
                         android:id="@+id/text_score_city_attract"
+                        style="@style/TextAppearance.AppCompat.Large"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:fontFamily="@font/caractere_l1"
                         android:gravity="center_vertical"
-                        android:text="-1"
-                        style="@style/TextAppearance.AppCompat.Large"/>
+                        android:text="-1" />
                 </LinearLayout>
 
             </LinearLayout>
