@@ -20,5 +20,6 @@
     <color name="evenLighterGray">#dadada</color>
 
     <color name="colorDelete">#CB1A08</color>
+    <color name="colorButtonClassique">#d7d7d7</color>
 
 </resources>

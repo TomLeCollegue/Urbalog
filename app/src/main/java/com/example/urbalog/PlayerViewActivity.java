@@ -68,11 +68,11 @@ public class PlayerViewActivity extends AppCompatActivity {
     private TextView textEnviBuilding5;
     private TextView textTraficBuilding5;
 
-    private TextView textNameBuilding1;
-    private TextView textNameBuilding2;
-    private TextView textNameBuilding3;
-    private TextView textNameBuilding4;
-    private TextView textNameBuilding5;
+    private Button textNameBuilding1;
+    private Button textNameBuilding2;
+    private Button textNameBuilding3;
+    private Button textNameBuilding4;
+    private Button textNameBuilding5;
 
     private TextView textScoreCityEnvi;
     private TextView textScoreCityTrafic;
@@ -195,11 +195,11 @@ public class PlayerViewActivity extends AppCompatActivity {
 
         textScore = (TextView) findViewById(R.id.text_score);
 
-        textNameBuilding1 = (TextView) findViewById(R.id.text_name_building_1);
-        textNameBuilding2 = (TextView) findViewById(R.id.text_name_building_2);
-        textNameBuilding3 = (TextView) findViewById(R.id.text_name_building_3);
-        textNameBuilding4 = (TextView) findViewById(R.id.text_name_building_4);
-        textNameBuilding5 = (TextView) findViewById(R.id.text_name_building_5);
+        textNameBuilding1 = (Button) findViewById(R.id.text_name_building_1);
+        textNameBuilding2 = (Button) findViewById(R.id.text_name_building_2);
+        textNameBuilding3 = (Button) findViewById(R.id.text_name_building_3);
+        textNameBuilding4 = (Button) findViewById(R.id.text_name_building_4);
+        textNameBuilding5 = (Button) findViewById(R.id.text_name_building_5);
 
         icoObjectifLeftRole = (ImageView) findViewById(R.id.ico_objectif_left_role);
         icoObjectifRightRole = (ImageView) findViewById(R.id.ico_objectif_right_role);
@@ -689,38 +689,38 @@ public class PlayerViewActivity extends AppCompatActivity {
     public void colorBuildingBet(){
         Market M = PlayerConnexionActivity.net.getCurrentGame().getMarket();
         if( M.getBuildings().get(0).isFilled()){
-            B1.setBackgroundColor(Color.parseColor("#bcc87f"));
+            B1.setBackground(getDrawable(R.drawable.style_market_view_green));
         }
         else {
-            B1.setBackgroundColor(Color.parseColor("#f5e7da"));
+            B1.setBackground(getDrawable(R.drawable.style_market_view));
         }
 
         if( M.getBuildings().get(1).isFilled()){
-            B2.setBackgroundColor(Color.parseColor("#bcc87f"));
+            B2.setBackground(getDrawable(R.drawable.style_market_view_green));
         }
         else {
-            B2.setBackgroundColor(Color.parseColor("#f5e7da"));
+            B2.setBackground(getDrawable(R.drawable.style_market_view));
         }
 
         if( M.getBuildings().get(2).isFilled()){
-            B3.setBackgroundColor(Color.parseColor("#bcc87f"));
+            B3.setBackground(getDrawable(R.drawable.style_market_view_green));
         }
         else {
-            B3.setBackgroundColor(Color.parseColor("#f5e7da"));
+            B3.setBackground(getDrawable(R.drawable.style_market_view));
         }
 
         if( M.getBuildings().get(3).isFilled()){
-            B4.setBackgroundColor(Color.parseColor("#bcc87f"));
+            B4.setBackground(getDrawable(R.drawable.style_market_view_green));
         }
         else {
-            B4.setBackgroundColor(Color.parseColor("#f5e7da"));
-        }
+            B4.setBackground(getDrawable(R.drawable.style_market_view));
+    }
 
         if( M.getBuildings().get(4).isFilled()){
-            B5.setBackgroundColor(Color.parseColor("#bcc87f"));
+            B5.setBackground(getDrawable(R.drawable.style_market_view_green));
         }
         else {
-            B5.setBackgroundColor(Color.parseColor("#f5e7da"));
+            B5.setBackground(getDrawable(R.drawable.style_market_view));
         }
     }
 }
