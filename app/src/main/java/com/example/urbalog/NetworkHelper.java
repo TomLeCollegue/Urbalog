@@ -162,6 +162,7 @@ public class NetworkHelper implements Serializable {
                             if(currentPlayerView != null) {
                                 currentPlayerView.fillInfosView();
                                 currentPlayerView.resetTurnButton();
+                                currentPlayerView.colorBuildingBet();
                             }
                         }
                         else if(dataReceived instanceof Role){
