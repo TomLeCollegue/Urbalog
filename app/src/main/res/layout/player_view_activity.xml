@@ -185,13 +185,12 @@
                                 android:id="@+id/text_name_building_1"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
-                                android:fontFamily="@font/caractere_l1"
-                                android:text="Magasin"
-                                android:autoSizeTextType="uniform"
-                                android:autoSizeMinTextSize="5sp"
                                 android:autoSizeMaxTextSize="100sp"
+                                android:autoSizeMinTextSize="5sp"
                                 android:autoSizeStepGranularity="2sp"
-                                />
+                                android:autoSizeTextType="uniform"
+                                android:fontFamily="@font/caractere_l1"
+                                android:text="Magasin" />
 
                         </LinearLayout>
 
@@ -1352,24 +1351,34 @@
                 android:background="#c0c0c0"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/title_city_score"
+                <FrameLayout
+                    android:id="@+id/text_city_score"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:layout_height="25dp">
 
                     <TextView
                         android:id="@+id/text_title_city_score"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_gravity="center"
                         android:fontFamily="@font/caractere_l1"
-                        android:gravity="center"
                         android:text="Score de la Ville"
                         android:textAlignment="center"
                         android:textSize="18dp" />
-                </LinearLayout>
+
+                    <Button
+                        android:id="@+id/button_etat_de_la_ville"
+                        style="@style/Widget.AppCompat.Button.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autoSizeMaxTextSize="100sp"
+                        android:autoSizeMinTextSize="5sp"
+                        android:autoSizeStepGranularity="2sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@drawable/button_style_map"
+                        android:fontFamily="@font/caractere_l1"
+                        android:text="Etat de la ville" />
+                </FrameLayout>
 
                 <LinearLayout
                     android:id="@+id/list_city_score"
