@@ -1301,6 +1301,13 @@
                         android:text="Score de la Ville"
                         android:textAlignment="center"
                         android:textSize="18dp" />
+
+                    <Button
+                        android:id="@+id/testBuildingsButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="Button" />
                 </LinearLayout>
 
                 <LinearLayout

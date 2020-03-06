@@ -19,12 +19,26 @@
         android:theme="@style/AppTheme">
         <activity android:name=".AddBuildingActivity"
             android:screenOrientation="landscape"></activity>
+        <activity android:name=".EndTurnActivity"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
         <activity
             android:name=".ConfigurationActivity"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".LogisticActivity"
             android:screenOrientation="sensorLandscape"></activity>
+            android:name=".CityProgressionActivity"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity
+            android:name=".ConfigurationActivity"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".LogisticActivity"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".EditBuildingActivity"
             android:screenOrientation="landscape" />
