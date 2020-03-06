@@ -104,6 +104,8 @@ public class PlayerViewActivity extends AppCompatActivity {
     private Button buttonPlusTop;
     private Button buttonPlusBot;
 
+    private Button buttonCityState;
+
     private TextView textScorePlayer;
 
     private Integer numBuildingF;
@@ -188,6 +190,7 @@ public class PlayerViewActivity extends AppCompatActivity {
         textScoreCityAttract = (TextView) findViewById(R.id.text_score_city_attract);
         textScoreCityTrafic = (TextView) findViewById(R.id.text_score_city_trafic);
         bTurn = (Button) findViewById(R.id.button_turn);
+        buttonCityState = (Button)findViewById(R.id.button_etat_de_la_ville);
 
         textScore = (TextView) findViewById(R.id.text_score);
 
@@ -271,7 +274,13 @@ public class PlayerViewActivity extends AppCompatActivity {
             }
         });
 
-
+        buttonCityState.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cityIntent = new Intent(PlayerViewActivity.this, CityProgressionActivity.class);
+                startActivity(cityIntent);
+            }
+        });
         fillInfosView();
     }
 
