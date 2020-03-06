@@ -18,6 +18,7 @@ public class CityProgressionActivity extends AppCompatActivity {
 
     private ArrayList<Building> buildings = new ArrayList<Building>();
     private RecyclerView rv;
+    private TextView turnNumber;
 
 
     @Override
@@ -32,5 +33,8 @@ public class CityProgressionActivity extends AppCompatActivity {
 
         CityProgressionAdapter mProgressionAdapter = new CityProgressionAdapter(buildings);
         rv.setAdapter(mProgressionAdapter);
+
+        turnNumber = (TextView) findViewById(R.id.text_turnNumber);
+        turnNumber.setText("Tour n°"+PlayerConnexionActivity.net.getCurrentGame().getnTurn());
     }
 }

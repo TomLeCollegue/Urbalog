@@ -3,8 +3,11 @@ package com.example.urbalog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.FrameLayout;
 
 public class EndTurnActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

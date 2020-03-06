@@ -37,12 +37,12 @@
             android:orientation="horizontal"
             android:background="@color/lightPink">
 
-            <FrameLayout
+            <LinearLayout
                 android:id="@+id/beforeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/beforeTitle"
@@ -51,23 +51,113 @@
                     android:paddingLeft="2dp"
 
                     android:text="Avant" />
-            </FrameLayout>
 
-            <FrameLayout
+                <LinearLayout
+                    android:id="@+id/beforeEnvironmentalScoreLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/beforeEnvironmentalImg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@mipmap/img_environment_city_foreground"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/beforeFluidityScoreLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/beforeFluidityImg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@mipmap/img_fluid_city_foreground" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@mipmap/img_impact_on_city_foreground" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/afterLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                >
+                android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/afterTitle"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/afterTitleLayout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="2dp"
 
-                    android:text="Maintenant" />
-            </FrameLayout>
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/afterTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="2dp"
+
+                        android:text="Maintenant" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@mipmap/img_environment_city_foreground"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@mipmap/img_fluid_city_foreground" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@mipmap/img_impact_on_city_foreground" />
+                </LinearLayout>
+
+
+            </LinearLayout>
         </LinearLayout>
 
         <FrameLayout
