@@ -28,6 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:fontFamily="@font/caractere_l2"
                 android:gravity="center"
                 android:text="Partie Terminée : Logistique" />
         </FrameLayout>
@@ -59,6 +60,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
+                        android:fontFamily="@font/caractere_l2"
                         android:gravity="center"
                         android:text="Score Logistique de la ville" />
 
@@ -83,6 +85,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:fontFamily="@font/caractere_l2"
                         android:gravity="center"
                         android:text="+3" />
                 </FrameLayout>
@@ -99,6 +102,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
+                        android:fontFamily="@font/ariali"
                         android:gravity="center"
                         android:text="(Exemple)Bravo, dans votre ville, les livraisons se font sans encombre" />
                 </FrameLayout>
@@ -124,6 +128,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
+                        android:fontFamily="@font/caractere_l2"
                         android:gravity="center"
                         android:text="Influence de chaque aménagement" />
                 </FrameLayout>
