@@ -1,63 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_margin="40dp"
-    android:orientation="vertical"
-    android:background="#FFFFFF">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/text_name_building_popup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:gravity="center"
-            android:text="Magasin" />
-    </LinearLayout>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00FFFFFF"
+    android:orientation="horizontal" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:gravity="right|top"
         android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button_X"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:background="#CEFF0000"
+            android:text="X" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/layout_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_name_building_popup"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:fontFamily="@font/caractere_l1"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/buildingsButton"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeStepGranularity="2sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_desc_building_popup"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:fontFamily="@font/ariali"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="description "
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="3sp"
+                android:autoSizeMaxTextSize="15sp"
+                android:autoSizeStepGranularity="2sp"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/ressource_1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:background="#8BC7C7C7"
+                android:gravity="bottom"
+                android:orientation="vertical"
+                android:padding="5dp">
 
-                <ImageView
-                    android:id="@+id/ico_ressource_top_popup"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@mipmap/img_attract_city_foreground" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/avancement_ressource_top"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="4/5" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/ico_ressource_top_popup"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@mipmap/img_attract_city_foreground" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -69,50 +106,55 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/caractere_l1"
                         android:text="-" />
+
+                    <TextView
+                        android:id="@+id/avancement_ressource_top"
+                        android:layout_width="53dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/caractere_l1"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:paddingRight="5dp"
+                        android:text="0" />
 
                     <Button
                         android:id="@+id/button_plus_top"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/caractere_l1"
                         android:text="+" />
                 </LinearLayout>
 
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/rsessource_2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:background="#8BC7C7C7"
+                android:gravity="bottom"
+                android:orientation="vertical"
+                android:padding="5dp">
 
-                <ImageView
-                    android:id="@+id/ico_ressource_bot_popup"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@mipmap/img_ressource_eco_foreground" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/avancement_ressource_bot"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="3/5" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/ico_ressource_bot_popup"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@mipmap/img_attract_city_foreground" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -124,31 +166,31 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/caractere_l1"
                         android:text="-" />
+
+                    <TextView
+                        android:id="@+id/avancement_ressource_bot"
+                        android:layout_width="55dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/caractere_l1"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="0" />
 
                     <Button
                         android:id="@+id/button_plus_bot"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/caractere_l1"
                         android:text="+" />
                 </LinearLayout>
-
             </LinearLayout>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/button_bet_popup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Miser" />
         </LinearLayout>
 
     </LinearLayout>
-
 </LinearLayout>

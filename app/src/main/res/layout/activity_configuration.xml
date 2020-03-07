@@ -1,32 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/lightPink"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ConfigurationActivity">
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <Button
         android:id="@+id/modificationBuilding"
         android:background="@drawable/button_style"
-        android:text="Modification Batiments"
+        android:text="@string/modifBuilding"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:fontFamily="@font/caractere_l2"></Button>
+
+    <Button
+        android:id="@+id/initBuilding"
+        android:background="@drawable/button_style"
+        android:text="@string/initBuildings"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:layout_width="250dp"
+        android:fontFamily="@font/caractere_l2"
+        android:layout_height="100dp">
+    </Button>
+
+    <Button
+        android:id="@+id/addBuilding"
+        android:background="@drawable/button_style"
+        android:text="@string/addBuilding"
         android:layout_marginTop="50dp"
         android:layout_gravity="center"
         android:layout_width="250dp"
         android:layout_height="100dp">
     </Button>
 
-    <Button
-        android:id="@+id/initBuilding"
-        android:background="@drawable/button_style"
-        android:text="Réinitialiser Batiments"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center"
-        android:layout_width="250dp"
-        android:layout_height="100dp"
-        >
-    </Button>
+    </LinearLayout>
 
-</LinearLayout>
+    </ScrollView>

@@ -9,6 +9,7 @@
     <color name="white">#FFFFFF</color>
     <color name="dark">#000000</color>
     <color name="game">#f3d7bf</color>
+    <color name="sansCouleurs">#00FFFFFF</color>
 
 
     <!-- Hugo Hersemeule -->
@@ -17,7 +18,9 @@
     <color name="mediumPink">#f3d7be</color>
     <color name="lightGray">#c0c0c0</color>
     <color name="darkGray">#B4B4B4</color>
+    <color name="evenLighterGray">#dadada</color>
 
     <color name="colorDelete">#CB1A08</color>
+    <color name="colorButtonClassique">#d7d7d7</color>
 
 </resources>

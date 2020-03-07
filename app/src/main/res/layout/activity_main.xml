@@ -1,42 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:background="@color/lightPink">
+    android:background="@color/lightPink"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/buttonAdmin"
-            android:layout_width="250dp"
-            android:layout_height="200dp"
-            android:background="@drawable/button_style"
-            android:onClick="changeActivityAdmin"
-            android:text="Admin"
-            android:textSize="20dp" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/texte_urbalog" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <Button
-            android:textSize="20dp"
-            android:background="@drawable/button_style"
-            android:onClick="changeActivityPlayer"
-            android:id="@+id/buttonJoueur"
-            android:layout_width="250dp"
-            android:layout_height="200dp"
-            android:text="Joueur" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="40dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/buttonJoueur"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_style"
+                android:fontFamily="@font/caractere_l1"
+                android:onClick="changeActivityPlayer"
+                android:text="Joueur"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="40dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/buttonAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_style"
+                android:fontFamily="@font/caracteres_l1_regular"
+                android:onClick="changeActivityAdmin"
+                android:text="Admin"
+                android:textSize="20dp" />
+        </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>
 

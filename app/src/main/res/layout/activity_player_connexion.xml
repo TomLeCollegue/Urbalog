@@ -24,10 +24,13 @@
 
                 <Button
                     android:id="@+id/button_cancel_research"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Annuler la recherche"
-                    android:layout_gravity="center"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button_style"
+                    android:fontFamily="@font/caractere_l1"
+                    android:text="Annuler la recherche" />
             </FrameLayout>
 
             <FrameLayout
@@ -37,10 +40,13 @@
 
                 <Button
                     android:id="@+id/button_research"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Chercher un hôte"
-                    android:layout_gravity="center"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button_style"
+                    android:fontFamily="@font/caractere_l1"
+                    android:text="Chercher un hôte" />
             </FrameLayout>
 
             <FrameLayout
@@ -48,12 +54,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <ImageButton
-                    android:id="@+id/button_refresh_list"
+                <TextView
+                    android:id="@+id/player_name"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/stat_notify_sync_noanim"
-                    android:layout_gravity="center"/>
+                    android:layout_height="wrap_content">
+                </TextView>
             </FrameLayout>
 
             <FrameLayout
@@ -66,7 +72,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Disconnected" />
+                    android:fontFamily="@font/caractere_l1"
+                    android:text="Disconnected"
+                    android:textSize="20dp" />
             </FrameLayout>
         </LinearLayout>
 

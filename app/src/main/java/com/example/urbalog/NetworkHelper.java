@@ -1,12 +1,17 @@
 package com.example.urbalog;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.util.Pair;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.example.urbalog.Class.Bet;
 import com.example.urbalog.Class.Building;
@@ -104,6 +109,7 @@ public class NetworkHelper implements Serializable {
                                 currentPlayerView.fillInfosView();
                                 currentPlayerView.setButtonState(true);
                                 currentPlayerView.setEnabledBetButtons(true);
+                                currentPlayerView.colorBuildingBet();
                             }
                             else if(((TransferPackage) dataReceived).second instanceof Bet){
                                 if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
@@ -112,6 +118,7 @@ public class NetworkHelper implements Serializable {
                                     if(currentPlayerView != null)
                                     {
                                         currentPlayerView.fillInfosView();
+
                                     }
                                 }
                             }
@@ -119,7 +126,26 @@ public class NetworkHelper implements Serializable {
                                switch((Signal)((TransferPackage) dataReceived).first)
                                {
                                    case CHECK_GOALS:
-                                       player.checkGoals((ArrayList<Building>)((TransferPackage) dataReceived).second);
+                                       if(player.checkGoals((ArrayList<Building>)((TransferPackage) dataReceived).second)){
+
+                                           final AlertDialog.Builder scoreDialog = new AlertDialog.Builder(getCurrentPlayerView());
+
+                                           LayoutInflater inflater = getCurrentPlayerView().getLayoutInflater();
+
+                                           scoreDialog.setView(inflater.inflate(R.layout.alert_dialog,null))
+                                                  .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                                      @Override
+                                                      public void onClick(DialogInterface dialogInterface, int i) {
+                                                          dialogInterface.dismiss();
+                                                      }
+                                                  });
+
+                                           final AlertDialog alertScoreDialog = scoreDialog.create();
+
+                                           alertScoreDialog.show();
+                                           alertScoreDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+                                       }
                                        break;
                                    case GAME_OVER:
                                        currentGame = (Game)((TransferPackage) dataReceived).second;
@@ -137,6 +163,7 @@ public class NetworkHelper implements Serializable {
                             if(currentPlayerView != null) {
                                 currentPlayerView.fillInfosView();
                                 currentPlayerView.resetTurnButton();
+                                currentPlayerView.colorBuildingBet();
                             }
                         }
                         else if(dataReceived instanceof Role){

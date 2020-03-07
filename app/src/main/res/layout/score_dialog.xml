@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainLayoutScoreDialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/starLayoutScoreDialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#FFFFBB33"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/starFrameScoreDialog1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/starScoreDialog1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+
+                android:scaleType="center"
+                app:srcCompat="@drawable/star" />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:id="@+id/starFrameScoreDialog2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/starScoreDialog2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/app_name"
+                android:scaleType="center"
+                android:src="@android:drawable/star_big_on" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/starFrameScoreDialog3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/starScoreDialog3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/app_name"
+                android:scaleType="center"
+                android:src="@android:drawable/star_big_on" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/scoreDialogView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="@color/lightGray"
+        android:fontFamily="@font/caractere_l1"
+        android:gravity="center"
+        android:text="BIEN JOUÉ !"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="5sp"
+        android:autoSizeMaxTextSize="100sp"
+        android:autoSizeStepGranularity="2sp"
+        ></TextView>
+
+    <TextView
+        android:id="@+id/scoreDialogView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/lightGray"
+        android:fontFamily="@font/caractere_l2"
+        android:gravity="center"
+        android:text="Vous gagnez un point !"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="5sp"
+        android:autoSizeMaxTextSize="25sp"
+        android:autoSizeStepGranularity="2sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+</LinearLayout>
