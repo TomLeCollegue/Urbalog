@@ -64,7 +64,7 @@ public class EditBuildingActivity extends AppCompatActivity {
 
         description = findViewById(R.id.descriptionBuildingEdit);
         description.setText(building.getDescription());
-        description.setHint(building.getName());
+        description.setHint(building.getDescription());
 
         politique = findViewById(R.id.politiqueBuildingEdit);
         politique.setText(valueOf(building.getCoutPolitique()));
@@ -196,41 +196,53 @@ public class EditBuildingActivity extends AppCompatActivity {
         explicationLogistique.setHint(building.getExplicationLogistique());
     }
 
+    /**
+     * Funtion to validate the form
+     * check if name is not already taken
+     * check if fields are not empty
+     * call when we click on validate button
+     * listener on XML
+     *
+     * @param view
+     */
     public void validerBuildingEdit(View view) {
         boolean finish = true;
-        if(name.getText().toString().matches("") ||
-                name.getText().toString().matches(" ") ||
-                name.getText().toString().matches("\n")){
+        String finalName = name.getText().toString().trim();
+        String finalDescription = description.getText().toString().trim();
+        String finalExplicationLogistique = explicationLogistique.getText().toString().trim();
+
+        if(finalName.matches(""))
+        {
             name.setError("champs vide");
             finish = false;
         }
-        if(description.getText().toString().matches("") ||
-                description.getText().toString().matches(" ") ||
-                description.getText().toString().matches("\n")){
+        if(finalDescription.matches(""))
+        {
             description.setError("champs vide");
             finish = false;
         }
-        if(explicationLogistique.getText().toString().matches("")){
+        if(finalExplicationLogistique.matches(""))
+        {
             explicationLogistique.setError("champs vide");
             finish = false;
         }
 
         if(finish == true){
-            if((building.getName()).equals(name.getText().toString()))
+            if((building.getName()).equals(finalName))
             {
-                Building newBuilding = new Building(name.getText().toString(), description.getText().toString(), Integer.parseInt(politique.getText().toString()), Integer.parseInt(social.getText().toString()),  Integer.parseInt(economique.getText().toString()), Integer.parseInt(attractivite.getText().toString()), Integer.parseInt(fluidite.getText().toString()), Integer.parseInt(environnemental.getText().toString()), Integer.parseInt(scoreLogistique.getText().toString()), explicationLogistique.getText().toString() );
+                Building newBuilding = new Building(finalName, finalDescription, Integer.parseInt(politique.getText().toString()), Integer.parseInt(social.getText().toString()),  Integer.parseInt(economique.getText().toString()), Integer.parseInt(attractivite.getText().toString()), Integer.parseInt(fluidite.getText().toString()), Integer.parseInt(environnemental.getText().toString()), Integer.parseInt(scoreLogistique.getText().toString()), finalExplicationLogistique.toString() );
                 JsonBuilding.modificationBuilding(newBuilding, name.getHint().toString());
                 Intent intent = new Intent(EditBuildingActivity.this, ListBuildingsActivity.class);
                 startActivity(intent);
                 finish();
             }
             else{
-                if(JsonBuilding.buildingAlreadyInList(name.getText().toString())){
+                if(JsonBuilding.buildingAlreadyInList(finalName)){
                     name.setError("Il y a déja un batiment avec le même nom");
                 }
                 else{
                     Toast.makeText(this, "Le batiment a été modifié", Toast.LENGTH_SHORT).show();
-                    Building newBuilding = new Building(name.getText().toString(), description.getText().toString(), Integer.parseInt(politique.getText().toString()), Integer.parseInt(social.getText().toString()),  Integer.parseInt(economique.getText().toString()), Integer.parseInt(attractivite.getText().toString()), Integer.parseInt(fluidite.getText().toString()), Integer.parseInt(environnemental.getText().toString()), Integer.parseInt(scoreLogistique.getText().toString()), explicationLogistique.getText().toString());
+                    Building newBuilding = new Building(finalName, finalDescription, Integer.parseInt(politique.getText().toString()), Integer.parseInt(social.getText().toString()),  Integer.parseInt(economique.getText().toString()), Integer.parseInt(attractivite.getText().toString()), Integer.parseInt(fluidite.getText().toString()), Integer.parseInt(environnemental.getText().toString()), Integer.parseInt(scoreLogistique.getText().toString()), finalExplicationLogistique.toString());
                     JsonBuilding.modificationBuilding(newBuilding, name.getHint().toString());
                     Intent intent = new Intent(EditBuildingActivity.this, ListBuildingsActivity.class);
                     startActivity(intent);
@@ -240,7 +252,10 @@ public class EditBuildingActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * fonction to finish activity
+     * call when we click on back button
+     */
     public void onBackPressed(){
         Intent intent = new Intent(EditBuildingActivity.this, ListBuildingsActivity.class);
         startActivity(intent);
@@ -248,6 +263,13 @@ public class EditBuildingActivity extends AppCompatActivity {
         return;
     }
 
+    /**
+     * function to init the building values
+     * call when button is clicked
+     * 
+     * listener on XML
+     * @param view
+     */
     public void initBuildingEdit(View view) {
         name.setText(building.getName());
         description.setText(building.getDescription());
