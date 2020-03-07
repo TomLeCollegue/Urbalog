@@ -1,10 +1,5 @@
 package com.example.urbalog;
 
-import androidx.annotation.CallSuper;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,7 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.example.urbalog.Class.Building;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {

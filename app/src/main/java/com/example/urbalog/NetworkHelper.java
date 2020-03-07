@@ -4,15 +4,11 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 
@@ -45,6 +41,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -72,7 +69,7 @@ public class NetworkHelper implements Serializable {
 
     private int nextTurnVotes = 0;
 
-    private ConnectionsClient connectionsClient;
+    private final ConnectionsClient connectionsClient;
     private static final String TAG = "UrbalogGame"; // Tag for log
     private final String codeName = CodenameGenerator.generate();
     private final String playerUUID;
@@ -178,7 +175,7 @@ public class NetworkHelper implements Serializable {
                                            final AlertDialog alertScoreDialog = scoreDialog.create();
 
                                            alertScoreDialog.show();
-                                           alertScoreDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                                           Objects.requireNonNull(alertScoreDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
 
                                        }
                                        try {
@@ -587,7 +584,7 @@ public class NetworkHelper implements Serializable {
     }
 
     /** Finds an opponent to play the game with using Nearby Connections. */
-    public void hostGame(View view) {
+    public void hostGame() {
         if (!discovering) {
             startAdvertising();
         }
@@ -595,9 +592,8 @@ public class NetworkHelper implements Serializable {
 
     /**
      * Launch discovery and set status attributes
-     * @param view
      */
-    public void searchGame(View view) {
+    public void searchGame() {
         if (!advertising) {
             startDiscovery();
         }
@@ -748,10 +744,6 @@ public class NetworkHelper implements Serializable {
 
     public void setGameStarted(boolean gameStarted) {
         this.gameStarted = gameStarted;
-    }
-
-    public static void setNbPlayers(int nbPlayers) {
-        NB_PLAYERS = nbPlayers;
     }
 
     public void setHost(boolean host) {

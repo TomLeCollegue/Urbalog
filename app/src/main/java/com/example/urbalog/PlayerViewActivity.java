@@ -1,17 +1,12 @@
 package com.example.urbalog;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -20,19 +15,17 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.urbalog.Class.Bet;
 import com.example.urbalog.Class.Building;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
-import com.example.urbalog.Class.Player;
 import com.example.urbalog.Class.Role;
 import com.example.urbalog.Class.Signal;
 import com.example.urbalog.Class.TransferPackage;
-import com.example.urbalog.Json.JsonBuilding;
-import com.example.urbalog.Json.JsonRole;
+
+import java.io.IOException;
 
 public class PlayerViewActivity extends AppCompatActivity {
 

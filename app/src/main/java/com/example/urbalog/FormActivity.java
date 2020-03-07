@@ -1,22 +1,18 @@
 package com.example.urbalog;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.urbalog.Adapter.FormAdapter;
 import com.example.urbalog.Class.Player;
-
-import java.io.Serializable;
 
 public class FormActivity extends AppCompatActivity {
 

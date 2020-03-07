@@ -1,9 +1,8 @@
 package com.example.urbalog;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.widget.FrameLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class EndTurnActivity extends AppCompatActivity {
 

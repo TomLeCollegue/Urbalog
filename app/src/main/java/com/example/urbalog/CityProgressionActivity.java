@@ -1,11 +1,11 @@
 package com.example.urbalog;
 
+import android.os.Bundle;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.widget.TextView;
 
 import com.example.urbalog.Adapter.CityProgressionAdapter;
 import com.example.urbalog.Class.Building;

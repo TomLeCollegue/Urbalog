@@ -1,9 +1,5 @@
 package com.example.urbalog;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,10 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.urbalog.Adapter.BuildingBuiltAdapter;
-import com.example.urbalog.Adapter.BuildingInfluenceAdapter;
 import com.example.urbalog.Class.Building;
-import com.example.urbalog.Json.JsonBuilding;
 
 import java.util.ArrayList;
 
