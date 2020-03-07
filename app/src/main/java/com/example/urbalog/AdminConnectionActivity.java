@@ -59,8 +59,9 @@ public class AdminConnectionActivity extends AppCompatActivity {
         bPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                configurationButton.setEnabled(false);
                 if(net.getListPlayer().size() == NetworkHelper.getNbPlayers()) {
+                    bPlay.setEnabled(false);
+                    configurationButton.setEnabled(false);
                     net.setGameStarted(true);
                     currentGame = new Game();
                     currentGame.setMarket(new Market());
@@ -72,7 +73,6 @@ public class AdminConnectionActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                bPlay.setEnabled(false);
             }
         });
         bStop.setOnClickListener(new View.OnClickListener() {

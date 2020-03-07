@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -213,7 +214,7 @@ public class NetworkHelper implements Serializable {
                         }
                         /* If host have send Role, used on game start for role attribution */
                         else if(dataReceived instanceof Role){
-                            player = new Player((Role) dataReceived);
+                            player.setRole((Role) dataReceived);
                             try {
                                 sendToClient(new Triplet<Signal, String, Player>(Signal.UPDATE_PLAYER, playerUUID, player), endpointId);
                             } catch (IOException e) {
@@ -564,6 +565,11 @@ public class NetworkHelper implements Serializable {
                     }
                     else {
                         PlayerConnexionActivity.setStatus("Disconnected");
+                        if(currentPlayerView != null) {
+                            currentPlayerView.finish();
+                            Toast.makeText(appContext, "Vous avez été déconnecté de la partie, veuillez vous re-connecter en appuyant sur \"CHERCHER UN HOTE\"",
+                                    Toast.LENGTH_LONG).show();
+                        }
                         if(listPlayer.size() != 0)
                             listPlayer.clear();
                     }
