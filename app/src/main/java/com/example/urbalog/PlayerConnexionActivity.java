@@ -16,7 +16,6 @@ public class PlayerConnexionActivity extends AppCompatActivity {
     private Button bSearch;
     private static TextView tStatus;
 
-    private Player player;
     private TextView name;
 
     @Override
@@ -26,16 +25,14 @@ public class PlayerConnexionActivity extends AppCompatActivity {
 
         this.bSearch = (Button) findViewById(R.id.button_research);
         this.bCancel = (Button) findViewById(R.id.button_cancel_research);
-        this.tStatus = (TextView) findViewById(R.id.textStatus);
         this.name = (TextView) findViewById(R.id.player_name);
-
+        tStatus = (TextView) findViewById(R.id.textStatus);
 
         net = new NetworkHelper(this);
         net.setHost(false);
-        
-        player = (Player) getIntent().getSerializableExtra("player");
+        net.setPlayer((Player) getIntent().getSerializableExtra("player"));
 
-        name.setText("bonjour " + player.getName());
+        name.setText(String.format("Bonjour %s", net.getPlayer().getName()));
 
         this.bSearch.setOnClickListener(new View.OnClickListener() {
             @Override

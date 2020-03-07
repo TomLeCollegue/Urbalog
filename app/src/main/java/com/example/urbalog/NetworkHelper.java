@@ -213,7 +213,7 @@ public class NetworkHelper implements Serializable {
                         }
                         /* If host have send Role, used on game start for role attribution */
                         else if(dataReceived instanceof Role){
-                            player = new Player((Role) dataReceived);
+                            player.setRole((Role) dataReceived);
                             try {
                                 sendToClient(new Triplet<Signal, String, Player>(Signal.UPDATE_PLAYER, playerUUID, player), endpointId);
                             } catch (IOException e) {

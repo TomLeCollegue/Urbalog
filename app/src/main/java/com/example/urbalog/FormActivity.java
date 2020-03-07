@@ -53,7 +53,7 @@ public class FormActivity extends AppCompatActivity {
                     String name = formAdapter.getName();
                     int age = formAdapter.getAge();
                     String pcs = formAdapter.getPcs();
-                    Player player = new Player(name, age, pcs, null, null, null);
+                    Player player = new Player(name, age, pcs, null);
                     Intent myIntent = new Intent(FormActivity.this, PlayerConnexionActivity.class);
                     myIntent.putExtra("player", player);
                     startActivity(myIntent);
