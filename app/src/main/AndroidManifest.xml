@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.urbalog">
     <!-- Required for Nearby Connections -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -17,10 +18,18 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StatsActivity"></activity>
+        <activity
+            android:name=".stats.NbPlayerByGameActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".stats.PcsPercentActivity"
+            android:screenOrientation="sensorLandscape"/>
+        <activity
+            android:name=".StatsActivity"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".FormActivity"
-            android:screenOrientation="sensorLandscape"></activity>
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".AddBuildingActivity"
             android:screenOrientation="sensorLandscape" />
@@ -53,13 +62,10 @@
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ListBuildingsActivity"
-            android:screenOrientation="sensorLandscape"></activity>
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".EndGameActivity"
             android:screenOrientation="landscape" />
-        <activity
-            android:name=".FormActivity"
-            android:screenOrientation="sensorLandscape"></activity>
     </application>
 
 </manifest>

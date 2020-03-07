@@ -142,6 +142,8 @@ public class FormAdapter extends PagerAdapter{
 
         age = (NumberPicker) view.findViewById(R.id.slide_age);
         age.setMinValue(1);
+        age.setValue(20);
+        finalAge = age.getValue();
         age.setMaxValue(99);
         age.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
