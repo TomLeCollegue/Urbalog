@@ -44,7 +44,6 @@ public class PcsPercentActivity extends AppCompatActivity {
 
         pieChart.setDrawHoleEnabled(false);
         pieChart.setTransparentCircleRadius(1f);
-
         HashMap<String, Integer> res = JsonStats.getPercentPcs();
 
         ArrayList<PieEntry> yValues = new ArrayList<>();
@@ -60,17 +59,19 @@ public class PcsPercentActivity extends AppCompatActivity {
         dataSet.setSliceSpace(1f);
         dataSet.setSelectionShift(40f);
 
+        //example of array of colors
         int[] testColor = {
-                Color.rgb(221,160,221), Color.rgb(255,215,0),
-                Color.rgb(0,128,128), Color.rgb(0,0,255),
-                Color.rgb(255,160,122), Color.rgb(128,128,0),
-                Color.rgb(72,209,204), Color.rgb(139,0,139),
-                Color.rgb(255,215,0), Color.rgb(124,252,0)
+                Color.rgb(221,160,221),
+                Color.rgb(255,215,0),
+                Color.rgb(0,128,128),
+                Color.rgb(0,0,255),
+                Color.rgb(255,160,122),
+                Color.rgb(128,128,0),
+                Color.rgb(72,209,204),
+                Color.rgb(139,0,139),
+                Color.rgb(255,215,0),
+                Color.rgb(124,252,0)
         };
-
-
-
-
         List<Integer> test = ColorTemplate.createColors(testColor);
 
         dataSet.setColors(test);
@@ -78,8 +79,6 @@ public class PcsPercentActivity extends AppCompatActivity {
         PieData data = new PieData(dataSet);
         data.setValueTextSize(20f);
         data.setValueTextColors(Collections.singletonList(Color.BLACK));
-
-
         pieChart.setData(data);
     }
 

@@ -16,8 +16,6 @@ import android.widget.Toast;
 import com.example.urbalog.Adapter.FormAdapter;
 import com.example.urbalog.Class.Player;
 
-import java.io.Serializable;
-
 public class FormActivity extends AppCompatActivity {
 
     private ViewPager mSlideViewPager;
@@ -46,6 +44,8 @@ public class FormActivity extends AppCompatActivity {
         formAdapter = new FormAdapter(this);
         mSlideViewPager.setAdapter(formAdapter);
 
+
+
         addDotsIndicator(0);
 
         mSlideViewPager.addOnPageChangeListener(viewListener);
@@ -57,14 +57,35 @@ public class FormActivity extends AppCompatActivity {
                     String name = formAdapter.getName();
                     int age = formAdapter.getAge();
                     String pcs = formAdapter.getPcs();
-                    Player player = new Player(name, age, pcs, null, null, null);
-                    Intent myIntent = new Intent(FormActivity.this, PlayerConnexionActivity.class);
-                    myIntent.putExtra("player", player);
-                    startActivity(myIntent);
-                    finish();
+                    if(name == null)
+                    {
+                        Log.d("debug", "name null");
+                        getViewPager().setCurrentItem(0);
+                        Toast.makeText(FormActivity.this, "le champ n'est pas rempli", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(age == 0){
+                        Log.d("debug", "age pas correct");
+                        getViewPager().setCurrentItem(1);
+                        Toast.makeText(FormActivity.this, "le champ n'est pas rempli", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(pcs == null)
+                    {
+                        Log.d("debug", "pcs null");
+                        getViewPager().setCurrentItem(2);
+                        Toast.makeText(FormActivity.this, "le champ n'est pas rempli", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        name = name.trim();
+                        Player player = new Player(name, age, pcs, null, null, null);
+                        Intent myIntent = new Intent(FormActivity.this, PlayerConnexionActivity.class);
+                        myIntent.putExtra("player", player);
+                        startActivity(myIntent);
+                        finish();
+                    }
+                }else{
+                    mSlideViewPager.setCurrentItem(currentPage + 1);
                 }
-
-                mSlideViewPager.setCurrentItem(currentPage + 1);
             }
         });
 
@@ -91,6 +112,10 @@ public class FormActivity extends AppCompatActivity {
         if(mDots.length > 0){
             mDots[position].setTextColor(getResources().getColor(R.color.mediumPink));
         }
+    }
+
+    public ViewPager getViewPager(){
+        return this.mSlideViewPager;
     }
 
     ViewPager.OnPageChangeListener viewListener = new ViewPager.OnPageChangeListener() {

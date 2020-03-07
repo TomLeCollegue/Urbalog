@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -37,7 +38,7 @@ public class FormAdapter extends PagerAdapter{
     private LayoutInflater layoutInflater;
     private Button pcs;
     private NumberPicker age;
-    private EditText response;
+    private EditText name;
 
     private int finalAge;
     private String finalName;
@@ -46,6 +47,7 @@ public class FormAdapter extends PagerAdapter{
 
     public FormAdapter(Context context){
         this.context = context;
+
     }
 
     public String[] slide_titles = {
@@ -93,8 +95,8 @@ public class FormAdapter extends PagerAdapter{
         TextView title = view.findViewById(R.id.slide_titre);
         title.setText(slide_titles[position]);
 
-        response = view.findViewById(R.id.slide_res);
-        response.addTextChangedListener(new TextWatcher() {
+        name = view.findViewById(R.id.slide_res);
+        name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -154,16 +156,16 @@ public class FormAdapter extends PagerAdapter{
 
         switch(position){
             case 0:
-                response.setHint(slide_hints[position]);
+                name.setHint(slide_hints[position]);
                 pcs.setVisibility(View.GONE);
                 age.setVisibility(View.GONE);
                 break;
             case 1:
-                response.setVisibility(View.GONE);
+                name.setVisibility(View.GONE);
                 pcs.setVisibility(View.GONE);
                 break;
             case 2:
-                response.setVisibility(View.GONE);
+                name.setVisibility(View.GONE);
                 age.setVisibility(View.GONE);
                 break;
         }
@@ -189,4 +191,15 @@ public class FormAdapter extends PagerAdapter{
     public String getPcs(){
         return finalPcs;
     }
+
+    public EditText getEditTextName(){
+        return name;
+    }
+
+    public void setNameError(int position){
+        getEditTextName().setError("Il n'y a pas de nom");
+    }
+
+
+
 }
