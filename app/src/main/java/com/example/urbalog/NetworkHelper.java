@@ -132,8 +132,8 @@ public class NetworkHelper implements Serializable {
 
                                            LayoutInflater inflater = getCurrentPlayerView().getLayoutInflater();
 
-                                           scoreDialog.setView(inflater.inflate(R.layout.score_dialog,null))
-                                                  .setNegativeButton("Fermé", new DialogInterface.OnClickListener() {
+                                           scoreDialog.setView(inflater.inflate(R.layout.alert_dialog,null))
+                                                  .setNegativeButton("OK", new DialogInterface.OnClickListener() {
                                                       @Override
                                                       public void onClick(DialogInterface dialogInterface, int i) {
                                                           dialogInterface.dismiss();
@@ -143,6 +143,7 @@ public class NetworkHelper implements Serializable {
                                            final AlertDialog alertScoreDialog = scoreDialog.create();
 
                                            alertScoreDialog.show();
+                                           alertScoreDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
                                        }
                                        break;
