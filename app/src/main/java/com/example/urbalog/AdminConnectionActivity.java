@@ -1,14 +1,13 @@
 package com.example.urbalog;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.urbalog.Class.Building;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
 import com.example.urbalog.Class.Role;
@@ -53,7 +52,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 configurationButton.setEnabled(false);
-                net.hostGame(getCurrentFocus());
+                net.hostGame();
                 updateStatus("Searching...");
             }
         });

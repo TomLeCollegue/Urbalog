@@ -1,18 +1,15 @@
 package com.example.urbalog;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.urbalog.Adapter.BuildingInfluenceAdapter;
 import com.example.urbalog.Class.Building;
-import com.example.urbalog.Class.City;
-import com.example.urbalog.Class.Player;
-import com.example.urbalog.Json.JsonBuilding;
 
 import java.util.ArrayList;
 

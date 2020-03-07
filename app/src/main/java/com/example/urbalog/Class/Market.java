@@ -1,7 +1,8 @@
 package com.example.urbalog.Class;
 
-import java.io.Serializable;
 import com.example.urbalog.Json.JsonBuilding;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

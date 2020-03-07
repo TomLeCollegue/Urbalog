@@ -1,13 +1,11 @@
 package com.example.urbalog;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.urbalog.Class.Player;
 
@@ -42,7 +40,7 @@ public class PlayerConnexionActivity extends AppCompatActivity {
         this.bSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                net.searchGame(getCurrentFocus());
+                net.searchGame();
             }
         });
         this.bCancel.setOnClickListener(new View.OnClickListener() {
