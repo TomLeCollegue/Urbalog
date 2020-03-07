@@ -20,6 +20,9 @@ public class CityProgressionActivity extends AppCompatActivity {
     private RecyclerView rv;
     private TextView turnNumber;
 
+    private TextView textAttractivityScore;
+    private TextView textEnvironmentScore;
+    private TextView textFluidityScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,14 @@ public class CityProgressionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_city_progression);
 
         buildings = PlayerConnexionActivity.net.getCurrentGame().getCity().getBuildings();
+
+        textAttractivityScore = (TextView) findViewById(R.id.text_score_city_attract);
+        textEnvironmentScore = (TextView) findViewById(R.id.text_score_city_envi);
+        textFluidityScore = (TextView) findViewById(R.id.text_score_city_trafic);
+
+        textAttractivityScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreAttractivite()));
+        textEnvironmentScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreEnvironnemental()));
+        textFluidityScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreFluidite()));
 
         rv = (RecyclerView) findViewById(R.id.recyclerListBuildingsInCity);
         rv.setLayoutManager(new LinearLayoutManager(CityProgressionActivity.this,LinearLayoutManager.VERTICAL,false));

@@ -33,6 +33,7 @@ public class PlayerConnexionActivity extends AppCompatActivity {
 
 
         net = new NetworkHelper(this);
+        net.setHost(false);
         
         player = (Player) getIntent().getSerializableExtra("player");
 

@@ -1,6 +1,7 @@
 package com.example.urbalog;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 
@@ -58,7 +59,9 @@ public class NetworkHelper implements Serializable {
     private boolean advertising;
     private boolean discovering;
     private boolean host;
-    private static int NB_PLAYERS;
+
+    private static int NB_PLAYERS = 2;
+    private static int NB_BUILDINGS = 3;
 
     private Game currentGame;
     private boolean gameStarted;
@@ -96,6 +99,7 @@ public class NetworkHelper implements Serializable {
                  * @param endpointId
                  * @param payload
                  */
+                @SuppressLint("InflateParams")
                 @Override
                 public void onPayloadReceived(@NonNull String endpointId, Payload payload) {
 
@@ -123,10 +127,9 @@ public class NetworkHelper implements Serializable {
                                     e.printStackTrace();
                                 }
                                 currentGame.setMarket(((Market) ((TransferPackage) dataReceived).second));
-                                currentPlayerView.fillInfosView();
+                                updatePlayerView();
                                 currentPlayerView.setButtonState(true);
                                 currentPlayerView.setEnabledBetButtons(true);
-                                currentPlayerView.colorBuildingBet();
                             }
                             /* If host have send Bet, no longer used for the moment */
                             else if(((TransferPackage) dataReceived).second instanceof Bet){
@@ -135,8 +138,7 @@ public class NetworkHelper implements Serializable {
                                     currentGame.majBet(((Bet) ((TransferPackage) dataReceived).second));
                                     if(currentPlayerView != null)
                                     {
-                                        currentPlayerView.fillInfosView();
-
+                                        updatePlayerView();
                                     }
                                 }
                             }
@@ -148,6 +150,8 @@ public class NetworkHelper implements Serializable {
                                 gameStarted = true;
                                 Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
                                 appContext.startActivity(myIntent);
+                                if(currentPlayerView != null)
+                                    updatePlayerView();
 
                             }
                             /* If host have send Signal, used for communicate with players without data transfer */
@@ -156,7 +160,8 @@ public class NetworkHelper implements Serializable {
                                {
                                    /* Ask player to check if his goals are completed */
                                    case CHECK_GOALS:
-                                       if(player.checkGoals((ArrayList<Building>)((TransferPackage) dataReceived).second)){
+                                       if(player.checkGoals((ArrayList<Building>)((TransferPackage) dataReceived).second)
+                                           && (currentGame.getCity().getBuildings().size() + ((ArrayList<Building>) ((TransferPackage) dataReceived).second).size()) < NB_BUILDINGS){
 
                                            final AlertDialog.Builder scoreDialog = new AlertDialog.Builder(getCurrentPlayerView());
 
@@ -203,9 +208,8 @@ public class NetworkHelper implements Serializable {
                         else if(dataReceived instanceof Game){
                             currentGame = (Game) dataReceived;
                             if(currentPlayerView != null) {
-                                currentPlayerView.fillInfosView();
+                                updatePlayerView();
                                 currentPlayerView.resetTurnButton();
-                                currentPlayerView.colorBuildingBet();
                             }
                             else
                                 gameStarted = true;
@@ -360,7 +364,7 @@ public class NetworkHelper implements Serializable {
                                 currentGame.updateAllGameScores();
                                 /* Check if the game is finish */
                                 // If not, refresh market and update game instance of players
-                                if(currentGame.getCity().getBuildings().size() < 6) {
+                                if(currentGame.getCity().getBuildings().size() < NB_BUILDINGS) {
                                     currentGame.refreshMarket();
                                     currentGame.incrTurn();
                                     try {
@@ -518,6 +522,7 @@ public class NetworkHelper implements Serializable {
                         Log.i(TAG, "onConnectionResult: connection successful");
 
                         connectionsClient.stopDiscovery();
+                        discovering = false;
 
                         listPlayer.add(new Pair<>(playerName, endpointId));
                         if(host){
@@ -570,7 +575,6 @@ public class NetworkHelper implements Serializable {
 
     public NetworkHelper(Context c) {
         appContext = c;
-        NB_PLAYERS = 1;
         discovering = false;
         advertising = false;
         host = false;
@@ -638,62 +642,65 @@ public class NetworkHelper implements Serializable {
         connectionsClient.stopAllEndpoints();
         listPlayer.clear();
         gameStarted = false;
+        advertising = false;
+        discovering = false;
         if(host) {
             playersInformations.clear();
-            host = false;
         }
     }
 
     /** Starts looking for other players using Nearby Connections. */
     private void startDiscovery() {
-        connectionsClient
-                .startDiscovery(
-                    appContext.getPackageName(), endpointDiscoveryCallback,
-                    new DiscoveryOptions.Builder().setStrategy(STRATEGY).build())
-                .addOnSuccessListener(
-                        new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unusedResult) {
-                                discovering = true;
-                                Log.d(TAG, "Now discovering endpoint " + playerUUID);
-                                PlayerConnexionActivity.setStatus("Searching");
-                            }
-                        })
-                .addOnFailureListener(
-                        new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                discovering = false;
-                                Log.w(TAG, "startAdvertising() failed.", e);
-                                PlayerConnexionActivity.setStatus("Disconnected");
-                            }
-                        });;
+        if(!discovering) {
+            connectionsClient
+                    .startDiscovery(
+                            appContext.getPackageName(), endpointDiscoveryCallback,
+                            new DiscoveryOptions.Builder().setStrategy(STRATEGY).build())
+                    .addOnSuccessListener(
+                            new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unusedResult) {
+                                    discovering = true;
+                                    Log.d(TAG, "Now discovering endpoint " + playerUUID);
+                                    PlayerConnexionActivity.setStatus("Searching");
+                                }
+                            })
+                    .addOnFailureListener(
+                            new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    discovering = false;
+                                    Log.w(TAG, "startAdvertising() failed.", e);
+                                    PlayerConnexionActivity.setStatus("Disconnected");
+                                }
+                            });
+        }
     }
 
     /** Broadcasts our presence using Nearby Connections so other players can find us. */
     private void startAdvertising() {
-        connectionsClient
-                .startAdvertising(
-                    playerUUID, appContext.getPackageName(), connectionLifecycleCallback,
-                    new AdvertisingOptions.Builder().setStrategy(STRATEGY).build())
-                .addOnSuccessListener(
-                        new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unusedResult) {
-                                advertising = true;
-                                host = true;
-                                Log.d(TAG, "Now advertising endpoint " + playerUUID);
-                            }
-                        })
-                .addOnFailureListener(
-                        new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                advertising = false;
-                                host = false;
-                                Log.w(TAG, "startAdvertising() failed.", e);
-                            }
-                        });
+        if(!advertising) {
+            connectionsClient
+                    .startAdvertising(
+                            playerUUID, appContext.getPackageName(), connectionLifecycleCallback,
+                            new AdvertisingOptions.Builder().setStrategy(STRATEGY).build())
+                    .addOnSuccessListener(
+                            new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unusedResult) {
+                                    advertising = true;
+                                    Log.d(TAG, "Now advertising endpoint " + playerUUID);
+                                }
+                            })
+                    .addOnFailureListener(
+                            new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    advertising = false;
+                                    Log.w(TAG, "startAdvertising() failed.", e);
+                                }
+                            });
+        }
     }
 
     public static String[] getRequiredPermissions() {
@@ -745,6 +752,10 @@ public class NetworkHelper implements Serializable {
 
     public static void setNbPlayers(int nbPlayers) {
         NB_PLAYERS = nbPlayers;
+    }
+
+    public void setHost(boolean host) {
+        this.host = host;
     }
 
     public boolean isAdvertising()
@@ -826,6 +837,11 @@ public class NetworkHelper implements Serializable {
                                 });
             }
         }
+    }
+
+    private void updatePlayerView(){
+        currentPlayerView.fillInfosView();
+        currentPlayerView.colorBuildingBet();
     }
 
     private int randomIndex(int min, int max)

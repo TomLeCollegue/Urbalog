@@ -148,8 +148,6 @@ public class PlayerViewActivity extends AppCompatActivity {
         B4 = (LinearLayout) findViewById(R.id.infrastructure_4);
         B5 = (LinearLayout) findViewById(R.id.infrastructure_5);
 
-
-
         financementRessource = PlayerConnexionActivity.net.getPlayer().getFinancementRessource();
 
         textPoliticalResssourcesBuilding1 = (TextView) findViewById(R.id.text_political_resssources_building_1);
@@ -343,7 +341,6 @@ public class PlayerViewActivity extends AppCompatActivity {
 
         textScorePlayer.setText("Score : " + PlayerConnexionActivity.net.getPlayer().getScore());
         textScore.setText("Tour n°"+PlayerConnexionActivity.net.getCurrentGame().getnTurn());
-        /* TODO : Mettre à jour les ressources du joueur */
     }
 
     public void showPopUp(View v, int numBuilding)
