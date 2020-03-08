@@ -165,7 +165,21 @@ public class PlayerViewActivity extends AppCompatActivity {
         eco_1 = (LinearLayout) findViewById(R.id.eco_1);
         social_1 = (LinearLayout) findViewById(R.id.social_1);
 
+        poli_2 = (LinearLayout) findViewById(R.id.poli_2);
+        eco_2 = (LinearLayout) findViewById(R.id.eco_2);
+        social_2 = (LinearLayout) findViewById(R.id.social_2);
 
+        poli_3 = (LinearLayout) findViewById(R.id.poli_3);
+        eco_3 = (LinearLayout) findViewById(R.id.eco_3);
+        social_3 = (LinearLayout) findViewById(R.id.social_3);
+
+        poli_4 = (LinearLayout) findViewById(R.id.poli_4);
+        eco_4 = (LinearLayout) findViewById(R.id.eco_4);
+        social_4 = (LinearLayout) findViewById(R.id.social_4);
+
+        poli_5 = (LinearLayout) findViewById(R.id.poli_5);
+        eco_5 = (LinearLayout) findViewById(R.id.eco_5);
+        social_5 = (LinearLayout) findViewById(R.id.social_5);
 
 
         financementRessource = PlayerConnexionActivity.net.getPlayer().getFinancementRessource();
@@ -361,6 +375,8 @@ public class PlayerViewActivity extends AppCompatActivity {
 
         textScorePlayer.setText("Score : " + PlayerConnexionActivity.net.getPlayer().getScore());
         textScore.setText("Tour n°"+PlayerConnexionActivity.net.getCurrentGame().getnTurn());
+
+        colorRessources();
     }
 
     public void showPopUp(View v, int numBuilding)
@@ -678,8 +694,7 @@ public class PlayerViewActivity extends AppCompatActivity {
     }
 
 
-    public void resetTurnButton()
-        {
+    public void resetTurnButton() {
             nextTurn = false;
             bTurn.setText("Tour suivant");
             Integer[][] financementRessourceReset= {{0,0},{0,0},{0,0},{0,0},{0,0}};
@@ -740,15 +755,265 @@ public class PlayerViewActivity extends AppCompatActivity {
     }
 
     public void colorRessources(){
-        Building B = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(0);
-        Player P = PlayerConnexionActivity.net.getPlayer();
+
+        int[][] ressources_bet = new int[][]{{0, 0, 0}, {0, 0 ,0}, {0, 0 ,0}, {0, 0 ,0}, {0, 0 ,0}};
+
         if (Ressource1.equals("Economical")){
 
             if (financementRessource[0][0] != 0){
                 eco_1.setBackground(getDrawable(R.drawable.ressources_invested));
+                ressources_bet[0][1] = 1;
             }
             else{
                 eco_1.setBackground(getDrawable(R.drawable.none));
+                ressources_bet[0][1] = 0;
+            }
+
+            if (financementRessource[1][0] != 0){
+                eco_2.setBackground(getDrawable(R.drawable.ressources_invested));
+                ressources_bet[1][1] = 1;
+            }
+            else{
+                eco_2.setBackground(getDrawable(R.drawable.none));
+                ressources_bet[1][1] = 0;
+            }
+
+            if (financementRessource[2][0] != 0){
+                eco_3.setBackground(getDrawable(R.drawable.ressources_invested));
+                ressources_bet[2][1] = 1;
+            }
+            else{
+                eco_3.setBackground(getDrawable(R.drawable.none));
+                ressources_bet[2][1] = 0;
+            }
+
+            if (financementRessource[3][0] != 0){
+                eco_4.setBackground(getDrawable(R.drawable.ressources_invested));
+                ressources_bet[3][1] = 1;
+            }
+            else{
+                eco_4.setBackground(getDrawable(R.drawable.none));
+                ressources_bet[3][1] = 0;
+            }
+
+            if (financementRessource[4][0] != 0){
+                eco_5.setBackground(getDrawable(R.drawable.ressources_invested));
+                ressources_bet[4][1] = 1;
+            }
+            else{
+                eco_5.setBackground(getDrawable(R.drawable.none));
+                ressources_bet[4][1] = 0;
+            }
+
+        }
+        if (Ressource2.equals("Economical")){
+
+            if (financementRessource[0][1] != 0){
+                eco_1.setBackground(getDrawable(R.drawable.ressources_invested));
+                ressources_bet[0][1] = 1;
+            }
+            else{
+                eco_1.setBackground(getDrawable(R.drawable.none));
+                ressources_bet[0][1] = 0;
+            }
+
+            if (financementRessource[1][1] != 0){
+                eco_2.setBackground(getDrawable(R.drawable.ressources_invested));
+                ressources_bet[1][1] = 1;
+            }
+            else{
+                eco_2.setBackground(getDrawable(R.drawable.none));
+                ressources_bet[1][1] = 0;
+            }
+
+            if (financementRessource[2][1] != 0){
+                eco_3.setBackground(getDrawable(R.drawable.ressources_invested));
+                ressources_bet[2][1] = 1;
+            }
+            else{
+                eco_3.setBackground(getDrawable(R.drawable.none));
+                ressources_bet[2][1] = 0;
+
+            }
+
+            if (financementRessource[3][1] != 0){
+                eco_4.setBackground(getDrawable(R.drawable.ressources_invested));
+                ressources_bet[3][1] = 1;
+            }
+            else{
+                eco_4.setBackground(getDrawable(R.drawable.none));
+                ressources_bet[3][1] = 0;
+            }
+
+            if (financementRessource[4][1] != 0){
+                eco_5.setBackground(getDrawable(R.drawable.ressources_invested));
+                ressources_bet[4][1] = 1;
+            }
+            else{
+                eco_5.setBackground(getDrawable(R.drawable.none));
+                ressources_bet[4][1] = 0;
+            }
+        }
+
+        if (Ressource1.equals("Political")){
+
+            if (financementRessource[0][0] != 0){
+                poli_1.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                poli_1.setBackground(getDrawable(R.drawable.none));
+            }
+
+            if (financementRessource[1][0] != 0){
+                poli_2.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                poli_2.setBackground(getDrawable(R.drawable.none));
+            }
+
+            if (financementRessource[2][0] != 0){
+                poli_3.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                poli_3.setBackground(getDrawable(R.drawable.none));
+            }
+
+            if (financementRessource[3][0] != 0){
+                poli_4.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                poli_4.setBackground(getDrawable(R.drawable.none));
+            }
+
+            if (financementRessource[4][0] != 0){
+                poli_5.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                poli_5.setBackground(getDrawable(R.drawable.none));
+            }
+
+        }
+        if (Ressource2.equals("Political")){
+
+            if (financementRessource[0][1] != 0){
+                poli_1.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                poli_1.setBackground(getDrawable(R.drawable.none));
+            }
+
+            if (financementRessource[1][1] != 0){
+                poli_2.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                poli_2.setBackground(getDrawable(R.drawable.none));
+            }
+
+            if (financementRessource[2][1] != 0){
+                poli_3.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                poli_3.setBackground(getDrawable(R.drawable.none));
+            }
+
+            if (financementRessource[3][1] != 0){
+                poli_4.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                poli_4.setBackground(getDrawable(R.drawable.none));
+            }
+
+            if (financementRessource[4][1] != 0){
+                poli_5.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                poli_5.setBackground(getDrawable(R.drawable.none));
+            }
+        }
+
+        if (Ressource1.equals("Social")){
+
+            if (financementRessource[0][0] != 0){
+                social_1.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                social_1.setBackground(getDrawable(R.drawable.none));
+            }
+
+            if (financementRessource[1][0] != 0){
+                social_2.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                social_2.setBackground(getDrawable(R.drawable.none));
+            }
+
+            if (financementRessource[2][0] != 0){
+                social_3.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                social_3.setBackground(getDrawable(R.drawable.none));
+            }
+
+            if (financementRessource[3][0] != 0){
+                social_4.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                social_4.setBackground(getDrawable(R.drawable.none));
+            }
+
+            if (financementRessource[4][0] != 0){
+                social_5.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                social_5.setBackground(getDrawable(R.drawable.none));
+            }
+
+        }
+        if (Ressource2.equals("Social")){
+
+            if (financementRessource[0][1] != 0){
+                social_1.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                social_1.setBackground(getDrawable(R.drawable.none));
+            }
+
+            if (financementRessource[1][1] != 0){
+                social_2.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                social_2.setBackground(getDrawable(R.drawable.none));
+            }
+
+            if (financementRessource[2][1] != 0){
+                social_3.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                social_3.setBackground(getDrawable(R.drawable.none));
+            }
+
+            if (financementRessource[3][1] != 0){
+                social_4.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                social_4.setBackground(getDrawable(R.drawable.none));
+            }
+
+            if (financementRessource[4][1] != 0){
+                social_5.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                social_5.setBackground(getDrawable(R.drawable.none));
+            }
+        }
+
+        Market M = PlayerConnexionActivity.net.getCurrentGame().getMarket();
+        if ((M.getBuildings().get(0).getAvancementCoutEconomique() == M.getBuildings().get(0).getCoutEconomique())){
+            if (ressources_bet[0][1] == 1) {
+                eco_1.setBackground(getDrawable(R.drawable.ressources_invested_green));
+            }
+            else {
+                eco_1.setBackground(getDrawable(R.drawable.ressources_green));
             }
         }
     }
