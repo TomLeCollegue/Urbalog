@@ -45,7 +45,7 @@ public class NbPlayerByGameActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nb_player_by_game);
 
-        JsonStats.init(this);
+        JsonStats.giveContext(this);
         HashMap<String, Integer> nbPlayerByGame = JsonStats.getNumberPlayerByGame();
 
 

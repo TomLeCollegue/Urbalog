@@ -3,6 +3,8 @@ package com.example.urbalog.Json;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.urbalog.Class.Player;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,9 +17,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -35,6 +36,10 @@ public class JsonStats {
             Log.d("debug", "Création du fichier stats");
             createFile();
         }
+    }
+
+    public static void giveContext(Context mContext){
+        context = mContext;
     }
 
     public static void deleteJson()
@@ -55,6 +60,9 @@ public class JsonStats {
         }
     }
 
+    /**
+     * create an example of games
+     */
     public static void createFile()
     {
         writeText("{\n" +
@@ -287,8 +295,6 @@ public class JsonStats {
             for(int i=0; i<jsonGames.length(); i++){
                 jsonGame = (JSONObject) jsonGames.get(i);
                 jsonPlayers = jsonGame.getJSONArray("players");
-
-
                 for(int j=0; j<jsonPlayers.length(); j++){
                     jsonPlayer = (JSONObject) jsonPlayers.get(j);
 
@@ -356,8 +362,40 @@ public class JsonStats {
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-        
         return res;
+    }
+    
+    public static void writeGame(ArrayList<Player> list){
+        Log.d("debug", "writeGame...");
+        String jsonText = null;
+        JSONObject jsonRoot = null;
+        JSONArray jsonGames = null;
+        try {
+            JSONObject game = new JSONObject();
+            Date myDate = new Date();
+            String date = new SimpleDateFormat("MM/dd/yyyy H:m:s").format(myDate);
+            game.put("date", date);
+            JSONArray players = new JSONArray();
+            for(Player playerList : list)
+            {
+                JSONObject player = new JSONObject();
+                player.put("name", playerList.getName());
+                player.put("age", playerList.getAge().toString());
+                player.put("pcs", playerList.getJob());
+                players.put(player);
+            }
+            game.put("players", players);
+            jsonText = readText();
+            jsonRoot = new JSONObject(jsonText);
+            jsonGames = jsonRoot.getJSONArray("games");
+            jsonGames.put(game);
+            writeText(jsonRoot.toString());
+            
+            Log.d("debug", "nb de partie = "+ jsonGames.length());
+            Log.d("debug", game.toString());
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void writeText(String data){
@@ -400,7 +438,10 @@ public class JsonStats {
             return sb.toString();
         }
     }
+    
 
+
+    //TODO
     public static int getMoyenneAge(){
         return 1;
     }

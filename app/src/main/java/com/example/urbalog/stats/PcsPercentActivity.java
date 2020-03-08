@@ -32,7 +32,7 @@ public class PcsPercentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pcs_percent);
 
-        JsonStats.init(this);
+        JsonStats.giveContext(this);
 
         pieChart = (PieChart) findViewById(R.id.piechart);
 
