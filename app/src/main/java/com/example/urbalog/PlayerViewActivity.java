@@ -1,6 +1,8 @@
 package com.example.urbalog;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -139,10 +141,6 @@ public class PlayerViewActivity extends AppCompatActivity {
     private LinearLayout eco_5;
     private LinearLayout social_5;
 
-
-
-
-
     private TextView descriptionBuildingPopUp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,7 +151,6 @@ public class PlayerViewActivity extends AppCompatActivity {
         /* Link player activity to NetworkHelper */
         PlayerConnexionActivity.net.setCurrentPlayerView(this);
         buttonState = true;
-
 
         B1 = (LinearLayout) findViewById(R.id.infrastructure_1);
         B2 = (LinearLayout) findViewById(R.id.infrastructure_2);
@@ -180,7 +177,6 @@ public class PlayerViewActivity extends AppCompatActivity {
         poli_5 = (LinearLayout) findViewById(R.id.poli_5);
         eco_5 = (LinearLayout) findViewById(R.id.eco_5);
         social_5 = (LinearLayout) findViewById(R.id.social_5);
-
 
         financementRessource = PlayerConnexionActivity.net.getPlayer().getFinancementRessource();
 
@@ -316,9 +312,32 @@ public class PlayerViewActivity extends AppCompatActivity {
         fillInfosView();
     }
 
+    @Override
+    public void onBackPressed() {
+        AlertDialog diaBox = AskOption();
+        diaBox.show();
+    }
+
+    private AlertDialog AskOption()
+    {
+        return new AlertDialog.Builder(this)
+                .setTitle("Quitter")
+                .setMessage("Etes-vous sûr de vouloir quitter la partie?")
+                .setIcon(R.drawable.warning_icon)
+                .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+    }
+
     //button to test the building view
-
-
     void fillInfosView(){
 
         textNameBuilding1.setText(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(0).getName());

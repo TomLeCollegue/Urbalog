@@ -33,7 +33,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
     private TextView tStatus;
     private Game currentGame;
 
-    private Spinner SpinnerPlayer;
+    private Spinner spinnerPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
         tPlayers = (TextView) findViewById(R.id.nbPlayer);
         this.tStatus = (TextView) findViewById(R.id.statusText);
 
-        SpinnerPlayer = (Spinner) findViewById(R.id.spinnerNBplayer);
+        spinnerPlayer = (Spinner) findViewById(R.id.spinnerNBplayer);
 
         List<Integer> ListNB = new ArrayList<>();
         ListNB.add(1);
@@ -66,12 +66,14 @@ public class AdminConnectionActivity extends AppCompatActivity {
         ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, ListNB);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        SpinnerPlayer.setAdapter(adapter);
+        spinnerPlayer.setAdapter(adapter);
+        spinnerPlayer.setSelection(4);
 
-        SpinnerPlayer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerPlayer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                net.setNB_PLAYERS(position+1);
+                net.setNB_PLAYERS((Integer)spinnerPlayer.getSelectedItem());
+                updateNbPlayers();
             }
 
             @Override
@@ -115,7 +117,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
                 bPlay.setEnabled(true);
                 net.stopAll();
                 updateStatus("Disconnected");
-                updateNbPlayers(0);
+                updateNbPlayers();
             }
         });
 
@@ -130,9 +132,9 @@ public class AdminConnectionActivity extends AppCompatActivity {
 
     }
 
-    public static void updateNbPlayers(int nb)
+    public static void updateNbPlayers()
     {
-        tPlayers.setText(nb+"/"+ net.getNbPlayers());
+        tPlayers.setText(net.getListPlayer().size()+"/"+ net.getNbPlayers());
     }
 
     public void updateStatus(String s)

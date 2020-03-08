@@ -58,7 +58,7 @@ public class NetworkHelper implements Serializable {
     private boolean discovering;
     private boolean host;
 
-    private static int NB_PLAYERS = 3;
+    private static int NB_PLAYERS = 5;
     private static int NB_BUILDINGS = 6;
 
     private Game currentGame;
@@ -524,7 +524,7 @@ public class NetworkHelper implements Serializable {
 
                         listPlayer.add(new Pair<>(playerName, endpointId));
                         if(host){
-                            AdminConnectionActivity.updateNbPlayers(listPlayer.size());
+                            AdminConnectionActivity.updateNbPlayers();
                             if(!gameStarted) {
                                 playersInformations.add(new Triplet<Player, String, String>(null, playerName, endpointId));
                                 Log.i(TAG, "onConnectionResult: add player");
@@ -561,7 +561,7 @@ public class NetworkHelper implements Serializable {
                                 }
                             }
                         }
-                        AdminConnectionActivity.updateNbPlayers(listPlayer.size());
+                        AdminConnectionActivity.updateNbPlayers();
                     }
                     else {
                         PlayerConnexionActivity.setStatus("Disconnected");

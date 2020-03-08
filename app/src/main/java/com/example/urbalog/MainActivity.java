@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static String VERSION = "© Alpha V3.113";
+    public final static String VERSION = "© Alpha V3.113";
 
     ArrayList<Building> listeBuilding = new ArrayList<>();
 
