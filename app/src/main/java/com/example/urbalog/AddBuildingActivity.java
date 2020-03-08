@@ -176,54 +176,75 @@ public class AddBuildingActivity extends AppCompatActivity {
         explicationLogistique = findViewById(R.id.explicationLogistiqueBuildingEdit);
     }
 
+    /**
+     * Funtion to validate the form
+     * check if name is not already taken
+     * check if fields are not empty
+     * call when we click on validate button
+     * listener on XML
+     *
+     * @param view
+     */
     public void validerBuildingAdd(View view) {
         boolean finish = true;
-        if(name.getText().toString().matches("")){
+        String finalName = name.getText().toString().trim();
+        String finalDescription = description.getText().toString().trim();
+        String finalPolitique = politique.getText().toString().trim();
+        String finalSocial = social.getText().toString().trim();
+        String finalEconomique = economique.getText().toString().trim();
+        String finalAttractivite = attractivite.getText().toString().trim();
+        String finalFluidite = fluidite.getText().toString().trim();
+        String finalEnvironnemental = environnemental.getText().toString().trim();
+        String finalScoreLogistique = scoreLogistique.getText().toString().trim();
+        String finalExplicationLogistique = explicationLogistique.getText().toString().trim();
+
+
+        if(finalName.matches("")){
             name.setError("champs vide");
             finish = false;
         }
-        if(description.getText().toString().matches("")){
+        if(finalDescription.matches("")){
             description.setError("champs vide");
             finish = false;
         }
-        if(politique.getText().toString().matches("")){
+        if(finalPolitique.matches("")){
             politique.setError("champs vide");
             finish = false;
         }
-        if(social.getText().toString().matches("")){
+        if(finalSocial.matches("")){
             social.setError("champs vide");
             finish = false;
         }
-        if(economique.getText().toString().matches("")){
+        if(finalEconomique.matches("")){
             economique.setError("champs vide");
             finish = false;
         }
-        if(attractivite.getText().toString().matches("")){
+        if(finalAttractivite.matches("")){
             attractivite.setError("champs vide");
             finish = false;
         }
-        if(fluidite.getText().toString().matches("")){
+        if(finalFluidite.matches("")){
             fluidite.setError("champs vide");
             finish = false;
         }
-        if(environnemental.getText().toString().matches("")){
+        if(finalEnvironnemental.matches("")){
             environnemental.setError("champs vide");
             finish = false;
         }
-        if(scoreLogistique.getText().toString().matches("")){
+        if(finalScoreLogistique.matches("")){
             scoreLogistique.setError("champs vide");
             finish = false;
         }
-        if(explicationLogistique.getText().toString().matches("")){
+        if(finalExplicationLogistique.matches("")){
             explicationLogistique.setError("champs vide");
             finish = false;
         }
 
         if(finish == true){
-            if(JsonBuilding.buildingAlreadyInList(name.getText().toString())){
+            if(JsonBuilding.buildingAlreadyInList(finalName)){
                 name.setError("Il y a déja un batiment avec le même nom");
             }else{
-                Building newBuilding = new Building(name.getText().toString(), description.getText().toString(), Integer.parseInt(politique.getText().toString()), Integer.parseInt(social.getText().toString()),  Integer.parseInt(economique.getText().toString()), Integer.parseInt(attractivite.getText().toString()), Integer.parseInt(fluidite.getText().toString()), Integer.parseInt(environnemental.getText().toString()), Integer.parseInt(scoreLogistique.getText().toString()), explicationLogistique.getText().toString() );
+                Building newBuilding = new Building(finalName, finalDescription, Integer.parseInt(finalPolitique), Integer.parseInt(finalSocial),  Integer.parseInt(finalEconomique), Integer.parseInt(finalAttractivite), Integer.parseInt(finalFluidite), Integer.parseInt(finalEnvironnemental), Integer.parseInt(finalScoreLogistique), finalExplicationLogistique);
                 JsonBuilding.writeBuilding(newBuilding);
                 Toast.makeText(this, "Le batiment à été ajouté", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(AddBuildingActivity.this, ConfigurationActivity.class);
@@ -233,6 +254,10 @@ public class AddBuildingActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * fonction to finish activity
+     * call when we click on back button
+     */
     public void onBackPressed(){
         Intent intent = new Intent(AddBuildingActivity.this, ConfigurationActivity.class);
         startActivity(intent);
