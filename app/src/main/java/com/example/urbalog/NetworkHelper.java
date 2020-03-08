@@ -852,4 +852,8 @@ public class NetworkHelper implements Serializable {
         Random r = new Random();
         return r.nextInt((max - min) + 1) + min;
     }
+
+    public void setNB_PLAYERS(int NB_PLAYERS) {
+        this.NB_PLAYERS = NB_PLAYERS;
+    }
 }

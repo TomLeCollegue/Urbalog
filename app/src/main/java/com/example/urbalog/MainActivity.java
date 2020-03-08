@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.CallSuper;
@@ -16,7 +17,10 @@ import com.example.urbalog.Class.Building;
 
 import java.util.ArrayList;
 
+
 public class MainActivity extends AppCompatActivity {
+
+    public static String VERSION = "© Alpha V3.113";
 
     ArrayList<Building> listeBuilding = new ArrayList<>();
 
@@ -24,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        TextView version_text = findViewById(R.id.textView_version);
+        version_text.setText(VERSION);
     }
 
     public void changeActivityPlayer(View view) {
