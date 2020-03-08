@@ -58,7 +58,7 @@ public class NetworkHelper implements Serializable {
     private boolean discovering;
     private boolean host;
 
-    private static int NB_PLAYERS = 1;
+    private static int NB_PLAYERS = 3;
     private static int NB_BUILDINGS = 6;
 
     private Game currentGame;
