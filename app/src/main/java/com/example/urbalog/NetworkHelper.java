@@ -58,7 +58,7 @@ public class NetworkHelper implements Serializable {
     private boolean discovering;
     private boolean host;
 
-    private static int NB_PLAYERS = 5;
+    private static int NB_PLAYERS = 1;
     private static int NB_BUILDINGS = 6;
 
     private Game currentGame;
@@ -840,6 +840,7 @@ public class NetworkHelper implements Serializable {
     private void updatePlayerView(){
         currentPlayerView.fillInfosView();
         currentPlayerView.colorBuildingBet();
+        currentPlayerView.colorRessources();
     }
 
     private int randomIndex(int min, int max)

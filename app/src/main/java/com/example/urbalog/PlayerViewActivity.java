@@ -21,6 +21,7 @@ import com.example.urbalog.Class.Bet;
 import com.example.urbalog.Class.Building;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
+import com.example.urbalog.Class.Player;
 import com.example.urbalog.Class.Role;
 import com.example.urbalog.Class.Signal;
 import com.example.urbalog.Class.TransferPackage;
@@ -118,8 +119,27 @@ public class PlayerViewActivity extends AppCompatActivity {
     private LinearLayout B4;
     private LinearLayout B5;
 
-    //button for testing the buildings view
-    private Button bTestBuilding;
+    private LinearLayout poli_1;
+    private LinearLayout eco_1;
+    private LinearLayout social_1;
+
+    private LinearLayout poli_2;
+    private LinearLayout eco_2;
+    private LinearLayout social_2;
+
+    private LinearLayout poli_3;
+    private LinearLayout eco_3;
+    private LinearLayout social_3;
+
+    private LinearLayout poli_4;
+    private LinearLayout eco_4;
+    private LinearLayout social_4;
+
+    private LinearLayout poli_5;
+    private LinearLayout eco_5;
+    private LinearLayout social_5;
+
+
 
 
 
@@ -140,6 +160,13 @@ public class PlayerViewActivity extends AppCompatActivity {
         B3 = (LinearLayout) findViewById(R.id.infrastructure_3);
         B4 = (LinearLayout) findViewById(R.id.infrastructure_4);
         B5 = (LinearLayout) findViewById(R.id.infrastructure_5);
+
+        poli_1 = (LinearLayout) findViewById(R.id.poli_1);
+        eco_1 = (LinearLayout) findViewById(R.id.eco_1);
+        social_1 = (LinearLayout) findViewById(R.id.social_1);
+
+
+
 
         financementRessource = PlayerConnexionActivity.net.getPlayer().getFinancementRessource();
 
@@ -709,6 +736,20 @@ public class PlayerViewActivity extends AppCompatActivity {
         }
         else {
             B5.setBackground(getDrawable(R.drawable.style_market_view));
+        }
+    }
+
+    public void colorRessources(){
+        Building B = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(0);
+        Player P = PlayerConnexionActivity.net.getPlayer();
+        if (Ressource1.equals("Economical")){
+
+            if (financementRessource[0][0] != 0){
+                eco_1.setBackground(getDrawable(R.drawable.ressources_invested));
+            }
+            else{
+                eco_1.setBackground(getDrawable(R.drawable.none));
+            }
         }
     }
 }
