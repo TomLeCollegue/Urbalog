@@ -67,6 +67,7 @@
                             android:orientation="vertical">
 
                             <LinearLayout
+                                android:id="@+id/poli_1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -103,6 +104,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/eco_1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -138,6 +140,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/social_1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -325,6 +328,7 @@
                             android:orientation="vertical">
 
                             <LinearLayout
+                                android:id="@+id/poli_2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -361,6 +365,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/eco_2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -396,6 +401,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/social_2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -583,6 +589,7 @@
                             android:orientation="vertical">
 
                             <LinearLayout
+                                android:id="@+id/poli_3"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -619,6 +626,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/eco_3"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -654,6 +662,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/social_3"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -841,6 +850,7 @@
                             android:orientation="vertical">
 
                             <LinearLayout
+                                android:id="@+id/poli_4"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -877,6 +887,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/eco_4"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -912,6 +923,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/social_4"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -1099,6 +1111,7 @@
                             android:orientation="vertical">
 
                             <LinearLayout
+                                android:id="@+id/poli_5"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -1135,6 +1148,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/eco_5"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -1170,6 +1184,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/social_5"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
