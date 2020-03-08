@@ -3,10 +3,12 @@ package com.example.urbalog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -75,7 +77,7 @@ public class FormActivity extends AppCompatActivity {
                     else
                     {
                         name = name.trim();
-                        Player player = new Player(name, age, pcs, nulll);
+                        Player player = new Player(name, age, pcs, null);
                         Intent myIntent = new Intent(FormActivity.this, PlayerConnexionActivity.class);
                         myIntent.putExtra("player", player);
                         startActivity(myIntent);

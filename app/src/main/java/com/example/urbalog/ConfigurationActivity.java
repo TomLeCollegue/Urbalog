@@ -79,15 +79,15 @@ public class ConfigurationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 JsonStats.giveContext(ConfigurationActivity.this);
                 ArrayList<Player> list = new ArrayList<Player>();
-                Player un = new Player("Gab", 20, "Retraité", null, null, null);
+                Player un = new Player("Gab", 20, "Retraité", null);
                 list.add(un);
-                Player deux = new Player("Raph", 22, "Agriculteur, exploitant", null, null, null);
+                Player deux = new Player("Raph", 22, "Agriculteur, exploitant", null);
                 list.add(deux);
-                Player trois = new Player("Leo", 24, "Ouvrier qualifié", null, null, null);
+                Player trois = new Player("Leo", 24, "Ouvrier qualifié", null);
                 list.add(trois);
-                Player quatre = new Player("Louis", 25, "Cadres et profession intellectuelle supérieure", null, null, null);
+                Player quatre = new Player("Louis", 25, "Cadres et profession intellectuelle supérieure", null);
                 list.add(quatre);
-                Player cinq = new Player("Lucas", 26, "Sans emploi", null, null, null);
+                Player cinq = new Player("Lucas", 26, "Sans emploi", null);
                 list.add(cinq);
                 JsonStats.writeGame(list);
                 Toast.makeText(ConfigurationActivity.this, "partie ajoutée", Toast.LENGTH_LONG).show();
