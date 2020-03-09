@@ -57,7 +57,7 @@ public class FormActivity extends AppCompatActivity {
                     String name = formAdapter.getName();
                     int age = formAdapter.getAge();
                     String pcs = formAdapter.getPcs();
-                    if(name == null)
+                    if(name == null || name.trim().matches(""))
                     {
                         Log.d("debug", "name null");
                         getViewPager().setCurrentItem(0);
@@ -92,6 +92,13 @@ public class FormActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(currentPage == 0){
+                    Player player = new Player(null, null, null, null);
+                    Intent myIntent = new Intent(FormActivity.this, PlayerConnexionActivity.class);
+                    myIntent.putExtra("player", player);
+                    startActivity(myIntent);
+                    finish();
+                }
                 mSlideViewPager.setCurrentItem(currentPage - 1);
             }
         });
@@ -131,10 +138,9 @@ public class FormActivity extends AppCompatActivity {
 
             if(position == 0){
                 next.setEnabled(true);
-                back.setEnabled(false);
-                back.setVisibility(View.INVISIBLE);
+                back.setEnabled(true);
+                back.setText("Passer");
                 next.setText("Suivant");
-                back.setText("");
             } else if (position == mDots.length -1 ){
                 next.setEnabled(true);
                 back.setEnabled(true);

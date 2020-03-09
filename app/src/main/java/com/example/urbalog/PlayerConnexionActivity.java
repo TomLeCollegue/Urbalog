@@ -32,7 +32,11 @@ public class PlayerConnexionActivity extends AppCompatActivity {
         net.setHost(false);
         net.setPlayer((Player) getIntent().getSerializableExtra("player"));
 
-        name.setText(String.format("Bonjour %s", net.getPlayer().getName()));
+        if(net.getPlayer().getName() == null){
+            name.setText("Formulaire pas rempli");
+        }else{
+            name.setText(String.format("Bonjour %s", net.getPlayer().getName()));
+        }
 
         this.bSearch.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -72,9 +72,6 @@
         <activity
             android:name=".EndGameActivity"
             android:screenOrientation="sensorLandscape" />
-        <activity
-            android:name=".FormActivity"
-            android:screenOrientation="sensorLandscape"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
