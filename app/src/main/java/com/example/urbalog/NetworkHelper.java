@@ -137,9 +137,8 @@ public class NetworkHelper implements Serializable {
                                 {
                                     currentGame.majBet(((Bet) ((TransferPackage) dataReceived).second));
                                     if(currentPlayerView != null)
-                                    {
                                         updatePlayerView();
-                                    }
+
                                 }
                             }
                             /* If host have send PLayer and Game instances for returning player */
@@ -150,9 +149,9 @@ public class NetworkHelper implements Serializable {
                                 gameStarted = true;
                                 Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
                                 appContext.startActivity(myIntent);
-                                if(currentPlayerView != null)
+                                if(currentPlayerView != null){
                                     updatePlayerView();
-
+                                }
                             }
                             /* If host have send Signal, used for communicate with players without data transfer */
                             else if(((TransferPackage) dataReceived).first instanceof Signal){
@@ -211,6 +210,7 @@ public class NetworkHelper implements Serializable {
                             if(currentPlayerView != null) {
                                 updatePlayerView();
                                 currentPlayerView.resetTurnButton();
+                                currentPlayerView.resetColorRessources();
                             }
                             else
                                 gameStarted = true;
@@ -384,7 +384,6 @@ public class NetworkHelper implements Serializable {
                                             endGamePlayerList.add(playersInformations.get(i).getFirst());
                                         }
                                         Log.d("debug", "ok");
-                                        JsonStats.writeGame(endGamePlayerList);
                                         JsonStats.writeGame(endGamePlayerList);
                                         gameStarted = false;
                                     } catch (IOException e) {
@@ -851,6 +850,8 @@ public class NetworkHelper implements Serializable {
     private void updatePlayerView(){
         currentPlayerView.fillInfosView();
         currentPlayerView.colorBuildingBet();
+        //currentPlayerView.resetColorRessources(); pas optimal. Peut être trop lourd en local.
+        currentPlayerView.resetColorRessources();
         currentPlayerView.colorRessources();
     }
 
