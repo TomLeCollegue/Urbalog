@@ -32,6 +32,9 @@ public class Player implements Serializable {
     }
 
     public Player(Role role) {
+        this.name = "";
+        this.age = 0;
+        this.job = "";
         this.score = 0;
         this.role = role;
         this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
@@ -91,6 +94,10 @@ public class Player implements Serializable {
 
     public void setFinancementRessource(Integer[][] financementRessource) {
         this.financementRessource = financementRessource;
+    }
+
+    public void resetFinancementRessource() {
+        this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
     }
 
     @Override
