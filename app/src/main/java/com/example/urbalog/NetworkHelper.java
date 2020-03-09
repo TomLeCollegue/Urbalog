@@ -22,6 +22,7 @@ import com.example.urbalog.Class.Role;
 import com.example.urbalog.Class.Signal;
 import com.example.urbalog.Class.TransferPackage;
 import com.example.urbalog.Class.Triplet;
+import com.example.urbalog.Json.JsonStats;
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
 import com.google.android.gms.nearby.connection.ConnectionInfo;
@@ -375,6 +376,12 @@ public class NetworkHelper implements Serializable {
                                 else {
                                     try {
                                         sendToAllClients(new TransferPackage<Signal, Game>(Signal.GAME_OVER, currentGame));
+                                        JsonStats.giveContext(appContext);
+                                        ArrayList<Player> endGamePlayerList = new ArrayList<Player>();
+                                        for (int i = 0; i < playersInformations.size(); i++) {
+                                            endGamePlayerList.add(playersInformations.get(i).getFirst());
+                                        }
+                                        JsonStats.writeGame(endGamePlayerList);
                                         gameStarted = false;
                                     } catch (IOException e) {
                                         e.printStackTrace();
