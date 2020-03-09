@@ -93,7 +93,7 @@ public class FormActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(currentPage == 0){
-                    Player player = new Player(null, null, null, null);
+                    Player player = new Player(null);
                     Intent myIntent = new Intent(FormActivity.this, PlayerConnexionActivity.class);
                     myIntent.putExtra("player", player);
                     startActivity(myIntent);

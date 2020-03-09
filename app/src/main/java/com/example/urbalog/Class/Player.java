@@ -32,6 +32,9 @@ public class Player implements Serializable {
     }
 
     public Player(Role role) {
+        this.name = "";
+        this.age = 0;
+        this.job = "";
         this.score = 0;
         this.role = role;
         this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
