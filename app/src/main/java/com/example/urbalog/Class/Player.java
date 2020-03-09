@@ -93,6 +93,10 @@ public class Player implements Serializable {
         this.financementRessource = financementRessource;
     }
 
+    public void resetFinancementRessource() {
+        this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
+    }
+
     @Override
     public String toString() {
         return "Player{" +

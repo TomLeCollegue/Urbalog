@@ -121,6 +121,7 @@ public class NetworkHelper implements Serializable {
                             if(((TransferPackage) dataReceived).second instanceof Market)
                             {
                                 try {
+                                    player.resetFinancementRessource();
                                     sendToClient(new Triplet<Signal, String, Player>(Signal.UPDATE_PLAYER, playerUUID, player), endpointId);
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -181,6 +182,7 @@ public class NetworkHelper implements Serializable {
 
                                        }
                                        try {
+                                           player.resetFinancementRessource();
                                            sendToClient(new Triplet<Signal, String, Player>(Signal.UPDATE_PLAYER, playerUUID, player), endpointId);
                                        } catch (IOException e) {
                                            e.printStackTrace();
@@ -381,6 +383,7 @@ public class NetworkHelper implements Serializable {
                                         for (int i = 0; i < playersInformations.size(); i++) {
                                             endGamePlayerList.add(playersInformations.get(i).getFirst());
                                         }
+                                        JsonStats.writeGame(endGamePlayerList);
                                         JsonStats.writeGame(endGamePlayerList);
                                         gameStarted = false;
                                     } catch (IOException e) {
