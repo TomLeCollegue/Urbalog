@@ -376,6 +376,7 @@ public class JsonStats {
             String date = new SimpleDateFormat("MM/dd/yyyy H:m:s").format(myDate);
             game.put("date", date);
             JSONArray players = new JSONArray();
+            int i = 1;
             for(Player playerList : list)
             {
                 JSONObject player = new JSONObject();
@@ -383,6 +384,8 @@ public class JsonStats {
                 player.put("age", playerList.getAge().toString());
                 player.put("pcs", playerList.getJob());
                 players.put(player);
+                Log.d("debug",  i + " === " + player.toString());
+                ++i;
             }
             game.put("players", players);
             jsonText = readText();
@@ -390,9 +393,9 @@ public class JsonStats {
             jsonGames = jsonRoot.getJSONArray("games");
             jsonGames.put(game);
             writeText(jsonRoot.toString());
-            
+
             Log.d("debug", "nb de partie = "+ jsonGames.length());
-            Log.d("debug", game.toString());
+            Log.d("debug", "partie => " + game.toString());
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }

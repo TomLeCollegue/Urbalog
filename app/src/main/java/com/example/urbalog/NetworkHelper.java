@@ -383,6 +383,7 @@ public class NetworkHelper implements Serializable {
                                         for (int i = 0; i < playersInformations.size(); i++) {
                                             endGamePlayerList.add(playersInformations.get(i).getFirst());
                                         }
+                                        Log.d("debug", "ok");
                                         JsonStats.writeGame(endGamePlayerList);
                                         gameStarted = false;
                                     } catch (IOException e) {
