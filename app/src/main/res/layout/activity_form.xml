@@ -23,6 +23,7 @@
     <Button
         android:id="@+id/form_button_back"
         android:layout_margin="20dp"
+        android:text="Passer"
         android:layout_alignParentBottom="true"
         android:background="@android:color/transparent"
         android:layout_width="wrap_content"
