@@ -283,10 +283,13 @@ public class JsonStats {
         int nbEtudiant =0;
         int nbSansEmploi=0;
         int nbOuvrier=0;
-        int nbRetraité=0;
+        int nbRetraite=0;
         int nbAgriculteur=0;
-        int nbEmployé=0;
+        int nbEmploye=0;
         int nbCadre=0;
+        int nbMain=0;
+        int nbArtisant=0;
+        int nbProfession=0;
         try {
             jsonText = readText();
 
@@ -311,16 +314,25 @@ public class JsonStats {
                             nbOuvrier++;
                             break;
                         case "Employé et personnel de service":
-                            nbEmployé++;
+                            nbEmploye++;
                             break;
                         case "Cadres et profession intellectuelle supérieure":
                             nbCadre++;
                             break;
                         case "Retraité":
-                            nbRetraité++;
+                            nbRetraite++;
                             break;
                         case "Agriculteur, exploitant":
                             nbAgriculteur++;
+                            break;
+                        case "Main d'oeuvre et ouvrier specialisé":
+                            nbMain++;
+                            break;
+                        case "Artisan, commerçant, chef d'entreprise, profession libérale":
+                            nbArtisant++;
+                            break;
+                        case "Profession intérmediaire, cadre moyen":
+                            nbProfession++;
                             break;
                     }
                 }
@@ -329,13 +341,46 @@ public class JsonStats {
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-        res.put("Etudiant", nbEtudiant);
-        res.put("Sans emploi", nbSansEmploi);
-        res.put("Ouvrier qualifié", nbOuvrier);
-        res.put("Employé et personnel de service", nbEmployé);
-        res.put("Cadres et profession intellectuelle supérieure", nbCadre);
-        res.put("Retraité", nbRetraité);
-        res.put("Agriculteur, exploitant", nbAgriculteur);
+        if(nbEtudiant != 0)
+        {
+            res.put("Etudiant", nbEtudiant);
+        }
+        if(nbSansEmploi != 0)
+        {
+            res.put("Sans emploi", nbSansEmploi);
+        }
+        if(nbOuvrier != 0)
+        {
+            res.put("Ouvrier qualifié", nbOuvrier);
+        }
+        if(nbEmploye != 0)
+        {
+            res.put("Employé et personnel de service", nbEmploye);
+        }
+        if(nbCadre != 0)
+        {
+            res.put("Cadres et profession intellectuelle supérieure", nbCadre);
+        }
+        if(nbRetraite != 0)
+        {
+            res.put("Retraité", nbRetraite);
+        }
+        if(nbAgriculteur != 0)
+        {
+            res.put("Agriculteur, exploitant", nbAgriculteur);
+        }
+        if(nbMain != 0)
+        {
+            res.put("Main d'oeuvre et ouvrier specialisé", nbMain);
+        }
+        if(nbArtisant != 0)
+        {
+            res.put("Artisan, commerçant, chef d'entreprise, profession libérale", nbArtisant);
+        }
+        if(nbProfession != 0)
+        {
+            res.put("Profession intérmediaire, cadre moyen", nbProfession);
+        }
         return res;
     }
     
