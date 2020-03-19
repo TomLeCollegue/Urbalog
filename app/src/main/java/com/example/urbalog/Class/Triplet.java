@@ -1,9 +1,11 @@
 package com.example.urbalog.Class;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Triplet<T, U, V> extends Object implements Serializable {
+public class Triplet<T, U, V> implements Serializable {
 
     private T first;
     private U second;
@@ -38,6 +40,7 @@ public class Triplet<T, U, V> extends Object implements Serializable {
         return Objects.hash(getFirst(), getSecond(), getThird());
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Triplet{" +

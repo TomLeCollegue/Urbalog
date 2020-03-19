@@ -1,5 +1,7 @@
 package com.example.urbalog.Class;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -7,19 +9,19 @@ public class Building implements Serializable {
 
     private String name;
     private String description;
-    private Integer coutPolitique;
-    private Integer coutSocial;
-    private Integer coutEconomique;
-    private Integer avancementCoutPolitique;
-    private Integer avancementCoutSocial;
-    private Integer avancementCoutEconomique;
-    private Integer effetAttractivite;
-    private Integer effetFluidite;
-    private Integer effetEnvironnemental;
-    private Integer scoreLogistique;
+    private int coutPolitique;
+    private int coutSocial;
+    private int coutEconomique;
+    private int avancementCoutPolitique;
+    private int avancementCoutSocial;
+    private int avancementCoutEconomique;
+    private int effetAttractivite;
+    private int effetFluidite;
+    private int effetEnvironnemental;
+    private int scoreLogistique;
     private String explicationLogistique;
 
-    public Building(String name, String description, Integer coutPolitique, Integer coutSocial, Integer coutEconomique, Integer effetAttractivite, Integer effetFluidite, Integer effetEnvironnemental, Integer scoreLogistique, String explicationLogistique) {
+    public Building(String name, String description, int coutPolitique, int coutSocial, int coutEconomique, int effetAttractivite, int effetFluidite, int effetEnvironnemental, int scoreLogistique, String explicationLogistique) {
         this.name = name;
         this.description = description;
         this.coutPolitique = coutPolitique;
@@ -35,23 +37,23 @@ public class Building implements Serializable {
         this.explicationLogistique = explicationLogistique;
     }
 
-    public void setAvancementCoutPolitique(Integer avancementCoutPolitique) {
+    public void setAvancementCoutPolitique(int avancementCoutPolitique) {
         this.avancementCoutPolitique = avancementCoutPolitique;
     }
 
-    public void setAvancementCoutSocial(Integer avancementCoutSocial) {
+    public void setAvancementCoutSocial(int avancementCoutSocial) {
         this.avancementCoutSocial = avancementCoutSocial;
     }
 
-    public void setAvancementCoutEconomique(Integer avancementCoutEconomique) {
+    public void setAvancementCoutEconomique(int avancementCoutEconomique) {
         this.avancementCoutEconomique = avancementCoutEconomique;
     }
 
-    public Integer getScoreLogistique() {
+    public int getScoreLogistique() {
         return scoreLogistique;
     }
 
-    public void setScoreLogistique(Integer scoreLogistique) {
+    public void setScoreLogistique(int scoreLogistique) {
         this.scoreLogistique = scoreLogistique;
     }
 
@@ -79,51 +81,51 @@ public class Building implements Serializable {
         this.description = description;
     }
 
-    public Integer getCoutPolitique() {
+    public int getCoutPolitique() {
         return coutPolitique;
     }
 
-    public void setCoutPolitique(Integer coutPolitique) {
+    public void setCoutPolitique(int coutPolitique) {
         this.coutPolitique = coutPolitique;
     }
 
-    public Integer getCoutSocial() {
+    public int getCoutSocial() {
         return coutSocial;
     }
 
-    public void setCoutSocial(Integer coutSocial) {
+    public void setCoutSocial(int coutSocial) {
         this.coutSocial = coutSocial;
     }
 
-    public Integer getCoutEconomique() {
+    public int getCoutEconomique() {
         return coutEconomique;
     }
 
-    public void setCoutEconomique(Integer coutEconomique) {
+    public void setCoutEconomique(int coutEconomique) {
         this.coutEconomique = coutEconomique;
     }
 
-    public Integer getEffetAttractivite() {
+    public int getEffetAttractivite() {
         return effetAttractivite;
     }
 
-    public void setEffetAttractivite(Integer effetAttractivite) {
+    public void setEffetAttractivite(int effetAttractivite) {
         this.effetAttractivite = effetAttractivite;
     }
 
-    public Integer getEffetFluidite() {
+    public int getEffetFluidite() {
         return effetFluidite;
     }
 
-    public void setEffetFluidite(Integer effetFluidite) {
+    public void setEffetFluidite(int effetFluidite) {
         this.effetFluidite = effetFluidite;
     }
 
-    public Integer getEffetEnvironnemental() {
+    public int getEffetEnvironnemental() {
         return effetEnvironnemental;
     }
 
-    public void setEffetEnvironnemental(Integer effetEnvironnemental) {
+    public void setEffetEnvironnemental(int effetEnvironnemental) {
         this.effetEnvironnemental = effetEnvironnemental;
     }
 
@@ -153,6 +155,7 @@ public class Building implements Serializable {
         return Objects.hash(name, description, coutPolitique, coutSocial, coutEconomique, effetAttractivite, effetFluidite, effetEnvironnemental);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Building ===> {" +
@@ -167,15 +170,15 @@ public class Building implements Serializable {
                 '}';
     }
 
-    public Integer getAvancementCoutPolitique() {
+    public int getAvancementCoutPolitique() {
         return avancementCoutPolitique;
     }
 
-    public Integer getAvancementCoutSocial() {
+    public int getAvancementCoutSocial() {
         return avancementCoutSocial;
     }
 
-    public Integer getAvancementCoutEconomique() {
+    public int getAvancementCoutEconomique() {
         return avancementCoutEconomique;
     }
 
@@ -192,9 +195,6 @@ public class Building implements Serializable {
 
     public boolean isFilled()
     {
-        if((avancementCoutSocial == coutSocial) && (avancementCoutPolitique == coutPolitique) && (avancementCoutEconomique == coutEconomique))
-            return true;
-        else
-            return false;
+        return (avancementCoutSocial == coutSocial) && (avancementCoutPolitique == coutPolitique) && (avancementCoutEconomique == coutEconomique);
     }
 }

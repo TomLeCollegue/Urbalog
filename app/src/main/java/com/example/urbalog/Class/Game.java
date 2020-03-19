@@ -1,15 +1,17 @@
 package com.example.urbalog.Class;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 public class Game implements Serializable {
 
-    private Integer scoreLogistique;
-    private Integer scoreAttractivite;
-    private Integer scoreFluidite;
-    private Integer scoreEnvironnemental;
+    private int scoreLogistique;
+    private int scoreAttractivite;
+    private int scoreFluidite;
+    private int scoreEnvironnemental;
     private Market market;
     private City city;
     private List<Bet> listBet;
@@ -24,35 +26,35 @@ public class Game implements Serializable {
         city = new City();
     }
 
-    public Integer getScoreLogistique() {
+    public int getScoreLogistique() {
         return scoreLogistique;
     }
 
-    public void setScoreLogistique(Integer scoreLogistique) {
+    public void setScoreLogistique(int scoreLogistique) {
         this.scoreLogistique = scoreLogistique;
     }
 
-    public Integer getScoreAttractivite() {
+    public int getScoreAttractivite() {
         return scoreAttractivite;
     }
 
-    public void setScoreAttractivite(Integer scoreAttractivite) {
+    public void setScoreAttractivite(int scoreAttractivite) {
         this.scoreAttractivite = scoreAttractivite;
     }
 
-    public Integer getScoreFluidite() {
+    public int getScoreFluidite() {
         return scoreFluidite;
     }
 
-    public void setScoreFluidite(Integer scoreFluidite) {
+    public void setScoreFluidite(int scoreFluidite) {
         this.scoreFluidite = scoreFluidite;
     }
 
-    public Integer getScoreEnvironnemental() {
+    public int getScoreEnvironnemental() {
         return scoreEnvironnemental;
     }
 
-    public void setScoreEnvironnemental(Integer scoreEnvironnemental) {
+    public void setScoreEnvironnemental(int scoreEnvironnemental) {
         this.scoreEnvironnemental = scoreEnvironnemental;
     }
 
@@ -118,6 +120,7 @@ public class Game implements Serializable {
         return Objects.hash(getScoreLogistique(), getScoreAttractivite(), getScoreFluidite(), getScoreEnvironnemental(), getMarket(), city, getListBet());
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Game{" +

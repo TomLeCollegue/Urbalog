@@ -1,5 +1,7 @@
 package com.example.urbalog.Class;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -7,13 +9,13 @@ import java.util.Objects;
 public class Player implements Serializable {
 
     private String name;
-    private Integer age;
+    private int age;
     private String job;
-    private Integer score;
+    private int score;
     private Role role;
     private Integer[][] financementRessource;
 
-    public Player(String name, Integer age, String job) {
+    public Player(String name, int age, String job) {
         this.name = name;
         this.age = age;
         this.job = job;
@@ -22,7 +24,7 @@ public class Player implements Serializable {
         this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
     }
 
-    public Player(String name, Integer age, String job, Role role) {
+    public Player(String name, int age, String job, Role role) {
         this.name = name;
         this.age = age;
         this.job = job;
@@ -48,11 +50,11 @@ public class Player implements Serializable {
         this.name = name;
     }
 
-    public Integer getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
@@ -64,11 +66,11 @@ public class Player implements Serializable {
         this.job = job;
     }
 
-    public Integer getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
@@ -100,6 +102,7 @@ public class Player implements Serializable {
         this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Player{" +

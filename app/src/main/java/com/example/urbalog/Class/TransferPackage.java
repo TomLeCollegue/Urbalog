@@ -1,5 +1,7 @@
 package com.example.urbalog.Class;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -10,7 +12,7 @@ import java.util.Objects;
  * @param <S> -> Object
  */
 
-public class TransferPackage<F, S> extends Object implements Serializable {
+public class TransferPackage<F, S> implements Serializable {
 
     public final F first;
     public final S second;
@@ -35,6 +37,7 @@ public class TransferPackage<F, S> extends Object implements Serializable {
         return Objects.hash(first, second);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "TransferPackage{" +
