@@ -7,19 +7,18 @@ import java.util.Objects;
 
 /**
  * Custom Pair class who implements serialization
- * Use for data transfer between devices (Signal, Object)
- * @param <Signal> -> Signal for incoming payload
+ * Use for data transfer between devices (Game instance, Object)
+ * @param <F> -> Game
  * @param <S> -> Object
  */
 
-public class Duo<Signal, S> implements Serializable {
-
-    public final Signal sig;
+public class Duo<F, S> implements Serializable {
+    public final F first;
     public final S second;
 
-    public Duo(Signal s, S o)
+    public Duo(F s, S o)
     {
-        this.sig = s;
+        this.first = s;
         this.second = o;
     }
 
@@ -28,20 +27,20 @@ public class Duo<Signal, S> implements Serializable {
         if (this == o) return true;
         if (!(o instanceof Duo)) return false;
         Duo<?, ?> that = (Duo<?, ?>) o;
-        return sig.equals(that.sig) &&
+        return first.equals(that.first) &&
                 second.equals(that.second);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sig, second);
+        return Objects.hash(first, second);
     }
 
     @NonNull
     @Override
     public String toString() {
         return "Duo{" +
-                "signal=" + sig +
+                "first=" + first +
                 ", second=" + second +
                 '}';
     }
