@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -68,7 +69,7 @@ public class JsonStats {
         writeText("{\n" +
                 "  \"games\" : [\n" +
                 "      {\n" +
-                "        \"date\" : \"02/02/2020 19:18:21\",\n" +
+                "        \"date\" : \"Sun Feb 02 11:35:27 GMT+01:00 2020\",\n" +
                 "        \"players\" : [\n" +
                 "            {\n" +
                 "            \"name\" : \"Laurent\",\n" +
@@ -98,7 +99,7 @@ public class JsonStats {
                 "          ]\n" +
                 "      },\n" +
                 "      {\n" +
-                "        \"date\" : \"12/02/2020 19:18:21\",\n" +
+                "        \"date\" : \"Wed Feb 12 10:35:27 GMT+01:00 2020\",\n" +
                 "        \"players\" : [\n" +
                 "            {\n" +
                 "            \"name\" : \"Hugo\",\n" +
@@ -145,7 +146,7 @@ public class JsonStats {
                 "          ]\n" +
                 "      },\n" +
                 "      {\n" +
-                "        \"date\" : \"14/02/2020 19:18:21\",\n" +
+                "        \"date\" : \"Fri Feb 14 20:35:27 GMT+01:00 2020\",\n" +
                 "        \"players\" : [\n" +
                 "            {\n" +
                 "            \"name\" : \"Laurent\",\n" +
@@ -175,7 +176,7 @@ public class JsonStats {
                 "          ]\n" +
                 "      },\n" +
                 "      {\n" +
-                "        \"date\" : \"20/02/2020 19:18:21\",\n" +
+                "        \"date\" : \"Thu Feb 20 10:35:27 GMT+01:00 2020\",\n" +
                 "        \"players\" : [\n" +
                 "            {\n" +
                 "            \"name\" : \"Laurent\",\n" +
@@ -205,7 +206,7 @@ public class JsonStats {
                 "          ]\n" +
                 "      },\n" +
                 "      {\n" +
-                "        \"date\" : \"24/02/2020 19:18:21\",\n" +
+                "        \"date\" : \"Mon Feb 24 10:35:27 GMT+01:00 2020\",\n" +
                 "        \"players\" : [\n" +
                 "            {\n" +
                 "            \"name\" : \"Laurent\",\n" +
@@ -220,7 +221,7 @@ public class JsonStats {
                 "          ]\n" +
                 "      },\n" +
                 "      {\n" +
-                "        \"date\" : \"01/03/2020 19:18:21\",\n" +
+                "        \"date\" : \"Wed Feb 12 00:35:27 GMT+01:00 2020\",\n" +
                 "        \"players\" : [\n" +
                 "            {\n" +
                 "            \"name\" : \"Laurent\",\n" +
@@ -250,7 +251,7 @@ public class JsonStats {
                 "          ]\n" +
                 "      },\n" +
                 "      {\n" +
-                "        \"date\" : \"05/03/2020 19:18:21\",\n" +
+                "        \"date\" : \"Wed Mar 25 10:35:27 GMT+01:00 2020\",\n" +
                 "        \"players\" : [\n" +
                 "            {\n" +
                 "            \"name\" : \"Laurent\",\n" +
@@ -383,16 +384,17 @@ public class JsonStats {
         }
         return res;
     }
-    
 
-    public static HashMap<String, Integer> getNumberPlayerByGame(){
-        Log.d("debug", "getNumberPlayerByGame...");
-        HashMap<String, Integer> res = new HashMap<>();
+
+    public static HashMap<Date, Integer> getNumberPlayerByGame(){
+        Log.d("debug", "getNumberPlayerByGame2...");
+        HashMap<Date, Integer> res = new HashMap<>();
         String jsonText = null;
         JSONObject jsonRoot = null;
         JSONArray jsonGames = null;
         JSONObject jsonGame = null;
-        String date = null;
+        Date date = null;
+        String sDate = null;
         int nbPlayer;
         try {
             jsonText = readText();
@@ -400,7 +402,9 @@ public class JsonStats {
             jsonGames = jsonRoot.getJSONArray("games");
             for(int i=0; i<jsonGames.length(); i++) {
                 jsonGame = (JSONObject) jsonGames.get(i);
-                date = (String) jsonGame.get("date");
+                sDate = (String) jsonGame.get("date");
+                date = new Date(sDate);
+                Log.d("debug", date.toString());
                 nbPlayer = jsonGame.getJSONArray("players").length();
                 res.put(date, nbPlayer);
             }

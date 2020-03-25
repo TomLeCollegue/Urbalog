@@ -34,6 +34,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class NbPlayerByGameActivity extends AppCompatActivity{
 
@@ -46,12 +47,11 @@ public class NbPlayerByGameActivity extends AppCompatActivity{
         setContentView(R.layout.activity_nb_player_by_game);
 
         JsonStats.giveContext(this);
-        HashMap<String, Integer> nbPlayerByGame = JsonStats.getNumberPlayerByGame();
 
+        HashMap<Date, Integer> nbPlayerByGame = JsonStats.getNumberPlayerByGame();
+        Map<Date, Integer> nbPlayerByGameSorted = new TreeMap<Date, Integer>(nbPlayerByGame);
 
         mChart = (LineChart) findViewById(R.id.linechart);
-
-
         mChart.setDragEnabled(true);
         mChart.setScaleEnabled(true);
         mChart.setExtraOffsets(10, 10, 10, 10);
@@ -68,9 +68,10 @@ public class NbPlayerByGameActivity extends AppCompatActivity{
 
         ArrayList<Entry> yValues = new ArrayList<>();
 
-        for(Map.Entry<String, Integer> entry: nbPlayerByGame.entrySet()) {
+        for(Map.Entry<Date, Integer> entry: nbPlayerByGameSorted.entrySet()) {
             yValues.add(new Entry(i, entry.getValue()));
-            ar.add(entry.getKey());
+            String str = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(entry.getKey());
+            ar.add(str);
             i++;
         }
 
