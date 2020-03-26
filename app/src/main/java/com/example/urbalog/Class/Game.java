@@ -1,6 +1,7 @@
 package com.example.urbalog.Class;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,6 +15,7 @@ public class Game implements Serializable {
     private City city;
     private List<Bet> listBet;
     private int nTurn;
+    private Date date;
 
     public Game() {
         scoreLogistique = 0;
@@ -22,6 +24,15 @@ public class Game implements Serializable {
         scoreEnvironnemental = 0;
         nTurn = 1;
         city = new City();
+        date = new Date();
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Integer getScoreLogistique() {

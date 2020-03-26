@@ -3,6 +3,7 @@ package com.example.urbalog.Json;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Player;
 
 import org.json.JSONArray;
@@ -67,205 +68,95 @@ public class JsonStats {
     public static void createFile()
     {
         writeText("{\n" +
-                "  \"games\" : [\n" +
-                "      {\n" +
-                "        \"date\" : \"Sun Feb 02 11:35:27 GMT+01:00 2020\",\n" +
-                "        \"players\" : [\n" +
-                "            {\n" +
-                "            \"name\" : \"Laurent\",\n" +
-                "            \"age\" : \"23\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Samuel\",\n" +
-                "            \"age\" : \"22\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Tom\",\n" +
-                "            \"age\" : \"55\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Bertrand\",\n" +
-                "            \"age\" : \"15\",\n" +
-                "            \"pcs\" : \"Retraité\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"John\",\n" +
-                "            \"age\" : \"31\",\n" +
-                "            \"pcs\" : \"Cadres et profession intellectuelle supérieure\"\n" +
-                "            }\n" +
-                "          ]\n" +
-                "      },\n" +
-                "      {\n" +
-                "        \"date\" : \"Wed Feb 12 10:35:27 GMT+01:00 2020\",\n" +
-                "        \"players\" : [\n" +
-                "            {\n" +
-                "            \"name\" : \"Hugo\",\n" +
-                "            \"age\" : \"23\",\n" +
-                "            \"pcs\" : \"Sans emploi\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Samuel\",\n" +
-                "            \"age\" : \"22\",\n" +
-                "            \"pcs\" : \"Ouvrier qualifié\"\n" +
-                "            }\n" +
-                "            ,\n" +
-                "            {\n" +
-                "            \"name\" : \"Jean\",\n" +
-                "            \"age\" : \"12\",\n" +
-                "            \"pcs\" : \"Retraité\"\n" +
-                "            }\n" +
-                "            ,\n" +
-                "            {\n" +
-                "            \"name\" : \"Charles\",\n" +
-                "            \"age\" : \"34\",\n" +
-                "            \"pcs\" : \"Cadres et profession intellectuelle supérieure\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Yves\",\n" +
-                "            \"age\" : \"45\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Yves\",\n" +
-                "            \"age\" : \"45\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Yves\",\n" +
-                "            \"age\" : \"45\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Yves\",\n" +
-                "            \"age\" : \"45\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            }\n" +
-                "          ]\n" +
-                "      },\n" +
-                "      {\n" +
-                "        \"date\" : \"Fri Feb 14 20:35:27 GMT+01:00 2020\",\n" +
-                "        \"players\" : [\n" +
-                "            {\n" +
-                "            \"name\" : \"Laurent\",\n" +
-                "            \"age\" : \"23\",\n" +
-                "            \"pcs\" : \"Retraité\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Yves\",\n" +
-                "            \"age\" : \"45\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Yves\",\n" +
-                "            \"age\" : \"45\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Yves\",\n" +
-                "            \"age\" : \"45\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Yves\",\n" +
-                "            \"age\" : \"45\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            }\n" +
-                "          ]\n" +
-                "      },\n" +
-                "      {\n" +
-                "        \"date\" : \"Thu Feb 20 10:35:27 GMT+01:00 2020\",\n" +
-                "        \"players\" : [\n" +
-                "            {\n" +
-                "            \"name\" : \"Laurent\",\n" +
-                "            \"age\" : \"23\",\n" +
-                "            \"pcs\" : \"Retraité\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Yves\",\n" +
-                "            \"age\" : \"45\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Yves\",\n" +
-                "            \"age\" : \"45\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Yves\",\n" +
-                "            \"age\" : \"45\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Yves\",\n" +
-                "            \"age\" : \"45\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            }\n" +
-                "          ]\n" +
-                "      },\n" +
-                "      {\n" +
-                "        \"date\" : \"Mon Feb 24 10:35:27 GMT+01:00 2020\",\n" +
-                "        \"players\" : [\n" +
-                "            {\n" +
-                "            \"name\" : \"Laurent\",\n" +
-                "            \"age\" : \"23\",\n" +
-                "            \"pcs\" : \"Retraité\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Yves\",\n" +
-                "            \"age\" : \"45\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            }\n" +
-                "          ]\n" +
-                "      },\n" +
-                "      {\n" +
-                "        \"date\" : \"Wed Feb 12 00:35:27 GMT+01:00 2020\",\n" +
-                "        \"players\" : [\n" +
-                "            {\n" +
-                "            \"name\" : \"Laurent\",\n" +
-                "            \"age\" : \"23\",\n" +
-                "            \"pcs\" : \"Retraité\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Yves\",\n" +
-                "            \"age\" : \"45\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Yves\",\n" +
-                "            \"age\" : \"45\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Yves\",\n" +
-                "            \"age\" : \"45\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Yves\",\n" +
-                "            \"age\" : \"45\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            }\n" +
-                "          ]\n" +
-                "      },\n" +
-                "      {\n" +
-                "        \"date\" : \"Wed Mar 25 10:35:27 GMT+01:00 2020\",\n" +
-                "        \"players\" : [\n" +
-                "            {\n" +
-                "            \"name\" : \"Laurent\",\n" +
-                "            \"age\" : \"23\",\n" +
-                "            \"pcs\" : \"Retraité\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "            \"name\" : \"Yves\",\n" +
-                "            \"age\" : \"45\",\n" +
-                "            \"pcs\" : \"Etudiant\"\n" +
-                "            }\n" +
-                "          ]\n" +
-                "      }\n" +
-                "    ]\n" +
+                "  \"games\": [\n" +
+                "    {\n" +
+                "      \"date\": \"Wed Mar 25 10:35:27 GMT+01:00 2020\",\n" +
+                "      \"Score Logistique\": 0,\n" +
+                "      \"Score Attractivite\": 2,\n" +
+                "      \"Score Fluidite\": 1,\n" +
+                "      \"Score Environnemental\": -4,\n" +
+                "      \"players\": [\n" +
+                "        {\n" +
+                "          \"name\": \"Laurent\",\n" +
+                "          \"age\": \"23\",\n" +
+                "          \"pcs\": \"Retraité\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "          \"name\": \"Yves\",\n" +
+                "          \"age\": \"45\",\n" +
+                "          \"pcs\": \"Etudiant\"\n" +
+                "        }\n" +
+                "      ]\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"date\": \"Thu Mar 26 21:16:00 GMT+01:00 2020\",\n" +
+                "      \"Score Logistique\": 0,\n" +
+                "      \"Score Attractivite\": 2,\n" +
+                "      \"Score Fluidite\": 1,\n" +
+                "      \"Score Environnemental\": -4,\n" +
+                "      \"players\": [\n" +
+                "        {\n" +
+                "          \"name\": \"Gab\",\n" +
+                "          \"age\": \"20\",\n" +
+                "          \"pcs\": \"Retraité\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "          \"name\": \"Raph\",\n" +
+                "          \"age\": \"22\",\n" +
+                "          \"pcs\": \"Agriculteur, exploitant\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "          \"name\": \"Leo\",\n" +
+                "          \"age\": \"24\",\n" +
+                "          \"pcs\": \"Ouvrier qualifié\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "          \"name\": \"Louis\",\n" +
+                "          \"age\": \"25\",\n" +
+                "          \"pcs\": \"Cadres et profession intellectuelle supérieure\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "          \"name\": \"Lucas\",\n" +
+                "          \"age\": \"26\",\n" +
+                "          \"pcs\": \"Sans emploi\"\n" +
+                "        }\n" +
+                "      ]\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"date\": \"Thu Mar 26 21:17:14 GMT+01:00 2020\",\n" +
+                "      \"Score Logistique\": 0,\n" +
+                "      \"Score Attractivite\": 2,\n" +
+                "      \"Score Fluidite\": 1,\n" +
+                "      \"Score Environnemental\": -4,\n" +
+                "      \"players\": [\n" +
+                "        {\n" +
+                "          \"name\": \"Gab\",\n" +
+                "          \"age\": \"20\",\n" +
+                "          \"pcs\": \"Retraité\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "          \"name\": \"Raph\",\n" +
+                "          \"age\": \"22\",\n" +
+                "          \"pcs\": \"Agriculteur, exploitant\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "          \"name\": \"Leo\",\n" +
+                "          \"age\": \"24\",\n" +
+                "          \"pcs\": \"Ouvrier qualifié\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "          \"name\": \"Louis\",\n" +
+                "          \"age\": \"25\",\n" +
+                "          \"pcs\": \"Cadres et profession intellectuelle supérieure\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "          \"name\": \"Lucas\",\n" +
+                "          \"age\": \"26\",\n" +
+                "          \"pcs\": \"Sans emploi\"\n" +
+                "        }\n" +
+                "      ]\n" +
+                "    }\n" +
+                "  ]\n" +
                 "}");
     }
 
@@ -413,17 +304,19 @@ public class JsonStats {
         }
         return res;
     }
-    
-    public static void writeGame(ArrayList<Player> list){
+
+    public static void writeGame(ArrayList<Player> list, Game game){
         Log.d("debug", "writeGame...");
         String jsonText = null;
         JSONObject jsonRoot = null;
         JSONArray jsonGames = null;
         try {
-            JSONObject game = new JSONObject();
-            Date myDate = new Date();
-            String date = new SimpleDateFormat("MM/dd/yyyy H:m:s").format(myDate);
-            game.put("date", date);
+            JSONObject jsonGame = new JSONObject();
+            jsonGame.put("date", game.getDate());
+            jsonGame.put("Score Logistique", game.getScoreLogistique());
+            jsonGame.put("Score Attractivite", game.getScoreAttractivite());
+            jsonGame.put("Score Fluidite", game.getScoreFluidite());
+            jsonGame.put("Score Environnemental", game.getScoreEnvironnemental());
             JSONArray players = new JSONArray();
             for(Player playerList : list)
             {
@@ -433,15 +326,13 @@ public class JsonStats {
                 player.put("pcs", playerList.getJob());
                 players.put(player);
             }
-            game.put("players", players);
+            jsonGame.put("players", players);
             jsonText = readText();
             jsonRoot = new JSONObject(jsonText);
             jsonGames = jsonRoot.getJSONArray("games");
-            jsonGames.put(game);
+            jsonGames.put(jsonGame);
             writeText(jsonRoot.toString());
-            
-            Log.d("debug", "nb de partie = "+ jsonGames.length());
-            Log.d("debug", game.toString());
+            Log.d("debug", jsonRoot.toString());
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
