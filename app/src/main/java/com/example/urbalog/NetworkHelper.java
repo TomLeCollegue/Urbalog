@@ -20,6 +20,7 @@ import com.example.urbalog.Class.Market;
 import com.example.urbalog.Class.Player;
 import com.example.urbalog.Class.Role;
 import com.example.urbalog.Class.Signal;
+import com.example.urbalog.Class.Duo;
 import com.example.urbalog.Class.TransferPackage;
 import com.example.urbalog.Class.Triplet;
 import com.example.urbalog.Json.JsonStats;
@@ -60,7 +61,7 @@ public class NetworkHelper implements Serializable {
     private boolean host;
 
     private static int NB_PLAYERS = 5;
-    private static int NB_BUILDINGS = 6;
+    private static int NB_BUILDINGS = 3;
 
     private Game currentGame;
     private boolean gameStarted;
@@ -106,7 +107,7 @@ public class NetworkHelper implements Serializable {
                     Object dataReceived = new Object();
                     try {
                         dataReceived = SerializationHelper.deserialize(payload.asBytes());
-                        Log.i(TAG, "sendToAllClients: "+ dataReceived.toString());
+                        Log.i(TAG, "sendToAllClients: " + dataReceived.toString());
 
                     } catch (IOException | ClassNotFoundException e) {
                         e.printStackTrace();
@@ -114,220 +115,246 @@ public class NetworkHelper implements Serializable {
 
                     /* Process data received based on this type and if it's host or not */
                     /* If it's a player device */
-                    if(!host){
-                        /* Manage TransferPackage data */
-                        if(dataReceived instanceof TransferPackage){
-                            /* If host have send Market, usually used for respond to player bet with updated state of Market */
-                            if(((TransferPackage) dataReceived).second instanceof Market)
-                            {
-                                try {
-                                    player.resetFinancementRessource();
-                                    sendToClient(new Triplet<Signal, String, Player>(Signal.UPDATE_PLAYER, playerUUID, player), endpointId);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                currentGame.setMarket(((Market) ((TransferPackage) dataReceived).second));
-                                updatePlayerView();
-                                currentPlayerView.setButtonState(true);
-                                currentPlayerView.setEnabledBetButtons(true);
-                            }
-                            /* If host have send Bet, no longer used for the moment */
-                            else if(((TransferPackage) dataReceived).second instanceof Bet){
-                                if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
-                                {
-                                    currentGame.majBet(((Bet) ((TransferPackage) dataReceived).second));
-                                    if(currentPlayerView != null)
+                    if (!host) {
+                        if (dataReceived instanceof TransferPackage) {
+                            switch (((TransferPackage) dataReceived).sig) {
+
+                                /* If host have send Market, usually used for respond to player bet with updated state of Market */
+                                case MARKET_RECEIVED:
+                                    if (((Duo) ((TransferPackage) dataReceived).second).second instanceof Market) {
+                                        try {
+                                            player.resetFinancementRessource();
+                                            sendToClient(new TransferPackage<Duo>(
+                                                    Signal.UPDATE_PLAYER,
+                                                    new Duo<String, Player>(playerUUID, player)), endpointId);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                        currentGame.setMarket((Market)((Duo) ((TransferPackage) dataReceived).second).second);
                                         updatePlayerView();
-
-                                }
-                            }
-                            /* If host have send PLayer and Game instances for returning player */
-                            else if(((TransferPackage) dataReceived).first instanceof Game){
-                                Log.i(TAG, "Restart game");
-                                currentGame = ((Game)((TransferPackage) dataReceived).first);
-                                player = ((Player)((TransferPackage) dataReceived).second);
-                                gameStarted = true;
-                                Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
-                                appContext.startActivity(myIntent);
-                                if(currentPlayerView != null){
-                                    updatePlayerView();
-                                }
-                            }
-                            /* If host have send Signal, used for communicate with players without data transfer */
-                            else if(((TransferPackage) dataReceived).first instanceof Signal){
-                               switch((Signal)((TransferPackage) dataReceived).first)
-                               {
-                                   /* Ask player to check if his goals are completed */
-                                   case CHECK_GOALS:
-                                       if(player.checkGoals((ArrayList<Building>)((TransferPackage) dataReceived).second)
-                                           && (currentGame.getCity().getBuildings().size() + ((ArrayList<Building>) ((TransferPackage) dataReceived).second).size()) < NB_BUILDINGS){
-
-                                           final AlertDialog.Builder scoreDialog = new AlertDialog.Builder(getCurrentPlayerView());
-
-                                           LayoutInflater inflater = getCurrentPlayerView().getLayoutInflater();
-
-                                           scoreDialog.setView(inflater.inflate(R.layout.alert_dialog,null))
-                                                  .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                                      @Override
-                                                      public void onClick(DialogInterface dialogInterface, int i) {
-                                                          dialogInterface.dismiss();
-                                                      }
-                                                  });
-
-                                           final AlertDialog alertScoreDialog = scoreDialog.create();
-
-                                           alertScoreDialog.show();
-                                           Objects.requireNonNull(alertScoreDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
-
-                                       }
-                                       try {
-                                           player.resetFinancementRessource();
-                                           sendToClient(new Triplet<Signal, String, Player>(Signal.UPDATE_PLAYER, playerUUID, player), endpointId);
-                                       } catch (IOException e) {
-                                           e.printStackTrace();
-                                       }
-                                       break;
-                                   /* Report to player the end of the game */
-                                   case GAME_OVER:
-                                       currentGame = (Game)((TransferPackage) dataReceived).second;
-                                       try {
-                                           sendToClient(new Triplet<Signal, String, Player>(Signal.UPDATE_PLAYER, playerUUID, player), endpointId);
-                                       } catch (IOException e) {
-                                           e.printStackTrace();
-                                       }
-                                       currentPlayerView.finish();
-                                       Intent myIntent = new Intent(appContext, EndGameActivity.class);
-                                       appContext.startActivity(myIntent);
-                                       break;
-                                   default:
-                                       break;
-                               }
-                            }
-                        }
-                        /* If host have send Game, used for returning player, when the game start or at new turn */
-                        else if(dataReceived instanceof Game){
-                            currentGame = (Game) dataReceived;
-                            if(currentPlayerView != null) {
-                                updatePlayerView();
-                                currentPlayerView.resetTurnButton();
-                                currentPlayerView.resetColorRessources();
-                            }
-                            else
-                                gameStarted = true;
-                        }
-                        /* If host have send Role, used on game start for role attribution */
-                        else if(dataReceived instanceof Role){
-                            player.setRole((Role) dataReceived);
-                            try {
-                                sendToClient(new Triplet<Signal, String, Player>(Signal.UPDATE_PLAYER, playerUUID, player), endpointId);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
-                            appContext.startActivity(myIntent);
-                        }
-                    }
-                    /* If it's the host device */
-                    else
-                    {
-                        /* If received payload is a instance of TransferPackage */
-                        if(dataReceived instanceof TransferPackage){
-                            /* If player have send Market, no longer used for the moment */
-                            if(((TransferPackage) dataReceived).second instanceof Market) {
-                                if (currentGame.equals(((Game) ((TransferPackage) dataReceived).first))) {
-                                    currentGame.setMarket(((Market) ((TransferPackage) dataReceived).second));
-                                    try {
-                                        TransferPackage resend = new TransferPackage<Game, Market>((((Game) ((TransferPackage) dataReceived).first)), ((Market) ((TransferPackage) dataReceived).second));
-                                        sendToAllClients(resend);
+                                        currentPlayerView.setButtonState(true);
+                                        currentPlayerView.setEnabledBetButtons(true);
                                     }
-                                    catch (IOException e) {
+                                    break;
+
+                                /* If host have send Bet, no longer used for the moment */
+                                case BET_RECEIVED:
+                                    if (((Duo) ((TransferPackage) dataReceived).second).second instanceof Bet) {
+                                        if (currentGame.equals((((Duo) ((TransferPackage) dataReceived).second).first))) {
+                                            currentGame.majBet(((Bet) ((Duo) ((TransferPackage) dataReceived).second).second));
+                                            if (currentPlayerView != null)
+                                                updatePlayerView();
+                                        }
+                                    }
+                                    break;
+
+                                /* If host have send Game, used for returning player, when the game start or at new turn */
+                                case GAME_RECEIVED:
+                                    if (((TransferPackage) dataReceived).second instanceof Game) {
+                                        currentGame = ((Game) ((TransferPackage) dataReceived).second);
+                                        if (currentPlayerView != null) {
+                                            updatePlayerView();
+                                            currentPlayerView.resetTurnButton();
+                                            currentPlayerView.resetColorRessources();
+                                        } else
+                                            gameStarted = true;
+                                    }
+                                    break;
+
+                                /* If host have send Role, used on game start for role attribution */
+                                case ROLE_RECEIVED:
+                                    player.setRole((Role) ((TransferPackage) dataReceived).second);
+                                    try {
+                                        sendToClient(new TransferPackage<Duo>(
+                                                Signal.UPDATE_PLAYER,
+                                                new Duo<String, Player>(playerUUID, player)), endpointId);
+                                    } catch (IOException e) {
                                         e.printStackTrace();
                                     }
-                                }
-                                else if(((TransferPackage) dataReceived).second instanceof Signal){
-                                    switch(((Signal) ((TransferPackage) dataReceived).second)){
-                                        case RETURN_PLAYER:
-                                            for(int i = 0; i < playersInformations.size(); i++) {
-                                                if(playersInformations.get(i).getSecond().equals(((String) ((TransferPackage) dataReceived).second))){
-                                                    try {
-                                                        sendToClient(new TransferPackage<Game, Player>(currentGame, playersInformations.get(i).getFirst()), endpointId);
-                                                    } catch (IOException e) {
-                                                        e.printStackTrace();
+                                    Intent intentPlayerView = new Intent(appContext, PlayerViewActivity.class);
+                                    appContext.startActivity(intentPlayerView);
+                                    break;
+
+                                /* If host have send PLayer and Game instances for returning player */
+                                case RESTART_GAME:
+                                    if (((Duo) ((TransferPackage) dataReceived).second).first instanceof Game) {
+                                        Log.i(TAG, "Restart game");
+                                        currentGame = ((Game) ((Duo) ((TransferPackage) dataReceived).second).first);
+                                        player = ((Player) ((Duo) ((TransferPackage) dataReceived).second).second);
+                                        gameStarted = true;
+                                        Intent myIntent = new Intent(appContext, PlayerViewActivity.class);
+                                        appContext.startActivity(myIntent);
+                                        if (currentPlayerView != null) {
+                                            updatePlayerView();
+                                        }
+                                    }
+                                    break;
+
+                                /* Ask player to check if his goals are completed */
+                                case CHECK_GOALS:
+                                    if (player.checkGoals((ArrayList<Building>) ((TransferPackage) dataReceived).second)
+                                            && (currentGame.getCity().getBuildings().size() + ((ArrayList<Building>) ((TransferPackage) dataReceived).second).size()) < NB_BUILDINGS) {
+
+                                        final AlertDialog.Builder scoreDialog = new AlertDialog.Builder(getCurrentPlayerView());
+
+                                        LayoutInflater inflater = getCurrentPlayerView().getLayoutInflater();
+
+                                        scoreDialog.setView(inflater.inflate(R.layout.alert_dialog, null))
+                                                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        dialogInterface.dismiss();
                                                     }
-                                                    break;
+                                                });
+
+                                        final AlertDialog alertScoreDialog = scoreDialog.create();
+
+                                        alertScoreDialog.show();
+                                        Objects.requireNonNull(alertScoreDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+
+                                    }
+                                    try {
+                                        player.resetFinancementRessource();
+                                        sendToClient(new TransferPackage<Duo>(
+                                                Signal.UPDATE_PLAYER,
+                                                new Duo<String, Player>(playerUUID, player)), endpointId);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
+
+                                /* Report to player the end of the game */
+                                case GAME_OVER:
+                                    currentGame = (Game) ((TransferPackage) dataReceived).second;
+                                    try {
+                                        sendToClient(new TransferPackage<Duo>(
+                                                Signal.UPDATE_PLAYER,
+                                                new Duo<String, Player>(playerUUID, player)), endpointId);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    currentPlayerView.finish();
+                                    Intent myIntent = new Intent(appContext, EndGameActivity.class);
+                                    appContext.startActivity(myIntent);
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                    /* ----------------------- */
+                    /* If it's the host device */
+                    /* ----------------------- */
+                    else {
+                        if(dataReceived instanceof TransferPackage) {
+                            switch(((TransferPackage) dataReceived).sig){
+
+                                case MARKET_RECEIVED:
+                                    if(((TransferPackage) dataReceived).second instanceof Duo) {
+                                        if(((Duo)((TransferPackage) dataReceived).second).second instanceof Market)
+                                            if (currentGame.equals(((Duo)((TransferPackage) dataReceived).second).first)) {
+                                                currentGame.setMarket((Market)((Duo)((TransferPackage) dataReceived).second).second);
+                                                try {
+                                                    TransferPackage resend = new TransferPackage<Duo>(
+                                                            Signal.MARKET_RECEIVED,
+                                                            new Duo<Game, Market>((Game)((Duo)((TransferPackage) dataReceived).second).first, (Market)((Duo)((TransferPackage) dataReceived).second).second));
+                                                    sendToAllClients(resend);
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
                                                 }
                                             }
-                                            break;
-                                        default:
-                                            break;
                                     }
-                                }
-                            }
-                            else if(((TransferPackage) dataReceived).first instanceof Player){
-                                if(gameStarted) {
-                                    Log.i(TAG, "gameStarted");
-                                    for (int i = 0; i < playersInformations.size(); i++) {
-                                        if (playersInformations.get(i).getSecond().equals(((String) ((TransferPackage) dataReceived).second))) {
+                                    break;
+
+                                case RETURN_PLAYER:
+                                    for(int i = 0; i < playersInformations.size(); i++) {
+                                        if(playersInformations.get(i).getSecond().equals(((TransferPackage)dataReceived).second)) {
                                             try {
-                                                Log.i(TAG, "returning player");
-                                                sendToClient(new TransferPackage<Game, Player>(currentGame, playersInformations.get(i).getFirst()), endpointId);
+                                                sendToClient(new TransferPackage<Duo>(
+                                                        Signal.RESTART_GAME,
+                                                        new Duo<Game, Player>(currentGame, playersInformations.get(i).getFirst())), endpointId);
                                             } catch (IOException e) {
                                                 e.printStackTrace();
                                             }
                                             break;
                                         }
                                     }
-                                }
-                                else{
-                                    Log.i(TAG, "!gameStarted: ");
-                                    for (int i = 0; i < playersInformations.size(); i++) {
-                                        if(playersInformations.get(i).getThird().equals(endpointId)){
-                                            playersInformations.get(i).setFirst(((Player) ((TransferPackage) dataReceived).first));
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                            /* If player have send Bet, always used when player put or remove a bet on a building in the market
-                            *  after updating the host market with this Bet, it will resend it to all clients */
-                            else if(((TransferPackage) dataReceived).second instanceof Bet){
-                                if(currentGame.equals(((Game) ((TransferPackage) dataReceived).first)))
-                                {
-                                    currentGame.majBet(((Bet) ((TransferPackage) dataReceived).second));
-                                    try {
-                                        sendToAllClients(new TransferPackage<Game, Market>(currentGame, currentGame.getMarket()));
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                        }
-                        /* if player have send Triplet data set */
-                        else if(dataReceived instanceof Triplet){
-                            if(((Triplet)dataReceived).getFirst() instanceof Signal){
-                                switch((Signal)(((Triplet)dataReceived).getFirst())){
-                                    case UPDATE_PLAYER:
-                                        for (int i = 0; i < playersInformations.size(); i++) {
-                                            if (playersInformations.get(i).getSecond().equals((String)(((Triplet)dataReceived).getSecond()))){
-                                                playersInformations.get(i).setFirst((Player)(((Triplet)dataReceived).getThird()));
+                                    break;
+
+                                case NEW_CONNECTION:
+                                    if(((TransferPackage) dataReceived).second instanceof Duo) {
+                                        if (((Duo)((TransferPackage) dataReceived).second).first instanceof Player) {
+                                            if (gameStarted) {
+                                                Log.i(TAG, "gameStarted");
+                                                for (int i = 0; i < playersInformations.size(); i++) {
+                                                    if (playersInformations.get(i).getSecond().equals(((Duo)((TransferPackage) dataReceived).second).second)) {
+                                                        try {
+                                                            Log.i(TAG, "returning player");
+                                                            sendToClient(new TransferPackage<Duo>(
+                                                                    Signal.RESTART_GAME,
+                                                                    new Duo<Game, Player>(currentGame, playersInformations.get(i).getFirst())), endpointId);
+                                                        } catch (IOException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                        break;
+                                                    }
+                                                }
+                                            } else {
+                                                Log.i(TAG, "!gameStarted: ");
+                                                for (int i = 0; i < playersInformations.size(); i++) {
+                                                    if (playersInformations.get(i).getThird().equals(endpointId)) {
+                                                        playersInformations.get(i).setFirst((Player)((Duo)((TransferPackage) dataReceived).second).first);
+                                                        break;
+                                                    }
+                                                }
                                             }
                                         }
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                        }
-                        /* If player have send Player, used on client connection to the host and often during the game */
-                        else if(dataReceived instanceof Player){
-                            for (int i = 0; i < playersInformations.size(); i++) {
-                                if(playersInformations.get(i).getThird().equals(endpointId)){
-                                    playersInformations.get(i).setFirst((Player)dataReceived);
+                                    }
                                     break;
-                                }
+
+                                case BET_RECEIVED:
+                                    if(((TransferPackage) dataReceived).second instanceof Duo){
+                                        if(currentGame.equals(((Duo)((TransferPackage) dataReceived).second).first))
+                                        {
+                                            currentGame.majBet((Bet)((Duo)((TransferPackage) dataReceived).second).second);
+                                            try {
+                                                sendToAllClients(new TransferPackage<Duo>(
+                                                        Signal.MARKET_RECEIVED,
+                                                        new Duo<Game, Market>(currentGame, currentGame.getMarket())));
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                    break;
+
+                                case UPDATE_PLAYER:
+                                    for (int i = 0; i < playersInformations.size(); i++) {
+                                        if (playersInformations.get(i).getSecond().equals(((Duo)((TransferPackage) dataReceived).second).first)){
+                                            playersInformations.get(i).setFirst((Player)((Duo)((TransferPackage) dataReceived).second).second);
+                                        }
+                                    }
+                                    break;
+
+                                case BACKUP_PLAYER:
+                                    if(((TransferPackage) dataReceived).second instanceof Player){
+                                        for (int i = 0; i < playersInformations.size(); i++) {
+                                            if(playersInformations.get(i).getThird().equals(endpointId)){
+                                                playersInformations.get(i).setFirst((Player)((TransferPackage) dataReceived).second);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    break;
+
+                                default:
+                                    break;
                             }
+
+
                         }
-                        /* If player have send Signal, used for communicate with the host without data transfer */
+
                         else if(dataReceived instanceof Signal){
                             switch ((Signal) dataReceived)
                             {
@@ -358,7 +385,9 @@ public class NetworkHelper implements Serializable {
                                     }
                                 }
                                 try {
-                                    sendToAllClients(new TransferPackage<Signal, ArrayList<Building>>(Signal.CHECK_GOALS, newBuildings));
+                                    sendToAllClients(new TransferPackage<ArrayList<Building>>(
+                                            Signal.CHECK_GOALS,
+                                            newBuildings));
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -369,7 +398,9 @@ public class NetworkHelper implements Serializable {
                                     currentGame.refreshMarket();
                                     currentGame.incrTurn();
                                     try {
-                                        sendToAllClients(currentGame);
+                                        sendToAllClients(new TransferPackage<Game>(
+                                                Signal.GAME_RECEIVED,
+                                                currentGame));
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -377,12 +408,15 @@ public class NetworkHelper implements Serializable {
                                 }
                                 else {
                                     try {
-                                        sendToAllClients(new TransferPackage<Signal, Game>(Signal.GAME_OVER, currentGame));
+                                        sendToAllClients(new TransferPackage<Game>(
+                                                Signal.GAME_OVER,
+                                                currentGame));
                                         JsonStats.giveContext(appContext);
                                         ArrayList<Player> endGamePlayerList = new ArrayList<Player>();
                                         for (int i = 0; i < playersInformations.size(); i++) {
                                             endGamePlayerList.add(playersInformations.get(i).getFirst());
                                         }
+                                        Log.d("debug", "ok");
                                         JsonStats.writeGame(endGamePlayerList);
                                         gameStarted = false;
                                     } catch (IOException e) {
@@ -543,7 +577,9 @@ public class NetworkHelper implements Serializable {
                             Log.i(TAG, "onConnectionResult: player");
                             PlayerConnexionActivity.setStatus("Connected");
                             try {
-                                sendToClient(new TransferPackage<Player, String>(player, playerName), endpointId);
+                                sendToClient(new TransferPackage<Duo>(
+                                        Signal.NEW_CONNECTION,
+                                        new Duo<Player, String>(player, playerName)), endpointId);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -832,7 +868,7 @@ public class NetworkHelper implements Serializable {
             int randomIndex = 0;
             Payload data;
             for (int i = 0; i < listPlayer.size(); i++) {
-                data = Payload.fromBytes(SerializationHelper.serialize(srcData.get(i)));
+                data = Payload.fromBytes(SerializationHelper.serialize(new TransferPackage<Role>(Signal.ROLE_RECEIVED, srcData.get(i))));
                 connectionsClient
                         .sendPayload(listPlayer.get(i).second, data)
                         .addOnFailureListener(

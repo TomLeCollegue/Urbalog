@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.urbalog.Class.Bet;
 import com.example.urbalog.Class.Building;
+import com.example.urbalog.Class.Duo;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
 import com.example.urbalog.Class.Player;
@@ -617,7 +618,9 @@ public class PlayerViewActivity extends AppCompatActivity {
                     setEnabledBetButtons(buttonState);
                     mise = new Bet(numBuilding, 0, 0, 1);
                     try {
-                        PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                        PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
+                                Signal.BET_RECEIVED,
+                                new Duo<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise)));
                         RoleInfo.lessSocial();
                         fillRoleCardRessources();
                         financementRessource[numBuilding][ressource]++;
@@ -631,7 +634,9 @@ public class PlayerViewActivity extends AppCompatActivity {
                     setEnabledBetButtons(buttonState);
                     mise = new Bet(numBuilding, 0, 0, -1);
                     try {
-                        PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                        PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
+                                Signal.BET_RECEIVED,
+                                new Duo<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise)));
                         RoleInfo.addSocial();
                         fillRoleCardRessources();
                         financementRessource[numBuilding][ressource]--;
@@ -649,7 +654,9 @@ public class PlayerViewActivity extends AppCompatActivity {
                 setEnabledBetButtons(buttonState);
                 mise = new Bet(numBuilding, 0, 1, 0);
                 try {
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
+                            Signal.BET_RECEIVED,
+                            new Duo<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise)));
                     RoleInfo.lessEco();
                     fillRoleCardRessources();
                     financementRessource[numBuilding][ressource]++;
@@ -663,7 +670,9 @@ public class PlayerViewActivity extends AppCompatActivity {
                 setEnabledBetButtons(buttonState);
                 mise = new Bet(numBuilding, 0, -1, 0);
                 try {
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
+                            Signal.BET_RECEIVED,
+                            new Duo<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise)));
                     RoleInfo.addEco();
                     fillRoleCardRessources();
                     financementRessource[numBuilding][ressource]--;
@@ -681,7 +690,9 @@ public class PlayerViewActivity extends AppCompatActivity {
                 setEnabledBetButtons(buttonState);
                 mise = new Bet(numBuilding, 1, 0, 0);
                 try {
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
+                            Signal.BET_RECEIVED,
+                            new Duo<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise)));
                     RoleInfo.lessPolitical();
                     fillRoleCardRessources();
                     financementRessource[numBuilding][ressource]++;
@@ -695,7 +706,9 @@ public class PlayerViewActivity extends AppCompatActivity {
                 setEnabledBetButtons(buttonState);
                 mise = new Bet(numBuilding, -1, 0, 0);
                 try {
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
+                            Signal.BET_RECEIVED,
+                            new Duo<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise)));
                     RoleInfo.addPolitical();
                     fillRoleCardRessources();
                     financementRessource[numBuilding][ressource]--;

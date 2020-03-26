@@ -3,7 +3,7 @@ package com.example.urbalog.Class;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Bet extends Object implements Serializable {
+public class Bet implements Serializable {
 
     private int misePolitique;
     private int miseEco;

@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
 import com.example.urbalog.Class.Role;
+import com.example.urbalog.Class.Signal;
+import com.example.urbalog.Class.TransferPackage;
 import com.example.urbalog.Json.JsonBuilding;
 import com.example.urbalog.Json.JsonRole;
 import com.example.urbalog.Json.JsonStats;
@@ -104,7 +106,9 @@ public class AdminConnectionActivity extends AppCompatActivity {
                     currentGame.setMarket(new Market());
                     net.setCurrentGame(currentGame);
                     try {
-                        net.sendToAllClients(currentGame);
+                        net.sendToAllClients(new TransferPackage<Game>(
+                                Signal.GAME_RECEIVED,
+                                currentGame));
                         randomRoleAssignment();
                     } catch (IOException e) {
                         e.printStackTrace();

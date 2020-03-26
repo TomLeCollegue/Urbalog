@@ -60,9 +60,9 @@ public class BuildingBuiltAdapter extends RecyclerView.Adapter<BuildingBuiltAdap
         public void display(Building building) {
 
             buildingNameScore.setText(building.getName());
-            environmentScore.setText(building.getEffetEnvironnemental().toString());
-            fluidityScore.setText(building.getEffetFluidite().toString());
-            attractivityScore.setText(building.getEffetAttractivite().toString());
+            environmentScore.setText(String.valueOf(building.getEffetEnvironnemental()));
+            fluidityScore.setText(String.valueOf(building.getEffetFluidite()));
+            attractivityScore.setText(String.valueOf(building.getEffetAttractivite()));
 
         }
     }

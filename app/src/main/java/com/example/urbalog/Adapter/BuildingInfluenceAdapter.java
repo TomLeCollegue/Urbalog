@@ -59,7 +59,7 @@ public class BuildingInfluenceAdapter extends RecyclerView.Adapter<BuildingInflu
 
             buildingName.setText(building.getName());
             buildingInfluenceSentence.setText(building.getExplicationLogistique());
-            buildingInfluenceScore.setText(building.getScoreLogistique().toString());
+            buildingInfluenceScore.setText(String.valueOf(building.getScoreLogistique()));
 
         }
     }

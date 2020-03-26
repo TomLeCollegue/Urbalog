@@ -1,5 +1,7 @@
 package com.example.urbalog.Class;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -36,6 +38,7 @@ public class City implements Serializable {
         return Objects.hash(buildings);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "City{" +
