@@ -61,7 +61,7 @@ public class NetworkHelper implements Serializable {
     private boolean host;
 
     private static int NB_PLAYERS = 5;
-    private static int NB_BUILDINGS = 6;
+    private static int NB_BUILDINGS = 3;
 
     private Game currentGame;
     private boolean gameStarted;
@@ -124,11 +124,13 @@ public class NetworkHelper implements Serializable {
                                     if (((Duo) ((TransferPackage) dataReceived).second).second instanceof Market) {
                                         try {
                                             player.resetFinancementRessource();
-                                            sendToClient(new Triplet<Signal, String, Player>(Signal.UPDATE_PLAYER, playerUUID, player), endpointId);
+                                            sendToClient(new TransferPackage<Duo>(
+                                                    Signal.UPDATE_PLAYER,
+                                                    new Duo<String, Player>(playerUUID, player)), endpointId);
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }
-                                        currentGame.setMarket(((Market) ((Duo) dataReceived).second));
+                                        currentGame.setMarket((Market)((Duo) ((TransferPackage) dataReceived).second).second);
                                         updatePlayerView();
                                         currentPlayerView.setButtonState(true);
                                         currentPlayerView.setEnabledBetButtons(true);
@@ -163,7 +165,9 @@ public class NetworkHelper implements Serializable {
                                 case ROLE_RECEIVED:
                                     player.setRole((Role) ((TransferPackage) dataReceived).second);
                                     try {
-                                        sendToClient(new Triplet<Signal, String, Player>(Signal.UPDATE_PLAYER, playerUUID, player), endpointId);
+                                        sendToClient(new TransferPackage<Duo>(
+                                                Signal.UPDATE_PLAYER,
+                                                new Duo<String, Player>(playerUUID, player)), endpointId);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -211,7 +215,9 @@ public class NetworkHelper implements Serializable {
                                     }
                                     try {
                                         player.resetFinancementRessource();
-                                        sendToClient(new Triplet<Signal, String, Player>(Signal.UPDATE_PLAYER, playerUUID, player), endpointId);
+                                        sendToClient(new TransferPackage<Duo>(
+                                                Signal.UPDATE_PLAYER,
+                                                new Duo<String, Player>(playerUUID, player)), endpointId);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -221,7 +227,9 @@ public class NetworkHelper implements Serializable {
                                 case GAME_OVER:
                                     currentGame = (Game) ((TransferPackage) dataReceived).second;
                                     try {
-                                        sendToClient(new Triplet<Signal, String, Player>(Signal.UPDATE_PLAYER, playerUUID, player), endpointId);
+                                        sendToClient(new TransferPackage<Duo>(
+                                                Signal.UPDATE_PLAYER,
+                                                new Duo<String, Player>(playerUUID, player)), endpointId);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -377,7 +385,9 @@ public class NetworkHelper implements Serializable {
                                     }
                                 }
                                 try {
-                                    sendToAllClients(new Duo<Signal, ArrayList<Building>>(Signal.CHECK_GOALS, newBuildings));
+                                    sendToAllClients(new TransferPackage<ArrayList<Building>>(
+                                            Signal.CHECK_GOALS,
+                                            newBuildings));
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -388,7 +398,9 @@ public class NetworkHelper implements Serializable {
                                     currentGame.refreshMarket();
                                     currentGame.incrTurn();
                                     try {
-                                        sendToAllClients(currentGame);
+                                        sendToAllClients(new TransferPackage<Game>(
+                                                Signal.GAME_RECEIVED,
+                                                currentGame));
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -396,7 +408,9 @@ public class NetworkHelper implements Serializable {
                                 }
                                 else {
                                     try {
-                                        sendToAllClients(new Duo<Signal, Game>(Signal.GAME_OVER, currentGame));
+                                        sendToAllClients(new TransferPackage<Game>(
+                                                Signal.GAME_OVER,
+                                                currentGame));
                                         JsonStats.giveContext(appContext);
                                         ArrayList<Player> endGamePlayerList = new ArrayList<Player>();
                                         for (int i = 0; i < playersInformations.size(); i++) {
@@ -563,7 +577,9 @@ public class NetworkHelper implements Serializable {
                             Log.i(TAG, "onConnectionResult: player");
                             PlayerConnexionActivity.setStatus("Connected");
                             try {
-                                sendToClient(new Duo<Player, String>(player, playerName), endpointId);
+                                sendToClient(new TransferPackage<Duo>(
+                                        Signal.NEW_CONNECTION,
+                                        new Duo<Player, String>(player, playerName)), endpointId);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -852,7 +868,7 @@ public class NetworkHelper implements Serializable {
             int randomIndex = 0;
             Payload data;
             for (int i = 0; i < listPlayer.size(); i++) {
-                data = Payload.fromBytes(SerializationHelper.serialize(srcData.get(i)));
+                data = Payload.fromBytes(SerializationHelper.serialize(new TransferPackage<Role>(Signal.ROLE_RECEIVED, srcData.get(i))));
                 connectionsClient
                         .sendPayload(listPlayer.get(i).second, data)
                         .addOnFailureListener(
