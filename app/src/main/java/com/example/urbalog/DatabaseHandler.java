@@ -90,14 +90,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     "FOREIGN KEY(" + BET_PLAYER_ID + ") REFERENCES " + PLAYER_TABLE_NAME + "(" + PLAYER_KEY + ")" +
                     ");";
 
-    // Tableau avec les valeurs par défault de la bdd
-    private final List<Pair<String, String>> baseActivity = Arrays.asList(
-            Pair.create("Picolo", "Brave, curious, and crafty, she has been prophesied by the witches to help the balance of life"),
-            Pair.create("Netflix", "Lyra's daemon, nicknamed Pan."),
-            Pair.create("Uber Eats", "Lyra's friends"),
-            Pair.create("Jeu", "Lyra's uncle")
-    );
-
     public DatabaseHandler(Context context) {
         super(context, DB_NAME, null, 1);
     }
@@ -260,12 +252,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return empty;
     }
-    
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(GAME_TABLE_NAME);
-        db.execSQL(PLAYER_TABLE_NAME);
-        db.execSQL(BET_TABLE_NAME);
+        db.execSQL(TABLE_GAME_CREATE);
+        db.execSQL(TABLE_PLAYER_CREATE);
+        db.execSQL(TABLE_BET_CREATE);
     }
 
     @Override

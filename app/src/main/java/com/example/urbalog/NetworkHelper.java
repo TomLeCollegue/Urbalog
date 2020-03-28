@@ -55,6 +55,7 @@ import java.util.Random;
 public class NetworkHelper implements Serializable {
     private Context appContext;
     private PlayerViewActivity currentPlayerView = null;
+    private DatabaseHandler db;
 
     private boolean advertising;
     private boolean discovering;
@@ -322,6 +323,7 @@ public class NetworkHelper implements Serializable {
                                                 sendToAllClients(new TransferPackage<Duo>(
                                                         Signal.MARKET_RECEIVED,
                                                         new Duo<Game, Market>(currentGame, currentGame.getMarket())));
+                                                logBet((Bet)((Duo)((TransferPackage) dataReceived).second).second);
                                             } catch (IOException e) {
                                                 e.printStackTrace();
                                             }
@@ -638,6 +640,7 @@ public class NetworkHelper implements Serializable {
     public void hostGame() {
         if (!discovering) {
             startAdvertising();
+            db = new DatabaseHandler(appContext);
         }
     }
 
@@ -902,5 +905,16 @@ public class NetworkHelper implements Serializable {
 
     public void setNB_PLAYERS(int NB_PLAYERS) {
         this.NB_PLAYERS = NB_PLAYERS;
+    }
+
+    public void logGameStart(){
+        db.insertGame(currentGame, NB_PLAYERS, NB_BUILDINGS);
+        for (int i = 0; i < playersInformations.size(); i++) {
+            db.insertPlayer(currentGame, playersInformations.get(i).getFirst());
+        }
+    }
+
+    public void logBet(Bet bet){
+        db.insertBet(bet, currentGame);
     }
 }

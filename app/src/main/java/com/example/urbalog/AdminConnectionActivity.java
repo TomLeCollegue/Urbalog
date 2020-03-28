@@ -110,6 +110,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
                                 Signal.GAME_RECEIVED,
                                 currentGame));
                         randomRoleAssignment();
+                        net.logGameStart();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
