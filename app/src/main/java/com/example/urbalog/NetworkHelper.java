@@ -420,7 +420,7 @@ public class NetworkHelper implements Serializable {
                                             endGamePlayerList.add(playersInformations.get(i).getFirst());
                                         }
                                         Log.d("debug", "ok");
-                                        JsonStats.writeGame(endGamePlayerList);
+                                        JsonStats.writeGame(endGamePlayerList, currentGame);
                                         gameStarted = false;
                                     } catch (IOException e) {
                                         e.printStackTrace();
