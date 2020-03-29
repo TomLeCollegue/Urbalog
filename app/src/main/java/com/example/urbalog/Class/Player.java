@@ -14,6 +14,7 @@ public class Player implements Serializable {
     private int score;
     private Role role;
     private Integer[][] financementRessource;
+    private long dbID;
 
     public Player(String name, int age, String job) {
         this.name = name;
@@ -21,6 +22,7 @@ public class Player implements Serializable {
         this.job = job;
         this.score = 0;
         this.role = null;
+        this.dbID = 0;
         this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
     }
 
@@ -30,6 +32,7 @@ public class Player implements Serializable {
         this.job = job;
         this.score = 0;
         this.role = role;
+        this.dbID = 0;
         this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
     }
 
@@ -39,6 +42,7 @@ public class Player implements Serializable {
         this.job = "";
         this.score = 0;
         this.role = role;
+        this.dbID = 0;
         this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
     }
 
@@ -100,6 +104,14 @@ public class Player implements Serializable {
 
     public void resetFinancementRessource() {
         this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
+    }
+
+    public long getDbID() {
+        return dbID;
+    }
+
+    public void setDbID(long dbID) {
+        this.dbID = dbID;
     }
 
     @NonNull

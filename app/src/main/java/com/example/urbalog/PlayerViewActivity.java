@@ -602,7 +602,7 @@ public class PlayerViewActivity extends AppCompatActivity {
     private void betFromButton(int numBuilding, int ressource, int Value){
 
         Role RoleInfo = PlayerConnexionActivity.net.getPlayer().getRole();
-        Building building= PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding);
+        Building building = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding);
         String valeurRessource;
         if (ressource == 0){
             valeurRessource = Ressource1;
@@ -616,7 +616,7 @@ public class PlayerViewActivity extends AppCompatActivity {
                 if(((Value == 1) && (RoleInfo.getTokenSocial() > 0)) && (building.getAvancementCoutSocial() < building.getCoutSocial())){
                     buttonState = false;
                     setEnabledBetButtons(buttonState);
-                    mise = new Bet(numBuilding, 0, 0, 1);
+                    mise = new Bet(building.getName(), numBuilding, 0, 0, 1, PlayerConnexionActivity.net.getPlayer().getDbID());
                     try {
                         PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
                                 Signal.BET_RECEIVED,
@@ -632,7 +632,7 @@ public class PlayerViewActivity extends AppCompatActivity {
                 else if ((Value == -1) && (building.getAvancementCoutSocial() > 0)) {
                     buttonState = false;
                     setEnabledBetButtons(buttonState);
-                    mise = new Bet(numBuilding, 0, 0, -1);
+                    mise = new Bet(building.getName(), numBuilding, 0, 0, -1, PlayerConnexionActivity.net.getPlayer().getDbID());
                     try {
                         PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
                                 Signal.BET_RECEIVED,
@@ -652,7 +652,7 @@ public class PlayerViewActivity extends AppCompatActivity {
             if(((Value == 1) && (RoleInfo.getTokenEconomical() > 0)) && (building.getAvancementCoutEconomique() < building.getCoutEconomique())){
                 buttonState = false;
                 setEnabledBetButtons(buttonState);
-                mise = new Bet(numBuilding, 0, 1, 0);
+                mise = new Bet(building.getName(), numBuilding, 0, 1, 0, PlayerConnexionActivity.net.getPlayer().getDbID());
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
                             Signal.BET_RECEIVED,
@@ -668,7 +668,7 @@ public class PlayerViewActivity extends AppCompatActivity {
             else if ((Value == -1)&&(building.getAvancementCoutEconomique() > 0)) {
                 buttonState = false;
                 setEnabledBetButtons(buttonState);
-                mise = new Bet(numBuilding, 0, -1, 0);
+                mise = new Bet(building.getName(), numBuilding, 0, -1, 0, PlayerConnexionActivity.net.getPlayer().getDbID());
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
                             Signal.BET_RECEIVED,
@@ -688,7 +688,7 @@ public class PlayerViewActivity extends AppCompatActivity {
             if(((Value == 1) && (RoleInfo.getTokenPolitical() > 0)) && (building.getAvancementCoutPolitique() < building.getCoutPolitique())){
                 buttonState = false;
                 setEnabledBetButtons(buttonState);
-                mise = new Bet(numBuilding, 1, 0, 0);
+                mise = new Bet(building.getName(), numBuilding, 1, 0, 0, PlayerConnexionActivity.net.getPlayer().getDbID());
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
                             Signal.BET_RECEIVED,
@@ -704,7 +704,7 @@ public class PlayerViewActivity extends AppCompatActivity {
             else if ((Value == -1)&&(building.getAvancementCoutPolitique() > 0)) {
                 buttonState = false;
                 setEnabledBetButtons(buttonState);
-                mise = new Bet(numBuilding, -1, 0, 0);
+                mise = new Bet(building.getName(), numBuilding, -1, 0, 0, PlayerConnexionActivity.net.getPlayer().getDbID());
                 try {
                     PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
                             Signal.BET_RECEIVED,

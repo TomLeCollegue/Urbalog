@@ -47,7 +47,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
         JsonStats.init(getApplicationContext());
         this.roles = JsonRole.readRole();
 
-        net = new NetworkHelper(this);
+        net = new NetworkHelper(this, true);
         net.setHost(true);
         setContentView(R.layout.activity_admin_connection);
 
@@ -110,6 +110,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
                                 Signal.GAME_RECEIVED,
                                 currentGame));
                         randomRoleAssignment();
+                        net.logGameStart();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

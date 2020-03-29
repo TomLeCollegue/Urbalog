@@ -16,6 +16,7 @@ public class Game implements Serializable {
     private City city;
     private List<Bet> listBet;
     private int nTurn;
+    private long dbID;
 
     public Game() {
         scoreLogistique = 0;
@@ -23,6 +24,7 @@ public class Game implements Serializable {
         scoreFluidite = 0;
         scoreEnvironnemental = 0;
         nTurn = 1;
+        dbID = 0;
         city = new City();
     }
 
@@ -99,6 +101,14 @@ public class Game implements Serializable {
     public void incrTurn()
     {
         nTurn++;
+    }
+
+    public long getDbID() {
+        return dbID;
+    }
+
+    public void setDbID(long dbID) {
+        this.dbID = dbID;
     }
 
     @Override

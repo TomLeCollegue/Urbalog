@@ -23,6 +23,7 @@ import com.example.urbalog.Class.Signal;
 import com.example.urbalog.Class.Duo;
 import com.example.urbalog.Class.TransferPackage;
 import com.example.urbalog.Class.Triplet;
+import com.example.urbalog.Database.DatabaseHandler;
 import com.example.urbalog.Json.JsonStats;
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
@@ -55,6 +56,7 @@ import java.util.Random;
 public class NetworkHelper implements Serializable {
     private Context appContext;
     private PlayerViewActivity currentPlayerView = null;
+    private DatabaseHandler db;
 
     private boolean advertising;
     private boolean discovering;
@@ -322,6 +324,7 @@ public class NetworkHelper implements Serializable {
                                                 sendToAllClients(new TransferPackage<Duo>(
                                                         Signal.MARKET_RECEIVED,
                                                         new Duo<Game, Market>(currentGame, currentGame.getMarket())));
+                                                logBet((Bet)((Duo)((TransferPackage) dataReceived).second).second);
                                             } catch (IOException e) {
                                                 e.printStackTrace();
                                             }
@@ -621,17 +624,20 @@ public class NetworkHelper implements Serializable {
                 }
             };
 
-    public NetworkHelper(Context c) {
+    public NetworkHelper(Context c, boolean mHost) {
         appContext = c;
         discovering = false;
         advertising = false;
-        host = false;
+        host = mHost;
         gameStarted = false;
         player = new Player(null);
         listPlayer = new ArrayList<>();
         playersInformations = new ArrayList<>();
         connectionsClient = Nearby.getConnectionsClient(c);
         playerUUID = UUIDHelper.id(appContext);
+
+        if(host)
+            db = new DatabaseHandler(appContext);
     }
 
     /** Finds an opponent to play the game with using Nearby Connections. */
@@ -777,6 +783,10 @@ public class NetworkHelper implements Serializable {
         this.currentPlayerView = currentPlayerView;
     }
 
+    public DatabaseHandler getDb() {
+        return db;
+    }
+
     public Player getPlayer() {
         return player;
     }
@@ -902,5 +912,16 @@ public class NetworkHelper implements Serializable {
 
     public void setNB_PLAYERS(int NB_PLAYERS) {
         this.NB_PLAYERS = NB_PLAYERS;
+    }
+
+    public void logGameStart(){
+        db.insertGame(currentGame, NB_PLAYERS, NB_BUILDINGS);
+        for (int i = 0; i < playersInformations.size(); i++) {
+            db.insertPlayer(currentGame, playersInformations.get(i).getFirst());
+        }
+    }
+
+    public void logBet(Bet bet){
+        db.insertBet(bet, currentGame);
     }
 }
