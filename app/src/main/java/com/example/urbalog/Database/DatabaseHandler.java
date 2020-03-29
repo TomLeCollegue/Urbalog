@@ -1,4 +1,4 @@
-package com.example.urbalog;
+package com.example.urbalog.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
