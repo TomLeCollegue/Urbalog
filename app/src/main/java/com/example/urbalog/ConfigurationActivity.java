@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Player;
 import com.example.urbalog.Json.JsonBuilding;
 import com.example.urbalog.Json.JsonStats;
@@ -93,7 +94,11 @@ public class ConfigurationActivity extends AppCompatActivity {
                 list.add(quatre);
                 Player cinq = new Player("Lucas", 26, "Sans emploi", null);
                 list.add(cinq);
-                JsonStats.writeGame(list);
+                Game game = new Game();
+                game.setScoreAttractivite(2);
+                game.setScoreFluidite(1);
+                game.setScoreEnvironnemental(-4);
+                JsonStats.writeGame(list, game);
                 Toast.makeText(ConfigurationActivity.this, "partie ajoutée", Toast.LENGTH_LONG).show();
             }
         });

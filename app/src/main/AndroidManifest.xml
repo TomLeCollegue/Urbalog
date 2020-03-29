@@ -18,15 +18,17 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EndTurnActivity"
-            android:screenOrientation="sensorLandscape">
-        </activity>
+        <activity android:name=".Stats.AverageScoreActivity"
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:name=".stats.NbPlayerByGameActivity"
+            android:name=".EndTurnActivity"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Stats.NbPlayerByGameActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".stats.PcsPercentActivity"
-            android:screenOrientation="sensorLandscape"/>
+            android:name=".Stats.PcsPercentActivity"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".StatsActivity"
             android:screenOrientation="sensorLandscape" />
@@ -38,13 +40,13 @@
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ConfigurationActivity"
-            android:screenOrientation="sensorLandscape"/>
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".LogisticActivity"
-            android:screenOrientation="sensorLandscape"/>
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".CityProgressionActivity"
-            android:screenOrientation="sensorLandscape"/>
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".EditBuildingActivity"
             android:screenOrientation="sensorLandscape" />
@@ -72,6 +74,7 @@
         <activity
             android:name=".EndGameActivity"
             android:screenOrientation="sensorLandscape" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

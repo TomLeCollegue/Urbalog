@@ -175,7 +175,7 @@
                         android:layout_gravity="center"
                         android:fontFamily="@font/caractere_l2"
                         android:onClick="scoreLog"
-                        android:text="Score Logistique de la ville" />
+                        android:text="ScoreLogistique de la ville" />
                 </FrameLayout>
 
             </LinearLayout>

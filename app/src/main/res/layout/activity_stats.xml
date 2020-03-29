@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.constraintlayout.motion.widget.MotionLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/lightPink"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/activity_stats_scene"
+    app:showPaths="false"
+    android:background="@color/lightPink"
+    tools:showPaths="true">
+
+
+<androidx.core.widget.NestedScrollView
+    android:id="@+id/recyclerView"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/header"
+    android:background="@color/lightPink">
 
     <LinearLayout
         android:orientation="vertical"
@@ -14,12 +30,11 @@
             android:id="@+id/pcsPercent"
             android:background="@drawable/button_style"
             android:text="Pourcentage pcs"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="0dp"
             android:layout_gravity="center"
             android:layout_width="250dp"
             android:layout_height="100dp">
         </Button>
-
 
         <Button
             android:id="@+id/nbPlayerGame"
@@ -31,6 +46,54 @@
             android:layout_height="100dp">
         </Button>
 
+        <Button
+            android:id="@+id/scoreGameStats"
+            android:background="@drawable/button_style"
+            android:text="Score"
+            android:layout_marginBottom="100dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:layout_width="250dp"
+            android:layout_height="100dp">
+        </Button>
+
+
     </LinearLayout>
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>
+
+    <com.github.florent37.shapeofview.shapes.ArcView
+        android:id="@+id/header"
+        android:background="@color/blue"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shape_arc_cropDirection="outside"
+        app:shape_arc_height="26dp"
+        app:shape_arc_position="bottom">
+
+
+    </com.github.florent37.shapeofview.shapes.ArcView>
+
+    <TextView
+        android:id="@+id/headerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="23sp"
+        android:gravity="center_vertical|left"
+        android:text="Statistiques"
+        android:shadowColor="#3E3E3E"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        android:textColor="@color/dark"
+        tools:ignore="MissingConstraints">
+    </TextView>
+
+
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

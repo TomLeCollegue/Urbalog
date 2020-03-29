@@ -1,39 +1,29 @@
-package com.example.urbalog.stats;
+package com.example.urbalog.Stats;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.example.urbalog.ConfigurationActivity;
 import com.example.urbalog.Json.JsonStats;
 import com.example.urbalog.R;
 import com.example.urbalog.StatsActivity;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.listener.OnChartGestureListener;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class NbPlayerByGameActivity extends AppCompatActivity{
 
@@ -46,12 +36,11 @@ public class NbPlayerByGameActivity extends AppCompatActivity{
         setContentView(R.layout.activity_nb_player_by_game);
 
         JsonStats.giveContext(this);
-        HashMap<String, Integer> nbPlayerByGame = JsonStats.getNumberPlayerByGame();
 
+        HashMap<Date, Integer> nbPlayerByGame = JsonStats.getNumberPlayerByGame();
+        Map<Date, Integer> nbPlayerByGameSorted = new TreeMap<Date, Integer>(nbPlayerByGame);
 
         mChart = (LineChart) findViewById(R.id.linechart);
-
-
         mChart.setDragEnabled(true);
         mChart.setScaleEnabled(true);
         mChart.setExtraOffsets(10, 10, 10, 10);
@@ -68,9 +57,10 @@ public class NbPlayerByGameActivity extends AppCompatActivity{
 
         ArrayList<Entry> yValues = new ArrayList<>();
 
-        for(Map.Entry<String, Integer> entry: nbPlayerByGame.entrySet()) {
+        for(Map.Entry<Date, Integer> entry: nbPlayerByGameSorted.entrySet()) {
             yValues.add(new Entry(i, entry.getValue()));
-            ar.add(entry.getKey());
+            String str = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(entry.getKey());
+            ar.add(str);
             i++;
         }
 

@@ -3,6 +3,7 @@ package com.example.urbalog.Class;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,6 +18,7 @@ public class Game implements Serializable {
     private List<Bet> listBet;
     private int nTurn;
     private long dbID;
+    private Date date;
 
     public Game() {
         scoreLogistique = 0;
@@ -26,8 +28,17 @@ public class Game implements Serializable {
         nTurn = 1;
         dbID = 0;
         city = new City();
+        date = new Date();
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    
     public int getScoreLogistique() {
         return scoreLogistique;
     }

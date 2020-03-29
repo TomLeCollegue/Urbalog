@@ -35,5 +35,8 @@ dependencies {
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
+    implementation 'com.github.florent37:shapeofview:1.4.4'
+
     implementation group: 'com.opencsv', name: 'opencsv', version: '4.1'
 }
