@@ -164,7 +164,7 @@ public class NetworkHelper implements Serializable {
                                     break;
 
                                 /* If host have send Role, used on game start for role attribution */
-                                case ROLE_RECEIVED:
+                                /*case ROLE_RECEIVED:
                                     player.setRole((Role) ((TransferPackage) dataReceived).second);
                                     try {
                                         sendToClient(new TransferPackage<Duo>(
@@ -173,6 +173,13 @@ public class NetworkHelper implements Serializable {
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
+                                    Intent intentPlayerView = new Intent(appContext, PlayerViewActivity.class);
+                                    appContext.startActivity(intentPlayerView);
+                                    break;*/
+                                /* If host have send Player, used on game start for role attribution */
+                                case UPDATE_PLAYER:
+                                    player = (Player)((TransferPackage) dataReceived).second;
+
                                     Intent intentPlayerView = new Intent(appContext, PlayerViewActivity.class);
                                     appContext.startActivity(intentPlayerView);
                                     break;
@@ -878,7 +885,13 @@ public class NetworkHelper implements Serializable {
             int randomIndex = 0;
             Payload data;
             for (int i = 0; i < listPlayer.size(); i++) {
-                data = Payload.fromBytes(SerializationHelper.serialize(new TransferPackage<Role>(Signal.ROLE_RECEIVED, srcData.get(i))));
+                playersInformations.get(i).getFirst().setRole(srcData.get(i));
+                db.insertPlayer(currentGame, playersInformations.get(i).getFirst());
+                data = Payload.fromBytes(SerializationHelper.serialize(
+                        new TransferPackage<Player>(
+                                Signal.UPDATE_PLAYER,
+                                playersInformations.get(i).getFirst()
+                                )));
                 connectionsClient
                         .sendPayload(listPlayer.get(i).second, data)
                         .addOnFailureListener(
@@ -914,14 +927,20 @@ public class NetworkHelper implements Serializable {
         this.NB_PLAYERS = NB_PLAYERS;
     }
 
-    public void logGameStart(){
-        db.insertGame(currentGame, NB_PLAYERS, NB_BUILDINGS);
-        for (int i = 0; i < playersInformations.size(); i++) {
-            db.insertPlayer(currentGame, playersInformations.get(i).getFirst());
-        }
+    private void logBet(Bet bet){
+        db.insertBet(bet, currentGame);
     }
 
-    public void logBet(Bet bet){
-        db.insertBet(bet, currentGame);
+    public void startGame(ArrayList<Role> roles){
+        try {
+            sendToAllClients(new TransferPackage<Game>(
+                    Signal.GAME_RECEIVED,
+                    currentGame)
+            );
+            db.insertGame(currentGame, NB_PLAYERS, NB_BUILDINGS);
+            sendRandomRoleToAllClients(roles);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

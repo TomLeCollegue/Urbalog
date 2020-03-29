@@ -12,6 +12,7 @@ public enum Signal implements Serializable {
     GAME_RECEIVED,
     ROLE_RECEIVED,
     RESTART_GAME,
+    START_GAME,
 
     NEXT_TURN,
     CANCEL_NEXT_TURN,

@@ -105,15 +105,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
                     currentGame = new Game();
                     currentGame.setMarket(new Market());
                     net.setCurrentGame(currentGame);
-                    try {
-                        net.sendToAllClients(new TransferPackage<Game>(
-                                Signal.GAME_RECEIVED,
-                                currentGame));
-                        randomRoleAssignment();
-                        net.logGameStart();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    net.startGame(roles);
                 }
             }
         });
@@ -147,13 +139,5 @@ public class AdminConnectionActivity extends AppCompatActivity {
     public void updateStatus(String s)
     {
         tStatus.setText(s);
-    }
-
-    public void randomRoleAssignment() {
-        try {
-            net.sendRandomRoleToAllClients(roles);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

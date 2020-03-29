@@ -135,6 +135,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         v.put(PLAYER_AGE, player.getAge());
         v.put(PLAYER_JOB, player.getJob());
         v.put(PLAYER_SCORE, 0);
+        v.put(PLAYER_ROLE, player.getRole().getTypeRole());
         v.put(PLAYER_GAME_ID, game.getDbID());
         long res = db.insert(PLAYER_TABLE_NAME, null, v);
 
