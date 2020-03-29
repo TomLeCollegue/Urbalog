@@ -206,8 +206,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         c.close();
 
         for (String table : tables) {
-            String dropQuery = "DROP TABLE IF EXISTS " + table;
-            db.execSQL(dropQuery);
+            if(table.equals(GAME_TABLE_NAME) || table.equals(PLAYER_TABLE_NAME) || table.equals(BET_TABLE_NAME)) {
+                String dropQuery = "DROP TABLE IF EXISTS " + table;
+                db.execSQL(dropQuery);
+            }
         }
     }
 
