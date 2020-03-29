@@ -61,7 +61,7 @@
                         android:layout_gravity="center"
                         android:fontFamily="@font/caractere_l2"
                         android:gravity="center"
-                        android:text="Score Logistique de la ville" />
+                        android:text="ScoreLogistique de la ville" />
 
                     <ImageView
                         android:id="@+id/LogisticIcon"

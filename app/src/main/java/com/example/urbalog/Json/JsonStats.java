@@ -71,10 +71,10 @@ public class JsonStats {
                 "  \"games\": [\n" +
                 "    {\n" +
                 "      \"date\": \"Wed Mar 25 10:35:27 GMT+01:00 2020\",\n" +
-                "      \"Score Logistique\": 0,\n" +
-                "      \"Score Attractivite\": 2,\n" +
-                "      \"Score Fluidite\": 1,\n" +
-                "      \"Score Environnemental\": -4,\n" +
+                "      \"Score Logistique\": 2,\n" +
+                "      \"Score Attractivite\": 3,\n" +
+                "      \"Score Fluidite\": 4,\n" +
+                "      \"Score Environnemental\": 0,\n" +
                 "      \"players\": [\n" +
                 "        {\n" +
                 "          \"name\": \"Laurent\",\n" +
@@ -90,7 +90,7 @@ public class JsonStats {
                 "    },\n" +
                 "    {\n" +
                 "      \"date\": \"Thu Mar 26 21:16:00 GMT+01:00 2020\",\n" +
-                "      \"Score Logistique\": 0,\n" +
+                "      \"Score Logistique\": -1,\n" +
                 "      \"Score Attractivite\": 2,\n" +
                 "      \"Score Fluidite\": 1,\n" +
                 "      \"Score Environnemental\": -4,\n" +
@@ -124,8 +124,8 @@ public class JsonStats {
                 "    },\n" +
                 "    {\n" +
                 "      \"date\": \"Thu Mar 26 21:17:14 GMT+01:00 2020\",\n" +
-                "      \"Score Logistique\": 0,\n" +
-                "      \"Score Attractivite\": 2,\n" +
+                "      \"Score Logistique\": 5,\n" +
+                "      \"Score Attractivite\": -1,\n" +
                 "      \"Score Fluidite\": 1,\n" +
                 "      \"Score Environnemental\": -4,\n" +
                 "      \"players\": [\n" +
@@ -277,6 +277,114 @@ public class JsonStats {
     }
 
 
+    public static HashMap<Date, Integer> getScoreLogistiqueByGame(){
+        Log.d("debug", "getScoreLogistiqueByGame...");
+        HashMap<Date, Integer> res = new HashMap<>();
+        String jsonText = null;
+        JSONObject jsonRoot = null;
+        JSONArray jsonGames = null;
+        JSONObject jsonGame = null;
+        Date date = null;
+        String sDate = null;
+        int nbScore;
+        try {
+            jsonText = readText();
+            jsonRoot = new JSONObject(jsonText);
+            jsonGames = jsonRoot.getJSONArray("games");
+            for(int i=0; i<jsonGames.length(); i++) {
+                jsonGame = (JSONObject) jsonGames.get(i);
+                sDate = (String) jsonGame.get("date");
+                date = new Date(sDate);
+                nbScore = Integer.parseInt(jsonGame.get("Score Logistique").toString());
+                res.put(date, nbScore);
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public static HashMap<Date, Integer> getScoreAttractiviteByGame(){
+        Log.d("debug", "getScoreAttractiviteByGame...");
+        HashMap<Date, Integer> res = new HashMap<>();
+        String jsonText = null;
+        JSONObject jsonRoot = null;
+        JSONArray jsonGames = null;
+        JSONObject jsonGame = null;
+        Date date = null;
+        String sDate = null;
+        int nbScore;
+        try {
+            jsonText = readText();
+            jsonRoot = new JSONObject(jsonText);
+            jsonGames = jsonRoot.getJSONArray("games");
+            for(int i=0; i<jsonGames.length(); i++) {
+                jsonGame = (JSONObject) jsonGames.get(i);
+                sDate = (String) jsonGame.get("date");
+                date = new Date(sDate);
+                nbScore = Integer.parseInt(jsonGame.get("Score Attractivite").toString());
+                res.put(date, nbScore);
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public static HashMap<Date, Integer> getScoreFluiditeByGame(){
+        Log.d("debug", "getScoreFluiditeByGame...");
+        HashMap<Date, Integer> res = new HashMap<>();
+        String jsonText = null;
+        JSONObject jsonRoot = null;
+        JSONArray jsonGames = null;
+        JSONObject jsonGame = null;
+        Date date = null;
+        String sDate = null;
+        int nbScore;
+        try {
+            jsonText = readText();
+            jsonRoot = new JSONObject(jsonText);
+            jsonGames = jsonRoot.getJSONArray("games");
+            for(int i=0; i<jsonGames.length(); i++) {
+                jsonGame = (JSONObject) jsonGames.get(i);
+                sDate = (String) jsonGame.get("date");
+                date = new Date(sDate);
+                nbScore = Integer.parseInt(jsonGame.get("Score Fluidite").toString());
+                res.put(date, nbScore);
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public static HashMap<Date, Integer> getScoreEnvironnementalByGame(){
+        Log.d("debug", "getScoreLogistiqueByGame...");
+        HashMap<Date, Integer> res = new HashMap<>();
+        String jsonText = null;
+        JSONObject jsonRoot = null;
+        JSONArray jsonGames = null;
+        JSONObject jsonGame = null;
+        Date date = null;
+        String sDate = null;
+        int nbScore;
+        try {
+            jsonText = readText();
+            jsonRoot = new JSONObject(jsonText);
+            jsonGames = jsonRoot.getJSONArray("games");
+            for(int i=0; i<jsonGames.length(); i++) {
+                jsonGame = (JSONObject) jsonGames.get(i);
+                sDate = (String) jsonGame.get("date");
+                date = new Date(sDate);
+                nbScore = Integer.parseInt(jsonGame.get("Score Environnemental").toString());
+                res.put(date, nbScore);
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
     public static HashMap<Date, Integer> getNumberPlayerByGame(){
         Log.d("debug", "getNumberPlayerByGame2...");
         HashMap<Date, Integer> res = new HashMap<>();
@@ -380,9 +488,4 @@ public class JsonStats {
     }
     
 
-
-    //TODO
-    public static int getMoyenneAge(){
-        return 1;
-    }
 }

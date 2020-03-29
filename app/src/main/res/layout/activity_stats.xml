@@ -47,22 +47,16 @@
         </Button>
 
         <Button
+            android:id="@+id/scoreGameStats"
             android:background="@drawable/button_style"
-            android:text="test"
+            android:text="Score"
+            android:layout_marginBottom="100dp"
             android:layout_marginTop="50dp"
             android:layout_gravity="center"
             android:layout_width="250dp"
             android:layout_height="100dp">
         </Button>
 
-        <Button
-            android:background="@drawable/button_style"
-            android:text="test"
-            android:layout_marginTop="50dp"
-            android:layout_gravity="center"
-            android:layout_width="250dp"
-            android:layout_height="100dp">
-        </Button>
 
     </LinearLayout>
 

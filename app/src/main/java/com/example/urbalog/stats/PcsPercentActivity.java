@@ -1,15 +1,11 @@
-package com.example.urbalog.stats;
+package com.example.urbalog.Stats;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
-import com.example.urbalog.ConfigurationActivity;
 import com.example.urbalog.Json.JsonStats;
 import com.example.urbalog.R;
 import com.example.urbalog.StatsActivity;
