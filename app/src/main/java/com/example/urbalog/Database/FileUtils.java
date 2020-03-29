@@ -10,7 +10,7 @@ import java.io.File;
 public class FileUtils {
 
     public static String getAppDir(Context c){
-        return c.getExternalFilesDir(null) + "/" + c.getString(R.string.app_name);
+        return c.getApplicationInfo().dataDir;
     }
 
     public static File createDirIfNotExist(String path){

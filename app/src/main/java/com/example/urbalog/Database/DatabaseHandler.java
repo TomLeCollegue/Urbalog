@@ -12,6 +12,7 @@ import com.example.urbalog.Class.Bet;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Player;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -90,8 +91,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     "FOREIGN KEY(" + BET_PLAYER_ID + ") REFERENCES " + PLAYER_TABLE_NAME + "(" + PLAYER_KEY + ")" +
                     ");";
 
+    private Context appContext;
+
     public DatabaseHandler(Context context) {
         super(context, DB_NAME, null, 1);
+        this.appContext = context;
     }
 
     /**
@@ -251,6 +255,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         mCursor.close();
 
         return empty;
+    }
+
+    public void exportDbToCSV(){
+        try {
+            SqliteExporter.export(this.getWritableDatabase(), appContext);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

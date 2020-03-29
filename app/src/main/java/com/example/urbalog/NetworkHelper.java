@@ -624,24 +624,26 @@ public class NetworkHelper implements Serializable {
                 }
             };
 
-    public NetworkHelper(Context c) {
+    public NetworkHelper(Context c, boolean mHost) {
         appContext = c;
         discovering = false;
         advertising = false;
-        host = false;
+        host = mHost;
         gameStarted = false;
         player = new Player(null);
         listPlayer = new ArrayList<>();
         playersInformations = new ArrayList<>();
         connectionsClient = Nearby.getConnectionsClient(c);
         playerUUID = UUIDHelper.id(appContext);
+
+        if(host)
+            db = new DatabaseHandler(appContext);
     }
 
     /** Finds an opponent to play the game with using Nearby Connections. */
     public void hostGame() {
         if (!discovering) {
             startAdvertising();
-            db = new DatabaseHandler(appContext);
         }
     }
 
@@ -779,6 +781,10 @@ public class NetworkHelper implements Serializable {
 
     public void setCurrentPlayerView(PlayerViewActivity currentPlayerView) {
         this.currentPlayerView = currentPlayerView;
+    }
+
+    public DatabaseHandler getDb() {
+        return db;
     }
 
     public Player getPlayer() {

@@ -39,7 +39,7 @@ public class SqliteExporter {
         if( !FileUtils.isExternalStorageWritable() ){
             throw new IOException("Cannot write to external storage");
         }
-        File backupDir = FileUtils.createDirIfNotExist(FileUtils.getAppDir(appContext) + "/backup");
+        File backupDir = FileUtils.createDirIfNotExist(FileUtils.getAppDir(appContext) + "/databases");
         String fileName = createBackupFileName();
         File backupFile = new File(backupDir, fileName);
         boolean success = backupFile.createNewFile();

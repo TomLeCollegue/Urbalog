@@ -28,7 +28,7 @@ public class PlayerConnexionActivity extends AppCompatActivity {
         this.name = (TextView) findViewById(R.id.player_name);
         tStatus = (TextView) findViewById(R.id.textStatus);
 
-        net = new NetworkHelper(this);
+        net = new NetworkHelper(this, false);
         net.setHost(false);
         net.setPlayer((Player) getIntent().getSerializableExtra("player"));
 

@@ -16,7 +16,7 @@ public class Host {
     public Host() {
         this.players = new ArrayList<Player>();
         this.games = new ArrayList<Game>();
-        this.netHelp = new NetworkHelper(appContext);
+        this.netHelp = new NetworkHelper(appContext, true);
     }
 
     public ArrayList<Player> getPlayers() {

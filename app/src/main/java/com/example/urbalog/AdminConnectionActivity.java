@@ -47,7 +47,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
         JsonStats.init(getApplicationContext());
         this.roles = JsonRole.readRole();
 
-        net = new NetworkHelper(this);
+        net = new NetworkHelper(this, true);
         net.setHost(true);
         setContentView(R.layout.activity_admin_connection);
 
