@@ -55,9 +55,11 @@ import java.util.Random;
 
 public class NetworkHelper implements Serializable {
     private Context appContext;
-    private PlayerViewActivity currentPlayerView = null;
     private DatabaseHandler db;
     private CountDownTimerHandler timer;
+
+    private PlayerViewActivity currentPlayerView = null;
+    private CityProgressionActivity currentAdminView = null;
 
     private boolean advertising;
     private boolean discovering;
@@ -484,6 +486,8 @@ public class NetworkHelper implements Serializable {
                                         e.printStackTrace();
                                     }
                                     nextTurnVotes = 0;
+                                    /*if(currentAdminView != null)
+                                        currentAdminView.updateView();*/
                                 }
                                 else {
                                     try {
@@ -886,6 +890,14 @@ public class NetworkHelper implements Serializable {
 
     public void setCurrentPlayerView(PlayerViewActivity currentPlayerView) {
         this.currentPlayerView = currentPlayerView;
+    }
+
+    public CityProgressionActivity getCurrentAdminView() {
+        return currentAdminView;
+    }
+
+    public void setCurrentAdminView(CityProgressionActivity currentAdminView) {
+        this.currentAdminView = currentAdminView;
     }
 
     public DatabaseHandler getDb() {

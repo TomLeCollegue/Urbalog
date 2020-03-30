@@ -210,11 +210,7 @@ public class PlayerViewActivity extends AppCompatActivity {
         textTraficBuilding4 = (TextView) findViewById(R.id.text_trafic_building_4);
         textTraficBuilding5 = (TextView) findViewById(R.id.text_trafic_building_5);
 
-
         bTurn = (Button) findViewById(R.id.button_turn);
-
-
-
 
         textNameBuilding1 = (Button) findViewById(R.id.text_name_building_1);
         textNameBuilding2 = (Button) findViewById(R.id.text_name_building_2);
@@ -295,8 +291,7 @@ public class PlayerViewActivity extends AppCompatActivity {
                 }
             }
         });
-
-
+        fillInfosView();
     }
 
     @Override

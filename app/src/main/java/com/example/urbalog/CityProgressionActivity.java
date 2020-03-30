@@ -18,6 +18,7 @@ public class CityProgressionActivity extends AppCompatActivity {
 
     private ArrayList<Building> buildings = new ArrayList<Building>();
     private RecyclerView rv;
+    private CityProgressionAdapter mProgressionAdapter;
     private TextView turnNumber;
 
     private TextView textAttractivityScore;
@@ -42,10 +43,18 @@ public class CityProgressionActivity extends AppCompatActivity {
         rv = (RecyclerView) findViewById(R.id.recyclerListBuildingsInCity);
         rv.setLayoutManager(new LinearLayoutManager(CityProgressionActivity.this,LinearLayoutManager.VERTICAL,false));
 
-        CityProgressionAdapter mProgressionAdapter = new CityProgressionAdapter(buildings);
+        mProgressionAdapter = new CityProgressionAdapter(buildings);
         rv.setAdapter(mProgressionAdapter);
 
         turnNumber = (TextView) findViewById(R.id.text_turnNumber);
         turnNumber.setText("Tour n°"+AdminConnectionActivity.net.getCurrentGame().getnTurn());
+
+        AdminConnectionActivity.net.setCurrentAdminView(this);
+    }
+
+    public void updateView(){
+        buildings = AdminConnectionActivity.net.getCurrentGame().getCity().getBuildings();
+        mProgressionAdapter.updateData(buildings);
+        rv.setAdapter(mProgressionAdapter);
     }
 }

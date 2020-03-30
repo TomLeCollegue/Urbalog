@@ -12,6 +12,7 @@ import com.example.urbalog.Class.Building;
 import com.example.urbalog.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CityProgressionAdapter extends RecyclerView.Adapter<CityProgressionAdapter.MyViewHolder> {
 
@@ -65,5 +66,11 @@ public class CityProgressionAdapter extends RecyclerView.Adapter<CityProgression
             bAttractivenessScore.setText(String.valueOf(building.getEffetAttractivite()));
             bDescription.setText(building.getDescription());
         }
+    }
+
+    public void updateData(ArrayList data) {
+        buildings.clear();
+        buildings.addAll(data);
+        this.notifyDataSetChanged();
     }
 }
