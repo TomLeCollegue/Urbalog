@@ -71,10 +71,6 @@ public class PlayerViewActivity extends AppCompatActivity {
     private Button textNameBuilding4;
     private Button textNameBuilding5;
 
-    private TextView textScoreCityEnvi;
-    private TextView textScoreCityTrafic;
-    private TextView textScoreCityAttract;
-    private TextView textScore;
     private Button bTurn;
     private boolean nextTurn;
 
@@ -101,7 +97,6 @@ public class PlayerViewActivity extends AppCompatActivity {
     private Button buttonPlusTop;
     private Button buttonPlusBot;
 
-    private Button buttonCityState;
 
     private TextView textScorePlayer;
 
@@ -215,13 +210,11 @@ public class PlayerViewActivity extends AppCompatActivity {
         textTraficBuilding4 = (TextView) findViewById(R.id.text_trafic_building_4);
         textTraficBuilding5 = (TextView) findViewById(R.id.text_trafic_building_5);
 
-        textScoreCityEnvi = (TextView) findViewById(R.id.text_score_city_envi);
-        textScoreCityAttract = (TextView) findViewById(R.id.text_score_city_attract);
-        textScoreCityTrafic = (TextView) findViewById(R.id.text_score_city_trafic);
-        bTurn = (Button) findViewById(R.id.button_turn);
-        buttonCityState = (Button)findViewById(R.id.button_etat_de_la_ville);
 
-        textScore = (TextView) findViewById(R.id.text_score);
+        bTurn = (Button) findViewById(R.id.button_turn);
+
+
+
 
         textNameBuilding1 = (Button) findViewById(R.id.text_name_building_1);
         textNameBuilding2 = (Button) findViewById(R.id.text_name_building_2);
@@ -303,14 +296,7 @@ public class PlayerViewActivity extends AppCompatActivity {
             }
         });
 
-        buttonCityState.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent cityIntent = new Intent(PlayerViewActivity.this, CityProgressionActivity.class);
-                startActivity(cityIntent);
-            }
-        });
-        fillInfosView();
+
     }
 
     @Override
@@ -389,12 +375,9 @@ public class PlayerViewActivity extends AppCompatActivity {
         textPoliticalResssourcesBuilding4.setText(Building4.getAvancementCoutPolitique() + "/" + Building4.getCoutPolitique());
         textPoliticalResssourcesBuilding5.setText(Building5.getAvancementCoutPolitique() + "/" + Building5.getCoutPolitique());
 
-        textScoreCityAttract.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreAttractivite()));
-        textScoreCityEnvi.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreEnvironnemental()));
-        textScoreCityTrafic.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreFluidite()));
+
 
         textScorePlayer.setText("Score : " + PlayerConnexionActivity.net.getPlayer().getScore());
-        textScore.setText("Tour n°"+PlayerConnexionActivity.net.getCurrentGame().getnTurn());
 
         colorRessources();
     }
