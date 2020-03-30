@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class Duo<F, S> implements Serializable {
     public final F first;
-    public final S second;
+    public S second;
 
     public Duo(F s, S o)
     {
