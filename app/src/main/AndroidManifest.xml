@@ -18,11 +18,17 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Stats.AverageScoreActivity"
-            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".TimerUpdateActivity"
+            android:screenOrientation="sensorLandscape"/>
+
+
+        <activity
+            android:name=".Stats.AverageScoreActivity"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".EndTurnActivity"
-            android:screenOrientation="sensorLandscape"></activity>
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".Stats.NbPlayerByGameActivity"
             android:screenOrientation="sensorLandscape" />

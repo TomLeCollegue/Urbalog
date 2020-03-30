@@ -26,6 +26,7 @@ public class ConfigurationActivity extends AppCompatActivity {
     private Button initStats;
     private Button resetDb;
     private Button exportCsv;
+    private Button updateTimer;
     private Context mContext;
 
     @Override
@@ -43,6 +44,7 @@ public class ConfigurationActivity extends AppCompatActivity {
         initStats = (Button) findViewById(R.id.initStats);
         resetDb = (Button) findViewById(R.id.resetDb);
         exportCsv = (Button) findViewById(R.id.exportCsv);
+        updateTimer = (Button) findViewById(R.id.updateTimer);
 
         modificationBuilding.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +128,16 @@ public class ConfigurationActivity extends AppCompatActivity {
                 Toast.makeText(ConfigurationActivity.this, "Base de donnée exportée", Toast.LENGTH_LONG).show();
             }
         });
+
+        updateTimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ConfigurationActivity.this, TimerUpdateActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
 
 
     }
