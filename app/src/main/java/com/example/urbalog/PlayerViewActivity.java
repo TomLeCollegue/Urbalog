@@ -612,7 +612,7 @@ public class PlayerViewActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                else if ((Value == -1) && (building.getAvancementCoutSocial() > 0)) {
+                else if ((Value == -1) && (building.getAvancementCoutSocial() > 0) && (financementRessource[numBuilding][ressource] != 0)) {
                     buttonState = false;
                     setEnabledBetButtons(buttonState);
                     mise = new Bet(building.getName(), numBuilding, 0, 0, -1, PlayerConnexionActivity.net.getPlayer().getDbID());
@@ -648,7 +648,7 @@ public class PlayerViewActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            else if ((Value == -1)&&(building.getAvancementCoutEconomique() > 0)) {
+            else if ((Value == -1)&&(building.getAvancementCoutEconomique() > 0) && (financementRessource[numBuilding][ressource] != 0)) {
                 buttonState = false;
                 setEnabledBetButtons(buttonState);
                 mise = new Bet(building.getName(), numBuilding, 0, -1, 0, PlayerConnexionActivity.net.getPlayer().getDbID());
@@ -684,7 +684,7 @@ public class PlayerViewActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            else if ((Value == -1)&&(building.getAvancementCoutPolitique() > 0)) {
+            else if ((Value == -1)&&(building.getAvancementCoutPolitique() > 0) && (financementRessource[numBuilding][ressource] != 0)) {
                 buttonState = false;
                 setEnabledBetButtons(buttonState);
                 mise = new Bet(building.getName(), numBuilding, -1, 0, 0, PlayerConnexionActivity.net.getPlayer().getDbID());
