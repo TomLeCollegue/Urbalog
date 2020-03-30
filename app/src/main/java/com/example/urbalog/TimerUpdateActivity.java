@@ -30,8 +30,7 @@ public class TimerUpdateActivity extends AppCompatActivity {
             finish = false;
         }
 
-        if(finish == true) {
-            numberUpdateTimer.setText(String.valueOf(AdminConnectionActivity.net.getTURN_TIME()));
+        if(finish) {
             AdminConnectionActivity.net.setTURN_TIME(Integer.parseInt(finalTime));
             Toast.makeText(this, "Le temps de mise a été mis a jour", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(TimerUpdateActivity.this, ConfigurationActivity.class);
@@ -44,6 +43,5 @@ public class TimerUpdateActivity extends AppCompatActivity {
         Intent intent = new Intent(TimerUpdateActivity.this, ConfigurationActivity.class);
         startActivity(intent);
         finish();
-        return;
     }
 }
