@@ -37,6 +37,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
     private Game currentGame;
 
     private Spinner spinnerPlayer;
+    private Button lancerVue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
         this.bStop = (Button)findViewById(R.id.stopButton);
         tPlayers = (TextView) findViewById(R.id.nbPlayer);
         this.tStatus = (TextView) findViewById(R.id.statusText);
+        this.lancerVue = (Button) findViewById(R.id.vue_admin);
 
         spinnerPlayer = (Spinner) findViewById(R.id.spinnerNBplayer);
 
@@ -126,6 +128,15 @@ public class AdminConnectionActivity extends AppCompatActivity {
                 Intent intent = new Intent(AdminConnectionActivity.this, ConfigurationActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+
+        lancerVue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cityIntent = new Intent(AdminConnectionActivity.this, CityProgressionActivity.class);
+                startActivity(cityIntent);
             }
         });
 
