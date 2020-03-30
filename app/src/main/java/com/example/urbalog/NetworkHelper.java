@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.Editable;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -65,7 +66,7 @@ public class NetworkHelper implements Serializable {
     private static int NB_PLAYERS = 5;
     private static int NB_BUILDINGS = 3;
 
-    private int TURN_TIME;
+    private int TURN_TIME = 0;
 
     private Game currentGame;
     private boolean gameStarted;
@@ -953,4 +954,5 @@ public class NetworkHelper implements Serializable {
             e.printStackTrace();
         }
     }
+
 }
