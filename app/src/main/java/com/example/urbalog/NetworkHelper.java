@@ -510,7 +510,7 @@ public class NetworkHelper implements Serializable {
                                     }
                                 }
                             }
-                            else if(nextTurnVotes == NB_PLAYERS-1){
+                            else if(nextTurnVotes == NB_PLAYERS-1 && NB_PLAYERS != 1){
                                 // Launch turn timer for last player
                                 for (int i = 0; i < playersVotes.size(); i++) {
                                     if(!playersVotes.get(i).second){
