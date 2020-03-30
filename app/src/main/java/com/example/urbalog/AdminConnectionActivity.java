@@ -2,6 +2,7 @@ package com.example.urbalog;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -48,8 +49,10 @@ public class AdminConnectionActivity extends AppCompatActivity {
         JsonStats.init(getApplicationContext());
         this.roles = JsonRole.readRole();
 
-        net = new NetworkHelper(this, true);
-        net.setHost(true);
+        if(net == null) {
+            net = new NetworkHelper(this, true);
+            net.setHost(true);
+        }
         setContentView(R.layout.activity_admin_connection);
 
         this.bHost = (Button)findViewById(R.id.hostButton);
@@ -101,10 +104,11 @@ public class AdminConnectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(net.getListPlayer().size() == NetworkHelper.getNbPlayers()) {
+                    Log.i("Urbalog", "Turn game: " + net.getTURN_TIME());
                     bPlay.setEnabled(false);
                     configurationButton.setEnabled(false);
                     net.setGameStarted(true);
-                    currentGame = new Game();
+                    currentGame = net.getCurrentGame();
                     currentGame.setMarket(new Market());
                     net.setCurrentGame(currentGame);
                     net.startGame(roles);
@@ -127,7 +131,6 @@ public class AdminConnectionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(AdminConnectionActivity.this, ConfigurationActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
 

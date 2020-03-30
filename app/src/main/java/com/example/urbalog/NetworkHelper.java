@@ -69,7 +69,7 @@ public class NetworkHelper implements Serializable {
     private static int NB_PLAYERS = 5;
     private static int NB_BUILDINGS = 3;
 
-    private int TURN_TIME = 0;
+    private int TURN_TIME = 60;
 
     private Game currentGame;
     private boolean gameStarted;
@@ -270,7 +270,7 @@ public class NetworkHelper implements Serializable {
                         else if(dataReceived instanceof Signal) {
                             switch ((Signal) dataReceived) {
                                 case START_TIMER:
-                                    timer = new CountDownTimerHandler(5 * 1000, new CountDownTimerHandler.TimerTickListener() {
+                                    timer = new CountDownTimerHandler(currentGame.getTurnDur() * 1000, new CountDownTimerHandler.TimerTickListener() {
                                         @Override
                                         public void onTick(long millisLeft) {
                                             // Unused
@@ -740,6 +740,7 @@ public class NetworkHelper implements Serializable {
         discovering = false;
         advertising = false;
         host = mHost;
+        currentGame = new Game();
         gameStarted = false;
         player = new Player(null);
         listPlayer = new ArrayList<>();
@@ -894,12 +895,15 @@ public class NetworkHelper implements Serializable {
     public void setCurrentPlayerView(PlayerViewActivity currentPlayerView) {
         this.currentPlayerView = currentPlayerView;
     }
+
     public int getTURN_TIME() {
         return TURN_TIME;
     }
 
-    public void setTURN_TIME(int TURN_TIME) {
-        this.TURN_TIME = TURN_TIME;
+    public void setTURN_TIME(int time) {
+        TURN_TIME = time;
+        Log.i(TAG, "Turn set time: " + time);
+        Log.i(TAG, "Turn set TURN: " + TURN_TIME);
     }
 
     public CityProgressionActivity getCurrentAdminView() {
@@ -1067,6 +1071,10 @@ public class NetworkHelper implements Serializable {
 
     public void startGame(ArrayList<Role> roles){
         try {
+            Log.i(TAG, "Turn before: " + TURN_TIME);
+            currentGame.setTurnDur(TURN_TIME);
+            Log.i(TAG, "Turn after : " + TURN_TIME);
+            Log.i(TAG, "Turn game : " + currentGame.getTurnDur());
             sendToAllClients(new TransferPackage<Game>(
                     Signal.GAME_RECEIVED,
                     currentGame)

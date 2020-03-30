@@ -1,5 +1,7 @@
 package com.example.urbalog.Class;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
@@ -17,6 +19,7 @@ public class Game implements Serializable {
     private City city;
     private List<Bet> listBet;
     private int nTurn;
+    private int turnDur;
     private long dbID;
     private Date date;
 
@@ -26,6 +29,7 @@ public class Game implements Serializable {
         scoreFluidite = 0;
         scoreEnvironnemental = 0;
         nTurn = 1;
+        turnDur = 60;
         dbID = 0;
         city = new City();
         date = new Date();
@@ -120,6 +124,15 @@ public class Game implements Serializable {
 
     public void setDbID(long dbID) {
         this.dbID = dbID;
+    }
+
+    public int getTurnDur() {
+        return turnDur;
+    }
+
+    public void setTurnDur(int turnDur) {
+        this.turnDur = turnDur;
+        Log.i("Urbalog", "Turn game: " + turnDur);
     }
 
     @Override

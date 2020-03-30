@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -30,9 +31,9 @@ public class TimerUpdateActivity extends AppCompatActivity {
             finish = false;
         }
 
-        if(finish == true) {
-            numberUpdateTimer.setText(String.valueOf(AdminConnectionActivity.net.getTURN_TIME()));
+        if(finish) {
             AdminConnectionActivity.net.setTURN_TIME(Integer.parseInt(finalTime));
+            Log.i("Urbalog", "Turn game: " + AdminConnectionActivity.net.getTURN_TIME());
             Toast.makeText(this, "Le temps de mise a été mis a jour", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(TimerUpdateActivity.this, ConfigurationActivity.class);
             startActivity(intent);
