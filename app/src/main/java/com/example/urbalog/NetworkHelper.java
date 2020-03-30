@@ -57,6 +57,7 @@ public class NetworkHelper implements Serializable {
     private Context appContext;
     private PlayerViewActivity currentPlayerView = null;
     private DatabaseHandler db;
+    private CountDownTimerHandler timer;
 
     private boolean advertising;
     private boolean discovering;
@@ -68,9 +69,18 @@ public class NetworkHelper implements Serializable {
     private Game currentGame;
     private boolean gameStarted;
     private Player player;
+    private String endpointLast;
 
     private ArrayList<Pair<String, String>> listPlayer; // Pair array for connexion information storage of connected users
     private ArrayList<Triplet<Player, String, String>> playersInformations; // Pair array with Player instance of clients
+
+    private ArrayList<Duo<String, Boolean>> playersVotes;
+    private void createPlayersVotes(){
+        playersVotes = new ArrayList<Duo<String, Boolean>>();
+        for (int i = 0; i < listPlayer.size(); i++) {
+            playersVotes.add(new Duo<String, Boolean>(listPlayer.get(i).second, false));
+        }
+    }
 
     private int nextTurnVotes = 0;
 
@@ -110,7 +120,7 @@ public class NetworkHelper implements Serializable {
                     Object dataReceived = new Object();
                     try {
                         dataReceived = SerializationHelper.deserialize(payload.asBytes());
-                        Log.i(TAG, "sendToAllClients: " + dataReceived.toString());
+                        Log.i(TAG, "Received Payload : " + dataReceived.toString());
 
                     } catch (IOException | ClassNotFoundException e) {
                         e.printStackTrace();
@@ -252,6 +262,40 @@ public class NetworkHelper implements Serializable {
                                     break;
                             }
                         }
+                        else if(dataReceived instanceof Signal) {
+                            switch ((Signal) dataReceived) {
+                                case START_TIMER:
+                                    timer = new CountDownTimerHandler(5 * 1000, new CountDownTimerHandler.TimerTickListener() {
+                                        @Override
+                                        public void onTick(long millisLeft) {
+                                            // Unused
+                                        }
+
+                                        @Override
+                                        public void onFinish() {
+                                            try {
+                                                sendToAllClients(Signal.NEXT_TURN);
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancel() {
+
+                                        }
+                                    });
+                                    timer.start();
+                                    break;
+
+                                case STOP_TIMER:
+                                    timer.cancel();
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
                     }
                     /* ----------------------- */
                     /* If it's the host device */
@@ -362,8 +406,6 @@ public class NetworkHelper implements Serializable {
                                 default:
                                     break;
                             }
-
-
                         }
 
                         else if(dataReceived instanceof Signal){
@@ -371,11 +413,23 @@ public class NetworkHelper implements Serializable {
                             {
                                 /* Report to host a next turn vote */
                                 case NEXT_TURN:
+                                    for (int i = 0; i < playersVotes.size(); i++) {
+                                        if(playersVotes.get(i).first.equals(endpointId)) {
+                                            playersVotes.get(i).second = true;
+                                            break;
+                                        }
+                                    }
                                     nextTurnVotes++;
                                     break;
 
                                 /* Report to host the cancellation of a next turn vote */
                                 case CANCEL_NEXT_TURN:
+                                    for (int i = 0; i < playersVotes.size(); i++) {
+                                        if(playersVotes.get(i).first.equals(endpointId)) {
+                                            playersVotes.get(i).second = false;
+                                            break;
+                                        }
+                                    }
                                     nextTurnVotes--;
                                     break;
 
@@ -385,6 +439,20 @@ public class NetworkHelper implements Serializable {
                             /* If all players have voted for next turn */
                             if(nextTurnVotes == NB_PLAYERS)
                             {
+                                // Cancel turn timer for last player if exist
+                                if(endpointLast != null) {
+                                    for (int i = 0; i < playersVotes.size(); i++) {
+                                        if (!playersVotes.get(i).second) {
+                                            try {
+                                                sendToClient(Signal.STOP_TIMER, endpointLast);
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                            endpointLast = null;
+                                        }
+                                    }
+                                }
+                                createPlayersVotes();
                                 /* Check market and build financed building */
                                 ArrayList<Building> newBuildings = new ArrayList<Building>();
                                 for(int i = 0; i < currentGame.getMarket().getBuildings().size(); i++) {
@@ -433,6 +501,34 @@ public class NetworkHelper implements Serializable {
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
+                                }
+                            }
+                            else if(nextTurnVotes == NB_PLAYERS-1){
+                                // Launch turn timer for last player
+                                for (int i = 0; i < playersVotes.size(); i++) {
+                                    if(!playersVotes.get(i).second){
+                                        endpointLast = playersVotes.get(i).first;
+                                        try {
+                                            sendToClient(Signal.START_TIMER, endpointLast);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                            }
+                            else{
+                                // Cancel turn timer for last player if exist
+                                if(endpointLast != null) {
+                                    for (int i = 0; i < playersVotes.size(); i++) {
+                                        if (!playersVotes.get(i).second) {
+                                            try {
+                                                sendToClient(Signal.STOP_TIMER, endpointLast);
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                    endpointLast = null;
                                 }
                             }
                         }
@@ -644,8 +740,9 @@ public class NetworkHelper implements Serializable {
         connectionsClient = Nearby.getConnectionsClient(c);
         playerUUID = UUIDHelper.id(appContext);
 
-        if(host)
+        if(host) {
             db = new DatabaseHandler(appContext);
+        }
     }
 
     /** Finds an opponent to play the game with using Nearby Connections. */
@@ -840,11 +937,18 @@ public class NetworkHelper implements Serializable {
      * @param o
      * @throws IOException
      */
-    public void sendToAllClients(Object o) throws IOException {
+    public void sendToAllClients(final Object o) throws IOException {
         Payload data = Payload.fromBytes(SerializationHelper.serialize(o));
         for (int i = 0; i < listPlayer.size(); i++) {
             connectionsClient
                     .sendPayload(listPlayer.get(i).second, data)
+                    .addOnSuccessListener(
+                        new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.i(TAG, "SendToAllClients Payload : " + o.toString());
+                            }
+                    })
                     .addOnFailureListener(
                             new OnFailureListener() {
                                 @Override
@@ -862,10 +966,17 @@ public class NetworkHelper implements Serializable {
      * @param id
      * @throws IOException
      */
-    public void sendToClient(Object o, String id) throws IOException {
+    public void sendToClient(final Object o, final String id) throws IOException {
         Payload data = Payload.fromBytes(SerializationHelper.serialize(o));
         connectionsClient
                 .sendPayload(id, data)
+                .addOnSuccessListener(
+                        new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.i(TAG, "SendToClient (" + id + ") Payload : " + o.toString());
+                            }
+                        })
                 .addOnFailureListener(
                         new OnFailureListener() {
                             @Override
@@ -940,6 +1051,7 @@ public class NetworkHelper implements Serializable {
             );
             db.insertGame(currentGame, NB_PLAYERS, NB_BUILDINGS);
             sendRandomRoleToAllClients(roles);
+            createPlayersVotes();
         } catch (IOException e) {
             e.printStackTrace();
         }
