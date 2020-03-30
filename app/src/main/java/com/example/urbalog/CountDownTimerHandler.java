@@ -4,6 +4,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -80,7 +82,23 @@ public class CountDownTimerHandler {
     private ScheduledExecutorService scheduler;
 
     /**
-     * Constructor
+     * Constructor for schedule for execute final task
+     *
+     * @param millisInFuture time in millisec for which timer is to run
+     * @param tickListener implementation of TimerTickListener which provides callbacks code
+     */
+    public CountDownTimerHandler(long millisInFuture,
+                                 TimerTickListener tickListener) {
+        this.millisInFuture = millisInFuture;
+        stopTimeInFuture = SystemClock.elapsedRealtime() + this.millisInFuture;
+        countdownInterval = -1;
+        this.tickListener = tickListener;
+        scheduler = Executors.newSingleThreadScheduledExecutor();
+    }
+
+    /**
+     * Constructor for schedule than execute task at given interval and a final task
+     *
      * @param millisInFuture time in millisec for which timer is to run
      * @param countDownInterval interval frequency in millisec at which the callback will be invoked
      * @param tickListener implementation of TimerTickListener which provides callbacks code
@@ -99,8 +117,14 @@ public class CountDownTimerHandler {
      */
     public synchronized void start() {
         isCancelled = false;
-        scheduler.scheduleWithFixedDelay(new TimerRunnable(), 0, countdownInterval,
-                TimeUnit.MILLISECONDS);
+        if(countdownInterval == -1){
+            scheduler.schedule(new TimerRunnable(), millisInFuture,
+                    TimeUnit.MILLISECONDS);
+        }
+        else{
+            scheduler.scheduleWithFixedDelay(new TimerRunnable(), 0, countdownInterval,
+                    TimeUnit.MILLISECONDS);
+        }
     }
 
     /**
