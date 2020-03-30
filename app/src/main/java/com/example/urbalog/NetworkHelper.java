@@ -86,6 +86,7 @@ public class NetworkHelper implements Serializable {
                     Manifest.permission.ACCESS_WIFI_STATE,
                     Manifest.permission.CHANGE_WIFI_STATE,
                     Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
             };
 
     private static final int REQUEST_CODE_REQUIRED_PERMISSIONS = 1;
@@ -730,7 +731,7 @@ public class NetworkHelper implements Serializable {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     discovering = false;
-                                    Log.w(TAG, "startAdvertising() failed.", e);
+                                    Log.w(TAG, "startDiscovery() failed.", e);
                                     PlayerConnexionActivity.setStatus("Disconnected");
                                 }
                             });
