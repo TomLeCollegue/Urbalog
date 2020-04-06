@@ -18,7 +18,7 @@ public class UUIDHelper {
                 uniqueID = UUID.randomUUID().toString();
                 SharedPreferences.Editor editor = sharedPrefs.edit();
                 editor.putString(PREF_UNIQUE_ID, uniqueID);
-                editor.commit();
+                editor.apply();
             }
         }
         return uniqueID;
