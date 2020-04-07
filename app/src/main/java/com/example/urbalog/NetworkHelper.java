@@ -1049,7 +1049,6 @@ public class NetworkHelper implements Serializable {
     private void updatePlayerView(){
         currentPlayerView.fillInfosView();
         currentPlayerView.colorBuildingBet();
-        //currentPlayerView.resetColorRessources(); pas optimal. Peut être trop lourd en local.
         currentPlayerView.resetColorRessources();
         currentPlayerView.colorRessources();
     }
@@ -1089,5 +1088,4 @@ public class NetworkHelper implements Serializable {
             e.printStackTrace();
         }
     }
-
 }

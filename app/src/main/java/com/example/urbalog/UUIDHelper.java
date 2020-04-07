@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import java.util.UUID;
 
-public class UUIDHelper {
+public final class UUIDHelper {
     private static String uniqueID = null;
     private static final String PREF_UNIQUE_ID = "PREF_UNIQUE_ID";
 
