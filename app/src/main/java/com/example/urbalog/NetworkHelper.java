@@ -66,7 +66,7 @@ public class NetworkHelper implements Serializable {
     private boolean host;
 
     private static int NB_PLAYERS = 5;
-    private static int NB_BUILDINGS = 3;
+    private static int NB_BUILDINGS = 2;
 
     private int TURN_TIME = 60;
 
@@ -496,13 +496,14 @@ public class NetworkHelper implements Serializable {
                                         sendToAllClients(new TransferPackage<>(
                                                 Signal.GAME_OVER,
                                                 currentGame));
-                                        JsonStats.giveContext(appContext);
+                                        db.updateGame(currentGame);
+                                        /*JsonStats.giveContext(appContext);
                                         ArrayList<Player> endGamePlayerList = new ArrayList<>();
                                         for (int i = 0; i < playersInformations.size(); i++) {
                                             endGamePlayerList.add(playersInformations.get(i).getFirst());
                                         }
                                         Log.d("debug", "ok");
-                                        JsonStats.writeGame(endGamePlayerList, currentGame);
+                                        JsonStats.writeGame(endGamePlayerList, currentGame);*/
                                         gameStarted = false;
                                     } catch (IOException e) {
                                         e.printStackTrace();

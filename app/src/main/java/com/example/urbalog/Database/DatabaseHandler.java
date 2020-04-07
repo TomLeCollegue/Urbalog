@@ -20,6 +20,7 @@ import java.util.List;
  * - insert
  * - delete
  * - select
+ * - update
  * - create database and tables
  */
 
@@ -28,9 +29,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Constants for games table
     private final String GAME_KEY = "id";
-    private final String GAME_NB_PLAYER = "nb_player";
-    private final String GAME_NB_BUILDING = "nb_building";
-    private final String GAME_CREATED_AT = "created_at";
+    private static final String GAME_NB_PLAYER = "nb_player";
+    private static final String GAME_NB_BUILDING = "nb_building";
+    private static final String GAME_SCORE_FLUID = "score_fluidité";
+    private static final String GAME_SCORE_ATTR = "score_attractivité";
+    private static final String GAME_SCORE_ENV = "score_environmental";
+    private static final String GAME_SCORE_LOG = "score_logistique";
+    private static final String GAME_NB_TURN = "nb_turn";
+    private static final String GAME_CREATED_AT = "created_at";
     private static final String GAME_TABLE_NAME = "games";
 
     private final String TABLE_GAME_CREATE =
@@ -38,17 +44,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     GAME_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     GAME_NB_PLAYER + " INTEGER, " +
                     GAME_NB_BUILDING + " INTEGER, " +
+                    GAME_SCORE_FLUID + " INTEGER, " +
+                    GAME_SCORE_ATTR + " INTEGER, " +
+                    GAME_SCORE_ENV + " INTEGER, " +
+                    GAME_SCORE_LOG + " INTEGER, " +
+                    GAME_NB_TURN + " INTEGER, " +
                     GAME_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP" +
                     ");";
 
     // Constants for players table
     private final String PLAYER_KEY = "id";
-    private final String PLAYER_GAME_ID = "game_id";
-    private final String PLAYER_AGE = "age";
-    private final String PLAYER_JOB = "job";
-    private final String PLAYER_SCORE = "score";
-    private final String PLAYER_ROLE = "role";
-    private final String PLAYER_CREATED_AT = "created_at";
+    private static final String PLAYER_GAME_ID = "game_id";
+    private static final String PLAYER_AGE = "age";
+    private static final String PLAYER_JOB = "job";
+    private static final String PLAYER_SCORE = "score";
+    private static final String PLAYER_ROLE = "role";
+    private static final String PLAYER_CREATED_AT = "created_at";
     private static final String PLAYER_TABLE_NAME = "players";
 
     private final String TABLE_PLAYER_CREATE =
@@ -64,14 +75,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     ");";
 
     // Constants for bet_history table
-    private final String BET_KEY = "id";
-    private final String BET_GAME_ID = "game_id";
-    private final String BET_PLAYER_ID = "player_id";
-    private final String BET_MISE_POLITIQUE = "mise_politique";
-    private final String BET_MISE_SOCIAL = "mise_social";
-    private final String BET_MISE_ECO = "mise_eco";
-    private final String BET_BUILDING = "building";
-    private final String BET_CREATED_AT = "created_at";
+    private static final String BET_KEY = "id";
+    private static final String BET_GAME_ID = "game_id";
+    private static final String BET_PLAYER_ID = "player_id";
+    private static final String BET_MISE_POLITIQUE = "mise_politique";
+    private static final String BET_MISE_SOCIAL = "mise_social";
+    private static final String BET_MISE_ECO = "mise_eco";
+    private static final String BET_BUILDING = "building";
+    private static final String BET_CREATED_AT = "created_at";
     private static final String BET_TABLE_NAME = "bet_history";
 
 
@@ -116,6 +127,28 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         game.setDbID(res);
 
         return res != -1;
+    }
+
+    /**
+     * Update Game data in db with final game values (score, nb turn, ect...)
+     *
+     * @param game Game Instance
+     * @return bool
+     */
+    public boolean updateGame(Game game)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues v = new ContentValues();
+
+        v.put(GAME_SCORE_FLUID, game.getScoreFluidite());
+        v.put(GAME_SCORE_ENV, game.getScoreEnvironnemental());
+        v.put(GAME_SCORE_ATTR, game.getScoreAttractivite());
+        v.put(GAME_SCORE_LOG, game.getScoreLogistique());
+        v.put(GAME_NB_TURN, game.getnTurn());
+        String[] args = {String.valueOf(game.getDbID())};
+        int res = db.update(GAME_TABLE_NAME, v, GAME_KEY + " = ?", args);
+
+        return res > 0;
     }
 
     /**
