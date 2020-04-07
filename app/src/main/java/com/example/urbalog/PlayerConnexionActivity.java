@@ -23,10 +23,10 @@ public class PlayerConnexionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_connexion);
 
-        this.bSearch = (Button) findViewById(R.id.button_research);
-        this.bCancel = (Button) findViewById(R.id.button_cancel_research);
-        this.name = (TextView) findViewById(R.id.player_name);
-        tStatus = (TextView) findViewById(R.id.textStatus);
+        this.bSearch = findViewById(R.id.button_research);
+        this.bCancel = findViewById(R.id.button_cancel_research);
+        this.name = findViewById(R.id.player_name);
+        tStatus = findViewById(R.id.textStatus);
 
         net = new NetworkHelper(this, false);
         net.setHost(false);

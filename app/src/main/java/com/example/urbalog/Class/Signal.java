@@ -22,5 +22,5 @@ public enum Signal implements Serializable {
     GAME_OVER,
     UPDATE_PLAYER,
     RETURN_PLAYER,
-    BACKUP_PLAYER;
+    BACKUP_PLAYER
 }

@@ -15,13 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
 import com.example.urbalog.Class.Role;
-import com.example.urbalog.Class.Signal;
-import com.example.urbalog.Class.TransferPackage;
 import com.example.urbalog.Json.JsonBuilding;
 import com.example.urbalog.Json.JsonRole;
 import com.example.urbalog.Json.JsonStats;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,15 +52,15 @@ public class AdminConnectionActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_admin_connection);
 
-        this.bHost = (Button)findViewById(R.id.hostButton);
-        this.bPlay = (Button)findViewById(R.id.playButton);
-        this.configurationButton = (Button)findViewById(R.id.configurationButton);
-        this.bStop = (Button)findViewById(R.id.stopButton);
-        tPlayers = (TextView) findViewById(R.id.nbPlayer);
-        this.tStatus = (TextView) findViewById(R.id.statusText);
-        this.lancerVue = (Button) findViewById(R.id.vue_admin);
+        this.bHost = findViewById(R.id.hostButton);
+        this.bPlay = findViewById(R.id.playButton);
+        this.configurationButton = findViewById(R.id.configurationButton);
+        this.bStop = findViewById(R.id.stopButton);
+        tPlayers = findViewById(R.id.nbPlayer);
+        this.tStatus = findViewById(R.id.statusText);
+        this.lancerVue = findViewById(R.id.vue_admin);
 
-        spinnerPlayer = (Spinner) findViewById(R.id.spinnerNBplayer);
+        spinnerPlayer = findViewById(R.id.spinnerNBplayer);
 
         List<Integer> ListNB = new ArrayList<>();
         ListNB.add(1);
@@ -147,7 +144,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
 
     public static void updateNbPlayers()
     {
-        tPlayers.setText(net.getListPlayer().size()+"/"+ net.getNbPlayers());
+        tPlayers.setText(net.getListPlayer().size()+"/"+ NetworkHelper.getNbPlayers());
     }
 
     public void updateStatus(String s)

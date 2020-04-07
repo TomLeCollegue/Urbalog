@@ -31,7 +31,7 @@ public class ListBuildingsActivity extends AppCompatActivity implements ListBuil
 
         buildings = JsonBuilding.readBuilding();
 
-        rv = (RecyclerView) findViewById(R.id.recyclerListBuildings);
+        rv = findViewById(R.id.recyclerListBuildings);
         rv.setLayoutManager(new LinearLayoutManager(ListBuildingsActivity.this, LinearLayoutManager.HORIZONTAL, false));
         mMyadapter = new ListBuildingsAdapter(buildings, this);
         rv.setAdapter(mMyadapter);

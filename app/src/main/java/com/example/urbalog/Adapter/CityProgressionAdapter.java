@@ -12,7 +12,6 @@ import com.example.urbalog.Class.Building;
 import com.example.urbalog.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CityProgressionAdapter extends RecyclerView.Adapter<CityProgressionAdapter.MyViewHolder> {
 

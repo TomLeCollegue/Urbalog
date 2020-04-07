@@ -32,12 +32,12 @@ public class LogisticActivity extends AppCompatActivity {
 
         /*** Print the logistic score at the end of the game ***/
 
-        totalLogisticScore = (TextView) findViewById(R.id.TotalScore_TextView);
+        totalLogisticScore = findViewById(R.id.TotalScore_TextView);
         totalLogisticScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreLogistique()));
 
         /*** Choose and print the sentence below the Logistic Score ***/
         iLogisticScore = PlayerConnexionActivity.net.getCurrentGame().getScoreLogistique();
-        totalLogisticScoreSentence = (TextView) findViewById(R.id.LogisticSentence_TextView);
+        totalLogisticScoreSentence = findViewById(R.id.LogisticSentence_TextView);
         
         if (iLogisticScore <= -2) {
             totalLogisticScoreSentence.setText("D'un point de vue logistique, l'organisation de votre ville est à revoir.");
@@ -57,7 +57,7 @@ public class LogisticActivity extends AppCompatActivity {
         buildings = PlayerConnexionActivity.net.getCurrentGame().getCity().getBuildings();
 
         //Log.d("debug", buildings.toString());
-        rv = (RecyclerView) findViewById(R.id.recyclerListBuildingInfluence);
+        rv = findViewById(R.id.recyclerListBuildingInfluence);
         rv.setLayoutManager(new LinearLayoutManager(LogisticActivity.this, LinearLayoutManager.VERTICAL, false));
 
         BuildingInfluenceAdapter mMyadapter= new BuildingInfluenceAdapter(buildings);

@@ -1,10 +1,10 @@
 package com.example.urbalog.Stats;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.urbalog.Json.JsonStats;
 import com.example.urbalog.R;
@@ -36,7 +36,7 @@ public class PcsPercentActivity extends AppCompatActivity implements OnChartValu
 
         JsonStats.giveContext(this);
 
-        pieChart = (PieChart) findViewById(R.id.piechart);
+        pieChart = findViewById(R.id.piechart);
 
         pieChart.setUsePercentValues(true);
         pieChart.getDescription().setEnabled(false);

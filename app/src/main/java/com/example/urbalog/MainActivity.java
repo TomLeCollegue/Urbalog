@@ -16,7 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.example.urbalog.Class.Building;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -27,16 +26,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-import java.util.ArrayList;
-
 
 public class MainActivity extends AppCompatActivity {
 
     public final static String VERSION = "© Alpha V3.113";
     private static final int REQUEST_CHECK_SETTINGS = 0x1;
     private LocationRequest locationRequest;
-
-    ArrayList<Building> listeBuilding = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
