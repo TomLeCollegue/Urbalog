@@ -1,7 +1,5 @@
 package com.example.urbalog;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import static java.lang.String.valueOf;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class TimerUpdateActivity extends AppCompatActivity {
 

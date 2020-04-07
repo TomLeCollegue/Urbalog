@@ -1,11 +1,12 @@
 package com.example.urbalog;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.urbalog.Stats.AverageScoreActivity;
 import com.example.urbalog.Stats.NbPlayerByGameActivity;
@@ -23,9 +24,9 @@ public class StatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
 
-        pcsPercent = (Button) findViewById(R.id.pcsPercent);
-        nbPlayerGame = (Button) findViewById(R.id.nbPlayerGame);
-        scoreGameStats = (Button) findViewById(R.id.scoreGameStats);
+        pcsPercent = findViewById(R.id.pcsPercent);
+        nbPlayerGame = findViewById(R.id.nbPlayerGame);
+        scoreGameStats = findViewById(R.id.scoreGameStats);
 
         pcsPercent.setOnClickListener(new View.OnClickListener() {
             @Override

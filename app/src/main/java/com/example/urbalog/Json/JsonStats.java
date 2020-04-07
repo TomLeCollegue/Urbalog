@@ -18,8 +18,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -54,12 +52,7 @@ public class JsonStats {
     public static boolean fichierExiste()
     {
         File file = context.getFileStreamPath(fileNameStatistics);
-        if(file.exists()){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return file.exists();
     }
 
     /**

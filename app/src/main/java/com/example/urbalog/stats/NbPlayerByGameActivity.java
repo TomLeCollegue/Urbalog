@@ -1,10 +1,10 @@
 package com.example.urbalog.Stats;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.urbalog.Json.JsonStats;
 import com.example.urbalog.R;
@@ -40,7 +40,7 @@ public class NbPlayerByGameActivity extends AppCompatActivity{
         HashMap<Date, Integer> nbPlayerByGame = JsonStats.getNumberPlayerByGame();
         Map<Date, Integer> nbPlayerByGameSorted = new TreeMap<Date, Integer>(nbPlayerByGame);
 
-        mChart = (LineChart) findViewById(R.id.linechart);
+        mChart = findViewById(R.id.linechart);
         mChart.setDragEnabled(true);
         mChart.setScaleEnabled(true);
         mChart.setExtraOffsets(10, 10, 10, 10);

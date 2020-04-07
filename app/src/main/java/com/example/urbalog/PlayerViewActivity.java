@@ -3,7 +3,6 @@ package com.example.urbalog;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +23,6 @@ import com.example.urbalog.Class.Building;
 import com.example.urbalog.Class.Duo;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
-import com.example.urbalog.Class.Player;
 import com.example.urbalog.Class.Role;
 import com.example.urbalog.Class.Signal;
 import com.example.urbalog.Class.TransferPackage;
@@ -107,7 +105,7 @@ public class PlayerViewActivity extends AppCompatActivity {
     private String Ressource1;
     private String Ressource2;
 
-    private Integer financementRessource[][];
+    private Integer[][] financementRessource;
     boolean buttonState;
 
 
@@ -148,85 +146,85 @@ public class PlayerViewActivity extends AppCompatActivity {
         PlayerConnexionActivity.net.setCurrentPlayerView(this);
         buttonState = true;
 
-        B1 = (LinearLayout) findViewById(R.id.infrastructure_1);
-        B2 = (LinearLayout) findViewById(R.id.infrastructure_2);
-        B3 = (LinearLayout) findViewById(R.id.infrastructure_3);
-        B4 = (LinearLayout) findViewById(R.id.infrastructure_4);
-        B5 = (LinearLayout) findViewById(R.id.infrastructure_5);
+        B1 = findViewById(R.id.infrastructure_1);
+        B2 = findViewById(R.id.infrastructure_2);
+        B3 = findViewById(R.id.infrastructure_3);
+        B4 = findViewById(R.id.infrastructure_4);
+        B5 = findViewById(R.id.infrastructure_5);
 
-        poli_1 = (LinearLayout) findViewById(R.id.poli_1);
-        eco_1 = (LinearLayout) findViewById(R.id.eco_1);
-        social_1 = (LinearLayout) findViewById(R.id.social_1);
+        poli_1 = findViewById(R.id.poli_1);
+        eco_1 = findViewById(R.id.eco_1);
+        social_1 = findViewById(R.id.social_1);
 
-        poli_2 = (LinearLayout) findViewById(R.id.poli_2);
-        eco_2 = (LinearLayout) findViewById(R.id.eco_2);
-        social_2 = (LinearLayout) findViewById(R.id.social_2);
+        poli_2 = findViewById(R.id.poli_2);
+        eco_2 = findViewById(R.id.eco_2);
+        social_2 = findViewById(R.id.social_2);
 
-        poli_3 = (LinearLayout) findViewById(R.id.poli_3);
-        eco_3 = (LinearLayout) findViewById(R.id.eco_3);
-        social_3 = (LinearLayout) findViewById(R.id.social_3);
+        poli_3 = findViewById(R.id.poli_3);
+        eco_3 = findViewById(R.id.eco_3);
+        social_3 = findViewById(R.id.social_3);
 
-        poli_4 = (LinearLayout) findViewById(R.id.poli_4);
-        eco_4 = (LinearLayout) findViewById(R.id.eco_4);
-        social_4 = (LinearLayout) findViewById(R.id.social_4);
+        poli_4 = findViewById(R.id.poli_4);
+        eco_4 = findViewById(R.id.eco_4);
+        social_4 = findViewById(R.id.social_4);
 
-        poli_5 = (LinearLayout) findViewById(R.id.poli_5);
-        eco_5 = (LinearLayout) findViewById(R.id.eco_5);
-        social_5 = (LinearLayout) findViewById(R.id.social_5);
+        poli_5 = findViewById(R.id.poli_5);
+        eco_5 = findViewById(R.id.eco_5);
+        social_5 = findViewById(R.id.social_5);
 
         financementRessource = PlayerConnexionActivity.net.getPlayer().getFinancementRessource();
 
-        textPoliticalResssourcesBuilding1 = (TextView) findViewById(R.id.text_political_resssources_building_1);
-        textPoliticalResssourcesBuilding2 = (TextView) findViewById(R.id.text_political_resssources_building_2);
-        textPoliticalResssourcesBuilding3 = (TextView) findViewById(R.id.text_political_resssources_building_3);
-        textPoliticalResssourcesBuilding4 = (TextView) findViewById(R.id.text_political_resssources_building_4);
-        textPoliticalResssourcesBuilding5 = (TextView) findViewById(R.id.text_political_resssources_building_5);
-        textEcoResssourcesBuilding1 = (TextView) findViewById(R.id.text_eco_resssources_building_1);
-        textEcoResssourcesBuilding2 = (TextView) findViewById(R.id.text_eco_resssources_building_2);
-        textEcoResssourcesBuilding3 = (TextView) findViewById(R.id.text_eco_resssources_building_3);
-        textEcoResssourcesBuilding4 = (TextView) findViewById(R.id.text_eco_resssources_building_4);
-        textEcoResssourcesBuilding5 = (TextView) findViewById(R.id.text_eco_resssources_building_5);
-        textSocialRessourcesBuilding1 = (TextView) findViewById(R.id.text_social_ressources_building_1);
-        textSocialRessourcesBuilding2 = (TextView) findViewById(R.id.text_social_ressources_building_2);
-        textSocialRessourcesBuilding3 = (TextView) findViewById(R.id.text_social_ressources_building_3);
-        textSocialRessourcesBuilding4 = (TextView) findViewById(R.id.text_social_ressources_building_4);
-        textSocialRessourcesBuilding5 = (TextView) findViewById(R.id.text_social_ressources_building_5);
+        textPoliticalResssourcesBuilding1 = findViewById(R.id.text_political_resssources_building_1);
+        textPoliticalResssourcesBuilding2 = findViewById(R.id.text_political_resssources_building_2);
+        textPoliticalResssourcesBuilding3 = findViewById(R.id.text_political_resssources_building_3);
+        textPoliticalResssourcesBuilding4 = findViewById(R.id.text_political_resssources_building_4);
+        textPoliticalResssourcesBuilding5 = findViewById(R.id.text_political_resssources_building_5);
+        textEcoResssourcesBuilding1 = findViewById(R.id.text_eco_resssources_building_1);
+        textEcoResssourcesBuilding2 = findViewById(R.id.text_eco_resssources_building_2);
+        textEcoResssourcesBuilding3 = findViewById(R.id.text_eco_resssources_building_3);
+        textEcoResssourcesBuilding4 = findViewById(R.id.text_eco_resssources_building_4);
+        textEcoResssourcesBuilding5 = findViewById(R.id.text_eco_resssources_building_5);
+        textSocialRessourcesBuilding1 = findViewById(R.id.text_social_ressources_building_1);
+        textSocialRessourcesBuilding2 = findViewById(R.id.text_social_ressources_building_2);
+        textSocialRessourcesBuilding3 = findViewById(R.id.text_social_ressources_building_3);
+        textSocialRessourcesBuilding4 = findViewById(R.id.text_social_ressources_building_4);
+        textSocialRessourcesBuilding5 = findViewById(R.id.text_social_ressources_building_5);
 
-        textAttractBuilding1 = (TextView) findViewById(R.id.text_attract_building_1);
-        textAttractBuilding2 = (TextView) findViewById(R.id.text_attract_building_2);
-        textAttractBuilding3 = (TextView) findViewById(R.id.text_attract_building_3);
-        textAttractBuilding4 = (TextView) findViewById(R.id.text_attract_building_4);
-        textAttractBuilding5 = (TextView) findViewById(R.id.text_attract_building_5);
+        textAttractBuilding1 = findViewById(R.id.text_attract_building_1);
+        textAttractBuilding2 = findViewById(R.id.text_attract_building_2);
+        textAttractBuilding3 = findViewById(R.id.text_attract_building_3);
+        textAttractBuilding4 = findViewById(R.id.text_attract_building_4);
+        textAttractBuilding5 = findViewById(R.id.text_attract_building_5);
 
-        textEnviBuilding1 = (TextView) findViewById(R.id.text_envi_building_1);
-        textEnviBuilding2 = (TextView) findViewById(R.id.text_envi_building_2);
-        textEnviBuilding3 = (TextView) findViewById(R.id.text_envi_building_3);
-        textEnviBuilding4 = (TextView) findViewById(R.id.text_envi_building_4);
-        textEnviBuilding5 = (TextView) findViewById(R.id.text_envi_building_5);
+        textEnviBuilding1 = findViewById(R.id.text_envi_building_1);
+        textEnviBuilding2 = findViewById(R.id.text_envi_building_2);
+        textEnviBuilding3 = findViewById(R.id.text_envi_building_3);
+        textEnviBuilding4 = findViewById(R.id.text_envi_building_4);
+        textEnviBuilding5 = findViewById(R.id.text_envi_building_5);
 
-        textTraficBuilding1 = (TextView) findViewById(R.id.text_trafic_building_1);
-        textTraficBuilding2 = (TextView) findViewById(R.id.text_trafic_building_2);
-        textTraficBuilding3 = (TextView) findViewById(R.id.text_trafic_building_3);
-        textTraficBuilding4 = (TextView) findViewById(R.id.text_trafic_building_4);
-        textTraficBuilding5 = (TextView) findViewById(R.id.text_trafic_building_5);
+        textTraficBuilding1 = findViewById(R.id.text_trafic_building_1);
+        textTraficBuilding2 = findViewById(R.id.text_trafic_building_2);
+        textTraficBuilding3 = findViewById(R.id.text_trafic_building_3);
+        textTraficBuilding4 = findViewById(R.id.text_trafic_building_4);
+        textTraficBuilding5 = findViewById(R.id.text_trafic_building_5);
 
-        bTurn = (Button) findViewById(R.id.button_turn);
+        bTurn = findViewById(R.id.button_turn);
 
-        textNameBuilding1 = (Button) findViewById(R.id.text_name_building_1);
-        textNameBuilding2 = (Button) findViewById(R.id.text_name_building_2);
-        textNameBuilding3 = (Button) findViewById(R.id.text_name_building_3);
-        textNameBuilding4 = (Button) findViewById(R.id.text_name_building_4);
-        textNameBuilding5 = (Button) findViewById(R.id.text_name_building_5);
+        textNameBuilding1 = findViewById(R.id.text_name_building_1);
+        textNameBuilding2 = findViewById(R.id.text_name_building_2);
+        textNameBuilding3 = findViewById(R.id.text_name_building_3);
+        textNameBuilding4 = findViewById(R.id.text_name_building_4);
+        textNameBuilding5 = findViewById(R.id.text_name_building_5);
 
-        icoObjectifLeftRole = (ImageView) findViewById(R.id.ico_objectif_left_role);
-        icoObjectifRightRole = (ImageView) findViewById(R.id.ico_objectif_right_role);
-        textTitleRole = (TextView) findViewById(R.id.text_title_role);
-        icoRessourceLeftRole = (ImageView) findViewById(R.id.ico_ressource_left_role);
-        icoRessourceRightRole = (ImageView) findViewById(R.id.ico_ressource_right_role);
-        textRessourceLeftRole = (TextView) findViewById(R.id.text_ressource_left_role);
-        textRessourceRightRole = (TextView) findViewById(R.id.text_ressource_right_role);
+        icoObjectifLeftRole = findViewById(R.id.ico_objectif_left_role);
+        icoObjectifRightRole = findViewById(R.id.ico_objectif_right_role);
+        textTitleRole = findViewById(R.id.text_title_role);
+        icoRessourceLeftRole = findViewById(R.id.ico_ressource_left_role);
+        icoRessourceRightRole = findViewById(R.id.ico_ressource_right_role);
+        textRessourceLeftRole = findViewById(R.id.text_ressource_left_role);
+        textRessourceRightRole = findViewById(R.id.text_ressource_right_role);
 
-        textScorePlayer = (TextView) findViewById(R.id.text_score_player);
+        textScorePlayer = findViewById(R.id.text_score_player);
 
         textTitleRole.setText(PlayerConnexionActivity.net.getPlayer().getRole().getTypeRole());
 
@@ -389,20 +387,20 @@ public class PlayerViewActivity extends AppCompatActivity {
         boolean focusable = true;
         popUpBet = new PopupWindow(popUpView, width, height, focusable);
 
-        buttonBetPopup = (Button)popUpView.findViewById(R.id.button_X);
-        textNameBuildingPopup = (TextView)popUpView.findViewById(R.id.text_name_building_popup);
+        buttonBetPopup = popUpView.findViewById(R.id.button_X);
+        textNameBuildingPopup = popUpView.findViewById(R.id.text_name_building_popup);
 
-        textAvancementRessourceTop = (TextView) popUpView.findViewById(R.id.avancement_ressource_top);
-        TextAvancementRessourceBot= (TextView) popUpView.findViewById(R.id.avancement_ressource_bot);
-        icoRessourceBotPopup= (ImageView) popUpView.findViewById(R.id.ico_ressource_bot_popup);
-        icoRessourceTopPopup= (ImageView) popUpView.findViewById(R.id.ico_ressource_top_popup);
+        textAvancementRessourceTop = popUpView.findViewById(R.id.avancement_ressource_top);
+        TextAvancementRessourceBot= popUpView.findViewById(R.id.avancement_ressource_bot);
+        icoRessourceBotPopup= popUpView.findViewById(R.id.ico_ressource_bot_popup);
+        icoRessourceTopPopup= popUpView.findViewById(R.id.ico_ressource_top_popup);
 
-        descriptionBuildingPopUp = (TextView) popUpView.findViewById(R.id.text_desc_building_popup);
+        descriptionBuildingPopUp = popUpView.findViewById(R.id.text_desc_building_popup);
 
-        buttonMinusTop= (Button) popUpView.findViewById(R.id.button_minus_top);
-        buttonMinusBot= (Button) popUpView.findViewById(R.id.button_minus_bot);
-        buttonPlusTop= (Button) popUpView.findViewById(R.id.button_plus_top);
-        buttonPlusBot= (Button) popUpView.findViewById(R.id.button_plus_bot);
+        buttonMinusTop= popUpView.findViewById(R.id.button_minus_top);
+        buttonMinusBot= popUpView.findViewById(R.id.button_minus_bot);
+        buttonPlusTop= popUpView.findViewById(R.id.button_plus_top);
+        buttonPlusBot= popUpView.findViewById(R.id.button_plus_bot);
 
 
         textAvancementRessourceTop.setText(String.valueOf(financementRessource[numBuildingF][0]));

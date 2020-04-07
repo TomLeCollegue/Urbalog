@@ -4,8 +4,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 
-import org.apache.commons.lang3.ObjectUtils;
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -24,17 +22,17 @@ public class CountDownTimerHandler {
          * Callback on each tick
          * @param millisLeft time left in millisec for the timer to shutdown
          */
-        public void onTick(long millisLeft);
+        void onTick(long millisLeft);
 
         /**
          * Callback to be invokded when timer's time finishes
          */
-        public void onFinish();
+        void onFinish();
 
         /**
          * Callback to be invokded when timer is canceled
          */
-        public void onCancel();
+        void onCancel();
     }
 
     /**

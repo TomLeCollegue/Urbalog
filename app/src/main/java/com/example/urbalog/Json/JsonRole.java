@@ -30,12 +30,7 @@ public class JsonRole {
     public static boolean fichierExiste()
     {
         File file = context.getFileStreamPath(fileNameBuilding);
-        if(file.exists()){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return file.exists();
     }
 
     /**

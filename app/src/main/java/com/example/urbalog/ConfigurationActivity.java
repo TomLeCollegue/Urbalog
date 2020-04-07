@@ -36,15 +36,15 @@ public class ConfigurationActivity extends AppCompatActivity {
 
         mContext = ConfigurationActivity.this;
 
-        modificationBuilding = (Button) findViewById(R.id.modificationBuilding);
-        initBuilding = (Button) findViewById(R.id.initBuilding);
-        addBuilding = (Button) findViewById(R.id.addBuilding);
-        statistics = (Button) findViewById(R.id.statistics);
-        addGame = (Button) findViewById(R.id.addGame);
-        initStats = (Button) findViewById(R.id.initStats);
-        resetDb = (Button) findViewById(R.id.resetDb);
-        exportCsv = (Button) findViewById(R.id.exportCsv);
-        updateTimer = (Button) findViewById(R.id.updateTimer);
+        modificationBuilding = findViewById(R.id.modificationBuilding);
+        initBuilding = findViewById(R.id.initBuilding);
+        addBuilding = findViewById(R.id.addBuilding);
+        statistics = findViewById(R.id.statistics);
+        addGame = findViewById(R.id.addGame);
+        initStats = findViewById(R.id.initStats);
+        resetDb = findViewById(R.id.resetDb);
+        exportCsv = findViewById(R.id.exportCsv);
+        updateTimer = findViewById(R.id.updateTimer);
 
         modificationBuilding.setOnClickListener(new View.OnClickListener() {
             @Override

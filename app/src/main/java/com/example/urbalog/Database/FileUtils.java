@@ -3,8 +3,6 @@ package com.example.urbalog.Database;
 import android.content.Context;
 import android.os.Environment;
 
-import com.example.urbalog.R;
-
 import java.io.File;
 
 public class FileUtils {

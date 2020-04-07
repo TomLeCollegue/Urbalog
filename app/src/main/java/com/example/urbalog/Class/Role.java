@@ -113,10 +113,8 @@ public class Role implements Serializable {
             else if ((totalEnv > 0 && improve.equals("Environnement")) &&
                     ((totalAttractivite >= 0 && hold.equals("Attractivité")) ||(totalFluidite >= 0 && hold.equals("Fluidité"))))
                 return true;
-            else if((totalFluidite > 0 && improve.equals("Fluidité")) &&
-                    (((totalAttractivite >= 0 && hold.equals("Attractivité"))) ||(totalEnv >= 0 && hold.equals("Environnement"))))
-                return true;
-            else return false;
+            else return (totalFluidite > 0 && improve.equals("Fluidité")) &&
+                        (((totalAttractivite >= 0 && hold.equals("Attractivité"))) || (totalEnv >= 0 && hold.equals("Environnement")));
         } else{
             return false;
         }
