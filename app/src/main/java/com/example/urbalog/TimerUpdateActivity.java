@@ -43,6 +43,5 @@ public class TimerUpdateActivity extends AppCompatActivity {
         Intent intent = new Intent(TimerUpdateActivity.this, ConfigurationActivity.class);
         startActivity(intent);
         finish();
-        return;
     }
 }
