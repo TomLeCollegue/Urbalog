@@ -29,9 +29,10 @@ import com.google.android.gms.tasks.Task;
 
 public class MainActivity extends AppCompatActivity {
 
-    public final static String VERSION = "© Alpha V3.113";
+    public final static String VERSION = "© Alpha V3.10.2";
     private static final int REQUEST_CHECK_SETTINGS = 0x1;
     private LocationRequest locationRequest;
+    private int buttonChoice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +45,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void changeActivityPlayer(View view) {
+        buttonChoice = 1;
         checkGPS();
     }
 
 
     public void changeActivityAdmin(View view) {
-        Intent myIntent = new Intent(this, AdminConnectionActivity.class);
-        startActivity(myIntent);
+        buttonChoice = 2;
+        checkGPS();
     }
 
     /**
@@ -129,8 +131,14 @@ public class MainActivity extends AppCompatActivity {
         task.addOnSuccessListener(MainActivity.this, new OnSuccessListener<LocationSettingsResponse>() {
             @Override
             public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
-                Intent myIntent = new Intent(getApplicationContext(), FormActivity.class);
-                startActivity(myIntent);
+                if(buttonChoice == 1) {
+                    Intent myIntent = new Intent(getApplicationContext(), FormActivity.class);
+                    startActivity(myIntent);
+                }
+                else if (buttonChoice == 2){
+                    Intent myIntent = new Intent(getApplicationContext(), AdminConnectionActivity.class);
+                    startActivity(myIntent);
+                }
             }
         });
 
@@ -155,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Analyse requestcode result when activity result
+     * Analyse requestcode when activity result
      *
      * @param requestCode
      * @param resultCode
@@ -167,12 +175,20 @@ public class MainActivity extends AppCompatActivity {
 
         if(requestCode == REQUEST_CHECK_SETTINGS){
             if(resultCode==RESULT_OK){
-                Intent myIntent = new Intent(this, FormActivity.class);
-                startActivity(myIntent);
-                Log.d("result ok",data.toString());
+                if(buttonChoice == 1) {
+                    Intent myIntent = new Intent(getApplicationContext(), FormActivity.class);
+                    startActivity(myIntent);
+                }
+                else if (buttonChoice == 2){
+                    Intent myIntent = new Intent(getApplicationContext(), AdminConnectionActivity.class);
+                    startActivity(myIntent);
+                }
+                assert data != null;
+                Log.d("Gps is enabled",data.toString());
             }else if(resultCode==RESULT_CANCELED){
-                Toast.makeText(getApplicationContext(), "La localisation est nécéssaire pour ce connecter au host, merci de l'activer pour pouvoir jouer", Toast.LENGTH_SHORT).show();
-                Log.d("result cancelled",data.toString());
+                Toast.makeText(getApplicationContext(), "La localisation est nécéssaire pour la connexion entre les appareils, merci de l'activer pour pouvoir jouer", Toast.LENGTH_SHORT).show();
+                assert data != null;
+                Log.d("Gps is disabled",data.toString());
             }
         }
     }
