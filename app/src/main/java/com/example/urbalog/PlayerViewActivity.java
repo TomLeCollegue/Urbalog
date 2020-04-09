@@ -470,8 +470,6 @@ public class PlayerViewActivity extends AppCompatActivity {
 
 
         popUpBet.showAtLocation(v, Gravity.CENTER, 0, 0);
-        // Assombrissement de l'arrière plan
-        //dimBehind(popUpBet);
 
 
         buttonBetPopup.setOnClickListener(new View.OnClickListener() {
@@ -514,16 +512,14 @@ public class PlayerViewActivity extends AppCompatActivity {
             Ressource1 = "Economical";
             Ressource2 = "Political";
         }
-        if (!RoleInfo.getBooleanRessource()[1]){
+        else if (!RoleInfo.getBooleanRessource()[1]){
             Ressource1 = "Social";
             Ressource2 = "Political";
         }
-        if (!RoleInfo.getBooleanRessource()[2]){
+        else if (!RoleInfo.getBooleanRessource()[2]){
             Ressource1 = "Social";
             Ressource2 = "Economical";
         }
-
-
     }
 
     private void fillRoleCardRessources(){

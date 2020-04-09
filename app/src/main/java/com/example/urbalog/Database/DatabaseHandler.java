@@ -6,10 +6,14 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.urbalog.Class.Bet;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Player;
+import com.example.urbalog.Class.Role;
+import com.example.urbalog.NetworkHelper;
+import com.example.urbalog.PlayerConnexionActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,6 +63,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String PLAYER_JOB = "job";
     private static final String PLAYER_SCORE = "score";
     private static final String PLAYER_ROLE = "role";
+    private static final String PLAYER_POL = "mise_politique";
+    private static final String PLAYER_SOCIAL = "mise_sociale";
+    private static final String PLAYER_ECO = "mise_economique";
     private static final String PLAYER_CREATED_AT = "created_at";
     private static final String PLAYER_TABLE_NAME = "players";
 
@@ -70,6 +77,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     PLAYER_JOB + " TEXT, " +
                     PLAYER_SCORE + " INTEGER, " +
                     PLAYER_ROLE + " TEXT, " +
+                    PLAYER_POL + " INTEGER, " +
+                    PLAYER_SOCIAL + " INTEGER, " +
+                    PLAYER_ECO + " INTEGER, " +
                     PLAYER_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
                     "FOREIGN KEY(" + PLAYER_GAME_ID + ") REFERENCES " + GAME_TABLE_NAME + "(" + GAME_KEY + ")" +
                     ");";
@@ -166,6 +176,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         v.put(PLAYER_AGE, player.getAge());
         v.put(PLAYER_JOB, player.getJob());
         v.put(PLAYER_SCORE, 0);
+        v.put(PLAYER_POL, 0);
+        v.put(PLAYER_ECO, 0);
+        v.put(PLAYER_SOCIAL, 0);
         v.put(PLAYER_ROLE, player.getRole().getTypeRole());
         v.put(PLAYER_GAME_ID, game.getDbID());
         long res = db.insert(PLAYER_TABLE_NAME, null, v);
@@ -173,6 +186,59 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         player.setDbID(res);
 
         return res != -1;
+    }
+
+    /**
+     * Update Player data in db with final game values (score)
+     *
+     * @param player Player Instance
+     * @return bool
+     */
+    public boolean updatePlayer(Player player)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues v = new ContentValues();
+        Cursor mCursor;
+        int eco = 0, social = 0, pol = 0;
+
+        mCursor = getAllDataFromTable(PLAYER_TABLE_NAME, "id=" + player.getDbID());
+        mCursor.moveToFirst();
+        eco = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(PLAYER_ECO)));
+        social = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(PLAYER_SOCIAL)));
+        pol = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(PLAYER_POL)));
+        mCursor.close();
+
+        Role roleInfo = player.getRole();
+        if (!roleInfo.getBooleanRessource()[0]){
+            for (int i = 0; i < 5; i++) {
+                eco += player.getFinancementRessource()[i][0];
+                pol += player.getFinancementRessource()[i][1];
+            }
+            social = -1;
+        }
+        else if (!roleInfo.getBooleanRessource()[1]){
+            for (int i = 0; i < 5; i++) {
+                social += player.getFinancementRessource()[i][0];
+                pol += player.getFinancementRessource()[i][1];
+            }
+            eco = -1;
+        }
+        else if (!roleInfo.getBooleanRessource()[2]){
+            for (int i = 0; i < 5; i++) {
+                social += player.getFinancementRessource()[i][0];
+                eco += player.getFinancementRessource()[i][1];
+            }
+            pol = -1;
+        }
+
+        v.put(PLAYER_SCORE, player.getScore());
+        v.put(PLAYER_POL, pol);
+        v.put(PLAYER_ECO, eco);
+        v.put(PLAYER_SOCIAL, social);
+        String[] args = {String.valueOf(player.getDbID())};
+        int res = db.update(PLAYER_TABLE_NAME, v, PLAYER_KEY + " = ?", args);
+
+        return res > 0;
     }
 
     /**
@@ -218,10 +284,49 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @param table Table name
      * @return Cursor
      */
-    public Cursor getAllData(String table)
+    public Cursor getAllDataFromTable(String table)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT * FROM " + table, null);
+    }
+
+    /**
+     * Return Cursor pointing on first element of desired table with where
+     *
+     * @param table Table name
+     * @return Cursor
+     */
+    public Cursor getAllDataFromTable(String table, String where)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM " + table + " WHERE " + where, null);
+    }
+
+    /**
+     * Return Cursor pointing on first element of desired data of table
+     *
+     * @param table Table name
+     * @param data Data name
+     * @return Cursor
+     */
+    public Cursor getOneDataFromTable(String table, String data)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT " + data + " FROM " + table, null);
+    }
+
+    /**
+     * Return Cursor pointing on first element of desired data of table with where parameter
+     *
+     * @param table Table name
+     * @param data Data name
+     * @param where Where constraint
+     * @return Cursor
+     */
+    public Cursor getOneDataFromTable(String table, String data, String where)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT " + data + " FROM " + table + " WHERE " + where, null);
     }
 
     /**

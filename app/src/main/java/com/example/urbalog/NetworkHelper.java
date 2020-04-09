@@ -89,7 +89,7 @@ public class NetworkHelper implements Serializable {
     private int nextTurnVotes = 0;
 
     private final ConnectionsClient connectionsClient;
-    private static final String TAG = "UrbalogGame"; // Tag for log
+    public static final String TAG = "UrbalogGame"; // Tag for log
     private final String codeName = CodenameGenerator.generate();
     private final String playerUUID;
 
@@ -140,7 +140,6 @@ public class NetworkHelper implements Serializable {
                                 case MARKET_RECEIVED:
                                     if (((Duo) ((TransferPackage) dataReceived).second).second instanceof Market) {
                                         try {
-                                            player.resetFinancementRessource();
                                             sendToClient(new TransferPackage<Duo>(
                                                     Signal.UPDATE_PLAYER,
                                                     new Duo<>(playerUUID, player)), endpointId);
@@ -238,10 +237,10 @@ public class NetworkHelper implements Serializable {
 
                                     }
                                     try {
-                                        player.resetFinancementRessource();
                                         sendToClient(new TransferPackage<Duo>(
-                                                Signal.UPDATE_PLAYER,
+                                                Signal.CHECK_GOALS,
                                                 new Duo<>(playerUUID, player)), endpointId);
+                                        player.resetFinancementRessource();
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -392,6 +391,16 @@ public class NetworkHelper implements Serializable {
                                     for (int i = 0; i < playersInformations.size(); i++) {
                                         if (playersInformations.get(i).getSecond().equals(((Duo)((TransferPackage) dataReceived).second).first)){
                                             playersInformations.get(i).setFirst((Player)((Duo)((TransferPackage) dataReceived).second).second);
+                                        }
+                                    }
+                                    break;
+
+                                case CHECK_GOALS:
+                                    for (int i = 0; i < playersInformations.size(); i++) {
+                                        if (playersInformations.get(i).getSecond().equals(((Duo)((TransferPackage) dataReceived).second).first)){
+                                            playersInformations.get(i).setFirst((Player)((Duo)((TransferPackage) dataReceived).second).second);
+                                            db.updatePlayer(playersInformations.get(i).getFirst());
+                                            playersInformations.get(i).getFirst().resetFinancementRessource();
                                         }
                                     }
                                     break;
