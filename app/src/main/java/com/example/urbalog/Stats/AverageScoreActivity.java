@@ -164,7 +164,7 @@ public class AverageScoreActivity extends AppCompatActivity {
         Log.d("debug", "getScoreLogistiqueByGame...");
         HashMap<Date, Integer> res = new HashMap<>();
         Date date;
-        int nbScore, i=1;
+        int nbScore;
 
         Cursor mCursor = db.getMultipleDataFromTable(DatabaseHandler.GAME_TABLE_NAME, new String[]{DatabaseHandler.GAME_SCORE_LOG, DatabaseHandler.GAME_CREATED_AT});
         try {
@@ -186,7 +186,7 @@ public class AverageScoreActivity extends AppCompatActivity {
         Log.d("debug", "getScoreAttractiviteByGame...");
         HashMap<Date, Integer> res = new HashMap<>();
         Date date;
-        int nbScore, i=1;
+        int nbScore;
 
         Cursor mCursor = db.getMultipleDataFromTable(DatabaseHandler.GAME_TABLE_NAME, new String[]{DatabaseHandler.GAME_SCORE_ATTR, DatabaseHandler.GAME_CREATED_AT});
         try {
@@ -208,7 +208,7 @@ public class AverageScoreActivity extends AppCompatActivity {
         Log.d("debug", "getScoreFluiditeByGame...");
         HashMap<Date, Integer> res = new HashMap<>();
         Date date;
-        int nbScore, i=1;
+        int nbScore;
 
         Cursor mCursor = db.getMultipleDataFromTable(DatabaseHandler.GAME_TABLE_NAME, new String[]{DatabaseHandler.GAME_SCORE_FLUID, DatabaseHandler.GAME_CREATED_AT});
         try {
@@ -230,7 +230,7 @@ public class AverageScoreActivity extends AppCompatActivity {
         Log.d("debug", "getScoreEnvironnementalByGame...");
         HashMap<Date, Integer> res = new HashMap<>();
         Date date;
-        int nbScore, i=1;
+        int nbScore;
 
         Cursor mCursor = db.getMultipleDataFromTable(DatabaseHandler.GAME_TABLE_NAME, new String[]{DatabaseHandler.GAME_SCORE_ENV, DatabaseHandler.GAME_CREATED_AT});
         try {
