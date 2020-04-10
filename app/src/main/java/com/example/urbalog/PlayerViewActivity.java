@@ -298,6 +298,12 @@ public class PlayerViewActivity extends AppCompatActivity {
         diaBox.show();
     }
 
+    /**
+     * Create AlertDialog when player hit return button
+     * for confimation
+     *
+     * @return Exit confimation alert dialog
+     */
     private AlertDialog AskOption()
     {
         return new AlertDialog.Builder(this)
@@ -464,8 +470,6 @@ public class PlayerViewActivity extends AppCompatActivity {
 
 
         popUpBet.showAtLocation(v, Gravity.CENTER, 0, 0);
-        // Assombrissement de l'arrière plan
-        //dimBehind(popUpBet);
 
 
         buttonBetPopup.setOnClickListener(new View.OnClickListener() {
@@ -474,30 +478,6 @@ public class PlayerViewActivity extends AppCompatActivity {
                 popUpBet.dismiss();
             }
         });
-    }
-
-    private void dimBehind(PopupWindow popupWindow)
-    {
-        View container;
-        if (popupWindow.getBackground() == null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                container = (View)popupWindow.getContentView().getParent();
-            } else {
-                container = popupWindow.getContentView();
-            }
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                container = (View)popupWindow.getContentView().getParent().getParent();
-            } else {
-                container = (View)popupWindow.getContentView().getParent();
-            }
-        }
-        Context context = popupWindow.getContentView().getContext();
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        WindowManager.LayoutParams p = (WindowManager.LayoutParams) container.getLayoutParams();
-        p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-        p.dimAmount = 0.5f;
-        wm.updateViewLayout(container, p);
     }
 
     private void fillRoleCardObjectives(){
@@ -528,20 +508,18 @@ public class PlayerViewActivity extends AppCompatActivity {
     private void fillRessources(){
         Role RoleInfo = PlayerConnexionActivity.net.getPlayer().getRole();
 
-        if (RoleInfo.getBooleanRessource()[0] == false){
+        if (!RoleInfo.getBooleanRessource()[0]){
             Ressource1 = "Economical";
             Ressource2 = "Political";
         }
-        if (RoleInfo.getBooleanRessource()[1] == false){
+        else if (!RoleInfo.getBooleanRessource()[1]){
             Ressource1 = "Social";
             Ressource2 = "Political";
         }
-        if (RoleInfo.getBooleanRessource()[2] == false){
+        else if (!RoleInfo.getBooleanRessource()[2]){
             Ressource1 = "Social";
             Ressource2 = "Economical";
         }
-
-
     }
 
     private void fillRoleCardRessources(){

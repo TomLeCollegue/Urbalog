@@ -6,10 +6,14 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.urbalog.Class.Bet;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Player;
+import com.example.urbalog.Class.Role;
+import com.example.urbalog.NetworkHelper;
+import com.example.urbalog.PlayerConnexionActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,6 +24,7 @@ import java.util.List;
  * - insert
  * - delete
  * - select
+ * - update
  * - create database and tables
  */
 
@@ -27,29 +32,42 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String DB_NAME = "Urbalog";
 
     // Constants for games table
-    private final String GAME_KEY = "id";
-    private final String GAME_NB_PLAYER = "nb_player";
-    private final String GAME_NB_BUILDING = "nb_building";
-    private final String GAME_CREATED_AT = "created_at";
-    private static final String GAME_TABLE_NAME = "games";
+    public static final String GAME_KEY = "id";
+    public static final String GAME_NB_PLAYER = "nb_player";
+    public static final String GAME_NB_BUILDING = "nb_building";
+    public static final String GAME_SCORE_FLUID = "score_fluidité";
+    public static final String GAME_SCORE_ATTR = "score_attractivité";
+    public static final String GAME_SCORE_ENV = "score_environmental";
+    public static final String GAME_SCORE_LOG = "score_logistique";
+    public static final String GAME_NB_TURN = "nb_turn";
+    public static final String GAME_CREATED_AT = "created_at";
+    public static final String GAME_TABLE_NAME = "games";
 
     private final String TABLE_GAME_CREATE =
             "CREATE TABLE " + GAME_TABLE_NAME + " (" +
                     GAME_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     GAME_NB_PLAYER + " INTEGER, " +
                     GAME_NB_BUILDING + " INTEGER, " +
+                    GAME_SCORE_FLUID + " INTEGER, " +
+                    GAME_SCORE_ATTR + " INTEGER, " +
+                    GAME_SCORE_ENV + " INTEGER, " +
+                    GAME_SCORE_LOG + " INTEGER, " +
+                    GAME_NB_TURN + " INTEGER, " +
                     GAME_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP" +
                     ");";
 
     // Constants for players table
-    private final String PLAYER_KEY = "id";
-    private final String PLAYER_GAME_ID = "game_id";
-    private final String PLAYER_AGE = "age";
-    private final String PLAYER_JOB = "job";
-    private final String PLAYER_SCORE = "score";
-    private final String PLAYER_ROLE = "role";
-    private final String PLAYER_CREATED_AT = "created_at";
-    private static final String PLAYER_TABLE_NAME = "players";
+    public static final String PLAYER_KEY = "id";
+    public static final String PLAYER_GAME_ID = "game_id";
+    public static final String PLAYER_AGE = "age";
+    public static final String PLAYER_JOB = "job";
+    public static final String PLAYER_SCORE = "score";
+    public static final String PLAYER_ROLE = "role";
+    public static final String PLAYER_POL = "mise_politique";
+    public static final String PLAYER_SOCIAL = "mise_sociale";
+    public static final String PLAYER_ECO = "mise_economique";
+    public static final String PLAYER_CREATED_AT = "created_at";
+    public static final String PLAYER_TABLE_NAME = "players";
 
     private final String TABLE_PLAYER_CREATE =
             "CREATE TABLE " + PLAYER_TABLE_NAME + " (" +
@@ -59,20 +77,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     PLAYER_JOB + " TEXT, " +
                     PLAYER_SCORE + " INTEGER, " +
                     PLAYER_ROLE + " TEXT, " +
+                    PLAYER_POL + " INTEGER, " +
+                    PLAYER_SOCIAL + " INTEGER, " +
+                    PLAYER_ECO + " INTEGER, " +
                     PLAYER_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
                     "FOREIGN KEY(" + PLAYER_GAME_ID + ") REFERENCES " + GAME_TABLE_NAME + "(" + GAME_KEY + ")" +
                     ");";
 
     // Constants for bet_history table
-    private final String BET_KEY = "id";
-    private final String BET_GAME_ID = "game_id";
-    private final String BET_PLAYER_ID = "player_id";
-    private final String BET_MISE_POLITIQUE = "mise_politique";
-    private final String BET_MISE_SOCIAL = "mise_social";
-    private final String BET_MISE_ECO = "mise_eco";
-    private final String BET_BUILDING = "building";
-    private final String BET_CREATED_AT = "created_at";
-    private static final String BET_TABLE_NAME = "bet_history";
+    public static final String BET_KEY = "id";
+    public static final String BET_GAME_ID = "game_id";
+    public static final String BET_PLAYER_ID = "player_id";
+    public static final String BET_MISE_POLITIQUE = "mise_politique";
+    public static final String BET_MISE_SOCIAL = "mise_social";
+    public static final String BET_MISE_ECO = "mise_eco";
+    public static final String BET_BUILDING = "building";
+    public static final String BET_CREATED_AT = "created_at";
+    public static final String BET_TABLE_NAME = "bet_history";
 
 
     private final String TABLE_BET_CREATE =
@@ -119,6 +140,28 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
+     * Update Game data in db with final game values (score, nb turn, ect...)
+     *
+     * @param game Game Instance
+     * @return bool
+     */
+    public boolean updateGame(Game game)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues v = new ContentValues();
+
+        v.put(GAME_SCORE_FLUID, game.getScoreFluidite());
+        v.put(GAME_SCORE_ENV, game.getScoreEnvironnemental());
+        v.put(GAME_SCORE_ATTR, game.getScoreAttractivite());
+        v.put(GAME_SCORE_LOG, game.getScoreLogistique());
+        v.put(GAME_NB_TURN, game.getnTurn());
+        String[] args = {String.valueOf(game.getDbID())};
+        int res = db.update(GAME_TABLE_NAME, v, GAME_KEY + " = ?", args);
+
+        return res > 0;
+    }
+
+    /**
      * Insert Player instance data in db
      *
      * @param game Game instance
@@ -133,6 +176,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         v.put(PLAYER_AGE, player.getAge());
         v.put(PLAYER_JOB, player.getJob());
         v.put(PLAYER_SCORE, 0);
+        v.put(PLAYER_POL, 0);
+        v.put(PLAYER_ECO, 0);
+        v.put(PLAYER_SOCIAL, 0);
         v.put(PLAYER_ROLE, player.getRole().getTypeRole());
         v.put(PLAYER_GAME_ID, game.getDbID());
         long res = db.insert(PLAYER_TABLE_NAME, null, v);
@@ -140,6 +186,59 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         player.setDbID(res);
 
         return res != -1;
+    }
+
+    /**
+     * Update Player data in db with final game values (score)
+     *
+     * @param player Player Instance
+     * @return bool
+     */
+    public boolean updatePlayer(Player player)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues v = new ContentValues();
+        Cursor mCursor;
+        int eco = 0, social = 0, pol = 0;
+
+        mCursor = getAllDataFromTable(PLAYER_TABLE_NAME, "id=" + player.getDbID());
+        mCursor.moveToFirst();
+        eco = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(PLAYER_ECO)));
+        social = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(PLAYER_SOCIAL)));
+        pol = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(PLAYER_POL)));
+        mCursor.close();
+
+        Role roleInfo = player.getRole();
+        if (!roleInfo.getBooleanRessource()[0]){
+            for (int i = 0; i < 5; i++) {
+                eco += player.getFinancementRessource()[i][0];
+                pol += player.getFinancementRessource()[i][1];
+            }
+            social = -1;
+        }
+        else if (!roleInfo.getBooleanRessource()[1]){
+            for (int i = 0; i < 5; i++) {
+                social += player.getFinancementRessource()[i][0];
+                pol += player.getFinancementRessource()[i][1];
+            }
+            eco = -1;
+        }
+        else if (!roleInfo.getBooleanRessource()[2]){
+            for (int i = 0; i < 5; i++) {
+                social += player.getFinancementRessource()[i][0];
+                eco += player.getFinancementRessource()[i][1];
+            }
+            pol = -1;
+        }
+
+        v.put(PLAYER_SCORE, player.getScore());
+        v.put(PLAYER_POL, pol);
+        v.put(PLAYER_ECO, eco);
+        v.put(PLAYER_SOCIAL, social);
+        String[] args = {String.valueOf(player.getDbID())};
+        int res = db.update(PLAYER_TABLE_NAME, v, PLAYER_KEY + " = ?", args);
+
+        return res > 0;
     }
 
     /**
@@ -185,10 +284,67 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @param table Table name
      * @return Cursor
      */
-    public Cursor getAllData(String table)
+    public Cursor getAllDataFromTable(String table)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT * FROM " + table, null);
+    }
+
+    /**
+     * Return Cursor pointing on first element of desired table with where
+     *
+     * @param table Table name
+     * @return Cursor
+     */
+    public Cursor getAllDataFromTable(String table, String where)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM " + table + " WHERE " + where, null);
+    }
+
+    /**
+     * Return Cursor pointing on first element of desired data of table
+     *
+     * @param table Table name
+     * @param data Data name
+     * @return Cursor
+     */
+    public Cursor getOneDataFromTable(String table, String data)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT " + data + " FROM " + table, null);
+    }
+
+    /**
+     * Return Cursor pointing on first element of desired data of table with where parameter
+     *
+     * @param table Table name
+     * @param data Data name
+     * @param where Where constraint
+     * @return Cursor
+     */
+    public Cursor getOneDataFromTable(String table, String data, String where)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT " + data + " FROM " + table + " WHERE " + where, null);
+    }
+
+    /**
+     * Return Cursor pointing on first element of desired data of table
+     *
+     * @param table Table name
+     * @param data Data name
+     * @return Cursor
+     */
+    public Cursor getMultipleDataFromTable(String table, String[] data)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String catData = data[0];
+        for (int i = 1; i < data.length; i++) {
+            catData = catData.concat(", "+data[i]);
+        }
+        Log.d(NetworkHelper.TAG, "SELECT " + catData + " FROM " + table);
+        return db.rawQuery("SELECT " + catData + " FROM " + table, null);
     }
 
     /**
