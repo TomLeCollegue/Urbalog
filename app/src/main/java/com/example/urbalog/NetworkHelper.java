@@ -24,7 +24,6 @@ import com.example.urbalog.Class.Signal;
 import com.example.urbalog.Class.TransferPackage;
 import com.example.urbalog.Class.Triplet;
 import com.example.urbalog.Database.DatabaseHandler;
-import com.example.urbalog.Json.JsonStats;
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
 import com.google.android.gms.nearby.connection.ConnectionInfo;

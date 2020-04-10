@@ -9,7 +9,6 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.urbalog.Database.DatabaseHandler;
-import com.example.urbalog.Json.JsonStats;
 import com.example.urbalog.NetworkHelper;
 import com.example.urbalog.R;
 import com.example.urbalog.StatsActivity;
@@ -23,18 +22,10 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class PcsPercentActivity extends AppCompatActivity implements OnChartValueSelectedListener{

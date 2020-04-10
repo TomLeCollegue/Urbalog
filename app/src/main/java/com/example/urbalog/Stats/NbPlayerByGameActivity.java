@@ -9,7 +9,6 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.urbalog.Database.DatabaseHandler;
-import com.example.urbalog.Json.JsonStats;
 import com.example.urbalog.NetworkHelper;
 import com.example.urbalog.R;
 import com.example.urbalog.StatsActivity;

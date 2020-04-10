@@ -9,7 +9,6 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.urbalog.Database.DatabaseHandler;
-import com.example.urbalog.Json.JsonStats;
 import com.example.urbalog.NetworkHelper;
 import com.example.urbalog.R;
 import com.example.urbalog.StatsActivity;
@@ -22,11 +21,6 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

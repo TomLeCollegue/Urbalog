@@ -13,7 +13,6 @@ import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Player;
 import com.example.urbalog.Class.Role;
 import com.example.urbalog.NetworkHelper;
-import com.example.urbalog.PlayerConnexionActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
