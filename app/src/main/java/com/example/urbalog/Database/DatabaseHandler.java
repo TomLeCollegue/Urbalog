@@ -32,16 +32,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String DB_NAME = "Urbalog";
 
     // Constants for games table
-    private final String GAME_KEY = "id";
-    private static final String GAME_NB_PLAYER = "nb_player";
-    private static final String GAME_NB_BUILDING = "nb_building";
-    private static final String GAME_SCORE_FLUID = "score_fluidité";
-    private static final String GAME_SCORE_ATTR = "score_attractivité";
-    private static final String GAME_SCORE_ENV = "score_environmental";
-    private static final String GAME_SCORE_LOG = "score_logistique";
-    private static final String GAME_NB_TURN = "nb_turn";
-    private static final String GAME_CREATED_AT = "created_at";
-    private static final String GAME_TABLE_NAME = "games";
+    public static final String GAME_KEY = "id";
+    public static final String GAME_NB_PLAYER = "nb_player";
+    public static final String GAME_NB_BUILDING = "nb_building";
+    public static final String GAME_SCORE_FLUID = "score_fluidité";
+    public static final String GAME_SCORE_ATTR = "score_attractivité";
+    public static final String GAME_SCORE_ENV = "score_environmental";
+    public static final String GAME_SCORE_LOG = "score_logistique";
+    public static final String GAME_NB_TURN = "nb_turn";
+    public static final String GAME_CREATED_AT = "created_at";
+    public static final String GAME_TABLE_NAME = "games";
 
     private final String TABLE_GAME_CREATE =
             "CREATE TABLE " + GAME_TABLE_NAME + " (" +
@@ -57,17 +57,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     ");";
 
     // Constants for players table
-    private final String PLAYER_KEY = "id";
-    private static final String PLAYER_GAME_ID = "game_id";
-    private static final String PLAYER_AGE = "age";
-    private static final String PLAYER_JOB = "job";
-    private static final String PLAYER_SCORE = "score";
-    private static final String PLAYER_ROLE = "role";
-    private static final String PLAYER_POL = "mise_politique";
-    private static final String PLAYER_SOCIAL = "mise_sociale";
-    private static final String PLAYER_ECO = "mise_economique";
-    private static final String PLAYER_CREATED_AT = "created_at";
-    private static final String PLAYER_TABLE_NAME = "players";
+    public static final String PLAYER_KEY = "id";
+    public static final String PLAYER_GAME_ID = "game_id";
+    public static final String PLAYER_AGE = "age";
+    public static final String PLAYER_JOB = "job";
+    public static final String PLAYER_SCORE = "score";
+    public static final String PLAYER_ROLE = "role";
+    public static final String PLAYER_POL = "mise_politique";
+    public static final String PLAYER_SOCIAL = "mise_sociale";
+    public static final String PLAYER_ECO = "mise_economique";
+    public static final String PLAYER_CREATED_AT = "created_at";
+    public static final String PLAYER_TABLE_NAME = "players";
 
     private final String TABLE_PLAYER_CREATE =
             "CREATE TABLE " + PLAYER_TABLE_NAME + " (" +
@@ -85,15 +85,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     ");";
 
     // Constants for bet_history table
-    private static final String BET_KEY = "id";
-    private static final String BET_GAME_ID = "game_id";
-    private static final String BET_PLAYER_ID = "player_id";
-    private static final String BET_MISE_POLITIQUE = "mise_politique";
-    private static final String BET_MISE_SOCIAL = "mise_social";
-    private static final String BET_MISE_ECO = "mise_eco";
-    private static final String BET_BUILDING = "building";
-    private static final String BET_CREATED_AT = "created_at";
-    private static final String BET_TABLE_NAME = "bet_history";
+    public static final String BET_KEY = "id";
+    public static final String BET_GAME_ID = "game_id";
+    public static final String BET_PLAYER_ID = "player_id";
+    public static final String BET_MISE_POLITIQUE = "mise_politique";
+    public static final String BET_MISE_SOCIAL = "mise_social";
+    public static final String BET_MISE_ECO = "mise_eco";
+    public static final String BET_BUILDING = "building";
+    public static final String BET_CREATED_AT = "created_at";
+    public static final String BET_TABLE_NAME = "bet_history";
 
 
     private final String TABLE_BET_CREATE =
@@ -327,6 +327,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT " + data + " FROM " + table + " WHERE " + where, null);
+    }
+
+    /**
+     * Return Cursor pointing on first element of desired data of table
+     *
+     * @param table Table name
+     * @param data Data name
+     * @return Cursor
+     */
+    public Cursor getMultipleDataFromTable(String table, String[] data)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String catData = data[0];
+        for (int i = 1; i < data.length; i++) {
+            catData = catData.concat(", "+data[i]);
+        }
+        Log.d(NetworkHelper.TAG, "SELECT " + catData + " FROM " + table);
+        return db.rawQuery("SELECT " + catData + " FROM " + table, null);
     }
 
     /**
