@@ -28,7 +28,7 @@ public class CityProgressionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_progression);
 
-        buildings = AdminConnectionActivity.net.getCurrentGame().getCity().getBuildings();
+        buildings.addAll(AdminConnectionActivity.net.getCurrentGame().getCity().getBuildings());
 
         Building b = new Building("Emplacement Libre"," ",0,0,0,0,0,0,0, " ");
 
