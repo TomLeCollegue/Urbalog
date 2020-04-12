@@ -28,7 +28,6 @@ public class CityProgressionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_progression);
 
-
         buildings = AdminConnectionActivity.net.getCurrentGame().getCity().getBuildings();
 
         Building b = new Building("Emplacement Libre"," ",0,0,0,0,0,0,0, " ");
@@ -39,15 +38,11 @@ public class CityProgressionActivity extends AppCompatActivity {
             buildings.add(b);
         }
 
-
         mProgressionAdapter = new CityProgressionAdapter(buildings);
         rv = findViewById(R.id.recyclerListBuildingsInCity);
         rv.setLayoutManager(new LinearLayoutManager(CityProgressionActivity.this,LinearLayoutManager.HORIZONTAL,false));
 
-
         rv.setAdapter(mProgressionAdapter);
-
-
 
         AdminConnectionActivity.net.setCurrentAdminView(this);
     }

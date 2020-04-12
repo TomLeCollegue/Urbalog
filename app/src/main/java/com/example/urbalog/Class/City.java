@@ -14,7 +14,7 @@ public class City implements Serializable {
     }
 
     public ArrayList<Building> getBuildings() {
-        return buildings;
+        return (ArrayList<Building>) buildings.clone();
     }
 
     public void setBuildings(ArrayList<Building> buildings) {
