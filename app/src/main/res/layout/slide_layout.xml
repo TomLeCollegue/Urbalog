@@ -58,10 +58,11 @@
                 android:prompt="@string/app_name"/>
 
 
+
             <Spinner
                 android:layout_gravity="center"
                 android:paddingHorizontal="30dp"
-                android:id="@+id/slide_profession"
+                android:id="@+id/slide_statutActivite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:prompt="@string/app_name"/>
@@ -97,14 +98,14 @@
                 android:layout_height="wrap_content">
             </EditText>
 
-
             <Spinner
                 android:layout_gravity="center"
                 android:paddingHorizontal="30dp"
-                android:id="@+id/slide_secteurActivite"
+                android:id="@+id/slide_profession"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:prompt="@string/app_name"/>
+
 
             <TextView
                 android:layout_marginTop="20dp"
@@ -127,16 +128,6 @@
                 android:layout_height="wrap_content"
                 android:prompt="@string/app_name"/>
 
-
-            <Spinner
-                android:layout_gravity="center"
-                android:paddingHorizontal="30dp"
-                android:id="@+id/slide_statutActivite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:prompt="@string/app_name"/>
-            
-
             <EditText
                 android:id="@+id/slide_entreprise"
                 android:layout_weight="1"
@@ -145,6 +136,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             </EditText>
+
+            <Spinner
+                android:layout_gravity="center"
+                android:paddingHorizontal="30dp"
+                android:id="@+id/slide_secteurActivite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:prompt="@string/app_name"/>
 
         </LinearLayout>
 

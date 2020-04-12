@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.urbalog.FormActivity;
 import com.example.urbalog.R;
 
 import java.util.Arrays;
@@ -84,19 +85,19 @@ public class FormAdapter extends PagerAdapter {
     public String[] slide_titles_1 = {
             "Quel est votre prénom ?",
             "Quel est votre age ?",
-            "Quelle est votre profession ?"
+            "Quel est votre statut d'activité ?"
     };
 
     public String[] slide_titles_2 = {
             "Quel est votre nom ?",
             "Quel est votre lieu de résidence ?",
-            "Quel est votre secteur d'activité ?"
+            "Quelle est votre profession ?"
     };
 
     public String[] slide_titles_3 = {
             "Quel est votre sexe ?",
-            "Quel est votre statut d'activité ?",
-            "Quelle est votre entreprise?"
+            "Quelle est votre entreprise?",
+            "Quel est votre secteur d'activité ?"
     };
 
     private String[] slide_age = {
@@ -230,7 +231,9 @@ public class FormAdapter extends PagerAdapter {
         sexe.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                finalSexe = slide_sexe[position];
+                if(position != 0){
+                    finalSexe = slide_sexe[position];
+                }
             }
 
             @Override
@@ -247,7 +250,9 @@ public class FormAdapter extends PagerAdapter {
         age.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                finalAge = slide_age[position];
+                if(position != 0) {
+                    finalAge = slide_age[position];
+                }
             }
 
             @Override
@@ -277,24 +282,6 @@ public class FormAdapter extends PagerAdapter {
             }
         });
 
-        statutActivité = view.findViewById(R.id.slide_statutActivite);
-        ArrayAdapter<String> dataAdapterStatutActivite = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, slide_statut_activite);
-        dataAdapterStatutActivite.setDropDownViewResource(android.R.layout.select_dialog_item);
-        statutActivité.setAdapter(dataAdapterStatutActivite);
-        statutActivité.setGravity(Gravity.CENTER);
-        statutActivité.setSelection(dataAdapterStatutActivite.getPosition(finalStatutActivite));
-        statutActivité.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                finalStatutActivite = slide_statut_activite[position];
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
         profession = view.findViewById(R.id.slide_profession);
         ArrayAdapter<String> dataAdapterProfession = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, slide_profession);
         dataAdapterProfession.setDropDownViewResource(android.R.layout.select_dialog_item);
@@ -304,7 +291,9 @@ public class FormAdapter extends PagerAdapter {
         profession.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                finalProfession = slide_profession[position];
+                if(position != 0){
+                    finalProfession = slide_profession[position];
+                }
             }
 
             @Override
@@ -312,6 +301,52 @@ public class FormAdapter extends PagerAdapter {
 
             }
         });
+
+        statutActivité = view.findViewById(R.id.slide_statutActivite);
+        ArrayAdapter<String> dataAdapterStatutActivite = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, slide_statut_activite);
+        dataAdapterStatutActivite.setDropDownViewResource(android.R.layout.select_dialog_item);
+        statutActivité.setAdapter(dataAdapterStatutActivite);
+        statutActivité.setGravity(Gravity.CENTER);
+        statutActivité.setSelection(dataAdapterStatutActivite.getPosition(finalStatutActivite));
+        statutActivité.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position != 0){
+                    finalStatutActivite = slide_statut_activite[position];
+                }
+                switch(position) {
+                    case 1:
+                        Log.d("debug", "1");
+                        finalProfession = "";
+                        title2.setVisibility(View.VISIBLE);
+                        profession.setVisibility(View.VISIBLE);
+                        break;
+                    case 2:
+                        Log.d("debug", "2");
+                        finalProfession = "";
+                        title2.setVisibility(View.VISIBLE);
+                        profession.setVisibility(View.VISIBLE);
+                        break;
+                    case 3:
+                        Log.d("debug", "3");
+                        finalProfession = "";
+                        title2.setVisibility(View.VISIBLE);
+                        profession.setVisibility(View.VISIBLE);
+                        break;
+                    default:
+                        finalProfession = null;
+                        title2.setVisibility(View.GONE);
+                        profession.setVisibility(View.GONE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         secteurActivité = view.findViewById(R.id.slide_secteurActivite);
         ArrayAdapter<String> dataAdapterSecteurActivite = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, slide_secteur_activite);
@@ -357,18 +392,18 @@ public class FormAdapter extends PagerAdapter {
             case 0:
                 age.setVisibility(View.GONE);
                 residence.setVisibility(View.GONE);
+                entreprise.setVisibility(View.GONE);
                 statutActivité.setVisibility(View.GONE);
                 profession.setVisibility(View.GONE);
                 secteurActivité.setVisibility(View.GONE);
-                entreprise.setVisibility(View.GONE);
                 break;
             case 1:
                 firstName.setVisibility(View.GONE);
                 name.setVisibility(View.GONE);
                 sexe.setVisibility(View.GONE);
-                profession.setVisibility(View.GONE);
                 secteurActivité.setVisibility(View.GONE);
-                entreprise.setVisibility(View.GONE);
+                profession.setVisibility(View.GONE);
+                statutActivité.setVisibility(View.GONE);
                 break;
             case 2:
                 firstName.setVisibility(View.GONE);
@@ -376,7 +411,10 @@ public class FormAdapter extends PagerAdapter {
                 sexe.setVisibility(View.GONE);
                 age.setVisibility(View.GONE);
                 residence.setVisibility(View.GONE);
-                statutActivité.setVisibility(View.GONE);
+                entreprise.setVisibility(View.GONE);
+
+                profession.setVisibility(View.GONE);
+                title2.setVisibility(View.GONE);
                 break;
         }
 
@@ -387,7 +425,7 @@ public class FormAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        //container.removeView((LinearLayout)object);
+        container.removeView((LinearLayout)object);
     }
 
 

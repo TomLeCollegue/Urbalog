@@ -53,6 +53,7 @@ public class FormActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(currentPage == formAdapter.getCount()-1){
                     String firstName = formAdapter.getFinalFirstName();
                     String name = formAdapter.getFinalName();
@@ -71,49 +72,51 @@ public class FormActivity extends AppCompatActivity {
                     {
                         Log.d("debug", "name null");
                         getViewPager().setCurrentItem(0);
-                        Toast.makeText(FormActivity.this, "le champ n'est pas rempli", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FormActivity.this, "Un champ n'est pas rempli", Toast.LENGTH_SHORT).show();
                     }
                     else if(sexe.matches(""))
                     {
                         Log.d("debug", "sexe null");
                         getViewPager().setCurrentItem(0);
-                        Toast.makeText(FormActivity.this, "le champ n'est pas rempli", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FormActivity.this, "Un champ n'est pas rempli", Toast.LENGTH_SHORT).show();
                     }
                     else if(age.matches(""))
                     {
                         Log.d("debug", "age null");
                         getViewPager().setCurrentItem(1);
-                        Toast.makeText(FormActivity.this, "le champ n'est pas rempli", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FormActivity.this, "Un champ n'est pas rempli", Toast.LENGTH_SHORT).show();
                     }
                     else if(residence.trim().matches(""))
                     {
                         Log.d("debug", "residence null");
                         getViewPager().setCurrentItem(1);
-                        Toast.makeText(FormActivity.this, "le champ n'est pas rempli", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FormActivity.this, "Un champ n'est pas rempli", Toast.LENGTH_SHORT).show();
                     }
                     else if(statutActivite.matches(""))
                     {
                         Log.d("debug", "statut null");
-                        getViewPager().setCurrentItem(1);
-                        Toast.makeText(FormActivity.this, "le champ n'est pas rempli", Toast.LENGTH_SHORT).show();
-                    }
-                    else if(profession.trim().matches(""))
-                    {
-                        Log.d("debug", "profession null");
                         getViewPager().setCurrentItem(2);
-                        Toast.makeText(FormActivity.this, "le champ n'est pas rempli", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FormActivity.this, "Un champ n'est pas rempli", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(profession != null)
+                    {
+                        if(profession.matches("")){
+                            Log.d("debug", "profession null");
+                            getViewPager().setCurrentItem(2);
+                            Toast.makeText(FormActivity.this, "Un champ n'est pas rempli", Toast.LENGTH_SHORT).show();
+                        }
                     }
                     else if(secteurActivite.trim().matches(""))
                     {
                         Log.d("debug", "secteur null");
                         getViewPager().setCurrentItem(2);
-                        Toast.makeText(FormActivity.this, "le champ n'est pas rempli", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FormActivity.this, "Un champ n'est pas rempli", Toast.LENGTH_SHORT).show();
                     }
                     else if(entreprise.trim().matches(""))
                     {
                         Log.d("debug", "entreprise null");
-                        getViewPager().setCurrentItem(2);
-                        Toast.makeText(FormActivity.this, "le champ n'est pas rempli", Toast.LENGTH_SHORT).show();
+                        getViewPager().setCurrentItem(1);
+                        Toast.makeText(FormActivity.this, "Un champ n'est pas rempli", Toast.LENGTH_SHORT).show();
                     }
                     else
                     {
@@ -201,4 +204,12 @@ public class FormActivity extends AppCompatActivity {
 
         }
     };
+
+    public void refresh(){
+        int currentPosition = mSlideViewPager.getCurrentItem();
+        formAdapter.notifyDataSetChanged();
+        mSlideViewPager.setAdapter(null);
+        mSlideViewPager.setAdapter(formAdapter);
+        mSlideViewPager.setCurrentItem(currentPosition);
+    }
 }
