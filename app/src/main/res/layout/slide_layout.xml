@@ -32,17 +32,15 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/slide_titre"
-                android:textSize="30dp"
+                android:id="@+id/slide_title_1"
+                android:textSize="25dp"
                 android:text="un"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content">
             </TextView>
 
-
-
             <EditText
-                android:id="@+id/slide_res"
+                android:id="@+id/slide_firstName"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text=""
@@ -50,24 +48,104 @@
                 android:layout_height="wrap_content">
             </EditText>
 
-            <NumberPicker
-                android:scaleX="1.25"
-                android:scaleY="1.25"
-                android:layout_gravity="center"
-                android:id="@+id/slide_age"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content">
-            </NumberPicker>
 
-            <Button
-                android:paddingHorizontal="30dp"
-                android:id="@+id/button_form_pcs"
+            <Spinner
                 android:layout_gravity="center"
-                android:text="chercher..."
+                android:paddingHorizontal="30dp"
+                android:id="@+id/slide_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_style">
-            </Button>
+                android:prompt="@string/app_name"/>
+
+
+            <Spinner
+                android:layout_gravity="center"
+                android:paddingHorizontal="30dp"
+                android:id="@+id/slide_profession"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:prompt="@string/app_name"/>
+
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/slide_title_2"
+                android:textSize="25dp"
+                android:text="deux"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
+            </TextView>
+
+            <EditText
+                android:id="@+id/slide_name"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text=""
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </EditText>
+
+            <EditText
+                android:id="@+id/slide_residence"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text=""
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </EditText>
+
+
+            <Spinner
+                android:layout_gravity="center"
+                android:paddingHorizontal="30dp"
+                android:id="@+id/slide_secteurActivite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:prompt="@string/app_name"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/slide_title_3"
+                android:textSize="25dp"
+                android:text="trois"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
+            </TextView>
+
+
+            <Spinner
+                android:layout_gravity="center"
+                android:paddingHorizontal="30dp"
+                android:id="@+id/slide_sexe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:prompt="@string/app_name"/>
+
+
+            <Spinner
+                android:layout_gravity="center"
+                android:paddingHorizontal="30dp"
+                android:id="@+id/slide_statutActivite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:prompt="@string/app_name"/>
+            
+
+            <EditText
+                android:id="@+id/slide_entreprise"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text=""
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </EditText>
+
         </LinearLayout>
 
         <View

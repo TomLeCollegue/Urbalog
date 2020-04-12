@@ -21,6 +21,22 @@ public class Player implements Serializable {
     private Role role;
     private Integer[][] financementRessource;
 
+    public Player(){
+        this.firstName = null;
+        this.name = null;
+        this.sexe = null;
+        this.age = null;
+        this.residence = null;
+        this.statutActivite = null;
+        this.profession = null;
+        this.secteurActivite = null;
+        this.entreprise = null;
+
+        this.score = 0;
+        this.role = null;
+        this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
+    }
+
     public Player(String firstName, String name, String sexe, String age, String residence,
                   String statutActivite, String profession, String secteurActivite, String entreprise) {
         this.firstName = firstName;

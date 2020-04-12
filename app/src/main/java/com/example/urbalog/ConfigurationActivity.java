@@ -75,6 +75,7 @@ public class ConfigurationActivity extends AppCompatActivity {
             }
         });
 
+        /*
         addGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,7 +98,7 @@ public class ConfigurationActivity extends AppCompatActivity {
                 JsonStats.writeGame(list, game);
                 Toast.makeText(ConfigurationActivity.this, "partie ajoutée", Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
 
         initStats.setOnClickListener(new View.OnClickListener() {
             @Override
