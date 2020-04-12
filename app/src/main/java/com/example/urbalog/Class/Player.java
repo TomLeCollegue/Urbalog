@@ -2,30 +2,55 @@ package com.example.urbalog.Class;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Player implements Serializable {
 
+    private String firstName;
     private String name;
-    private Integer age;
-    private String job;
+    private String sexe;
+    private String age;
+    private String residence;
+    private String statutActivite;
+    private String profession;
+    private String secteurActivite;
+    private String entreprise;
+
     private Integer score;
     private Role role;
     private Integer[][] financementRessource;
 
-    public Player(String name, Integer age, String job) {
+    public Player(String firstName, String name, String sexe, String age, String residence,
+                  String statutActivite, String profession, String secteurActivite, String entreprise) {
+        this.firstName = firstName;
         this.name = name;
+        this.sexe = sexe;
         this.age = age;
-        this.job = job;
+        this.residence = residence;
+        this.statutActivite = statutActivite;
+        this.profession = profession;
+        this.secteurActivite = secteurActivite;
+        this.entreprise = entreprise;
+
         this.score = 0;
         this.role = null;
         this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
     }
 
-    public Player(String name, Integer age, String job, Role role) {
+    public Player(String firstName, String name, String sexe, String age, String residence,
+                  String statutActivite, String profession, String secteurActivite, String entreprise,
+                  Role role) {
+        this.firstName = firstName;
         this.name = name;
+        this.sexe = sexe;
         this.age = age;
-        this.job = job;
+        this.residence = residence;
+        this.statutActivite = statutActivite;
+        this.profession = profession;
+        this.secteurActivite = secteurActivite;
+        this.entreprise = entreprise;
+
         this.score = 0;
         this.role = role;
         this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
@@ -37,6 +62,14 @@ public class Player implements Serializable {
         this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getName() {
         return name;
     }
@@ -45,20 +78,60 @@ public class Player implements Serializable {
         this.name = name;
     }
 
-    public Integer getAge() {
+    public String getSexe() {
+        return sexe;
+    }
+
+    public void setSexe(String sexe) {
+        this.sexe = sexe;
+    }
+
+    public String getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
-    public String getJob() {
-        return job;
+    public String getResidence() {
+        return residence;
     }
 
-    public void setJob(String job) {
-        this.job = job;
+    public void setResidence(String residence) {
+        this.residence = residence;
+    }
+
+    public String getStatutActivite() {
+        return statutActivite;
+    }
+
+    public void setStatutActivite(String statutActivite) {
+        this.statutActivite = statutActivite;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    public String getSecteurActivite() {
+        return secteurActivite;
+    }
+
+    public void setSecteurActivite(String secteurActivite) {
+        this.secteurActivite = secteurActivite;
+    }
+
+    public String getEntreprise() {
+        return entreprise;
+    }
+
+    public void setEntreprise(String entreprise) {
+        this.entreprise = entreprise;
     }
 
     public Integer getScore() {
@@ -94,28 +167,46 @@ public class Player implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "Player{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", job='" + job + '\'' +
-                ", score=" + score +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(firstName, player.firstName) &&
+                Objects.equals(name, player.name) &&
+                Objects.equals(sexe, player.sexe) &&
+                Objects.equals(age, player.age) &&
+                Objects.equals(residence, player.residence) &&
+                Objects.equals(statutActivite, player.statutActivite) &&
+                Objects.equals(profession, player.profession) &&
+                Objects.equals(secteurActivite, player.secteurActivite) &&
+                Objects.equals(entreprise, player.entreprise) &&
+                Objects.equals(score, player.score) &&
+                Objects.equals(role, player.role) &&
+                Arrays.equals(financementRessource, player.financementRessource);
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Player)) return false;
-        Player player = (Player) o;
-        return Objects.equals(name, player.name) &&
-                Objects.equals(age, player.age) &&
-                Objects.equals(job, player.job) &&
-                Objects.equals(score, player.score) &&
-                Objects.equals(role, player.role); }
+    public int hashCode() {
+        int result = Objects.hash(firstName, name, sexe, age, residence, statutActivite, profession, secteurActivite, entreprise, score, role);
+        result = 31 * result + Arrays.hashCode(financementRessource);
+        return result;
+    }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(name, age, job, score, role);
+    public String toString() {
+        return "Player{" +
+                "firstName='" + firstName + '\'' +
+                ", name='" + name + '\'' +
+                ", sexe='" + sexe + '\'' +
+                ", age='" + age + '\'' +
+                ", residence='" + residence + '\'' +
+                ", statutActivite='" + statutActivite + '\'' +
+                ", profession='" + profession + '\'' +
+                ", secteurActivite='" + secteurActivite + '\'' +
+                ", entreprise='" + entreprise + '\'' +
+                ", score=" + score +
+                ", role=" + role +
+                ", financementRessource=" + Arrays.toString(financementRessource) +
+                '}';
     }
 }
