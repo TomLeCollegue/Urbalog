@@ -1,133 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_width="320px"
+    android:layout_height="fill_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        >
+        android:orientation="horizontal">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="@drawable/layout_border_logistic_influence">
+            android:layout_weight="1"
+            android:padding="10sp">
 
             <LinearLayout
-                android:id="@+id/bNameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.8"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/bName"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
                     android:fontFamily="@font/caractere_l1"
-                    android:gravity="center_vertical"
-                    android:text="Magasin(test)" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/bScoreBoard"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1.5"
-                android:orientation="horizontal">
+                    android:gravity="center_horizontal"
+                    android:text="Magasin" />
 
                 <LinearLayout
-                    android:id="@+id/bEnvironmentalScoreLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/environmentImageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        app:srcCompat="@mipmap/img_environment_city_foreground" />
 
                     <TextView
                         android:id="@+id/bEnvironmentalScore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:fontFamily="@font/caractere_l1"
+                        android:gravity="center"
                         android:text="TextView" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/bFluidityScoreLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/fluidityImageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        app:srcCompat="@mipmap/img_fluid_city_foreground" />
 
                     <TextView
                         android:id="@+id/bFluidityScore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:fontFamily="@font/caractere_l1"
+                        android:gravity="center"
                         android:text="TextView" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/bAttractivenessScoreLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/attractivenessImageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        app:srcCompat="@mipmap/img_impact_on_city_foreground" />
 
                     <TextView
                         android:id="@+id/bAttractivenessScore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:fontFamily="@font/caractere_l1"
+                        android:gravity="center"
                         android:text="TextView" />
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/bDescription"
+            <ImageView
+                android:id="@+id/image_maison"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1.5"
-                android:fontFamily="@font/ariali"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:text="Ouech"></TextView>
-        </LinearLayout>
-    </FrameLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="220sp"
+                android:layout_gravity="bottom"
+                app:srcCompat="@drawable/maison" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

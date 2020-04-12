@@ -19,35 +19,35 @@ public class CityProgressionActivity extends AppCompatActivity {
     private ArrayList<Building> buildings = new ArrayList<Building>();
     private RecyclerView rv;
     private CityProgressionAdapter mProgressionAdapter;
-    private TextView turnNumber;
 
-    private TextView textAttractivityScore;
-    private TextView textEnvironmentScore;
-    private TextView textFluidityScore;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_progression);
 
+
         buildings = AdminConnectionActivity.net.getCurrentGame().getCity().getBuildings();
 
-        textAttractivityScore = findViewById(R.id.text_score_city_attract);
-        textEnvironmentScore = findViewById(R.id.text_score_city_envi);
-        textFluidityScore = findViewById(R.id.text_score_city_trafic);
+        Building b = new Building("Emplacement Libre"," ",0,0,0,0,0,0,0, " ");
 
-        textAttractivityScore.setText(String.valueOf(AdminConnectionActivity.net.getCurrentGame().getScoreAttractivite()));
-        textEnvironmentScore.setText(String.valueOf(AdminConnectionActivity.net.getCurrentGame().getScoreEnvironnemental()));
-        textFluidityScore.setText(String.valueOf(AdminConnectionActivity.net.getCurrentGame().getScoreFluidite()));
+        int size = buildings.size();
 
-        rv = findViewById(R.id.recyclerListBuildingsInCity);
-        rv.setLayoutManager(new LinearLayoutManager(CityProgressionActivity.this,LinearLayoutManager.VERTICAL,false));
+        for (int i = 0; i< 6 - size; i++){
+            buildings.add(b);
+        }
+
 
         mProgressionAdapter = new CityProgressionAdapter(buildings);
+        rv = findViewById(R.id.recyclerListBuildingsInCity);
+        rv.setLayoutManager(new LinearLayoutManager(CityProgressionActivity.this,LinearLayoutManager.HORIZONTAL,false));
+
+
         rv.setAdapter(mProgressionAdapter);
 
-        turnNumber = findViewById(R.id.text_turnNumber);
-        turnNumber.setText("Tour n°"+AdminConnectionActivity.net.getCurrentGame().getnTurn());
+
 
         AdminConnectionActivity.net.setCurrentAdminView(this);
     }
