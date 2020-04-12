@@ -48,6 +48,10 @@ public class CityProgressionAdapter extends RecyclerView.Adapter<CityProgression
         private final TextView bAttractivenessScore;
         private final ImageView bImage;
 
+        private final ImageView iEnvi;
+        private final ImageView iFluid;
+        private final ImageView iAttract;
+        private final TextView text_Empty;
 
         public MyViewHolder(@NonNull final View itemView){
             super(itemView);
@@ -57,6 +61,11 @@ public class CityProgressionAdapter extends RecyclerView.Adapter<CityProgression
             bFluidityScore = itemView.findViewById(R.id.bFluidityScore);
             bAttractivenessScore = itemView.findViewById(R.id.bAttractivenessScore);
             bImage = itemView.findViewById(R.id.image_maison);
+
+            iEnvi = itemView.findViewById(R.id.image_envi);
+            iFluid = itemView.findViewById(R.id.image_fluid);
+            iAttract = itemView.findViewById(R.id.image_attract);
+            text_Empty = itemView.findViewById(R.id.text_empty);
 
 
 
@@ -70,6 +79,15 @@ public class CityProgressionAdapter extends RecyclerView.Adapter<CityProgression
 
             if (building.getName().equals("Emplacement Libre")){
                 bImage.setImageResource(R.drawable.plots);
+                bEnvironmentalScore.setText(" ");
+                bAttractivenessScore.setText(" ");
+                bFluidityScore.setText(" ");
+                text_Empty.setText("Emplacement Libre");
+                bName.setVisibility(View.INVISIBLE);
+                iAttract.setVisibility(View.INVISIBLE);
+                iFluid.setVisibility(View.INVISIBLE);
+                iEnvi.setVisibility(View.INVISIBLE);
+
             }
         }
     }
