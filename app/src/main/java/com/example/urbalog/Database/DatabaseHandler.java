@@ -56,23 +56,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     ");";
 
     // Constants for players table
-    private final String PLAYER_KEY = "id";
-    private final String PLAYER_GAME_ID = "game_id";
-    private final String PLAYER_NAME = "nom";
-    private final String PLAYER_SEXE = "sexe";
-    private final String PLAYER_AGE = "age";
-    private final String PLAYER_HOME = "residence";
-    private final String PLAYER_ACTIVITY_STATUS = "statut_activité";
-    private final String PLAYER_JOB = "job";
-    private final String PLAYER_JOB_DOMAIN = "secteur_activité";
-    private final String PLAYER_CORP = "entreprise";
-    private final String PLAYER_SCORE = "score";
-    private final String PLAYER_ROLE = "role";
-    private final String PLAYER_CREATED_AT = "created_at";
-    private static final String PLAYER_TABLE_NAME = "players";
+    public static final String PLAYER_KEY = "id";
+    public static final String PLAYER_GAME_ID = "game_id";
+    public static final String PLAYER_NAME = "nom";
+    public static final String PLAYER_SEXE = "sexe";
+    public static final String PLAYER_AGE = "age";
+    public static final String PLAYER_HOME = "residence";
+    public static final String PLAYER_ACTIVITY_STATUS = "statut_activité";
+    public static final String PLAYER_JOB = "job";
+    public static final String PLAYER_JOB_DOMAIN = "secteur_activité";
+    public static final String PLAYER_CORP = "entreprise";
     public static final String PLAYER_POL = "mise_politique";
     public static final String PLAYER_SOCIAL = "mise_sociale";
     public static final String PLAYER_ECO = "mise_economique";
+    public static final String PLAYER_SCORE = "score";
+    public static final String PLAYER_ROLE = "role";
+    public static final String PLAYER_CREATED_AT = "created_at";
+    public static final String PLAYER_TABLE_NAME = "players";
 
     private final String TABLE_PLAYER_CREATE =
             "CREATE TABLE " + PLAYER_TABLE_NAME + " (" +
@@ -86,11 +86,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     PLAYER_JOB + " TEXT, " +
                     PLAYER_JOB_DOMAIN + " TEXT, " +
                     PLAYER_CORP + " TEXT, " +
-                    PLAYER_SCORE + " INTEGER, " +
-                    PLAYER_ROLE + " TEXT, " +
                     PLAYER_POL + " INTEGER, " +
                     PLAYER_SOCIAL + " INTEGER, " +
                     PLAYER_ECO + " INTEGER, " +
+                    PLAYER_SCORE + " INTEGER, " +
+                    PLAYER_ROLE + " TEXT, " +
                     PLAYER_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
                     "FOREIGN KEY(" + PLAYER_GAME_ID + ") REFERENCES " + GAME_TABLE_NAME + "(" + GAME_KEY + ")" +
                     ");";
