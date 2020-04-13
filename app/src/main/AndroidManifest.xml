@@ -19,10 +19,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".TimerUpdateActivity"
+            android:name=".DbConfigActivity"
             android:screenOrientation="sensorLandscape"/>
-
-
+        <activity
+            android:name=".BuildingConfigActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".TimerUpdateActivity"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".Stats.AverageScoreActivity"
             android:screenOrientation="sensorLandscape" />

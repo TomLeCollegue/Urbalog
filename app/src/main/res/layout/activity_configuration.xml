@@ -1,106 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/lightPink"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_weight="2"
+    android:background="@color/lightPink">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center">>
 
-        <Button
-            android:id="@+id/modificationBuilding"
-            android:layout_width="250dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/button_style"
-            android:fontFamily="@font/caractere_l2"
-            android:text="@string/modifBuilding"></Button>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <Button
-        android:id="@+id/initBuilding"
-        android:background="@drawable/button_style"
-        android:text="@string/initBuildings"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center"
-        android:layout_width="250dp"
-        android:fontFamily="@font/caractere_l2"
-        android:layout_height="100dp">
-    </Button>
+            <Button
+                android:id="@+id/statistics"
+                android:layout_width="250dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/caractere_l2"
+                android:background="@drawable/button_style"
+                android:text="Statistiques"></Button>
 
-    <Button
-        android:id="@+id/addBuilding"
-        android:background="@drawable/button_style"
-        android:text="@string/addBuilding"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center"
-        android:layout_width="250dp"
-        android:layout_height="100dp">
-    </Button>
-
-        <Button
-            android:id="@+id/statistics"
-            android:background="@drawable/button_style"
-            android:text="Statistiques"
-            android:layout_marginTop="50dp"
-            android:layout_gravity="center"
-            android:layout_width="250dp"
-            android:layout_height="100dp">
-        </Button>
-
-        <Button
-            android:id="@+id/addGame"
-            android:background="@drawable/button_style"
-            android:text="ajouter une partie aux stats"
-            android:layout_marginTop="50dp"
-            android:layout_gravity="center"
-            android:layout_width="250dp"
-            android:layout_height="100dp">
-        </Button>
-
-        <Button
-            android:id="@+id/initStats"
-            android:background="@drawable/button_style"
-            android:text="réinitialiser stats"
-            android:layout_marginTop="50dp"
-            android:layout_gravity="center"
-            android:layout_width="250dp"
-            android:layout_height="100dp">
-        </Button>
-
-        <Button
-            android:id="@+id/resetDb"
-            android:background="@drawable/button_style"
-            android:text="réinitialiser bdd"
-            android:layout_marginTop="50dp"
-            android:layout_gravity="center"
-            android:layout_width="250dp"
-            android:layout_height="100dp">
-        </Button>
-
-        <Button
-            android:id="@+id/exportCsv"
-            android:background="@drawable/button_style"
-            android:text="Exporter bdd vers csv"
-            android:layout_marginTop="50dp"
-            android:layout_gravity="center"
-            android:layout_width="250dp"
-            android:layout_height="100dp">
-        </Button>
-
-        <Button
-            android:id="@+id/updateTimer"
-            android:layout_width="250dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/button_style"
-            android:text="Changer le temps de mise"></Button>
+            <Button
+                android:id="@+id/updateTimer"
+                android:layout_width="250dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/caractere_l2"
+                android:background="@drawable/button_style"
+                android:text="Changer le temps de mise"></Button>
 
 
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
-</ScrollView>
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center">>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/buildingButton"
+                android:layout_width="250dp"
+                android:layout_height="100dp"
+                android:fontFamily="@font/caractere_l2"
+                android:layout_gravity="center"
+                android:background="@drawable/button_style"
+                android:text="Batiments"></Button>
+
+            <Button
+                android:id="@+id/dbButton"
+                android:layout_width="250dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/caractere_l2"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/button_style"
+                android:text="Base de données"></Button>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
