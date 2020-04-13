@@ -149,7 +149,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         v.put(PLAYER_ACTIVITY_STATUS, player.getStatutActivite());
         v.put(PLAYER_JOB, player.getProfession());
         v.put(PLAYER_JOB_DOMAIN, player.getSecteurActivite());
-        v.put(PLAYER_CORP, player.getProfession());
+        v.put(PLAYER_CORP, player.getEntreprise());
         v.put(PLAYER_SCORE, 0);
         v.put(PLAYER_ROLE, player.getRole().getTypeRole());
         v.put(PLAYER_GAME_ID, game.getDbID());
