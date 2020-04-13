@@ -29,6 +29,8 @@ import java.io.IOException;
 
 public class PlayerViewActivity extends AppCompatActivity {
 
+    private static final String TAG = "slt";
+
     private TextView textPoliticalResssourcesBuilding1;
     private TextView textEcoResssourcesBuilding1;
     private TextView textSocialRessourcesBuilding1;
@@ -135,10 +137,27 @@ public class PlayerViewActivity extends AppCompatActivity {
 
     private TextView descriptionBuildingPopUp;
 
+    //Images under the building's name
+    private ImageView attractiveness1;
+    private ImageView attractiveness2;
+    private ImageView attractiveness3;
+    private ImageView attractiveness4;
+    private ImageView attractiveness5;
+
+    private ImageView environment1;
+    private ImageView environment2;
+    private ImageView environment3;
+    private ImageView environment4;
+    private ImageView environment5;
+
+    private ImageView fluidity1;
+    private ImageView fluidity2;
+    private ImageView fluidity3;
+    private ImageView fluidity4;
+    private ImageView fluidity5;
 
 
 
-    private ImageView attract1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("debug", "PlayerViewActivity creation");
@@ -228,7 +247,23 @@ public class PlayerViewActivity extends AppCompatActivity {
         textRessourceRightRole = findViewById(R.id.text_ressource_right_role);
 
 
-        attract1 = (ImageView) findViewById(R.id.attract_1);
+        attractiveness1 = (ImageView) findViewById(R.id.img_attract_building_1);
+        attractiveness2 = (ImageView) findViewById(R.id.img_attract_building_2);
+        attractiveness3 = (ImageView) findViewById(R.id.img_attract_building_3);
+        attractiveness4 = (ImageView) findViewById(R.id.img_attract_building_4);
+        attractiveness5 = (ImageView) findViewById(R.id.img_attract_building_5);
+
+        environment1 = (ImageView) findViewById(R.id.img_environment_building_1);
+        environment2 = (ImageView) findViewById(R.id.img_environment_building_2);
+        environment3 = (ImageView) findViewById(R.id.img_environment_building_3);
+        environment4 = (ImageView) findViewById(R.id.img_environment_building_4);
+        environment5 = (ImageView) findViewById(R.id.img_environment_building_5);
+
+        fluidity1 = (ImageView) findViewById(R.id.img_fluidity_building_1);
+        fluidity2 = (ImageView) findViewById(R.id.img_fluidity_building_2);
+        fluidity3 = (ImageView) findViewById(R.id.img_fluidity_building_3);
+        fluidity4 = (ImageView) findViewById(R.id.img_fluidity_building_4);
+        fluidity5 = (ImageView) findViewById(R.id.img_fluidity_building_5);
 
         textScorePlayer = findViewById(R.id.text_score_player);
 
@@ -1168,6 +1203,10 @@ public class PlayerViewActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Will color the influence of a building in red if negative or in green if positive on the market
+     * for each building
+     */
     public void colorImpact(){
 
         Building building1 = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(0);
@@ -1179,20 +1218,55 @@ public class PlayerViewActivity extends AppCompatActivity {
         int colorRed = Color.parseColor("#D22C24");
         int colorGreen = Color.parseColor("#8DB735");
         int colorBlack = Color.parseColor("#2d2a41");
-        // Pour le premier building
 
-        // pour attractivité
+
+
+        Log.d(TAG, "1colorImpact: " + building1.getEffetEnvironnemental());
+        Log.d(TAG, "2colorImpact: " + textTraficBuilding1);
+
+
+
+
+        //On Building1
+            //for attractiveness
         if(building1.getEffetAttractivite() > 0 ){
-            attract1.setColorFilter(colorGreen);
+            attractiveness1.setColorFilter(colorGreen);
             textAttractBuilding1.setTextColor(colorGreen);
         }
         else if(building1.getEffetAttractivite() < 0){
-            attract1.setColorFilter(colorRed);
+            attractiveness1.setColorFilter(colorRed);
             textAttractBuilding1.setTextColor(colorRed);
         }
-        else{
-            attract1.setColorFilter(colorBlack);
+        else if (building1.getEffetAttractivite() == 0){
+            attractiveness1.setColorFilter(colorBlack);
             textAttractBuilding1.setTextColor(colorBlack);
+        }
+            //for environment
+        if (building1.getEffetEnvironnemental() > 0){
+            environment1.setColorFilter(colorGreen);
+            textEnviBuilding1.setTextColor(colorGreen);
+        }
+        else if(building1.getEffetEnvironnemental() < 0){
+            environment1.setColorFilter(colorRed);
+            textEnviBuilding1.setTextColor(colorRed);
+        }
+        else if (building1.getEffetEnvironnemental() == 0){
+            environment1.setColorFilter(colorBlack);
+            textEnviBuilding1.setTextColor(colorBlack);
+        }
+
+            //for fluidity
+        if (building1.getEffetFluidite() > 0){
+            fluidity1.setColorFilter(colorGreen);
+            textTraficBuilding1.setTextColor(colorGreen);
+        }
+        else if(building1.getEffetFluidite() < 0){
+            fluidity1.setColorFilter(colorRed);
+            textTraficBuilding1.setTextColor(colorRed);
+        }
+        else if (building1.getEffetFluidite() == 0){
+            fluidity1.setColorFilter(colorBlack);
+            textTraficBuilding1.setTextColor(colorBlack);
         }
 
 
