@@ -64,6 +64,13 @@ public class FormActivity extends AppCompatActivity {
                     String profession = formAdapter.getFinalProfession();
                     String secteurActivite = formAdapter.getFinalSecteurActivite();
                     String entreprise = formAdapter.getFinalEntreprise();
+                    if(profession == null){
+                        Log.d("debug", "profession = null");
+                    } else {
+                        Log.d("debug", profession);
+                    }
+                    
+                    
                     if(firstName.trim().matches("")){
                         Log.d("debug", "firstname null");
                         getViewPager().setCurrentItem(0);
@@ -98,13 +105,21 @@ public class FormActivity extends AppCompatActivity {
                         getViewPager().setCurrentItem(2);
                         Toast.makeText(FormActivity.this, "Un champ n'est pas rempli", Toast.LENGTH_SHORT).show();
                     }
+                    /*
                     else if(profession != null)
                     {
+                        Log.d("debug", "rentre dans le else if");
                         if(profession.matches("")){
                             Log.d("debug", "profession null");
                             getViewPager().setCurrentItem(2);
                             Toast.makeText(FormActivity.this, "Un champ n'est pas rempli", Toast.LENGTH_SHORT).show();
                         }
+                    }*/
+                    else if((profession != null) && profession.matches(""))
+                    {
+                        Log.d("debug", "rentre dans le else if");
+                        getViewPager().setCurrentItem(2);
+                        Toast.makeText(FormActivity.this, "Un champ n'est pas rempli", Toast.LENGTH_SHORT).show();
                     }
                     else if(secteurActivite.trim().matches(""))
                     {
@@ -121,6 +136,8 @@ public class FormActivity extends AppCompatActivity {
                     else
                     {
                         Player player = new Player(firstName, name, sexe, age, residence, statutActivite, profession, secteurActivite, entreprise);
+                        Log.d("debug", player.toString());
+                        Log.d("debug", "finish");
                         Intent myIntent = new Intent(FormActivity.this, PlayerConnexionActivity.class);
                         myIntent.putExtra("player", player);
                         startActivity(myIntent);

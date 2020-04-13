@@ -315,19 +315,16 @@ public class FormAdapter extends PagerAdapter {
                 }
                 switch(position) {
                     case 1:
-                        Log.d("debug", "1");
                         finalProfession = "";
                         title2.setVisibility(View.VISIBLE);
                         profession.setVisibility(View.VISIBLE);
                         break;
                     case 2:
-                        Log.d("debug", "2");
                         finalProfession = "";
                         title2.setVisibility(View.VISIBLE);
                         profession.setVisibility(View.VISIBLE);
                         break;
                     case 3:
-                        Log.d("debug", "3");
                         finalProfession = "";
                         title2.setVisibility(View.VISIBLE);
                         profession.setVisibility(View.VISIBLE);
@@ -356,7 +353,9 @@ public class FormAdapter extends PagerAdapter {
         secteurActivité.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                finalSecteurActivite = slide_secteur_activite[position];
+                if(position != 0){
+                    finalSecteurActivite = slide_secteur_activite[position];
+                }
             }
 
             @Override
