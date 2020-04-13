@@ -24,7 +24,11 @@ public class BuildingConfigActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_config);
 
+        mContext = BuildingConfigActivity.this;
+
         modificationBuilding = findViewById(R.id.modificationBuilding);
+        initBuilding = findViewById(R.id.initBuilding);
+        addBuilding = findViewById(R.id.addBuilding);
 
         modificationBuilding.setOnClickListener(new View.OnClickListener() {
             @Override

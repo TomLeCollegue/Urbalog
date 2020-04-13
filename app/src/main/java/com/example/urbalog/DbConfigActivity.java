@@ -18,6 +18,7 @@ public class DbConfigActivity extends AppCompatActivity {
         setContentView(R.layout.activity_db_config);
 
         resetDb = findViewById(R.id.resetDb);
+        exportCsv = findViewById(R.id.exportCsv);
 
         resetDb.setOnClickListener(new View.OnClickListener() {
             @Override

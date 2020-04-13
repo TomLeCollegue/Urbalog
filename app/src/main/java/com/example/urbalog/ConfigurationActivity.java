@@ -19,23 +19,16 @@ import java.util.ArrayList;
 public class ConfigurationActivity extends AppCompatActivity {
 
     private Button statistics;
-    private Button resetDb;
-    private Button exportCsv;
     private Button updateTimer;
     private Button buildingConfig;
     private Button dbConfig;
-    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuration);
 
-        mContext = ConfigurationActivity.this;
-
         statistics = findViewById(R.id.statistics);
-        resetDb = findViewById(R.id.resetDb);
-        exportCsv = findViewById(R.id.exportCsv);
         updateTimer = findViewById(R.id.updateTimer);
         buildingConfig = findViewById(R.id.buildingButton);
         dbConfig = findViewById(R.id.dbButton);
@@ -50,7 +43,6 @@ public class ConfigurationActivity extends AppCompatActivity {
             }
         });
 
-        
 
         updateTimer.setOnClickListener(new View.OnClickListener() {
             @Override
