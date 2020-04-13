@@ -77,19 +77,6 @@ public class Player implements Serializable {
         this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
     }
 
-<<<<<<< Updated upstream
-=======
-    public Player(Role role) {
-        this.name = "";
-        //this.age = 0;
-        //this.job = "";
-        this.score = 0;
-        this.role = role;
-        this.dbID = 0;
-        this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
-    }
-
->>>>>>> Stashed changes
     public String getFirstName() {
         return firstName;
     }

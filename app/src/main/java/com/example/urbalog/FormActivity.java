@@ -105,16 +105,6 @@ public class FormActivity extends AppCompatActivity {
                         getViewPager().setCurrentItem(2);
                         Toast.makeText(FormActivity.this, "Un champ n'est pas rempli", Toast.LENGTH_SHORT).show();
                     }
-                    /*
-                    else if(profession != null)
-                    {
-                        Log.d("debug", "rentre dans le else if");
-                        if(profession.matches("")){
-                            Log.d("debug", "profession null");
-                            getViewPager().setCurrentItem(2);
-                            Toast.makeText(FormActivity.this, "Un champ n'est pas rempli", Toast.LENGTH_SHORT).show();
-                        }
-                    }*/
                     else if((profession != null) && profession.matches(""))
                     {
                         Log.d("debug", "rentre dans le else if");
