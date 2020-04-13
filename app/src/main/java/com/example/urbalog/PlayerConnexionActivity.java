@@ -1,6 +1,7 @@
 package com.example.urbalog;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,7 +36,8 @@ public class PlayerConnexionActivity extends AppCompatActivity {
         if(net.getPlayer().getName() == null){
             name.setText("Formulaire pas rempli");
         }else{
-            name.setText(String.format("Bonjour %s", net.getPlayer().getName()));
+            name.setText(String.format("Bonjour %s", net.getPlayer().getFirstName()));
+            Log.d("debug", net.getPlayer().toString());
         }
 
         this.bSearch.setOnClickListener(new View.OnClickListener() {

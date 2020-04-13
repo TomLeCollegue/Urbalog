@@ -424,8 +424,8 @@ public class JsonStats {
             {
                 JSONObject player = new JSONObject();
                 player.put("name", playerList.getName());
-                player.put("age", Integer.toString(playerList.getAge()));
-                player.put("pcs", playerList.getJob());
+                player.put("age", playerList.getAge().toString());
+                //player.put("pcs", playerList.getJob());
                 players.put(player);
                 Log.d("debug",  i + " === " + player.toString());
                 ++i;
