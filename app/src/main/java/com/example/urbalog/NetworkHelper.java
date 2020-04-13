@@ -744,7 +744,7 @@ public class NetworkHelper implements Serializable {
         host = mHost;
         currentGame = new Game();
         gameStarted = false;
-        player = new Player(null);
+        player = new Player();
         listPlayer = new ArrayList<>();
         playersInformations = new ArrayList<>();
         connectionsClient = Nearby.getConnectionsClient(c);

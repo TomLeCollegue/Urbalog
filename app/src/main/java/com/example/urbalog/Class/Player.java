@@ -19,7 +19,7 @@ public class Player implements Serializable {
     private String secteurActivite;
     private String entreprise;
 
-    private Integer score;
+    private int score;
     private Role role;
     private Integer[][] financementRessource;
     private long dbID;
@@ -71,16 +71,6 @@ public class Player implements Serializable {
         this.secteurActivite = secteurActivite;
         this.entreprise = entreprise;
 
-        this.score = 0;
-        this.role = role;
-        this.dbID = 0;
-        this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
-    }
-
-    public Player(Role role) {
-        this.name = "";
-        this.age = 0;
-        this.job = "";
         this.score = 0;
         this.role = role;
         this.dbID = 0;
@@ -159,7 +149,7 @@ public class Player implements Serializable {
         this.entreprise = entreprise;
     }
 
-    public Integer getScore() {
+    public int getScore() {
         return score;
     }
 
@@ -203,7 +193,6 @@ public class Player implements Serializable {
         this.dbID = dbID;
     }
 
-    @NonNull
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -230,6 +219,7 @@ public class Player implements Serializable {
         return result;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Player{" +
