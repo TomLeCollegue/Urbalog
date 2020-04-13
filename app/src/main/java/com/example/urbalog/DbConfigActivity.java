@@ -41,6 +41,5 @@ public class DbConfigActivity extends AppCompatActivity {
         Intent intent = new Intent(DbConfigActivity.this, ConfigurationActivity.class);
         startActivity(intent);
         finish();
-        return;
     }
 }

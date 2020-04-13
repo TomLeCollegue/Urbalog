@@ -79,6 +79,5 @@ public class ConfigurationActivity extends AppCompatActivity {
         Intent intent = new Intent(ConfigurationActivity.this, AdminConnectionActivity.class);
         startActivity(intent);
         finish();
-        return;
     }
 }

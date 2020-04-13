@@ -61,6 +61,5 @@ public class BuildingConfigActivity extends AppCompatActivity {
         Intent intent = new Intent(BuildingConfigActivity.this, ConfigurationActivity.class);
         startActivity(intent);
         finish();
-        return;
     }
 }
