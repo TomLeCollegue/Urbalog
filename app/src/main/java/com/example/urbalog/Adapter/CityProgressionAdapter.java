@@ -3,6 +3,7 @@ package com.example.urbalog.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,7 +46,12 @@ public class CityProgressionAdapter extends RecyclerView.Adapter<CityProgression
         private final TextView bEnvironmentalScore;
         private final TextView bFluidityScore;
         private final TextView bAttractivenessScore;
-        private final TextView bDescription;
+        private final ImageView bImage;
+
+        private final ImageView iEnvi;
+        private final ImageView iFluid;
+        private final ImageView iAttract;
+        private final TextView text_Empty;
 
         public MyViewHolder(@NonNull final View itemView){
             super(itemView);
@@ -54,7 +60,14 @@ public class CityProgressionAdapter extends RecyclerView.Adapter<CityProgression
             bEnvironmentalScore = itemView.findViewById(R.id.bEnvironmentalScore);
             bFluidityScore = itemView.findViewById(R.id.bFluidityScore);
             bAttractivenessScore = itemView.findViewById(R.id.bAttractivenessScore);
-            bDescription = itemView.findViewById(R.id.bDescription);
+            bImage = itemView.findViewById(R.id.image_maison);
+
+            iEnvi = itemView.findViewById(R.id.image_envi);
+            iFluid = itemView.findViewById(R.id.image_fluid);
+            iAttract = itemView.findViewById(R.id.image_attract);
+            text_Empty = itemView.findViewById(R.id.text_empty);
+
+
 
         }
 
@@ -63,7 +76,19 @@ public class CityProgressionAdapter extends RecyclerView.Adapter<CityProgression
             bEnvironmentalScore.setText(String.valueOf(building.getEffetEnvironnemental()));
             bFluidityScore.setText(String.valueOf(building.getEffetFluidite()));
             bAttractivenessScore.setText(String.valueOf(building.getEffetAttractivite()));
-            bDescription.setText(building.getDescription());
+
+            if (building.getName().equals("Emplacement Libre")){
+                bImage.setImageResource(R.drawable.plots);
+                bEnvironmentalScore.setText(" ");
+                bAttractivenessScore.setText(" ");
+                bFluidityScore.setText(" ");
+                text_Empty.setText("Emplacement Libre");
+                bName.setVisibility(View.INVISIBLE);
+                iAttract.setVisibility(View.INVISIBLE);
+                iFluid.setVisibility(View.INVISIBLE);
+                iEnvi.setVisibility(View.INVISIBLE);
+
+            }
         }
     }
 
