@@ -21,6 +21,7 @@
                 android:layout_width="250dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
+                android:fontFamily="@font/caractere_l2"
                 android:background="@drawable/button_style"
                 android:text="Statistiques"></Button>
 
@@ -30,6 +31,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
+                android:fontFamily="@font/caractere_l2"
                 android:background="@drawable/button_style"
                 android:text="Changer le temps de mise"></Button>
 
@@ -52,6 +54,7 @@
                 android:id="@+id/buildingButton"
                 android:layout_width="250dp"
                 android:layout_height="100dp"
+                android:fontFamily="@font/caractere_l2"
                 android:layout_gravity="center"
                 android:background="@drawable/button_style"
                 android:text="Batiments"></Button>
@@ -61,6 +64,7 @@
                 android:layout_width="250dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
+                android:fontFamily="@font/caractere_l2"
                 android:layout_marginTop="50dp"
                 android:background="@drawable/button_style"
                 android:text="Base de données"></Button>

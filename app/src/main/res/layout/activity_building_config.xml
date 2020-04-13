@@ -38,6 +38,7 @@
             android:layout_marginTop="30dp"
             android:layout_gravity="center"
             android:layout_width="250dp"
+            android:fontFamily="@font/caractere_l2"
             android:layout_height="100dp">
         </Button>
     </LinearLayout>

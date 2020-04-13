@@ -13,6 +13,7 @@
         android:gravity="center"
         android:text="Temps de la mise :"
         android:textAlignment="center"
+        android:fontFamily="@font/caractere_l2"
         android:textColor="@color/dark"
         android:textSize="17dp"></TextView>
 
@@ -22,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:hint=" en secondes"
+        android:fontFamily="@font/caractere_l2"
         android:inputType="number"
         android:textAlignment="center"></EditText>
 
@@ -32,6 +34,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:paddingHorizontal="10dp"
+        android:fontFamily="@font/caractere_l2"
         android:background="@drawable/button_style"
         android:onClick="validerTimerUpdate"
         android:text="Mettre a jour"
