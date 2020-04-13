@@ -2,6 +2,7 @@ package com.example.urbalog;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -133,6 +134,11 @@ public class PlayerViewActivity extends AppCompatActivity {
     private LinearLayout social_5;
 
     private TextView descriptionBuildingPopUp;
+
+
+
+
+    private ImageView attract1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("debug", "PlayerViewActivity creation");
@@ -220,6 +226,9 @@ public class PlayerViewActivity extends AppCompatActivity {
         icoRessourceRightRole = findViewById(R.id.ico_ressource_right_role);
         textRessourceLeftRole = findViewById(R.id.text_ressource_left_role);
         textRessourceRightRole = findViewById(R.id.text_ressource_right_role);
+
+
+        attract1 = (ImageView) findViewById(R.id.attract_1);
 
         textScorePlayer = findViewById(R.id.text_score_player);
 
@@ -375,6 +384,9 @@ public class PlayerViewActivity extends AppCompatActivity {
 
         textScorePlayer.setText("Score : " + PlayerConnexionActivity.net.getPlayer().getScore());
 
+
+
+        colorImpact();
         colorRessources();
     }
 
@@ -1133,7 +1145,7 @@ public class PlayerViewActivity extends AppCompatActivity {
     }
 
 
-    public void resetColorRessources(){
+    public void resetColorRessources() {
 
         eco_1.setBackground(getDrawable(R.drawable.none));
         eco_2.setBackground(getDrawable(R.drawable.none));
@@ -1152,6 +1164,36 @@ public class PlayerViewActivity extends AppCompatActivity {
         social_3.setBackground(getDrawable(R.drawable.none));
         social_4.setBackground(getDrawable(R.drawable.none));
         social_5.setBackground(getDrawable(R.drawable.none));
+
+
+    }
+
+    public void colorImpact(){
+
+        Building building1 = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(0);
+        Building building2 = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(1);
+        Building building3 = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(2);
+        Building building4 = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(3);
+        Building building5 = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(4);
+
+        int colorRed = Color.parseColor("#D22C24");
+        int colorGreen = Color.parseColor("#8DB735");
+        int colorBlack = Color.parseColor("#2d2a41");
+        // Pour le premier building
+
+        // pour attractivité
+        if(building1.getEffetAttractivite() > 0 ){
+            attract1.setColorFilter(colorGreen);
+            textAttractBuilding1.setTextColor(colorGreen);
+        }
+        else if(building1.getEffetAttractivite() < 0){
+            attract1.setColorFilter(colorRed);
+            textAttractBuilding1.setTextColor(colorRed);
+        }
+        else{
+            attract1.setColorFilter(colorBlack);
+            textAttractBuilding1.setTextColor(colorBlack);
+        }
 
 
 

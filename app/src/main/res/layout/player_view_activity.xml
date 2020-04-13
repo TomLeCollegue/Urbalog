@@ -216,6 +216,7 @@
                                     android:orientation="vertical">
 
                                     <ImageView
+                                        android:id="@+id/attract_1"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:src="@mipmap/img_impact_on_city_foreground"></ImageView>
@@ -251,6 +252,7 @@
                                     android:orientation="vertical">
 
                                     <ImageView
+                                        android:id="@+id/envi_1"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
                                         android:src="@mipmap/img_environment_city_foreground"></ImageView>
@@ -286,6 +288,7 @@
                                     android:orientation="vertical">
 
                                     <ImageView
+                                        android:id="@+id/fluid_1"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:src="@mipmap/img_fluid_city_foreground"></ImageView>
@@ -477,6 +480,7 @@
                                     android:orientation="vertical">
 
                                     <ImageView
+                                        android:id="@+id/attract_2"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:src="@mipmap/img_impact_on_city_foreground"></ImageView>
