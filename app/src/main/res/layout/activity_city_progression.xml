@@ -205,6 +205,13 @@
                     android:layout_marginTop="195px"
                     app:srcCompat="@drawable/camionenvi" />
 
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:text="@string/refreshButton" />
+
             </FrameLayout>
 
         </LinearLayout>

@@ -27,6 +27,7 @@ public class CityProgressionActivity extends AppCompatActivity {
     private ImageView camionEnvi;
     private ImageView camionFluid;
     private ImageView camionAttract;
+    private Button refresh;
 
 
 
@@ -41,7 +42,7 @@ public class CityProgressionActivity extends AppCompatActivity {
         camionEnvi = (ImageView) findViewById(R.id.camion);
         camionFluid =  (ImageView) findViewById(R.id.camion2);
         camionAttract =  (ImageView) findViewById(R.id.camion3);
-
+        refresh = (Button) findViewById(R.id.button2);
 
 
         int scoreEnvi = AdminConnectionActivity.net.getCurrentGame().getScoreEnvironnemental();
@@ -86,6 +87,14 @@ public class CityProgressionActivity extends AppCompatActivity {
         AdminConnectionActivity.net.setCurrentAdminView(this);
 
 
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateView(rv);
+            }
+        });
+
+
 
     }
 
@@ -103,5 +112,27 @@ public class CityProgressionActivity extends AppCompatActivity {
         rv.setLayoutManager(new LinearLayoutManager(CityProgressionActivity.this,LinearLayoutManager.HORIZONTAL,false));
 
         rv.setAdapter(mProgressionAdapter);
+
+        int scoreEnvi = AdminConnectionActivity.net.getCurrentGame().getScoreEnvironnemental();
+        int scoreFluid = AdminConnectionActivity.net.getCurrentGame().getScoreFluidite();
+        int scoreAttract = AdminConnectionActivity.net.getCurrentGame().getScoreAttractivite();
+
+
+        final FrameLayout.LayoutParams lpEnvi = (FrameLayout.LayoutParams) camionEnvi.getLayoutParams();
+        lpEnvi.setMargins(900 + 100*scoreEnvi,0, 0, 0);
+
+        camionEnvi.setLayoutParams(lpEnvi);
+
+        final FrameLayout.LayoutParams lpFluid = (FrameLayout.LayoutParams) camionFluid.getLayoutParams();
+        lpFluid.setMargins(900 + 100*scoreFluid,100, 0, 0);
+
+        camionFluid.setLayoutParams(lpFluid);
+
+        final FrameLayout.LayoutParams lpAttract = (FrameLayout.LayoutParams) camionAttract.getLayoutParams();
+        lpAttract.setMargins(900 + 100*scoreAttract,195, 0, 0);
+
+        camionAttract.setLayoutParams(lpAttract);
+
+
     }
 }
