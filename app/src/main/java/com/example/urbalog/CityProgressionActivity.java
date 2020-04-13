@@ -1,6 +1,8 @@
 package com.example.urbalog;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +31,8 @@ public class CityProgressionActivity extends AppCompatActivity {
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +41,7 @@ public class CityProgressionActivity extends AppCompatActivity {
         camionEnvi = (ImageView) findViewById(R.id.camion);
         camionFluid =  (ImageView) findViewById(R.id.camion2);
         camionAttract =  (ImageView) findViewById(R.id.camion3);
+
 
 
         int scoreEnvi = AdminConnectionActivity.net.getCurrentGame().getScoreEnvironnemental();
@@ -79,12 +84,24 @@ public class CityProgressionActivity extends AppCompatActivity {
         rv.setAdapter(mProgressionAdapter);
 
         AdminConnectionActivity.net.setCurrentAdminView(this);
+
+
+
     }
 
-    public void updateView(){
+    public void updateView(RecyclerView rv){ // a appeler pour refresh la vue
         buildings.clear();
         buildings.addAll(AdminConnectionActivity.net.getCurrentGame().getCity().getBuildings());
-        mProgressionAdapter.updateData(buildings);
+        Building bVide = new Building("Emplacement Libre"," ",0,0,0,0,0,0,0, " ");
+        int size = buildings.size();
+
+        for (int i = 0; i< 6 - size; i++){
+            buildings.add(bVide);
+        }
+
+        mProgressionAdapter = new CityProgressionAdapter(buildings);
+        rv.setLayoutManager(new LinearLayoutManager(CityProgressionActivity.this,LinearLayoutManager.HORIZONTAL,false));
+
         rv.setAdapter(mProgressionAdapter);
     }
 }
