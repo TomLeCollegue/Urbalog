@@ -44,8 +44,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Constants for players table
     private final String PLAYER_KEY = "id";
     private final String PLAYER_GAME_ID = "game_id";
+    private final String PLAYER_NAME = "nom";
+    private final String PLAYER_SEXE = "sexe";
     private final String PLAYER_AGE = "age";
+    private final String PLAYER_HOME = "residence";
+    private final String PLAYER_ACTIVITY_STATUS = "statut_activité";
     private final String PLAYER_JOB = "job";
+    private final String PLAYER_JOB_DOMAIN = "secteur_activité";
+    private final String PLAYER_CORP = "entreprise";
     private final String PLAYER_SCORE = "score";
     private final String PLAYER_ROLE = "role";
     private final String PLAYER_CREATED_AT = "created_at";
@@ -55,8 +61,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             "CREATE TABLE " + PLAYER_TABLE_NAME + " (" +
                     PLAYER_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     PLAYER_GAME_ID + " INTEGER , " +
-                    PLAYER_AGE + " INTEGER, " +
+                    PLAYER_NAME + " TEXT , " +
+                    PLAYER_SEXE + " TEXT , " +
+                    PLAYER_AGE + " TEXT, " +
+                    PLAYER_HOME + " TEXT, " +
+                    PLAYER_ACTIVITY_STATUS + " TEXT, " +
                     PLAYER_JOB + " TEXT, " +
+                    PLAYER_JOB_DOMAIN + " TEXT, " +
+                    PLAYER_CORP + " TEXT, " +
                     PLAYER_SCORE + " INTEGER, " +
                     PLAYER_ROLE + " TEXT, " +
                     PLAYER_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
@@ -130,8 +142,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues v = new ContentValues();
 
+        v.put(PLAYER_NAME, player.getName());
+        v.put(PLAYER_SEXE, player.getSexe());
         v.put(PLAYER_AGE, player.getAge());
-        v.put(PLAYER_JOB, player.getJob());
+        v.put(PLAYER_HOME, player.getResidence());
+        v.put(PLAYER_ACTIVITY_STATUS, player.getStatutActivite());
+        v.put(PLAYER_JOB, player.getProfession());
+        v.put(PLAYER_JOB_DOMAIN, player.getSecteurActivite());
+        v.put(PLAYER_CORP, player.getProfession());
         v.put(PLAYER_SCORE, 0);
         v.put(PLAYER_ROLE, player.getRole().getTypeRole());
         v.put(PLAYER_GAME_ID, game.getDbID());
