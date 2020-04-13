@@ -1,22 +1,24 @@
 package com.example.urbalog.Class;
 
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Role extends Object implements Serializable {
+public class Role implements Serializable {
     private String typeRole;
     private boolean[] booleanRessource;
-    private Integer tokenSocial;
-    private Integer tokenEconomical;
-    private Integer tokenPolitical;
+    private int tokenSocial;
+    private int tokenEconomical;
+    private int tokenPolitical;
     private String objective;
     private String hold;
     private String improve;
 
-    public Role(String typeRole, boolean[] booleanRessource, Integer tokenSocial, Integer tokenEconomical, Integer tokenPolitical, String objective, String hold, String improve) {
+    public Role(String typeRole, boolean[] booleanRessource, int tokenSocial, int tokenEconomical, int tokenPolitical, String objective, String hold, String improve) {
         this.typeRole = typeRole;
         this.booleanRessource = booleanRessource;
         this.tokenSocial = tokenSocial;
@@ -46,27 +48,27 @@ public class Role extends Object implements Serializable {
         this.booleanRessource = booleanRessource;
     }
 
-    public Integer getTokenSocial() {
+    public int getTokenSocial() {
         return tokenSocial;
     }
 
-    public void setTokenSocial(Integer tokenSocial) {
+    public void setTokenSocial(int tokenSocial) {
         this.tokenSocial = tokenSocial;
     }
 
-    public Integer getTokenEconomical() {
+    public int getTokenEconomical() {
         return tokenEconomical;
     }
 
-    public void setTokenEconomical(Integer tokenEconomical) {
+    public void setTokenEconomical(int tokenEconomical) {
         this.tokenEconomical = tokenEconomical;
     }
 
-    public Integer getTokenPolitical() {
+    public int getTokenPolitical() {
         return tokenPolitical;
     }
 
-    public void setTokenPolitical(Integer tokenPolitical) {
+    public void setTokenPolitical(int tokenPolitical) {
         this.tokenPolitical = tokenPolitical;
     }
 
@@ -105,17 +107,15 @@ public class Role extends Object implements Serializable {
                     totalEnv += newBuildings.get(i).getEffetEnvironnemental();
                     totalFluidite += newBuildings.get(i).getEffetFluidite();
             }
-            if ((totalAttractivite >0 && improve.equals("Attractivité")) &&
+            if ((totalAttractivite > 0 && improve.equals("Attractivité")) &&
                     ((totalEnv >= 0 && hold.equals("Environnement")) || (totalFluidite >= 0 && hold.equals("Fluidité"))))
                 return true;
-            else if ((totalEnv >0 && improve.equals("Environnement"))&&
+            else if ((totalEnv > 0 && improve.equals("Environnement")) &&
                     ((totalAttractivite >= 0 && hold.equals("Attractivité")) ||(totalFluidite >= 0 && hold.equals("Fluidité"))))
                 return true;
-            else if((totalFluidite >0 && improve.equals("Fluidité"))&&
-                    (((totalAttractivite >= 0 && hold.equals("Attractivité"))) ||(totalEnv >= 0 && hold.equals("Environnement"))))
-                return true;
-            else return false;
-        }else{
+            else return (totalFluidite > 0 && improve.equals("Fluidité")) &&
+                        (((totalAttractivite >= 0 && hold.equals("Attractivité"))) || (totalEnv >= 0 && hold.equals("Environnement")));
+        } else{
             return false;
         }
     }
@@ -142,6 +142,7 @@ public class Role extends Object implements Serializable {
         return result;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Role{" +

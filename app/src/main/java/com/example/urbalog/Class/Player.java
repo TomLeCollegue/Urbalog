@@ -1,5 +1,7 @@
 package com.example.urbalog.Class;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +22,7 @@ public class Player implements Serializable {
     private Integer score;
     private Role role;
     private Integer[][] financementRessource;
+    private long dbID;
 
     public Player(){
         this.firstName = null;
@@ -51,6 +54,7 @@ public class Player implements Serializable {
 
         this.score = 0;
         this.role = null;
+        this.dbID = 0;
         this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
     }
 
@@ -69,12 +73,17 @@ public class Player implements Serializable {
 
         this.score = 0;
         this.role = role;
+        this.dbID = 0;
         this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
     }
 
     public Player(Role role) {
+        this.name = "";
+        this.age = 0;
+        this.job = "";
         this.score = 0;
         this.role = role;
+        this.dbID = 0;
         this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
     }
 
@@ -154,7 +163,7 @@ public class Player implements Serializable {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
@@ -182,6 +191,19 @@ public class Player implements Serializable {
         this.financementRessource = financementRessource;
     }
 
+    public void resetFinancementRessource() {
+        this.financementRessource = new Integer[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
+    }
+
+    public long getDbID() {
+        return dbID;
+    }
+
+    public void setDbID(long dbID) {
+        this.dbID = dbID;
+    }
+
+    @NonNull
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

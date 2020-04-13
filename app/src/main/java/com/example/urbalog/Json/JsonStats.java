@@ -18,8 +18,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -54,12 +52,7 @@ public class JsonStats {
     public static boolean fichierExiste()
     {
         File file = context.getFileStreamPath(fileNameStatistics);
-        if(file.exists()){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return file.exists();
     }
 
     /**
@@ -426,6 +419,7 @@ public class JsonStats {
             jsonGame.put("Score Fluidite", game.getScoreFluidite());
             jsonGame.put("Score Environnemental", game.getScoreEnvironnemental());
             JSONArray players = new JSONArray();
+            int i = 1;
             for(Player playerList : list)
             {
                 JSONObject player = new JSONObject();
@@ -433,6 +427,8 @@ public class JsonStats {
                 player.put("age", playerList.getAge().toString());
                 //player.put("pcs", playerList.getJob());
                 players.put(player);
+                Log.d("debug",  i + " === " + player.toString());
+                ++i;
             }
             jsonGame.put("players", players);
             jsonText = readText();

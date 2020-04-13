@@ -24,6 +24,9 @@ public class ConfigurationActivity extends AppCompatActivity {
     private Button statistics;
     private Button addGame;
     private Button initStats;
+    private Button resetDb;
+    private Button exportCsv;
+    private Button updateTimer;
     private Context mContext;
 
     @Override
@@ -33,12 +36,15 @@ public class ConfigurationActivity extends AppCompatActivity {
 
         mContext = ConfigurationActivity.this;
 
-        modificationBuilding = (Button) findViewById(R.id.modificationBuilding);
-        initBuilding = (Button) findViewById(R.id.initBuilding);
-        addBuilding = (Button) findViewById(R.id.addBuilding);
-        statistics = (Button) findViewById(R.id.statistics);
-        addGame = (Button) findViewById(R.id.addGame);
-        initStats = (Button) findViewById(R.id.initStats);
+        modificationBuilding = findViewById(R.id.modificationBuilding);
+        initBuilding = findViewById(R.id.initBuilding);
+        addBuilding = findViewById(R.id.addBuilding);
+        statistics = findViewById(R.id.statistics);
+        addGame = findViewById(R.id.addGame);
+        initStats = findViewById(R.id.initStats);
+        resetDb = findViewById(R.id.resetDb);
+        exportCsv = findViewById(R.id.exportCsv);
+        updateTimer = findViewById(R.id.updateTimer);
 
         modificationBuilding.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,9 +110,35 @@ public class ConfigurationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 JsonStats.init(ConfigurationActivity.this);
-                Toast.makeText(ConfigurationActivity.this, "Stats réinitialisé", Toast.LENGTH_LONG).show();
+                Toast.makeText(ConfigurationActivity.this, "Stats réinitialisés", Toast.LENGTH_LONG).show();
             }
         });
+
+        resetDb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AdminConnectionActivity.net.getDb().resetDB();
+                Toast.makeText(ConfigurationActivity.this, "Base de donnée réinitialisée", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        exportCsv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AdminConnectionActivity.net.getDb().exportDbToCSV();
+                Toast.makeText(ConfigurationActivity.this, "Base de donnée exportée", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        updateTimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ConfigurationActivity.this, TimerUpdateActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
 
 
     }

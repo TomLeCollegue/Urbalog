@@ -1,23 +1,23 @@
 package com.example.urbalog.Class;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Custom Pair class who implements serialization
- * Use for data transfer between devices (Game instance, Object)
- * @param <F> -> Game Instance
+ * Use for data transfer between devices (Signal, Object)
  * @param <S> -> Object
  */
 
-public class TransferPackage<F, S> extends Object implements Serializable {
+public class TransferPackage<S> implements Serializable {
 
-    public final F first;
+    public final Signal sig;
     public final S second;
 
-    public TransferPackage(F g, S o)
-    {
-        this.first = g;
+    public TransferPackage(Signal s, S o) {
+        this.sig = s;
         this.second = o;
     }
 
@@ -25,26 +25,27 @@ public class TransferPackage<F, S> extends Object implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TransferPackage)) return false;
-        TransferPackage<?, ?> that = (TransferPackage<?, ?>) o;
-        return first.equals(that.first) &&
+        TransferPackage<?> that = (TransferPackage<?>) o;
+        return sig.equals(that.sig) &&
                 second.equals(that.second);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(first, second);
+        return Objects.hash(sig, second);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "TransferPackage{" +
-                "first=" + first +
+                "first=" + sig +
                 ", second=" + second +
                 '}';
     }
 
-    public static <A, B> TransferPackage<A, B> create(A a, B b){
-        return new TransferPackage<A, B>(a, b);
+    public static <B> TransferPackage<B> create(Signal a, B b){
+        return new TransferPackage<B>(a, b);
     }
 
 }

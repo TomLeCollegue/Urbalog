@@ -32,12 +32,7 @@ public class JsonBuilding {
     public static boolean fichierExiste()
     {
         File file = context.getFileStreamPath(fileNameBuilding);
-        if(file.exists()){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return file.exists();
     }
 
     /**
@@ -407,14 +402,14 @@ public class JsonBuilding {
                 String name = jsonBuilding.getString("name");
                 String description = jsonBuilding.getString("description");
                 jsonCouts = jsonBuilding.getJSONObject("Couts");
-                Integer coutPolitique= Integer.parseInt(jsonCouts.getString("politique"));
-                Integer coutSocial= Integer.parseInt(jsonCouts.getString("social"));
-                Integer coutEconomique= Integer.parseInt(jsonCouts.getString("economique"));
+                int coutPolitique= Integer.parseInt(jsonCouts.getString("politique"));
+                int coutSocial= Integer.parseInt(jsonCouts.getString("social"));
+                int coutEconomique= Integer.parseInt(jsonCouts.getString("economique"));
                 jsonEffets = jsonBuilding.getJSONObject("Effets");
-                Integer effetAttractivite = Integer.parseInt(jsonEffets.getString("attractivite"));
-                Integer effetFluidite = Integer.parseInt(jsonEffets.getString("fluidite"));
-                Integer effetEnvironnemental = Integer.parseInt(jsonEffets.getString("environnemental"));
-                Integer scoreLogistique = jsonBuilding.getInt("scoreLogistique");
+                int effetAttractivite = Integer.parseInt(jsonEffets.getString("attractivite"));
+                int effetFluidite = Integer.parseInt(jsonEffets.getString("fluidite"));
+                int effetEnvironnemental = Integer.parseInt(jsonEffets.getString("environnemental"));
+                int scoreLogistique = jsonBuilding.getInt("scoreLogistique");
                 String explicationLogistique = jsonBuilding.getString("explicationLogistique");
                 Building building = new Building(name, description, coutPolitique, coutSocial, coutEconomique, effetAttractivite, effetFluidite, effetEnvironnemental, scoreLogistique, explicationLogistique);
                 listeBuilding.add(building);

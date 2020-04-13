@@ -1,5 +1,9 @@
 package com.example.urbalog.Class;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -7,14 +11,16 @@ import java.util.Objects;
 
 public class Game implements Serializable {
 
-    private Integer scoreLogistique;
-    private Integer scoreAttractivite;
-    private Integer scoreFluidite;
-    private Integer scoreEnvironnemental;
+    private int scoreLogistique;
+    private int scoreAttractivite;
+    private int scoreFluidite;
+    private int scoreEnvironnemental;
     private Market market;
     private City city;
     private List<Bet> listBet;
     private int nTurn;
+    private int turnDur;
+    private long dbID;
     private Date date;
 
     public Game() {
@@ -23,6 +29,8 @@ public class Game implements Serializable {
         scoreFluidite = 0;
         scoreEnvironnemental = 0;
         nTurn = 1;
+        turnDur = 60;
+        dbID = 0;
         city = new City();
         date = new Date();
     }
@@ -34,36 +42,36 @@ public class Game implements Serializable {
     public void setDate(Date date) {
         this.date = date;
     }
-
-    public Integer getScoreLogistique() {
+    
+    public int getScoreLogistique() {
         return scoreLogistique;
     }
 
-    public void setScoreLogistique(Integer scoreLogistique) {
+    public void setScoreLogistique(int scoreLogistique) {
         this.scoreLogistique = scoreLogistique;
     }
 
-    public Integer getScoreAttractivite() {
+    public int getScoreAttractivite() {
         return scoreAttractivite;
     }
 
-    public void setScoreAttractivite(Integer scoreAttractivite) {
+    public void setScoreAttractivite(int scoreAttractivite) {
         this.scoreAttractivite = scoreAttractivite;
     }
 
-    public Integer getScoreFluidite() {
+    public int getScoreFluidite() {
         return scoreFluidite;
     }
 
-    public void setScoreFluidite(Integer scoreFluidite) {
+    public void setScoreFluidite(int scoreFluidite) {
         this.scoreFluidite = scoreFluidite;
     }
 
-    public Integer getScoreEnvironnemental() {
+    public int getScoreEnvironnemental() {
         return scoreEnvironnemental;
     }
 
-    public void setScoreEnvironnemental(Integer scoreEnvironnemental) {
+    public void setScoreEnvironnemental(int scoreEnvironnemental) {
         this.scoreEnvironnemental = scoreEnvironnemental;
     }
 
@@ -110,6 +118,23 @@ public class Game implements Serializable {
         nTurn++;
     }
 
+    public long getDbID() {
+        return dbID;
+    }
+
+    public void setDbID(long dbID) {
+        this.dbID = dbID;
+    }
+
+    public int getTurnDur() {
+        return turnDur;
+    }
+
+    public void setTurnDur(int turnDur) {
+        this.turnDur = turnDur;
+        Log.i("Urbalog", "Turn game: " + turnDur);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -129,6 +154,7 @@ public class Game implements Serializable {
         return Objects.hash(getScoreLogistique(), getScoreAttractivite(), getScoreFluidite(), getScoreEnvironnemental(), getMarket(), city, getListBet());
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Game{" +

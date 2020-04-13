@@ -3,7 +3,6 @@ package com.example.urbalog;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,9 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.urbalog.Class.Bet;
 import com.example.urbalog.Class.Building;
+import com.example.urbalog.Class.Duo;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Market;
-import com.example.urbalog.Class.Player;
 import com.example.urbalog.Class.Role;
 import com.example.urbalog.Class.Signal;
 import com.example.urbalog.Class.TransferPackage;
@@ -70,10 +69,6 @@ public class PlayerViewActivity extends AppCompatActivity {
     private Button textNameBuilding4;
     private Button textNameBuilding5;
 
-    private TextView textScoreCityEnvi;
-    private TextView textScoreCityTrafic;
-    private TextView textScoreCityAttract;
-    private TextView textScore;
     private Button bTurn;
     private boolean nextTurn;
 
@@ -100,7 +95,6 @@ public class PlayerViewActivity extends AppCompatActivity {
     private Button buttonPlusTop;
     private Button buttonPlusBot;
 
-    private Button buttonCityState;
 
     private TextView textScorePlayer;
 
@@ -111,7 +105,7 @@ public class PlayerViewActivity extends AppCompatActivity {
     private String Ressource1;
     private String Ressource2;
 
-    private Integer financementRessource[][];
+    private Integer[][] financementRessource;
     boolean buttonState;
 
 
@@ -152,91 +146,85 @@ public class PlayerViewActivity extends AppCompatActivity {
         PlayerConnexionActivity.net.setCurrentPlayerView(this);
         buttonState = true;
 
-        B1 = (LinearLayout) findViewById(R.id.infrastructure_1);
-        B2 = (LinearLayout) findViewById(R.id.infrastructure_2);
-        B3 = (LinearLayout) findViewById(R.id.infrastructure_3);
-        B4 = (LinearLayout) findViewById(R.id.infrastructure_4);
-        B5 = (LinearLayout) findViewById(R.id.infrastructure_5);
+        B1 = findViewById(R.id.infrastructure_1);
+        B2 = findViewById(R.id.infrastructure_2);
+        B3 = findViewById(R.id.infrastructure_3);
+        B4 = findViewById(R.id.infrastructure_4);
+        B5 = findViewById(R.id.infrastructure_5);
 
-        poli_1 = (LinearLayout) findViewById(R.id.poli_1);
-        eco_1 = (LinearLayout) findViewById(R.id.eco_1);
-        social_1 = (LinearLayout) findViewById(R.id.social_1);
+        poli_1 = findViewById(R.id.poli_1);
+        eco_1 = findViewById(R.id.eco_1);
+        social_1 = findViewById(R.id.social_1);
 
-        poli_2 = (LinearLayout) findViewById(R.id.poli_2);
-        eco_2 = (LinearLayout) findViewById(R.id.eco_2);
-        social_2 = (LinearLayout) findViewById(R.id.social_2);
+        poli_2 = findViewById(R.id.poli_2);
+        eco_2 = findViewById(R.id.eco_2);
+        social_2 = findViewById(R.id.social_2);
 
-        poli_3 = (LinearLayout) findViewById(R.id.poli_3);
-        eco_3 = (LinearLayout) findViewById(R.id.eco_3);
-        social_3 = (LinearLayout) findViewById(R.id.social_3);
+        poli_3 = findViewById(R.id.poli_3);
+        eco_3 = findViewById(R.id.eco_3);
+        social_3 = findViewById(R.id.social_3);
 
-        poli_4 = (LinearLayout) findViewById(R.id.poli_4);
-        eco_4 = (LinearLayout) findViewById(R.id.eco_4);
-        social_4 = (LinearLayout) findViewById(R.id.social_4);
+        poli_4 = findViewById(R.id.poli_4);
+        eco_4 = findViewById(R.id.eco_4);
+        social_4 = findViewById(R.id.social_4);
 
-        poli_5 = (LinearLayout) findViewById(R.id.poli_5);
-        eco_5 = (LinearLayout) findViewById(R.id.eco_5);
-        social_5 = (LinearLayout) findViewById(R.id.social_5);
+        poli_5 = findViewById(R.id.poli_5);
+        eco_5 = findViewById(R.id.eco_5);
+        social_5 = findViewById(R.id.social_5);
 
         financementRessource = PlayerConnexionActivity.net.getPlayer().getFinancementRessource();
 
-        textPoliticalResssourcesBuilding1 = (TextView) findViewById(R.id.text_political_resssources_building_1);
-        textPoliticalResssourcesBuilding2 = (TextView) findViewById(R.id.text_political_resssources_building_2);
-        textPoliticalResssourcesBuilding3 = (TextView) findViewById(R.id.text_political_resssources_building_3);
-        textPoliticalResssourcesBuilding4 = (TextView) findViewById(R.id.text_political_resssources_building_4);
-        textPoliticalResssourcesBuilding5 = (TextView) findViewById(R.id.text_political_resssources_building_5);
-        textEcoResssourcesBuilding1 = (TextView) findViewById(R.id.text_eco_resssources_building_1);
-        textEcoResssourcesBuilding2 = (TextView) findViewById(R.id.text_eco_resssources_building_2);
-        textEcoResssourcesBuilding3 = (TextView) findViewById(R.id.text_eco_resssources_building_3);
-        textEcoResssourcesBuilding4 = (TextView) findViewById(R.id.text_eco_resssources_building_4);
-        textEcoResssourcesBuilding5 = (TextView) findViewById(R.id.text_eco_resssources_building_5);
-        textSocialRessourcesBuilding1 = (TextView) findViewById(R.id.text_social_ressources_building_1);
-        textSocialRessourcesBuilding2 = (TextView) findViewById(R.id.text_social_ressources_building_2);
-        textSocialRessourcesBuilding3 = (TextView) findViewById(R.id.text_social_ressources_building_3);
-        textSocialRessourcesBuilding4 = (TextView) findViewById(R.id.text_social_ressources_building_4);
-        textSocialRessourcesBuilding5 = (TextView) findViewById(R.id.text_social_ressources_building_5);
+        textPoliticalResssourcesBuilding1 = findViewById(R.id.text_political_resssources_building_1);
+        textPoliticalResssourcesBuilding2 = findViewById(R.id.text_political_resssources_building_2);
+        textPoliticalResssourcesBuilding3 = findViewById(R.id.text_political_resssources_building_3);
+        textPoliticalResssourcesBuilding4 = findViewById(R.id.text_political_resssources_building_4);
+        textPoliticalResssourcesBuilding5 = findViewById(R.id.text_political_resssources_building_5);
+        textEcoResssourcesBuilding1 = findViewById(R.id.text_eco_resssources_building_1);
+        textEcoResssourcesBuilding2 = findViewById(R.id.text_eco_resssources_building_2);
+        textEcoResssourcesBuilding3 = findViewById(R.id.text_eco_resssources_building_3);
+        textEcoResssourcesBuilding4 = findViewById(R.id.text_eco_resssources_building_4);
+        textEcoResssourcesBuilding5 = findViewById(R.id.text_eco_resssources_building_5);
+        textSocialRessourcesBuilding1 = findViewById(R.id.text_social_ressources_building_1);
+        textSocialRessourcesBuilding2 = findViewById(R.id.text_social_ressources_building_2);
+        textSocialRessourcesBuilding3 = findViewById(R.id.text_social_ressources_building_3);
+        textSocialRessourcesBuilding4 = findViewById(R.id.text_social_ressources_building_4);
+        textSocialRessourcesBuilding5 = findViewById(R.id.text_social_ressources_building_5);
 
-        textAttractBuilding1 = (TextView) findViewById(R.id.text_attract_building_1);
-        textAttractBuilding2 = (TextView) findViewById(R.id.text_attract_building_2);
-        textAttractBuilding3 = (TextView) findViewById(R.id.text_attract_building_3);
-        textAttractBuilding4 = (TextView) findViewById(R.id.text_attract_building_4);
-        textAttractBuilding5 = (TextView) findViewById(R.id.text_attract_building_5);
+        textAttractBuilding1 = findViewById(R.id.text_attract_building_1);
+        textAttractBuilding2 = findViewById(R.id.text_attract_building_2);
+        textAttractBuilding3 = findViewById(R.id.text_attract_building_3);
+        textAttractBuilding4 = findViewById(R.id.text_attract_building_4);
+        textAttractBuilding5 = findViewById(R.id.text_attract_building_5);
 
-        textEnviBuilding1 = (TextView) findViewById(R.id.text_envi_building_1);
-        textEnviBuilding2 = (TextView) findViewById(R.id.text_envi_building_2);
-        textEnviBuilding3 = (TextView) findViewById(R.id.text_envi_building_3);
-        textEnviBuilding4 = (TextView) findViewById(R.id.text_envi_building_4);
-        textEnviBuilding5 = (TextView) findViewById(R.id.text_envi_building_5);
+        textEnviBuilding1 = findViewById(R.id.text_envi_building_1);
+        textEnviBuilding2 = findViewById(R.id.text_envi_building_2);
+        textEnviBuilding3 = findViewById(R.id.text_envi_building_3);
+        textEnviBuilding4 = findViewById(R.id.text_envi_building_4);
+        textEnviBuilding5 = findViewById(R.id.text_envi_building_5);
 
-        textTraficBuilding1 = (TextView) findViewById(R.id.text_trafic_building_1);
-        textTraficBuilding2 = (TextView) findViewById(R.id.text_trafic_building_2);
-        textTraficBuilding3 = (TextView) findViewById(R.id.text_trafic_building_3);
-        textTraficBuilding4 = (TextView) findViewById(R.id.text_trafic_building_4);
-        textTraficBuilding5 = (TextView) findViewById(R.id.text_trafic_building_5);
+        textTraficBuilding1 = findViewById(R.id.text_trafic_building_1);
+        textTraficBuilding2 = findViewById(R.id.text_trafic_building_2);
+        textTraficBuilding3 = findViewById(R.id.text_trafic_building_3);
+        textTraficBuilding4 = findViewById(R.id.text_trafic_building_4);
+        textTraficBuilding5 = findViewById(R.id.text_trafic_building_5);
 
-        textScoreCityEnvi = (TextView) findViewById(R.id.text_score_city_envi);
-        textScoreCityAttract = (TextView) findViewById(R.id.text_score_city_attract);
-        textScoreCityTrafic = (TextView) findViewById(R.id.text_score_city_trafic);
-        bTurn = (Button) findViewById(R.id.button_turn);
-        buttonCityState = (Button)findViewById(R.id.button_etat_de_la_ville);
+        bTurn = findViewById(R.id.button_turn);
 
-        textScore = (TextView) findViewById(R.id.text_score);
+        textNameBuilding1 = findViewById(R.id.text_name_building_1);
+        textNameBuilding2 = findViewById(R.id.text_name_building_2);
+        textNameBuilding3 = findViewById(R.id.text_name_building_3);
+        textNameBuilding4 = findViewById(R.id.text_name_building_4);
+        textNameBuilding5 = findViewById(R.id.text_name_building_5);
 
-        textNameBuilding1 = (Button) findViewById(R.id.text_name_building_1);
-        textNameBuilding2 = (Button) findViewById(R.id.text_name_building_2);
-        textNameBuilding3 = (Button) findViewById(R.id.text_name_building_3);
-        textNameBuilding4 = (Button) findViewById(R.id.text_name_building_4);
-        textNameBuilding5 = (Button) findViewById(R.id.text_name_building_5);
+        icoObjectifLeftRole = findViewById(R.id.ico_objectif_left_role);
+        icoObjectifRightRole = findViewById(R.id.ico_objectif_right_role);
+        textTitleRole = findViewById(R.id.text_title_role);
+        icoRessourceLeftRole = findViewById(R.id.ico_ressource_left_role);
+        icoRessourceRightRole = findViewById(R.id.ico_ressource_right_role);
+        textRessourceLeftRole = findViewById(R.id.text_ressource_left_role);
+        textRessourceRightRole = findViewById(R.id.text_ressource_right_role);
 
-        icoObjectifLeftRole = (ImageView) findViewById(R.id.ico_objectif_left_role);
-        icoObjectifRightRole = (ImageView) findViewById(R.id.ico_objectif_right_role);
-        textTitleRole = (TextView) findViewById(R.id.text_title_role);
-        icoRessourceLeftRole = (ImageView) findViewById(R.id.ico_ressource_left_role);
-        icoRessourceRightRole = (ImageView) findViewById(R.id.ico_ressource_right_role);
-        textRessourceLeftRole = (TextView) findViewById(R.id.text_ressource_left_role);
-        textRessourceRightRole = (TextView) findViewById(R.id.text_ressource_right_role);
-
-        textScorePlayer = (TextView) findViewById(R.id.text_score_player);
+        textScorePlayer = findViewById(R.id.text_score_player);
 
         textTitleRole.setText(PlayerConnexionActivity.net.getPlayer().getRole().getTypeRole());
 
@@ -299,14 +287,6 @@ public class PlayerViewActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-            }
-        });
-
-        buttonCityState.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent cityIntent = new Intent(PlayerViewActivity.this, CityProgressionActivity.class);
-                startActivity(cityIntent);
             }
         });
         fillInfosView();
@@ -388,12 +368,9 @@ public class PlayerViewActivity extends AppCompatActivity {
         textPoliticalResssourcesBuilding4.setText(Building4.getAvancementCoutPolitique() + "/" + Building4.getCoutPolitique());
         textPoliticalResssourcesBuilding5.setText(Building5.getAvancementCoutPolitique() + "/" + Building5.getCoutPolitique());
 
-        textScoreCityAttract.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreAttractivite()));
-        textScoreCityEnvi.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreEnvironnemental()));
-        textScoreCityTrafic.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreFluidite()));
+
 
         textScorePlayer.setText("Score : " + PlayerConnexionActivity.net.getPlayer().getScore());
-        textScore.setText("Tour n°"+PlayerConnexionActivity.net.getCurrentGame().getnTurn());
 
         colorRessources();
     }
@@ -410,20 +387,20 @@ public class PlayerViewActivity extends AppCompatActivity {
         boolean focusable = true;
         popUpBet = new PopupWindow(popUpView, width, height, focusable);
 
-        buttonBetPopup = (Button)popUpView.findViewById(R.id.button_X);
-        textNameBuildingPopup = (TextView)popUpView.findViewById(R.id.text_name_building_popup);
+        buttonBetPopup = popUpView.findViewById(R.id.button_X);
+        textNameBuildingPopup = popUpView.findViewById(R.id.text_name_building_popup);
 
-        textAvancementRessourceTop = (TextView) popUpView.findViewById(R.id.avancement_ressource_top);
-        TextAvancementRessourceBot= (TextView) popUpView.findViewById(R.id.avancement_ressource_bot);
-        icoRessourceBotPopup= (ImageView) popUpView.findViewById(R.id.ico_ressource_bot_popup);
-        icoRessourceTopPopup= (ImageView) popUpView.findViewById(R.id.ico_ressource_top_popup);
+        textAvancementRessourceTop = popUpView.findViewById(R.id.avancement_ressource_top);
+        TextAvancementRessourceBot= popUpView.findViewById(R.id.avancement_ressource_bot);
+        icoRessourceBotPopup= popUpView.findViewById(R.id.ico_ressource_bot_popup);
+        icoRessourceTopPopup= popUpView.findViewById(R.id.ico_ressource_top_popup);
 
-        descriptionBuildingPopUp = (TextView) popUpView.findViewById(R.id.text_desc_building_popup);
+        descriptionBuildingPopUp = popUpView.findViewById(R.id.text_desc_building_popup);
 
-        buttonMinusTop= (Button) popUpView.findViewById(R.id.button_minus_top);
-        buttonMinusBot= (Button) popUpView.findViewById(R.id.button_minus_bot);
-        buttonPlusTop= (Button) popUpView.findViewById(R.id.button_plus_top);
-        buttonPlusBot= (Button) popUpView.findViewById(R.id.button_plus_bot);
+        buttonMinusTop= popUpView.findViewById(R.id.button_minus_top);
+        buttonMinusBot= popUpView.findViewById(R.id.button_minus_bot);
+        buttonPlusTop= popUpView.findViewById(R.id.button_plus_top);
+        buttonPlusBot= popUpView.findViewById(R.id.button_plus_bot);
 
 
         textAvancementRessourceTop.setText(String.valueOf(financementRessource[numBuildingF][0]));
@@ -601,7 +578,7 @@ public class PlayerViewActivity extends AppCompatActivity {
     private void betFromButton(int numBuilding, int ressource, int Value){
 
         Role RoleInfo = PlayerConnexionActivity.net.getPlayer().getRole();
-        Building building= PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding);
+        Building building = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding);
         String valeurRessource;
         if (ressource == 0){
             valeurRessource = Ressource1;
@@ -615,9 +592,11 @@ public class PlayerViewActivity extends AppCompatActivity {
                 if(((Value == 1) && (RoleInfo.getTokenSocial() > 0)) && (building.getAvancementCoutSocial() < building.getCoutSocial())){
                     buttonState = false;
                     setEnabledBetButtons(buttonState);
-                    mise = new Bet(numBuilding, 0, 0, 1);
+                    mise = new Bet(building.getName(), numBuilding, 0, 0, 1, PlayerConnexionActivity.net.getPlayer().getDbID());
                     try {
-                        PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                        PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
+                                Signal.BET_RECEIVED,
+                                new Duo<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise)));
                         RoleInfo.lessSocial();
                         fillRoleCardRessources();
                         financementRessource[numBuilding][ressource]++;
@@ -626,12 +605,14 @@ public class PlayerViewActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                else if ((Value == -1) && (building.getAvancementCoutSocial() > 0)) {
+                else if ((Value == -1) && (building.getAvancementCoutSocial() > 0) && (financementRessource[numBuilding][ressource] != 0)) {
                     buttonState = false;
                     setEnabledBetButtons(buttonState);
-                    mise = new Bet(numBuilding, 0, 0, -1);
+                    mise = new Bet(building.getName(), numBuilding, 0, 0, -1, PlayerConnexionActivity.net.getPlayer().getDbID());
                     try {
-                        PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                        PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
+                                Signal.BET_RECEIVED,
+                                new Duo<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise)));
                         RoleInfo.addSocial();
                         fillRoleCardRessources();
                         financementRessource[numBuilding][ressource]--;
@@ -647,9 +628,11 @@ public class PlayerViewActivity extends AppCompatActivity {
             if(((Value == 1) && (RoleInfo.getTokenEconomical() > 0)) && (building.getAvancementCoutEconomique() < building.getCoutEconomique())){
                 buttonState = false;
                 setEnabledBetButtons(buttonState);
-                mise = new Bet(numBuilding, 0, 1, 0);
+                mise = new Bet(building.getName(), numBuilding, 0, 1, 0, PlayerConnexionActivity.net.getPlayer().getDbID());
                 try {
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
+                            Signal.BET_RECEIVED,
+                            new Duo<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise)));
                     RoleInfo.lessEco();
                     fillRoleCardRessources();
                     financementRessource[numBuilding][ressource]++;
@@ -658,12 +641,14 @@ public class PlayerViewActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            else if ((Value == -1)&&(building.getAvancementCoutEconomique() > 0)) {
+            else if ((Value == -1)&&(building.getAvancementCoutEconomique() > 0) && (financementRessource[numBuilding][ressource] != 0)) {
                 buttonState = false;
                 setEnabledBetButtons(buttonState);
-                mise = new Bet(numBuilding, 0, -1, 0);
+                mise = new Bet(building.getName(), numBuilding, 0, -1, 0, PlayerConnexionActivity.net.getPlayer().getDbID());
                 try {
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
+                            Signal.BET_RECEIVED,
+                            new Duo<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise)));
                     RoleInfo.addEco();
                     fillRoleCardRessources();
                     financementRessource[numBuilding][ressource]--;
@@ -679,9 +664,11 @@ public class PlayerViewActivity extends AppCompatActivity {
             if(((Value == 1) && (RoleInfo.getTokenPolitical() > 0)) && (building.getAvancementCoutPolitique() < building.getCoutPolitique())){
                 buttonState = false;
                 setEnabledBetButtons(buttonState);
-                mise = new Bet(numBuilding, 1, 0, 0);
+                mise = new Bet(building.getName(), numBuilding, 1, 0, 0, PlayerConnexionActivity.net.getPlayer().getDbID());
                 try {
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
+                            Signal.BET_RECEIVED,
+                            new Duo<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise)));
                     RoleInfo.lessPolitical();
                     fillRoleCardRessources();
                     financementRessource[numBuilding][ressource]++;
@@ -690,12 +677,14 @@ public class PlayerViewActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            else if ((Value == -1)&&(building.getAvancementCoutPolitique() > 0)) {
+            else if ((Value == -1)&&(building.getAvancementCoutPolitique() > 0) && (financementRessource[numBuilding][ressource] != 0)) {
                 buttonState = false;
                 setEnabledBetButtons(buttonState);
-                mise = new Bet(numBuilding, -1, 0, 0);
+                mise = new Bet(building.getName(), numBuilding, -1, 0, 0, PlayerConnexionActivity.net.getPlayer().getDbID());
                 try {
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise));
+                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
+                            Signal.BET_RECEIVED,
+                            new Duo<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise)));
                     RoleInfo.addPolitical();
                     fillRoleCardRessources();
                     financementRessource[numBuilding][ressource]--;
@@ -1058,40 +1047,35 @@ public class PlayerViewActivity extends AppCompatActivity {
             }
             else {
                 eco_1.setBackground(getDrawable(R.drawable.ressources_green));
-            }
-        }
+            }}
         if ((M.getBuildings().get(1).getAvancementCoutEconomique() == M.getBuildings().get(1).getCoutEconomique())){
             if (ressources_bet[1][1] == 1) {
                 eco_2.setBackground(getDrawable(R.drawable.ressources_invested_green));
             }
-            else {
+        else {
                 eco_2.setBackground(getDrawable(R.drawable.ressources_green));
-            }
-        }
+        }}
         if ((M.getBuildings().get(2).getAvancementCoutEconomique() == M.getBuildings().get(2).getCoutEconomique())){
             if (ressources_bet[2][1] == 1) {
                 eco_3.setBackground(getDrawable(R.drawable.ressources_invested_green));
             }
-            else {
+        else {
                 eco_3.setBackground(getDrawable(R.drawable.ressources_green));
-            }
-        }
+        }}
         if ((M.getBuildings().get(3).getAvancementCoutEconomique() == M.getBuildings().get(3).getCoutEconomique())){
             if (ressources_bet[3][1] == 1) {
                 eco_4.setBackground(getDrawable(R.drawable.ressources_invested_green));
             }
-            else {
+        else {
                 eco_4.setBackground(getDrawable(R.drawable.ressources_green));
-            }
-        }
+        }}
         if ((M.getBuildings().get(4).getAvancementCoutEconomique() == M.getBuildings().get(4).getCoutEconomique())){
             if (ressources_bet[4][1] == 1) {
                 eco_5.setBackground(getDrawable(R.drawable.ressources_invested_green));
             }
-            else {
+        else {
                 eco_5.setBackground(getDrawable(R.drawable.ressources_green));
-            }
-        }
+        }}
 
         //---------------------------------------------Politique-------------------------------------------------------------
 
@@ -1099,42 +1083,37 @@ public class PlayerViewActivity extends AppCompatActivity {
             if (ressources_bet[0][0] == 1) {
                 poli_1.setBackground(getDrawable(R.drawable.ressources_invested_green));
             }
-            else {
+        else {
                 poli_1.setBackground(getDrawable(R.drawable.ressources_green));
-            }
-        }
+        }}
         if ((M.getBuildings().get(1).getAvancementCoutPolitique() == M.getBuildings().get(1).getCoutPolitique())){
             if (ressources_bet[1][0] == 1) {
                 poli_2.setBackground(getDrawable(R.drawable.ressources_invested_green));
             }
-            else {
+        else {
                 poli_2.setBackground(getDrawable(R.drawable.ressources_green));
-            }
-        }
+        }}
         if ((M.getBuildings().get(2).getAvancementCoutPolitique() == M.getBuildings().get(2).getCoutPolitique())){
             if (ressources_bet[2][0] == 1) {
                 poli_3.setBackground(getDrawable(R.drawable.ressources_invested_green));
             }
-            else {
+        else {
                 poli_3.setBackground(getDrawable(R.drawable.ressources_green));
-            }
-        }
+        }}
         if ((M.getBuildings().get(3).getAvancementCoutPolitique() == M.getBuildings().get(3).getCoutPolitique())){
             if (ressources_bet[3][0] == 1) {
                 poli_4.setBackground(getDrawable(R.drawable.ressources_invested_green));
             }
-            else {
+        else {
                 poli_4.setBackground(getDrawable(R.drawable.ressources_green));
-            }
-        }
+        }}
         if ((M.getBuildings().get(4).getAvancementCoutPolitique() == M.getBuildings().get(4).getCoutPolitique())){
             if (ressources_bet[4][0] == 1) {
                 poli_5.setBackground(getDrawable(R.drawable.ressources_invested_green));
             }
-            else {
+        else {
                 poli_5.setBackground(getDrawable(R.drawable.ressources_green));
-            }
-        }
+        }}
 
         //---------------------------------------------Social---------------------------------------------------------------
 
@@ -1142,41 +1121,64 @@ public class PlayerViewActivity extends AppCompatActivity {
             if (ressources_bet[0][2] == 1) {
                 social_1.setBackground(getDrawable(R.drawable.ressources_invested_green));
             }
-            else {
+
+        else {
                 social_1.setBackground(getDrawable(R.drawable.ressources_green));
-            }
-        }
+            }}
         if ((M.getBuildings().get(1).getAvancementCoutSocial() == M.getBuildings().get(1).getCoutSocial())){
             if (ressources_bet[1][2] == 1) {
                 social_1.setBackground(getDrawable(R.drawable.ressources_invested_green));
             }
-            else {
+
+        else {
                 social_1.setBackground(getDrawable(R.drawable.ressources_green));
-            }
-        }
+            }}
         if ((M.getBuildings().get(2).getAvancementCoutSocial() == M.getBuildings().get(2).getCoutSocial())){
             if (ressources_bet[2][2] == 1) {
                 social_3.setBackground(getDrawable(R.drawable.ressources_invested_green));
             }
-            else {
+        else {
                 social_3.setBackground(getDrawable(R.drawable.ressources_green));
-            }
-        }
+            }}
         if ((M.getBuildings().get(3).getAvancementCoutSocial() == M.getBuildings().get(3).getCoutSocial())){
             if (ressources_bet[3][2] == 1) {
                 social_4.setBackground(getDrawable(R.drawable.ressources_invested_green));
             }
-            else {
+        else {
                 social_4.setBackground(getDrawable(R.drawable.ressources_green));
-            }
-        }
+        }}
         if ((M.getBuildings().get(4).getAvancementCoutSocial() == M.getBuildings().get(4).getCoutSocial())){
             if (ressources_bet[4][2] == 1) {
                 social_5.setBackground(getDrawable(R.drawable.ressources_invested_green));
-            }
-            else {
-                social_5.setBackground(getDrawable(R.drawable.ressources_green));
-            }
+
         }
+        else {
+            social_5.setBackground(getDrawable(R.drawable.ressources_green));
+        }}
+    }
+
+
+    public void resetColorRessources(){
+
+        eco_1.setBackground(getDrawable(R.drawable.none));
+        eco_2.setBackground(getDrawable(R.drawable.none));
+        eco_3.setBackground(getDrawable(R.drawable.none));
+        eco_4.setBackground(getDrawable(R.drawable.none));
+        eco_5.setBackground(getDrawable(R.drawable.none));
+
+        poli_1.setBackground(getDrawable(R.drawable.none));
+        poli_2.setBackground(getDrawable(R.drawable.none));
+        poli_3.setBackground(getDrawable(R.drawable.none));
+        poli_4.setBackground(getDrawable(R.drawable.none));
+        poli_5.setBackground(getDrawable(R.drawable.none));
+
+        social_1.setBackground(getDrawable(R.drawable.none));
+        social_2.setBackground(getDrawable(R.drawable.none));
+        social_3.setBackground(getDrawable(R.drawable.none));
+        social_4.setBackground(getDrawable(R.drawable.none));
+        social_5.setBackground(getDrawable(R.drawable.none));
+
+
+
     }
 }

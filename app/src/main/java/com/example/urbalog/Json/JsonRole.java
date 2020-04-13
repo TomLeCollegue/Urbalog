@@ -30,12 +30,7 @@ public class JsonRole {
     public static boolean fichierExiste()
     {
         File file = context.getFileStreamPath(fileNameBuilding);
-        if(file.exists()){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return file.exists();
     }
 
     /**
@@ -208,24 +203,24 @@ public class JsonRole {
                 String objective = jsonRole.getString("description");
                 String hold = jsonRole.getString("hold");
                 String improve = jsonRole.getString("improve");
-                Integer tokenSocial;
-                Integer tokenEconomical;
-                Integer tokenPolitical;
+                int tokenSocial;
+                int tokenEconomical;
+                int tokenPolitical;
                 JSONArray booleanRessources = jsonRole.getJSONArray("ressources");
                 if((Boolean) booleanRessources.get(0) == true){
                     tokenSocial = jsonRole.getInt("tokenSocial");
                 } else {
-                    tokenSocial = null;
+                    tokenSocial = 0;
                 }
                 if((Boolean) booleanRessources.get(1) == true){
                     tokenEconomical = jsonRole.getInt("tokenEconomical");
                 } else {
-                    tokenEconomical = null;
+                    tokenEconomical = 0;
                 }
                 if((Boolean) booleanRessources.get(2) == true){
                     tokenPolitical = jsonRole.getInt("tokenPolitical");
                 } else {
-                    tokenPolitical = null;
+                    tokenPolitical = 0;
                 }
                 boolean[] bool = new boolean[3];
                 for(int k=0; k<booleanRessources.length(); k++)

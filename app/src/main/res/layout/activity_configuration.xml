@@ -10,17 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/modificationBuilding"
-        android:background="@drawable/button_style"
-        android:text="@string/modifBuilding"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center"
-        android:layout_width="250dp"
-        android:layout_height="100dp"
-        android:fontFamily="@font/caractere_l2"></Button>
+        <Button
+            android:id="@+id/modificationBuilding"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/button_style"
+            android:fontFamily="@font/caractere_l2"
+            android:text="@string/modifBuilding"></Button>
 
-    <Button
+        <Button
         android:id="@+id/initBuilding"
         android:background="@drawable/button_style"
         android:text="@string/initBuildings"
@@ -70,6 +70,36 @@
             android:layout_width="250dp"
             android:layout_height="100dp">
         </Button>
+
+        <Button
+            android:id="@+id/resetDb"
+            android:background="@drawable/button_style"
+            android:text="réinitialiser bdd"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:layout_width="250dp"
+            android:layout_height="100dp">
+        </Button>
+
+        <Button
+            android:id="@+id/exportCsv"
+            android:background="@drawable/button_style"
+            android:text="Exporter bdd vers csv"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:layout_width="250dp"
+            android:layout_height="100dp">
+        </Button>
+
+        <Button
+            android:id="@+id/updateTimer"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/button_style"
+            android:text="Changer le temps de mise"></Button>
+
 
     </LinearLayout>
 

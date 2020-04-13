@@ -2,6 +2,7 @@ package com.example.urbalog;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,8 +17,8 @@ import com.example.urbalog.Class.Market;
 import com.example.urbalog.Class.Role;
 import com.example.urbalog.Json.JsonBuilding;
 import com.example.urbalog.Json.JsonRole;
+import com.example.urbalog.Json.JsonStats;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
     private Game currentGame;
 
     private Spinner spinnerPlayer;
+    private Button lancerVue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,20 +43,24 @@ public class AdminConnectionActivity extends AppCompatActivity {
 
         JsonBuilding.init(getApplicationContext());
         JsonRole.init(getApplicationContext());
+        JsonStats.init(getApplicationContext());
         this.roles = JsonRole.readRole();
 
-        net = new NetworkHelper(this);
-        net.setHost(true);
+        if(net == null) {
+            net = new NetworkHelper(this, true);
+            net.setHost(true);
+        }
         setContentView(R.layout.activity_admin_connection);
 
-        this.bHost = (Button)findViewById(R.id.hostButton);
-        this.bPlay = (Button)findViewById(R.id.playButton);
-        this.configurationButton = (Button)findViewById(R.id.configurationButton);
-        this.bStop = (Button)findViewById(R.id.stopButton);
-        tPlayers = (TextView) findViewById(R.id.nbPlayer);
-        this.tStatus = (TextView) findViewById(R.id.statusText);
+        this.bHost = findViewById(R.id.hostButton);
+        this.bPlay = findViewById(R.id.playButton);
+        this.configurationButton = findViewById(R.id.configurationButton);
+        this.bStop = findViewById(R.id.stopButton);
+        tPlayers = findViewById(R.id.nbPlayer);
+        this.tStatus = findViewById(R.id.statusText);
+        this.lancerVue = findViewById(R.id.vue_admin);
 
-        spinnerPlayer = (Spinner) findViewById(R.id.spinnerNBplayer);
+        spinnerPlayer = findViewById(R.id.spinnerNBplayer);
 
         List<Integer> ListNB = new ArrayList<>();
         ListNB.add(1);
@@ -95,18 +101,14 @@ public class AdminConnectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(net.getListPlayer().size() == NetworkHelper.getNbPlayers()) {
+                    Log.i("Urbalog", "Turn game: " + net.getTURN_TIME());
                     bPlay.setEnabled(false);
                     configurationButton.setEnabled(false);
                     net.setGameStarted(true);
-                    currentGame = new Game();
+                    currentGame = net.getCurrentGame();
                     currentGame.setMarket(new Market());
                     net.setCurrentGame(currentGame);
-                    try {
-                        net.sendToAllClients(currentGame);
-                        randomRoleAssignment();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    net.startGame(roles);
                 }
             }
         });
@@ -126,7 +128,15 @@ public class AdminConnectionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(AdminConnectionActivity.this, ConfigurationActivity.class);
                 startActivity(intent);
-                finish();
+            }
+        });
+
+
+        lancerVue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cityIntent = new Intent(AdminConnectionActivity.this, CityProgressionActivity.class);
+                startActivity(cityIntent);
             }
         });
 
@@ -134,19 +144,11 @@ public class AdminConnectionActivity extends AppCompatActivity {
 
     public static void updateNbPlayers()
     {
-        tPlayers.setText(net.getListPlayer().size()+"/"+ net.getNbPlayers());
+        tPlayers.setText(net.getListPlayer().size()+"/"+ NetworkHelper.getNbPlayers());
     }
 
     public void updateStatus(String s)
     {
         tStatus.setText(s);
-    }
-
-    public void randomRoleAssignment() {
-        try {
-            net.sendRandomRoleToAllClients(roles);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -91,14 +91,14 @@ public class ListBuildingsAdapter extends RecyclerView.Adapter<ListBuildingsAdap
         public MyViewHolder(@NonNull final View itemView) {
             super(itemView);
 
-            name = ((TextView) itemView.findViewById(R.id.nameBuilding));
-            description = ((TextView) itemView.findViewById(R.id.descriptionBuilding));
-            politique = ((TextView) itemView.findViewById(R.id.coutPolitiqueBuilding));
-            social = ((TextView) itemView.findViewById(R.id.coutSocialBuilding));
-            economique = ((TextView) itemView.findViewById(R.id.coutEconomiqueBuilding));
-            attractivite = ((TextView) itemView.findViewById(R.id.effetAttractiviteBuilding));
-            fluidite = ((TextView) itemView.findViewById(R.id.effetFluiditeBuilding));
-            environnnement = ((TextView) itemView.findViewById(R.id.effetEnvironnementBuilding));
+            name = itemView.findViewById(R.id.nameBuilding);
+            description = itemView.findViewById(R.id.descriptionBuilding);
+            politique = itemView.findViewById(R.id.coutPolitiqueBuilding);
+            social = itemView.findViewById(R.id.coutSocialBuilding);
+            economique = itemView.findViewById(R.id.coutEconomiqueBuilding);
+            attractivite = itemView.findViewById(R.id.effetAttractiviteBuilding);
+            fluidite = itemView.findViewById(R.id.effetFluiditeBuilding);
+            environnnement = itemView.findViewById(R.id.effetEnvironnementBuilding);
 
             buttonDelete = itemView.findViewById(R.id.buttonDeleteBuilding);
 

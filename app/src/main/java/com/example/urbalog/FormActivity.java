@@ -35,11 +35,11 @@ public class FormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
 
-        mSlideViewPager = (ViewPager) findViewById(R.id.slideViewPager);
-        mDotsLayout = (LinearLayout) findViewById(R.id.dotsLayout);
+        mSlideViewPager = findViewById(R.id.slideViewPager);
+        mDotsLayout = findViewById(R.id.dotsLayout);
 
-        next = (Button)findViewById(R.id.form_button_next);
-        back = (Button)findViewById(R.id.form_button_back);
+        next = findViewById(R.id.form_button_next);
+        back = findViewById(R.id.form_button_back);
 
         formAdapter = new FormAdapter(this);
         mSlideViewPager.setAdapter(formAdapter);

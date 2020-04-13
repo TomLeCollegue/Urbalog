@@ -230,7 +230,7 @@ public class EditBuildingActivity extends AppCompatActivity {
         if(finish == true){
             if((building.getName()).equals(finalName))
             {
-                Building newBuilding = new Building(finalName, finalDescription, Integer.parseInt(politique.getText().toString()), Integer.parseInt(social.getText().toString()),  Integer.parseInt(economique.getText().toString()), Integer.parseInt(attractivite.getText().toString()), Integer.parseInt(fluidite.getText().toString()), Integer.parseInt(environnemental.getText().toString()), Integer.parseInt(scoreLogistique.getText().toString()), finalExplicationLogistique.toString() );
+                Building newBuilding = new Building(finalName, finalDescription, Integer.parseInt(politique.getText().toString()), Integer.parseInt(social.getText().toString()),  Integer.parseInt(economique.getText().toString()), Integer.parseInt(attractivite.getText().toString()), Integer.parseInt(fluidite.getText().toString()), Integer.parseInt(environnemental.getText().toString()), Integer.parseInt(scoreLogistique.getText().toString()), finalExplicationLogistique);
                 JsonBuilding.modificationBuilding(newBuilding, name.getHint().toString());
                 Intent intent = new Intent(EditBuildingActivity.this, ListBuildingsActivity.class);
                 startActivity(intent);
@@ -242,7 +242,7 @@ public class EditBuildingActivity extends AppCompatActivity {
                 }
                 else{
                     Toast.makeText(this, "Le batiment a été modifié", Toast.LENGTH_SHORT).show();
-                    Building newBuilding = new Building(finalName, finalDescription, Integer.parseInt(politique.getText().toString()), Integer.parseInt(social.getText().toString()),  Integer.parseInt(economique.getText().toString()), Integer.parseInt(attractivite.getText().toString()), Integer.parseInt(fluidite.getText().toString()), Integer.parseInt(environnemental.getText().toString()), Integer.parseInt(scoreLogistique.getText().toString()), finalExplicationLogistique.toString());
+                    Building newBuilding = new Building(finalName, finalDescription, Integer.parseInt(politique.getText().toString()), Integer.parseInt(social.getText().toString()),  Integer.parseInt(economique.getText().toString()), Integer.parseInt(attractivite.getText().toString()), Integer.parseInt(fluidite.getText().toString()), Integer.parseInt(environnemental.getText().toString()), Integer.parseInt(scoreLogistique.getText().toString()), finalExplicationLogistique);
                     JsonBuilding.modificationBuilding(newBuilding, name.getHint().toString());
                     Intent intent = new Intent(EditBuildingActivity.this, ListBuildingsActivity.class);
                     startActivity(intent);

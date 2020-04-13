@@ -1,11 +1,10 @@
 package com.example.urbalog.Stats;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.urbalog.Json.JsonStats;
 import com.example.urbalog.R;
@@ -53,7 +52,7 @@ public class AverageScoreActivity extends AppCompatActivity {
         HashMap<Date, Integer> nbScoreEnvironnementalByGame = JsonStats.getScoreEnvironnementalByGame();
         Map<Date, Integer> nbScoreEnvironnementalByGameSorted = new TreeMap<Date, Integer>(nbScoreEnvironnementalByGame);
 
-        mChart = (LineChart) findViewById(R.id.linechart);
+        mChart = findViewById(R.id.linechart);
         mChart.setDragEnabled(true);
         mChart.setScaleEnabled(true);
         mChart.setExtraOffsets(10, 10, 10, 10);

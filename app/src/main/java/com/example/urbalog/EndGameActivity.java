@@ -36,22 +36,22 @@ public class EndGameActivity extends AppCompatActivity {
 
         buildings = PlayerConnexionActivity.net.getCurrentGame().getCity().getBuildings();
 
-        textScorePlayer = (TextView) findViewById(R.id.text_score_player);
+        textScorePlayer = findViewById(R.id.text_score_player);
 
-        textAttractivityScore = (TextView) findViewById(R.id.attractivity_score);
-        textEnvironmentScore = (TextView) findViewById(R.id.environment_score);
-        textFluidityScore = (TextView) findViewById(R.id.fluidity_score);
+        textAttractivityScore = findViewById(R.id.attractivity_score);
+        textEnvironmentScore = findViewById(R.id.environment_score);
+        textFluidityScore = findViewById(R.id.fluidity_score);
 
-        logisticButton = (Button) findViewById(R.id.logisticButton);
+        logisticButton = findViewById(R.id.logisticButton);
 
         //Log.d("debug", buildings.toString());
-        rv1 = (RecyclerView) findViewById(R.id.recyclerListBuildingBuilt);
+        rv1 = findViewById(R.id.recyclerListBuildingBuilt);
         rv1.setLayoutManager(new LinearLayoutManager(EndGameActivity.this, LinearLayoutManager.VERTICAL, false));
 
         BuildingBuiltAdapter MyAdapter= new BuildingBuiltAdapter(buildings);
         rv1.setAdapter(MyAdapter);
 
-        textScorePlayer.setText("Score : " + String.valueOf(PlayerConnexionActivity.net.getPlayer().getScore()));
+        textScorePlayer.setText("Score : " + PlayerConnexionActivity.net.getPlayer().getScore());
 
         textAttractivityScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreAttractivite()));
         textEnvironmentScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreEnvironnemental()));

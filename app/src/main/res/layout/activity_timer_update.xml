@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TimerUpdateActivity">
+
+    <TextView
+        android:id="@+id/textTimer"
+        android:layout_width="170dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="Temps de la mise :"
+        android:textAlignment="center"
+        android:textColor="@color/dark"
+        android:textSize="17dp"></TextView>
+
+    <EditText
+        android:id="@+id/numberUpdateTimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:hint=" en secondes"
+        android:inputType="number"
+        android:textAlignment="center"></EditText>
+
+    <Button
+        android:id="@+id/updateTimerButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/button_style"
+        android:onClick="validerTimerUpdate"
+        android:text="Mettre a jour"
+        android:textSize="14sp"></Button>
+
+</FrameLayout>

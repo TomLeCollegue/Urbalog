@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import java.util.UUID;
 
-public class UUIDHelper {
+public final class UUIDHelper {
     private static String uniqueID = null;
     private static final String PREF_UNIQUE_ID = "PREF_UNIQUE_ID";
 
@@ -18,7 +18,7 @@ public class UUIDHelper {
                 uniqueID = UUID.randomUUID().toString();
                 SharedPreferences.Editor editor = sharedPrefs.edit();
                 editor.putString(PREF_UNIQUE_ID, uniqueID);
-                editor.commit();
+                editor.apply();
             }
         }
         return uniqueID;

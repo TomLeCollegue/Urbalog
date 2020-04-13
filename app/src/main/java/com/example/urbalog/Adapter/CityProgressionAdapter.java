@@ -60,10 +60,16 @@ public class CityProgressionAdapter extends RecyclerView.Adapter<CityProgression
 
         public void display(Building building){
             bName.setText(building.getName());
-            bEnvironmentalScore.setText(building.getEffetEnvironnemental().toString());
-            bFluidityScore.setText(building.getEffetFluidite().toString());
-            bAttractivenessScore.setText(building.getEffetAttractivite().toString());
+            bEnvironmentalScore.setText(String.valueOf(building.getEffetEnvironnemental()));
+            bFluidityScore.setText(String.valueOf(building.getEffetFluidite()));
+            bAttractivenessScore.setText(String.valueOf(building.getEffetAttractivite()));
             bDescription.setText(building.getDescription());
         }
+    }
+
+    public void updateData(ArrayList data) {
+        buildings.clear();
+        buildings.addAll(data);
+        this.notifyDataSetChanged();
     }
 }

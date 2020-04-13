@@ -1357,196 +1357,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/city_score"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:background="#c0c0c0"
-                android:orientation="vertical">
-
-                <FrameLayout
-                    android:id="@+id/text_city_score"
-                    android:layout_width="match_parent"
-                    android:layout_height="25dp">
-
-                    <TextView
-                        android:id="@+id/text_title_city_score"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/caractere_l1"
-                        android:text="Score de la Ville"
-                        android:textAlignment="center"
-                        android:textSize="18dp" />
-
-                    <Button
-                        android:id="@+id/button_etat_de_la_ville"
-                        style="@style/Widget.AppCompat.Button.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:autoSizeMaxTextSize="100sp"
-                        android:autoSizeMinTextSize="5sp"
-                        android:autoSizeStepGranularity="2sp"
-                        android:autoSizeTextType="uniform"
-                        android:background="@drawable/button_style_map"
-                        android:fontFamily="@font/caractere_l1"
-                        android:text="Etat de la ville" />
-                </FrameLayout>
-
-                <LinearLayout
-                    android:id="@+id/list_city_score"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="#dadada"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/text_score"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:text="Tour n°0"
-                            android:textAlignment="center" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:src="@mipmap/img_environment_city_foreground"></ImageView>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/text_score_city_envi"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:fontFamily="@font/caractere_l1"
-                                android:gravity="center_vertical"
-                                android:text="+5" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:src="@mipmap/img_fluid_city_foreground"></ImageView>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/text_score_city_trafic"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/caractere_l1"
-                                android:gravity="center_vertical"
-                                android:text="+2" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:src="@mipmap/img_impact_on_city_foreground"></ImageView>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/text_score_city_attract"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:fontFamily="@font/caractere_l1"
-                                android:gravity="center_vertical"
-                                android:text="-1" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <Button
-                            android:id="@+id/button_turn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-
-                            android:fontFamily="@font/caractere_l1"
-                            android:text="Tour suivant"
-                            android:autoSizeTextType="uniform"
-                            android:autoSizeMinTextSize="5sp"
-                            android:autoSizeMaxTextSize="30sp"
-                            android:autoSizeStepGranularity="2sp"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
         </LinearLayout>
 
         <LinearLayout
@@ -1733,15 +1543,24 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/text_score_player"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:fontFamily="@font/caractere_l1"
                         android:gravity="center|center"
                         android:text="Score" />
+
+                    <Button
+                        android:id="@+id/button_turn"
+                        android:layout_width="match_parent"
+                        android:layout_height="20sp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_style"
+                        android:text="Tour suivant" />
                 </LinearLayout>
             </LinearLayout>
 
