@@ -109,6 +109,8 @@ public class AdminConnectionActivity extends AppCompatActivity {
                     currentGame.setMarket(new Market());
                     net.setCurrentGame(currentGame);
                     net.startGame(roles);
+                    Intent cityIntent = new Intent(AdminConnectionActivity.this, CityProgressionActivity.class);
+                    startActivity(cityIntent);
                 }
             }
         });

@@ -517,6 +517,8 @@ public class NetworkHelper implements Serializable {
                                         e.printStackTrace();
                                     }
                                 }
+                                if(currentAdminView != null)
+                                    currentAdminView.updateView();
                             }
                             else if(nextTurnVotes == NB_PLAYERS-1 && NB_PLAYERS != 1){
                                 // Launch turn timer for last player

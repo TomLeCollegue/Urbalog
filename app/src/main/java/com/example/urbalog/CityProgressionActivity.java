@@ -29,11 +29,6 @@ public class CityProgressionActivity extends AppCompatActivity {
     private ImageView camionAttract;
     private Button refresh;
 
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,9 +60,6 @@ public class CityProgressionActivity extends AppCompatActivity {
 
         camionAttract.setLayoutParams(lpAttract);
 
-
-
-
         buildings.addAll(AdminConnectionActivity.net.getCurrentGame().getCity().getBuildings());
 
         Building b = new Building("Emplacement Libre"," ",0,0,0,0,0,0,0, " ");
@@ -86,19 +78,21 @@ public class CityProgressionActivity extends AppCompatActivity {
 
         AdminConnectionActivity.net.setCurrentAdminView(this);
 
-
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateView(rv);
+                updateView();
             }
         });
-
-
-
     }
 
-    public void updateView(RecyclerView rv){ // a appeler pour refresh la vue
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AdminConnectionActivity.net.setCurrentAdminView(null);
+    }
+
+    public void updateView(){ // a appeler pour refresh la vue
         buildings.clear();
         buildings.addAll(AdminConnectionActivity.net.getCurrentGame().getCity().getBuildings());
         Building bVide = new Building("Emplacement Libre"," ",0,0,0,0,0,0,0, " ");
@@ -132,7 +126,5 @@ public class CityProgressionActivity extends AppCompatActivity {
         lpAttract.setMargins(900 + 100*scoreAttract,195, 0, 0);
 
         camionAttract.setLayoutParams(lpAttract);
-
-
     }
 }
