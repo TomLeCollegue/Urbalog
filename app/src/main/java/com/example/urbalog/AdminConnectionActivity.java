@@ -118,6 +118,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
                 configurationButton.setEnabled(true);
                 bPlay.setEnabled(true);
                 net.stopAll();
+                net = new NetworkHelper(getApplicationContext(), true);
                 updateStatus("Disconnected");
                 updateNbPlayers();
             }
