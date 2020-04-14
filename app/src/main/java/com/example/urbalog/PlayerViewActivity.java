@@ -247,23 +247,23 @@ public class PlayerViewActivity extends AppCompatActivity {
         textRessourceRightRole = findViewById(R.id.text_ressource_right_role);
 
 
-        attractiveness1 = (ImageView) findViewById(R.id.img_attract_building_1);
-        attractiveness2 = (ImageView) findViewById(R.id.img_attract_building_2);
-        attractiveness3 = (ImageView) findViewById(R.id.img_attract_building_3);
-        attractiveness4 = (ImageView) findViewById(R.id.img_attract_building_4);
-        attractiveness5 = (ImageView) findViewById(R.id.img_attract_building_5);
+        attractiveness1 = findViewById(R.id.img_attract_building_1);
+        attractiveness2 = findViewById(R.id.img_attract_building_2);
+        attractiveness3 = findViewById(R.id.img_attract_building_3);
+        attractiveness4 = findViewById(R.id.img_attract_building_4);
+        attractiveness5 = findViewById(R.id.img_attract_building_5);
 
-        environment1 = (ImageView) findViewById(R.id.img_environment_building_1);
-        environment2 = (ImageView) findViewById(R.id.img_environment_building_2);
-        environment3 = (ImageView) findViewById(R.id.img_environment_building_3);
-        environment4 = (ImageView) findViewById(R.id.img_environment_building_4);
-        environment5 = (ImageView) findViewById(R.id.img_environment_building_5);
+        environment1 = findViewById(R.id.img_environment_building_1);
+        environment2 = findViewById(R.id.img_environment_building_2);
+        environment3 = findViewById(R.id.img_environment_building_3);
+        environment4 = findViewById(R.id.img_environment_building_4);
+        environment5 = findViewById(R.id.img_environment_building_5);
 
-        fluidity1 = (ImageView) findViewById(R.id.img_fluidity_building_1);
-        fluidity2 = (ImageView) findViewById(R.id.img_fluidity_building_2);
-        fluidity3 = (ImageView) findViewById(R.id.img_fluidity_building_3);
-        fluidity4 = (ImageView) findViewById(R.id.img_fluidity_building_4);
-        fluidity5 = (ImageView) findViewById(R.id.img_fluidity_building_5);
+        fluidity1 = findViewById(R.id.img_fluidity_building_1);
+        fluidity2 = findViewById(R.id.img_fluidity_building_2);
+        fluidity3 = findViewById(R.id.img_fluidity_building_3);
+        fluidity4 = findViewById(R.id.img_fluidity_building_4);
+        fluidity5 = findViewById(R.id.img_fluidity_building_5);
 
         textScorePlayer = findViewById(R.id.text_score_player);
 

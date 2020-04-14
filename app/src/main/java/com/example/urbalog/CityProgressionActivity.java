@@ -1,11 +1,8 @@
 package com.example.urbalog;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,9 +30,9 @@ public class CityProgressionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_progression);
 
-        camionEnvi = (ImageView) findViewById(R.id.camion);
-        camionFluid =  (ImageView) findViewById(R.id.camion2);
-        camionAttract =  (ImageView) findViewById(R.id.camion3);
+        camionEnvi = findViewById(R.id.camion);
+        camionFluid = findViewById(R.id.camion2);
+        camionAttract = findViewById(R.id.camion3);
 
         int scoreEnvi = AdminConnectionActivity.net.getCurrentGame().getScoreEnvironnemental();
         int scoreFluid = AdminConnectionActivity.net.getCurrentGame().getScoreFluidite();

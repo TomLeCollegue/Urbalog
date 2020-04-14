@@ -1,7 +1,5 @@
 package com.example.urbalog;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.urbalog.Class.Building;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.urbalog.Json.JsonBuilding;
 
 public class BuildingConfigActivity extends AppCompatActivity {

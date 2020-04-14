@@ -1,20 +1,11 @@
 package com.example.urbalog;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.urbalog.Class.Game;
-import com.example.urbalog.Class.Player;
-import com.example.urbalog.Json.JsonBuilding;
-import com.example.urbalog.Json.JsonStats;
-
-import java.util.ArrayList;
 
 public class ConfigurationActivity extends AppCompatActivity {
 

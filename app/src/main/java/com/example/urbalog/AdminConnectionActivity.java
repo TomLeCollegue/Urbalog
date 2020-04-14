@@ -17,7 +17,6 @@ import com.example.urbalog.Class.Market;
 import com.example.urbalog.Class.Role;
 import com.example.urbalog.Json.JsonBuilding;
 import com.example.urbalog.Json.JsonRole;
-import com.example.urbalog.Json.JsonStats;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
 
         JsonBuilding.init(getApplicationContext());
         JsonRole.init(getApplicationContext());
-        JsonStats.init(getApplicationContext());
+
         this.roles = JsonRole.readRole();
 
         if(net == null) {
