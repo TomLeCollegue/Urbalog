@@ -13,6 +13,7 @@ import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Player;
 import com.example.urbalog.Class.Role;
 import com.example.urbalog.NetworkHelper;
+import com.example.urbalog.UUIDHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Constants for games table
     public static final String GAME_KEY = "id";
+    public static final String GAME_GENERATED_KEY = "game_key";
     public static final String GAME_NB_PLAYER = "nb_player";
     public static final String GAME_NB_BUILDING = "nb_building";
     public static final String GAME_SCORE_FLUID = "score_fluidité";
@@ -45,6 +47,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private final String TABLE_GAME_CREATE =
             "CREATE TABLE " + GAME_TABLE_NAME + " (" +
                     GAME_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    GAME_GENERATED_KEY + " TEXT, " +
                     GAME_NB_PLAYER + " INTEGER, " +
                     GAME_NB_BUILDING + " INTEGER, " +
                     GAME_SCORE_FLUID + " INTEGER, " +
@@ -58,7 +61,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Constants for players table
     public static final String PLAYER_KEY = "id";
     public static final String PLAYER_GAME_ID = "game_id";
+    public static final String PLAYER_GAME_KEY = "game_key";
     public static final String PLAYER_NAME = "nom";
+    public static final String PLAYER_FIRSTNAME = "prénom";
     public static final String PLAYER_SEXE = "sexe";
     public static final String PLAYER_AGE = "age";
     public static final String PLAYER_HOME = "residence";
@@ -78,7 +83,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             "CREATE TABLE " + PLAYER_TABLE_NAME + " (" +
                     PLAYER_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     PLAYER_GAME_ID + " INTEGER , " +
+                    PLAYER_GAME_KEY + " TEXT , " +
                     PLAYER_NAME + " TEXT , " +
+                    PLAYER_FIRSTNAME + " TEXT , " +
                     PLAYER_SEXE + " TEXT , " +
                     PLAYER_AGE + " TEXT, " +
                     PLAYER_HOME + " TEXT, " +
@@ -98,6 +105,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Constants for bet_history table
     public static final String BET_KEY = "id";
     public static final String BET_GAME_ID = "game_id";
+    public static final String BET_GAME_KEY = "game_key";
     public static final String BET_PLAYER_ID = "player_id";
     public static final String BET_MISE_POLITIQUE = "mise_politique";
     public static final String BET_MISE_SOCIAL = "mise_social";
@@ -111,6 +119,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             "CREATE TABLE " + BET_TABLE_NAME + " (" +
                     BET_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     BET_GAME_ID + " INTEGER , " +
+                    BET_GAME_KEY + " TEXT , " +
                     BET_PLAYER_ID + " INTEGER, " +
                     BET_MISE_POLITIQUE + " INTEGER, " +
                     BET_MISE_SOCIAL + " INTEGER, " +
@@ -141,11 +150,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues v = new ContentValues();
 
+        String key = UUIDHelper.randomUUID(15, 0, ' ');
+        Log.d(NetworkHelper.TAG, "Game key :"+key);
+
+        v.put(GAME_GENERATED_KEY, key);
         v.put(GAME_NB_PLAYER, nbPlayers);
         v.put(GAME_NB_BUILDING, nbBuildings);
         long res = db.insert(GAME_TABLE_NAME, null, v);
 
         game.setDbID(res);
+        game.setDbKEY(key);
 
         return res != -1;
     }
@@ -185,6 +199,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues v = new ContentValues();
 
         v.put(PLAYER_NAME, player.getName());
+        v.put(PLAYER_FIRSTNAME, player.getFirstName());
         v.put(PLAYER_SEXE, player.getSexe());
         v.put(PLAYER_AGE, player.getAge());
         v.put(PLAYER_HOME, player.getResidence());
@@ -198,6 +213,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         v.put(PLAYER_SOCIAL, 0);
         v.put(PLAYER_ROLE, player.getRole().getTypeRole());
         v.put(PLAYER_GAME_ID, game.getDbID());
+        v.put(PLAYER_GAME_KEY, game.getDbKEY());
         long res = db.insert(PLAYER_TABLE_NAME, null, v);
 
         player.setDbID(res);
@@ -271,6 +287,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues v = new ContentValues();
 
         v.put(BET_GAME_ID, game.getDbID());
+        v.put(BET_GAME_KEY, game.getDbKEY());
         v.put(BET_PLAYER_ID, bet.getPlayerID());
         v.put(BET_MISE_POLITIQUE, bet.getMisePolitique());
         v.put(BET_MISE_SOCIAL, bet.getMiseSocial());

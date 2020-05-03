@@ -21,6 +21,7 @@ public class Game implements Serializable {
     private int nTurn;
     private int turnDur;
     private long dbID;
+    private String dbKEY;
     private Date date;
 
     public Game() {
@@ -30,7 +31,10 @@ public class Game implements Serializable {
         scoreEnvironnemental = 0;
         nTurn = 1;
         turnDur = 60;
+
         dbID = 0;
+        dbKEY = "";
+
         city = new City();
         date = new Date();
     }
@@ -124,6 +128,14 @@ public class Game implements Serializable {
 
     public void setDbID(long dbID) {
         this.dbID = dbID;
+    }
+
+    public String getDbKEY() {
+        return dbKEY;
+    }
+
+    public void setDbKEY(String dbKEY) {
+        this.dbKEY = dbKEY;
     }
 
     public int getTurnDur() {
