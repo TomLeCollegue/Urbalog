@@ -119,11 +119,11 @@ public class FormAdapter extends PagerAdapter {
     private String[] slide_profession = {
             "Choisir...",
             "Agriculteur",
-            "Artisant, commerçant, chef d'entreprise",
+            "Artisan, commerçant, chef d'entreprise",
             "Cadre",
             "Profession intermédiaire",
             "Employé",
-            "Ouvier"
+            "Ouvrier"
     };
 
     public String[] slide_secteur_activite = {
