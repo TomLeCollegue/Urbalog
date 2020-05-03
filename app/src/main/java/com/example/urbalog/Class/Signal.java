@@ -10,12 +10,11 @@ public enum Signal implements Serializable {
     MARKET_RECEIVED,
     BET_RECEIVED,
     GAME_RECEIVED,
-    ROLE_RECEIVED,
     RESTART_GAME,
-    START_GAME,
     START_TIMER,
     STOP_TIMER,
     TOO_MUCH_BUILDINGS,
+    TOO_MUCH_TOTAL_BUILDINGS,
 
     NEXT_TURN,
     CANCEL_NEXT_TURN,
