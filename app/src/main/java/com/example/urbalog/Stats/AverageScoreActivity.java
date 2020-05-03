@@ -163,10 +163,12 @@ public class AverageScoreActivity extends AppCompatActivity {
         Cursor mCursor = db.getMultipleDataFromTable(DatabaseHandler.GAME_TABLE_NAME, new String[]{DatabaseHandler.GAME_SCORE_LOG, DatabaseHandler.GAME_CREATED_AT});
         try {
             while(mCursor.moveToNext()){
-                SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", Locale.getDefault());
-                date = dateFormat.parse(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_CREATED_AT)));
-                nbScore = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_SCORE_LOG)));
-                res.put(date, nbScore);
+               if(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_CREATED_AT)) != null && mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_SCORE_LOG)) != null) {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", Locale.getDefault());
+                    date = dateFormat.parse(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_CREATED_AT)));
+                    nbScore = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_SCORE_LOG)));
+                    res.put(date, nbScore);
+               }
             }
         } catch(ParseException e){
             e.printStackTrace();
@@ -185,10 +187,12 @@ public class AverageScoreActivity extends AppCompatActivity {
         Cursor mCursor = db.getMultipleDataFromTable(DatabaseHandler.GAME_TABLE_NAME, new String[]{DatabaseHandler.GAME_SCORE_ATTR, DatabaseHandler.GAME_CREATED_AT});
         try {
             while(mCursor.moveToNext()){
-                SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", Locale.getDefault());
-                date = dateFormat.parse(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_CREATED_AT)));
-                nbScore = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_SCORE_ATTR)));
-                res.put(date, nbScore);
+                if(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_CREATED_AT)) != null && mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_SCORE_ATTR)) != null) {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", Locale.getDefault());
+                    date = dateFormat.parse(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_CREATED_AT)));
+                    nbScore = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_SCORE_ATTR)));
+                    res.put(date, nbScore);
+                }
             }
         } catch(ParseException e){
             e.printStackTrace();
@@ -207,10 +211,12 @@ public class AverageScoreActivity extends AppCompatActivity {
         Cursor mCursor = db.getMultipleDataFromTable(DatabaseHandler.GAME_TABLE_NAME, new String[]{DatabaseHandler.GAME_SCORE_FLUID, DatabaseHandler.GAME_CREATED_AT});
         try {
             while(mCursor.moveToNext()){
-                SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", Locale.getDefault());
-                date = dateFormat.parse(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_CREATED_AT)));
-                nbScore = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_SCORE_FLUID)));
-                res.put(date, nbScore);
+                if(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_CREATED_AT)) != null && mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_SCORE_FLUID)) != null) {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", Locale.getDefault());
+                    date = dateFormat.parse(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_CREATED_AT)));
+                    nbScore = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_SCORE_FLUID)));
+                    res.put(date, nbScore);
+                }
             }
         } catch(ParseException e){
             e.printStackTrace();
@@ -229,10 +235,12 @@ public class AverageScoreActivity extends AppCompatActivity {
         Cursor mCursor = db.getMultipleDataFromTable(DatabaseHandler.GAME_TABLE_NAME, new String[]{DatabaseHandler.GAME_SCORE_ENV, DatabaseHandler.GAME_CREATED_AT});
         try {
             while(mCursor.moveToNext()){
-                SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", Locale.getDefault());
-                date = dateFormat.parse(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_CREATED_AT)));
-                nbScore = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_SCORE_ENV)));
-                res.put(date, nbScore);
+                if(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_CREATED_AT)) != null && mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_SCORE_ENV)) != null) {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", Locale.getDefault());
+                    date = dateFormat.parse(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_CREATED_AT)));
+                    nbScore = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_SCORE_ENV)));
+                    res.put(date, nbScore);
+                }
             }
         } catch(ParseException e){
             e.printStackTrace();
