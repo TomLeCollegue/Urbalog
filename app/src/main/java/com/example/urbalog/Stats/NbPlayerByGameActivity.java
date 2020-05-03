@@ -101,10 +101,12 @@ public class NbPlayerByGameActivity extends AppCompatActivity{
         Cursor mCursor = db.getMultipleDataFromTable(DatabaseHandler.GAME_TABLE_NAME, new String[]{DatabaseHandler.GAME_NB_PLAYER, DatabaseHandler.GAME_CREATED_AT});
         try {
             while(mCursor.moveToNext()){
-                SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", Locale.getDefault());
-                date = dateFormat.parse(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_CREATED_AT)));
-                nbPlayer = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_NB_PLAYER)));
-                res.put(date, nbPlayer);
+                if(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_CREATED_AT)) != null && mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_NB_PLAYER)) != null) {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", Locale.getDefault());
+                    date = dateFormat.parse(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_CREATED_AT)));
+                    nbPlayer = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.GAME_NB_PLAYER)));
+                    res.put(date, nbPlayer);
+                }
             }
         } catch(ParseException e){
             e.printStackTrace();
