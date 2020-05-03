@@ -66,6 +66,7 @@ public class NetworkHelper implements Serializable {
 
     private static int NB_PLAYERS = 5;
     private static int NB_BUILDINGS = 2;
+    private static int NB_BUILDINGS_PER_TURN = 1;
 
     private int TURN_TIME = 60;
 
@@ -176,19 +177,6 @@ public class NetworkHelper implements Serializable {
                                     }
                                     break;
 
-                                /* If host have send Role, used on game start for role attribution */
-                                /*case ROLE_RECEIVED:
-                                    player.setRole((Role) ((TransferPackage) dataReceived).second);
-                                    try {
-                                        sendToClient(new TransferPackage<Duo>(
-                                                Signal.UPDATE_PLAYER,
-                                                new Duo<String, Player>(playerUUID, player)), endpointId);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                    Intent intentPlayerView = new Intent(appContext, PlayerViewActivity.class);
-                                    appContext.startActivity(intentPlayerView);
-                                    break;*/
                                 /* If host have send Player, used on game start for role attribution */
                                 case UPDATE_PLAYER:
                                     player = (Player)((TransferPackage) dataReceived).second;
@@ -292,6 +280,11 @@ public class NetworkHelper implements Serializable {
 
                                 case STOP_TIMER:
                                     timer.cancel();
+                                    break;
+
+                                case TOO_MUCH_BUILDINGS:
+                                    showAlertBuildings();
+                                    currentPlayerView.enableTurnButton();
                                     break;
 
                                 default:
@@ -464,61 +457,69 @@ public class NetworkHelper implements Serializable {
                                         }
                                     }
                                 }
+
+                                // Reset turns votes
                                 createPlayersVotes();
+
                                 /* Check market and build financed building */
                                 ArrayList<Building> newBuildings = new ArrayList<>();
                                 for(int i = 0; i < currentGame.getMarket().getBuildings().size(); i++) {
                                     if(currentGame.getMarket().getBuildings().get(i).isFilled()) {
-                                        currentGame.getCity().addBuilding(currentGame.getMarket().getBuildings().get(i));
                                         newBuildings.add(currentGame.getMarket().getBuildings().get(i));
+                                    }
+                                }
+
+                                /* If players haven't build too much buildings, we process construction and next turn */
+                                if(newBuildings.size() <= NB_BUILDINGS_PER_TURN) {
+                                    for (int i = 0; i < newBuildings.size(); i++) {
+                                        currentGame.getCity().addBuilding(newBuildings.get(i));
                                         // Delete build buildings to deck
-                                        currentGame.getMarket().deleteBuilding(currentGame.getMarket().getBuildings().get(i));
+                                        currentGame.getMarket().deleteBuilding(newBuildings.get(i));
                                     }
-                                }
-                                try {
-                                    sendToAllClients(new TransferPackage<>(
-                                            Signal.CHECK_GOALS,
-                                            newBuildings));
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                currentGame.updateAllGameScores();
-                                /* Check if the game is finish */
-                                // If not, refresh market and update game instance of players
-                                if(currentGame.getCity().getBuildings().size() < NB_BUILDINGS) {
-                                    currentGame.refreshMarket();
-                                    currentGame.incrTurn();
                                     try {
                                         sendToAllClients(new TransferPackage<>(
-                                                Signal.GAME_RECEIVED,
-                                                currentGame));
+                                                Signal.CHECK_GOALS,
+                                                newBuildings));
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
-                                    nextTurnVotes = 0;
-                                    /*if(currentAdminView != null)
-                                        currentAdminView.updateView();*/
-                                }
-                                else {
-                                    try {
-                                        sendToAllClients(new TransferPackage<>(
-                                                Signal.GAME_OVER,
-                                                currentGame));
-                                        db.updateGame(currentGame);
-                                        /*JsonStats.giveContext(appContext);
-                                        ArrayList<Player> endGamePlayerList = new ArrayList<>();
-                                        for (int i = 0; i < playersInformations.size(); i++) {
-                                            endGamePlayerList.add(playersInformations.get(i).getFirst());
+                                    currentGame.updateAllGameScores();
+                                    /* Check if the game is finish */
+                                    // If not, refresh market and update game instance of players
+                                    if (currentGame.getCity().getBuildings().size() < NB_BUILDINGS) {
+                                        currentGame.refreshMarket();
+                                        currentGame.incrTurn();
+                                        try {
+                                            sendToAllClients(new TransferPackage<>(
+                                                    Signal.GAME_RECEIVED,
+                                                    currentGame));
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
                                         }
-                                        Log.d("debug", "ok");
-                                        JsonStats.writeGame(endGamePlayerList, currentGame);*/
-                                        gameStarted = false;
+                                        nextTurnVotes = 0;
+                                    } else {
+                                        try {
+                                            sendToAllClients(new TransferPackage<>(
+                                                    Signal.GAME_OVER,
+                                                    currentGame));
+                                            db.updateGame(currentGame);
+                                            gameStarted = false;
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    if (currentAdminView != null)
+                                        currentAdminView.updateView();
+                                }
+                                /* Else we alert players */
+                                else{
+                                    try {
+                                        nextTurnVotes = 0;
+                                        sendToAllClients(Signal.TOO_MUCH_BUILDINGS);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
                                 }
-                                if(currentAdminView != null)
-                                    currentAdminView.updateView();
                             }
                             else if(nextTurnVotes == NB_PLAYERS-1 && NB_PLAYERS != 1){
                                 // Launch turn timer for last player
@@ -1097,5 +1098,19 @@ public class NetworkHelper implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showAlertBuildings(){
+        AlertDialog diaBox = new AlertDialog.Builder(currentPlayerView)
+                .setTitle("Attention")
+                .setMessage("Vous cherchez à constuire trop de bâtiments durant ce tour, veuillez limiter leur nombre à "+NB_BUILDINGS_PER_TURN+" maximum.")
+                .setIcon(R.drawable.warning_icon)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        diaBox.show();
     }
 }

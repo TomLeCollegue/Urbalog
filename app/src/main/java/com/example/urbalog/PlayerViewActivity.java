@@ -723,6 +723,10 @@ public class PlayerViewActivity extends AppCompatActivity {
 
     }
 
+    public void enableTurnButton() {
+        bTurn.setText("Tour suivant");
+        nextTurn = false;
+    }
 
     public void resetTurnButton() {
             nextTurn = false;

@@ -15,6 +15,7 @@ public enum Signal implements Serializable {
     START_GAME,
     START_TIMER,
     STOP_TIMER,
+    TOO_MUCH_BUILDINGS,
 
     NEXT_TURN,
     CANCEL_NEXT_TURN,
