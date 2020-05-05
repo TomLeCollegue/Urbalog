@@ -12,6 +12,8 @@ import com.example.urbalog.Class.Bet;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Player;
 import com.example.urbalog.Class.Role;
+import com.example.urbalog.Database.Export.DBExporterJson;
+import com.example.urbalog.Database.Export.ExportConfig;
 import com.example.urbalog.Database.Export.SqliteExporter;
 import com.example.urbalog.NetworkHelper;
 import com.example.urbalog.UUIDHelper;
@@ -456,6 +458,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             e.printStackTrace();
         }
     }
+
+    public void exportDbToJSON(){
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ExportConfig config = new ExportConfig(db, DB_NAME, ExportConfig.ExportType.JSON, appContext);
+            DBExporterJson exporter = new DBExporterJson(config);
+            exporter.export();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {

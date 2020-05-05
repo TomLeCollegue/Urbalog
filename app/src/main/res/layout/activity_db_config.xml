@@ -32,6 +32,16 @@
             android:layout_height="100dp">
         </Button>
 
+        <Button
+            android:id="@+id/exportJson"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/button_style"
+            android:fontFamily="@font/caractere_l2"
+            android:text="Exporter bdd vers json"></Button>
+
     </LinearLayout>
 
 </ScrollView>
