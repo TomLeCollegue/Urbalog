@@ -24,6 +24,14 @@ public class ExportConfig {
     private String databaseName;
     private Set<String> excludedTables;
 
+    /**
+     * Constructor
+     * @param db SQLiteDatabase instance
+     * @param databaseName Db name
+     * @param exportType ExportType (define if file will be export to CSV or JSON)
+     * @param appContext Application context
+     * @throws IOException
+     */
     public ExportConfig(SQLiteDatabase db, String databaseName, ExportType exportType, Context appContext) throws IOException {
         this.db = db;
         this.exportType = exportType;
@@ -32,7 +40,7 @@ public class ExportConfig {
         if( !FileUtils.isExternalStorageWritable() ){
             throw new IOException("Cannot write to external storage");
         }
-        this.directory = FileUtils.createDirIfNotExist(FileUtils.getAppDir(appContext) + "/databases");
+        this.directory = FileUtils.createDirIfNotExist(FileUtils.getAppDir(appContext) + "/databases/");
     }
 
     public void setExcludeTable(String tableName) {
@@ -42,6 +50,11 @@ public class ExportConfig {
         excludedTables.add(tableName);
     }
 
+    /**
+     * Check if table id excluded
+     * @param tableName
+     * @return bool
+     */
     public boolean isExcludeTable(String tableName) {
         if (excludedTables == null) {
             return false;
@@ -49,6 +62,10 @@ public class ExportConfig {
         return excludedTables.contains(tableName);
     }
 
+    /**
+     * Return corresponding file extension
+     * @return String
+     */
     public String getFileExtension(){
         switch(exportType){
             case CSV:

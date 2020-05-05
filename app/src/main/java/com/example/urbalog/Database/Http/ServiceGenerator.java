@@ -4,8 +4,12 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Builder to create a new REST client with the given API base url using retrofit2
+ */
 public class ServiceGenerator {
 
+    // base url for request
     private static final String BASE_URL = "";
 
     private static Retrofit.Builder builder =

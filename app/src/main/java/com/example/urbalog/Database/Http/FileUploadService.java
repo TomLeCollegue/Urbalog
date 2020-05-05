@@ -8,6 +8,9 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
+/**
+ * Template for file upload request
+ */
 public interface FileUploadService {
     @Multipart
     @POST("upload")
