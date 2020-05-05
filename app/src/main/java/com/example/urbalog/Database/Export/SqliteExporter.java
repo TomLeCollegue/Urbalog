@@ -1,10 +1,11 @@
-package com.example.urbalog.Database;
+package com.example.urbalog.Database.Export;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.urbalog.Database.FileUtils;
 import com.opencsv.CSVWriter;
 
 import java.io.File;

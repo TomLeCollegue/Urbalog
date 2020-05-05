@@ -12,6 +12,7 @@ import com.example.urbalog.Class.Bet;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Player;
 import com.example.urbalog.Class.Role;
+import com.example.urbalog.Database.Export.SqliteExporter;
 import com.example.urbalog.NetworkHelper;
 import com.example.urbalog.UUIDHelper;
 
