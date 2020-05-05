@@ -56,7 +56,7 @@ public abstract class DBExporter {
             }
         }
         c.close();
-        this.writeToFile(getExportAsString(), dbName + createBackupFileName() + config.getFileExtension());
+        this.writeToFile(getExportAsString(), dbName + config.getFileExtension());
         Log.i(NetworkHelper.TAG, "exporting database complete");
     }
 

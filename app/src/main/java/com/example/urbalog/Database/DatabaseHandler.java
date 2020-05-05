@@ -15,12 +15,25 @@ import com.example.urbalog.Class.Role;
 import com.example.urbalog.Database.Export.DBExporterJson;
 import com.example.urbalog.Database.Export.ExportConfig;
 import com.example.urbalog.Database.Export.SqliteExporter;
+import com.example.urbalog.Database.Http.FileUploadService;
+import com.example.urbalog.Database.Http.ServiceGenerator;
 import com.example.urbalog.NetworkHelper;
 import com.example.urbalog.UUIDHelper;
 
+import org.json.JSONObject;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Database helper class used for interact with db and table for operation like:
@@ -470,6 +483,40 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
+    public void syncDb(){
+        FileUploadService service =
+                ServiceGenerator.createService(FileUploadService.class);
+
+        File dbJsonPath = new File(FileUtils.getAppDir(appContext) + "/databases/Urbalog.json");
+
+        RequestBody requestFile =
+                RequestBody.create(
+                        MultipartBody.FORM,
+                        dbJsonPath
+                );
+
+        MultipartBody.Part body =
+                MultipartBody.Part.createFormData("file", dbJsonPath.getName(), requestFile);
+
+        String titleString = "Urbalog app sync";
+        RequestBody title =
+                RequestBody.create(
+                        okhttp3.MultipartBody.FORM, titleString);
+
+        Call<ResponseBody> call = service.upload(title, body);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call,
+                                   Response<ResponseBody> response) {
+                Log.v("Upload", "success");
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Upload error:", t.getMessage());
+            }
+        });
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
