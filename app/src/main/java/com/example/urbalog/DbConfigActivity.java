@@ -12,6 +12,7 @@ public class DbConfigActivity extends AppCompatActivity {
     private Button resetDb;
     private Button exportCsv;
     private Button exportJson;
+    private Button syncDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,7 @@ public class DbConfigActivity extends AppCompatActivity {
         resetDb = findViewById(R.id.resetDb);
         exportCsv = findViewById(R.id.exportCsv);
         exportJson = findViewById(R.id.exportJson);
+        syncDb = findViewById(R.id.syncDb);
 
         resetDb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +45,14 @@ public class DbConfigActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AdminConnectionActivity.net.getDb().exportDbToJSON();
                 Toast.makeText(DbConfigActivity.this, "Base de donnée exportée", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        syncDb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AdminConnectionActivity.net.getDb().syncDb();
+                Toast.makeText(DbConfigActivity.this, "Base de donnée synchronisée", Toast.LENGTH_LONG).show();
             }
         });
     }
