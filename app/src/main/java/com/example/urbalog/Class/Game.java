@@ -27,7 +27,7 @@ public class Game implements Serializable {
     private ArrayList<Game> arrayGame = new ArrayList<Game>();
 
     public void addArrayGame(){
-        getArrayGame().add(this);
+        arrayGame.add(new Game(this));
     }
 
     public  ArrayList<Game> getArrayGame() {
@@ -49,6 +49,13 @@ public class Game implements Serializable {
         date = new Date();
     }
 
+    public Game(Game game){
+        this.scoreLogistique = game.getScoreLogistique();
+        this.scoreAttractivite = game.getScoreAttractivite();
+        this.scoreFluidite = game.getScoreFluidite();
+        this.scoreEnvironnemental = game.getScoreEnvironnemental();
+        this.nTurn = game.getnTurn();
+    }
 
     public Date getDate() {
         return date;
