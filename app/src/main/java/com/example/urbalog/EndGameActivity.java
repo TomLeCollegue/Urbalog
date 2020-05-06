@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.urbalog.Adapter.BuildingBuiltAdapter;
 import com.example.urbalog.Class.Building;
+import com.example.urbalog.EndGameStats.StatsScorePerRoundActivity;
 
 import java.util.ArrayList;
 
@@ -75,6 +76,11 @@ public class EndGameActivity extends AppCompatActivity {
         Log.d("debug", "Listener");
         Intent MyIntent = new Intent(EndGameActivity.this, LogisticActivity.class);
         Log.d("debug", "Before startActivity");
+        startActivity(MyIntent);
+    }
+
+    public void statsScore(View view) {
+        Intent MyIntent = new Intent(EndGameActivity.this, StatsScorePerRoundActivity.class);
         startActivity(MyIntent);
     }
 }

@@ -2,14 +2,18 @@ package com.example.urbalog.EndGameStats;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.example.urbalog.AdminConnectionActivity;
 import com.example.urbalog.Class.Game;
+import com.example.urbalog.ConfigurationActivity;
+import com.example.urbalog.EndGameActivity;
 import com.example.urbalog.Json.JsonStats;
 import com.example.urbalog.R;
+import com.example.urbalog.StatsActivity;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -44,7 +48,7 @@ public class StatsScorePerRoundActivity extends AppCompatActivity {
         HashMap<Integer, Integer> nbScoreEnvironnementalByTurn = new HashMap<Integer, Integer>();
 
 
-
+            /* Fake game for testing
             Game a = new Game();
             a.setnTurn(1);
             a.setScoreLogistique(0);
@@ -68,8 +72,9 @@ public class StatsScorePerRoundActivity extends AppCompatActivity {
             c.setScoreFluidite(-1);
             c.setScoreEnvironnemental(5);
             arrayListGame.add(c);
+           */
 
-        //arrayListGame = AdminConnectionActivity.net.getCurrentGame().getArrayGame();
+        arrayListGame = AdminConnectionActivity.net.getCurrentGame().getArrayGame();
 
         for(int i=0; i<arrayListGame.size(); ++i){
             Game game = arrayListGame.get(i);
@@ -79,8 +84,6 @@ public class StatsScorePerRoundActivity extends AppCompatActivity {
             nbScoreEnvironnementalByTurn.put(game.getnTurn(), game.getScoreEnvironnemental());
         }
 
-        Log.d("debug", nbScoreLogistiqueByTurn.toString());
-
         mChart = findViewById(R.id.linechart);
         mChart.setDragEnabled(true);
         mChart.setScaleEnabled(true);
@@ -89,9 +92,8 @@ public class StatsScorePerRoundActivity extends AppCompatActivity {
 
 
         YAxis leftAxis = mChart.getAxisLeft();
-        leftAxis.removeAllLimitLines();
-        leftAxis.setAxisMaximum(8);
-        leftAxis.setAxisMinimum(-8);
+        leftAxis.setAxisMaximum(10);
+        leftAxis.setAxisMinimum(-10);
         leftAxis.setLabelCount(20);
         leftAxis.setDrawGridLinesBehindData(true);
 
@@ -138,7 +140,6 @@ public class StatsScorePerRoundActivity extends AppCompatActivity {
         set3.setColor(Color.YELLOW);
         set4.setColor(Color.GREEN);
 
-        Log.d("debug", "ici");
 
         set1.setCircleColor(Color.TRANSPARENT);
         set2.setCircleColor(Color.TRANSPARENT);
@@ -152,11 +153,7 @@ public class StatsScorePerRoundActivity extends AppCompatActivity {
         dataSets.add(set4);
         LineData data = new LineData(dataSets);
 
-        Log.d("debug", "ici2");
-
         mChart.setData(data);
-
-        Log.d("debug", "ici3");
 
         XAxis xAxis = mChart.getXAxis();
         xAxis.setLabelCount(nb-1);
@@ -166,7 +163,12 @@ public class StatsScorePerRoundActivity extends AppCompatActivity {
                 return ar.get((int)value);
             }
         });
-/*
-        Log.d("debug", "ici4");*/
+    }
+
+    public void onBackPressed(){
+        Intent intent = new Intent(StatsScorePerRoundActivity.this, EndGameActivity.class);
+        startActivity(intent);
+        finish();
+        return;
     }
 }
