@@ -1,10 +1,11 @@
-package com.example.urbalog.Database;
+package com.example.urbalog.Database.Export;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.urbalog.Database.FileUtils;
 import com.opencsv.CSVWriter;
 
 import java.io.File;
@@ -17,10 +18,14 @@ import java.util.List;
 
 
 /**
+ * DEPRECATED -> replaced by DBExporterCsv
+ * Will be deleted
+ *
  * Can export an sqlite databse into a csv file.
  *
  * The file has on the top dbVersion and on top of each table data the name of the table
  */
+@Deprecated
 public class SqliteExporter {
     private static final String TAG = SqliteExporter.class.getSimpleName();
 

@@ -6,18 +6,36 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.util.Log;
 
 import com.example.urbalog.Class.Bet;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Player;
 import com.example.urbalog.Class.Role;
+import com.example.urbalog.Database.Export.DBExporterCsv;
+import com.example.urbalog.Database.Export.DBExporterJson;
+import com.example.urbalog.Database.Export.ExportConfig;
+import com.example.urbalog.Database.Export.SqliteExporter;
+import com.example.urbalog.Database.Http.FileUploadService;
+import com.example.urbalog.Database.Http.ServiceGenerator;
 import com.example.urbalog.NetworkHelper;
 import com.example.urbalog.UUIDHelper;
 
+import org.json.JSONObject;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Database helper class used for interact with db and table for operation like:
@@ -450,10 +468,60 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public void exportDbToCSV(){
         try {
-            SqliteExporter.export(this.getWritableDatabase(), appContext);
-        } catch (IOException e) {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ExportConfig config = new ExportConfig(db, DB_NAME, ExportConfig.ExportType.CSV, appContext);
+            DBExporterCsv exporter = new DBExporterCsv(config);
+            exporter.export();
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void exportDbToJSON(){
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ExportConfig config = new ExportConfig(db, DB_NAME, ExportConfig.ExportType.JSON, appContext);
+            DBExporterJson exporter = new DBExporterJson(config);
+            exporter.export();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void syncDb(){
+        FileUploadService service =
+                ServiceGenerator.createService(FileUploadService.class);
+
+        File dbJsonPath = new File(FileUtils.getAppDir(appContext) + "/databases/Urbalog.json");
+        Log.d(NetworkHelper.TAG, dbJsonPath.getAbsolutePath());
+
+        RequestBody requestFile =
+                RequestBody.create(
+                        MediaType.parse(Uri.fromFile(dbJsonPath).toString()),
+                        dbJsonPath
+                );
+
+        MultipartBody.Part body =
+                MultipartBody.Part.createFormData("value", dbJsonPath.getName(), requestFile);
+
+        String titleString = "Urbalog app sync";
+        RequestBody title =
+                RequestBody.create(
+                        okhttp3.MultipartBody.FORM, titleString);
+
+        Call<ResponseBody> call = service.upload(title, body);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call,
+                                   Response<ResponseBody> response) {
+                Log.v("Upload", "success");
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Upload error:", t.getMessage());
+            }
+        });
     }
 
     @Override

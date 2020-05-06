@@ -67,6 +67,7 @@ public class NetworkHelper implements Serializable {
     private static int NB_PLAYERS = 5;
     private static int NB_BUILDINGS = 3;
     private static int NB_BUILDINGS_PER_TURN = 2;
+    private static String SERVER_DB_ADRESS = "";
 
     private int TURN_TIME = 60;
 
@@ -101,6 +102,9 @@ public class NetworkHelper implements Serializable {
                     Manifest.permission.CHANGE_WIFI_STATE,
                     Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.INTERNET,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
             };
 
     private static final int REQUEST_CODE_REQUIRED_PERMISSIONS = 1;
