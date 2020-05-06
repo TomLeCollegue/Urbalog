@@ -168,14 +168,34 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1.75">
 
-                    <Button
-                        android:id="@+id/logisticButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <LinearLayout
                         android:layout_gravity="center"
-                        android:fontFamily="@font/caractere_l2"
-                        android:onClick="scoreLog"
-                        android:text="ScoreLogistique de la ville" />
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:id="@+id/logisticButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/caractere_l2"
+                            android:onClick="scoreLog"
+                            android:text="ScoreLogistique de la ville" />
+
+                        <Button
+                            android:layout_marginTop="10px"
+                            android:id="@+id/stats"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/caractere_l2"
+                            android:onClick="statsScore"
+                            android:text="Avancer des scores" />
+
+                    </LinearLayout>
+
+
                 </FrameLayout>
 
             </LinearLayout>
