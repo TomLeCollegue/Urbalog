@@ -11,7 +11,6 @@ import com.example.urbalog.AdminConnectionActivity;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.ConfigurationActivity;
 import com.example.urbalog.EndGameActivity;
-import com.example.urbalog.Json.JsonStats;
 import com.example.urbalog.R;
 import com.example.urbalog.StatsActivity;
 import com.github.mikephil.charting.charts.LineChart;
