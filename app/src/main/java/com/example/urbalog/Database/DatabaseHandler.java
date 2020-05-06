@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.util.Log;
 
 import com.example.urbalog.Class.Bet;
@@ -471,7 +472,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             ExportConfig config = new ExportConfig(db, DB_NAME, ExportConfig.ExportType.CSV, appContext);
             DBExporterCsv exporter = new DBExporterCsv(config);
             exporter.export();
-            //SqliteExporter.export(this.getWritableDatabase(), appContext);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -493,15 +493,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 ServiceGenerator.createService(FileUploadService.class);
 
         File dbJsonPath = new File(FileUtils.getAppDir(appContext) + "/databases/Urbalog.json");
+        Log.d(NetworkHelper.TAG, dbJsonPath.getAbsolutePath());
 
         RequestBody requestFile =
                 RequestBody.create(
-                        MultipartBody.FORM,
+                        MediaType.parse(Uri.fromFile(dbJsonPath).toString()),
                         dbJsonPath
                 );
 
         MultipartBody.Part body =
-                MultipartBody.Part.createFormData("file", dbJsonPath.getName(), requestFile);
+                MultipartBody.Part.createFormData("value", dbJsonPath.getName(), requestFile);
 
         String titleString = "Urbalog app sync";
         RequestBody title =
