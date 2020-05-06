@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -22,6 +23,15 @@ public class Game implements Serializable {
     private int turnDur;
     private long dbID;
     private Date date;
+    private ArrayList<Game> arrayGame = new ArrayList<Game>();
+
+    public void addArrayGame(){
+        getArrayGame().add(this);
+    }
+
+    public  ArrayList<Game> getArrayGame() {
+        return arrayGame;
+    }
 
     public Game() {
         scoreLogistique = 0;
@@ -34,6 +44,7 @@ public class Game implements Serializable {
         city = new City();
         date = new Date();
     }
+
 
     public Date getDate() {
         return date;
