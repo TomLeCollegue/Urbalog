@@ -12,6 +12,7 @@ import com.example.urbalog.Class.Bet;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.Class.Player;
 import com.example.urbalog.Class.Role;
+import com.example.urbalog.Database.Export.DBExporterCsv;
 import com.example.urbalog.Database.Export.DBExporterJson;
 import com.example.urbalog.Database.Export.ExportConfig;
 import com.example.urbalog.Database.Export.SqliteExporter;
@@ -466,8 +467,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public void exportDbToCSV(){
         try {
-            SqliteExporter.export(this.getWritableDatabase(), appContext);
-        } catch (IOException e) {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ExportConfig config = new ExportConfig(db, DB_NAME, ExportConfig.ExportType.CSV, appContext);
+            DBExporterCsv exporter = new DBExporterCsv(config);
+            exporter.export();
+            //SqliteExporter.export(this.getWritableDatabase(), appContext);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

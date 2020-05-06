@@ -18,10 +18,14 @@ import java.util.List;
 
 
 /**
+ * DEPRECATED -> replaced by DBExporterCsv
+ * Will be deleted
+ *
  * Can export an sqlite databse into a csv file.
  *
  * The file has on the top dbVersion and on top of each table data the name of the table
  */
+@Deprecated
 public class SqliteExporter {
     private static final String TAG = SqliteExporter.class.getSimpleName();
 
