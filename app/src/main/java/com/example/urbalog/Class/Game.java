@@ -47,6 +47,8 @@ public class Game implements Serializable {
 
         city = new City();
         date = new Date();
+
+        addArrayGame();
     }
 
     public Game(Game game){
