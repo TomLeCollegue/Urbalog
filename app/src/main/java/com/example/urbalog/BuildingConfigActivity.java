@@ -16,6 +16,10 @@ public class BuildingConfigActivity extends AppCompatActivity {
     private Button modificationBuilding;
     private Button initBuilding;
     private Button addBuilding;
+
+    // Hugo H
+    private Button changeNbBuildingPerTurn;
+
     private Context mContext;
 
     @Override
@@ -28,6 +32,8 @@ public class BuildingConfigActivity extends AppCompatActivity {
         modificationBuilding = findViewById(R.id.modificationBuilding);
         initBuilding = findViewById(R.id.initBuilding);
         addBuilding = findViewById(R.id.addBuilding);
+
+        changeNbBuildingPerTurn = findViewById(R.id.nbBuildingMaxPerTurn);
 
         modificationBuilding.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +56,15 @@ public class BuildingConfigActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BuildingConfigActivity.this, AddBuildingActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        changeNbBuildingPerTurn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BuildingConfigActivity.this, ChangeNbBuildingPerTurn.class);
                 startActivity(intent);
                 finish();
             }

@@ -9,4 +9,7 @@
     <string name="addBuilding">Ajouter un Batiment</string>
     <string name="initBuildings">Réinitialiser Batiments</string>
     <string name="modifBuilding">Modification Batiments</string>
+    <string name="nbBuildingPerTurn">Choisir le nombre de bâtiments max par tour</string>
+    <string name="helpNbBuildingPerTurn">Pour modifier le nombre d\'aménagements pouvant être construits par tour :</string>
+
 </resources>
