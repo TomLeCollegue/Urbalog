@@ -11,6 +11,7 @@ import com.example.urbalog.AdminConnectionActivity;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.ConfigurationActivity;
 import com.example.urbalog.EndGameActivity;
+import com.example.urbalog.PlayerConnexionActivity;
 import com.example.urbalog.R;
 import com.example.urbalog.StatsActivity;
 import com.github.mikephil.charting.charts.LineChart;
@@ -73,15 +74,17 @@ public class StatsScorePerRoundActivity extends AppCompatActivity {
             arrayListGame.add(c);
            */
 
-        arrayListGame = AdminConnectionActivity.net.getCurrentGame().getArrayGame();
+        arrayListGame = PlayerConnexionActivity.net.getCurrentGame().getArrayGame();
 
         for(int i=0; i<arrayListGame.size(); ++i){
             Game game = arrayListGame.get(i);
-            nbScoreLogistiqueByTurn.put(game.getnTurn(), game.getScoreLogistique());
-            nbScoreAttractiviteByTurn.put(game.getnTurn(), game.getScoreAttractivite());
-            nbScoreFluiditeByTurn.put(game.getnTurn(), game.getScoreFluidite());
-            nbScoreEnvironnementalByTurn.put(game.getnTurn(), game.getScoreEnvironnemental());
+            nbScoreLogistiqueByTurn.put(i, game.getScoreLogistique());
+            nbScoreAttractiviteByTurn.put(i, game.getScoreAttractivite());
+            nbScoreFluiditeByTurn.put(i, game.getScoreFluidite());
+            nbScoreEnvironnementalByTurn.put(i, game.getScoreEnvironnemental());
         }
+        
+
 
         mChart = findViewById(R.id.linechart);
         mChart.setDragEnabled(true);
@@ -104,7 +107,7 @@ public class StatsScorePerRoundActivity extends AppCompatActivity {
         int nb =0;
         for(Map.Entry<Integer, Integer> entry: nbScoreLogistiqueByTurn.entrySet()){
             yValues1.add(new Entry(nb, entry.getValue()));
-            ar.add("tour : " + entry.getKey().toString());
+            ar.add("tour : " + String.valueOf(nb));
             nb++;
         }
 

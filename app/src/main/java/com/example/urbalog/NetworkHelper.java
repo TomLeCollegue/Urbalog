@@ -490,8 +490,8 @@ public class NetworkHelper implements Serializable {
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }
-                                        currentGame.addArrayGame();
                                         currentGame.updateAllGameScores();
+                                        currentGame.addArrayGame();
                                         /* Check if the game is finish */
                                         // If not, refresh market and update game instance of players
                                         if (currentGame.getCity().getBuildings().size() < NB_BUILDINGS) {
