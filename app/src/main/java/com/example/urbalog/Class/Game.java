@@ -4,6 +4,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.urbalog.NetworkHelper;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,6 +23,7 @@ public class Game implements Serializable {
     private List<Bet> listBet;
     private int nTurn;
     private int turnDur;
+    private int gameDur;
     private long dbID;
     private String dbKEY;
     private Date date;
@@ -40,7 +43,9 @@ public class Game implements Serializable {
         scoreFluidite = 0;
         scoreEnvironnemental = 0;
         nTurn = 1;
+
         turnDur = 60;
+        gameDur = 60;
 
         dbID = 0;
         dbKEY = "";
@@ -164,7 +169,16 @@ public class Game implements Serializable {
 
     public void setTurnDur(int turnDur) {
         this.turnDur = turnDur;
-        Log.i("Urbalog", "Turn game: " + turnDur);
+        Log.i(NetworkHelper.TAG, "Turn dur: " + turnDur);
+    }
+
+    public int getGameDur() {
+        return gameDur;
+    }
+
+    public void setGameDur(int gameDur) {
+        this.gameDur = gameDur;
+        Log.i("Urbalog", "Game dur: " + gameDur);
     }
 
     @Override

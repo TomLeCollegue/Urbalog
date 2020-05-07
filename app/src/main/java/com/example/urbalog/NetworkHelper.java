@@ -56,6 +56,7 @@ public class NetworkHelper implements Serializable {
     private Context appContext;
     private DatabaseHandler db;
     private CountDownTimerHandler timer;
+    private CountDownTimerHandler gameTimer;
 
     private PlayerViewActivity currentPlayerView = null;
     private CityProgressionActivity currentAdminView = null;
@@ -70,6 +71,7 @@ public class NetworkHelper implements Serializable {
     private static String SERVER_DB_ADRESS = "";
 
     private int TURN_TIME = 60;
+    private int GAME_TIME = 30;
 
     private Game currentGame;
     private boolean gameStarted;
@@ -510,15 +512,7 @@ public class NetworkHelper implements Serializable {
                                             }
                                             nextTurnVotes = 0;
                                         } else {
-                                            try {
-                                                sendToAllClients(new TransferPackage<>(
-                                                        Signal.GAME_OVER,
-                                                        currentGame));
-                                                db.updateGame(currentGame);
-                                                gameStarted = false;
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                            }
+                                            stopGame();
                                         }
                                         if (currentAdminView != null)
                                             currentAdminView.updateView();
@@ -1105,10 +1099,7 @@ public class NetworkHelper implements Serializable {
 
     public void startGame(ArrayList<Role> roles){
         try {
-            Log.i(TAG, "Turn before: " + TURN_TIME);
             currentGame.setTurnDur(TURN_TIME);
-            Log.i(TAG, "Turn after : " + TURN_TIME);
-            Log.i(TAG, "Turn game : " + currentGame.getTurnDur());
             sendToAllClients(new TransferPackage<>(
                     Signal.GAME_RECEIVED,
                     currentGame)
@@ -1119,6 +1110,41 @@ public class NetworkHelper implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        currentGame.setGameDur(GAME_TIME);
+        gameTimer = new CountDownTimerHandler(currentGame.getGameDur() * 1000, new CountDownTimerHandler.TimerTickListener() {
+            @Override
+            public void onTick(long millisLeft) {
+                // Unused
+            }
+
+            @Override
+            public void onFinish() {
+                stopGame();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
+        gameTimer.start();
+
+    }
+
+    private void stopGame() {
+        try {
+            sendToAllClients(new TransferPackage<>(
+                    Signal.GAME_OVER,
+                    currentGame));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(timer != null)
+            timer.cancel();
+        gameTimer.cancel();
+        db.updateGame(currentGame);
+        gameStarted = false;
     }
 
     private void showAlertBuildings(){

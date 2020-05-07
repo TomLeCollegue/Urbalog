@@ -15,6 +15,7 @@ public enum Signal implements Serializable {
     STOP_TIMER,
     TOO_MUCH_BUILDINGS,
     TOO_MUCH_TOTAL_BUILDINGS,
+    TIME_LEFT,
 
     NEXT_TURN,
     CANCEL_NEXT_TURN,
