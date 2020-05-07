@@ -76,101 +76,99 @@ public class StatsScorePerRoundActivity extends AppCompatActivity {
 
         arrayListGame = PlayerConnexionActivity.net.getCurrentGame().getArrayGame();
 
-        for(int i=0; i<arrayListGame.size(); ++i){
-            Game game = arrayListGame.get(i);
-            nbScoreLogistiqueByTurn.put(i, game.getScoreLogistique());
-            nbScoreAttractiviteByTurn.put(i, game.getScoreAttractivite());
-            nbScoreFluiditeByTurn.put(i, game.getScoreFluidite());
-            nbScoreEnvironnementalByTurn.put(i, game.getScoreEnvironnemental());
-        }
-        
-
-
-        mChart = findViewById(R.id.linechart);
-        mChart.setDragEnabled(true);
-        mChart.setScaleEnabled(true);
-        mChart.setExtraOffsets(10, 10, 10, 10);
-        mChart.getDescription().setEnabled(false);
-
-
-        YAxis leftAxis = mChart.getAxisLeft();
-        leftAxis.setAxisMaximum(10);
-        leftAxis.setAxisMinimum(-10);
-        leftAxis.setLabelCount(20);
-        leftAxis.setDrawGridLinesBehindData(true);
-
-        mChart.getAxisRight().setEnabled(false);
-
-
-
-        ArrayList<Entry> yValues1 = new ArrayList<>();
-        int nb =0;
-        for(Map.Entry<Integer, Integer> entry: nbScoreLogistiqueByTurn.entrySet()){
-            yValues1.add(new Entry(nb, entry.getValue()));
-            ar.add("tour : " + String.valueOf(nb));
-            nb++;
-        }
-
-        ArrayList<Entry> yValues2 = new ArrayList<>();
-        nb =0;
-        for(Map.Entry<Integer, Integer> entry: nbScoreAttractiviteByTurn.entrySet()){
-            yValues2.add(new Entry(nb, entry.getValue()));
-            nb++;
-        }
-
-        ArrayList<Entry> yValues3 = new ArrayList<>();
-        nb =0;
-        for(Map.Entry<Integer, Integer> entry: nbScoreFluiditeByTurn.entrySet()){
-            yValues3.add(new Entry(nb, entry.getValue()));
-            nb++;
-        }
-
-        ArrayList<Entry> yValues4 = new ArrayList<>();
-        nb =0;
-        for(Map.Entry<Integer, Integer> entry: nbScoreEnvironnementalByTurn.entrySet()){
-            yValues4.add(new Entry(nb, entry.getValue()));
-            nb++;
-        }
-
-        LineDataSet set1 = new LineDataSet(yValues1, "Score Logistique");
-        LineDataSet set2 = new LineDataSet(yValues2, "Score Attractivité");
-        LineDataSet set3 = new LineDataSet(yValues3, "Score Fluidité");
-        LineDataSet set4 = new LineDataSet(yValues4, "Score Environnemental");
-
-        set1.setColor(Color.RED);
-        set2.setColor(Color.BLUE);
-        set3.setColor(Color.YELLOW);
-        set4.setColor(Color.GREEN);
-
-
-        set1.setCircleColor(Color.TRANSPARENT);
-        set2.setCircleColor(Color.TRANSPARENT);
-        set3.setCircleColor(Color.TRANSPARENT);
-        set4.setCircleColor(Color.TRANSPARENT);
-
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(set1);
-        dataSets.add(set2);
-        dataSets.add(set3);
-        dataSets.add(set4);
-        LineData data = new LineData(dataSets);
-
-        mChart.setData(data);
-
-        XAxis xAxis = mChart.getXAxis();
-        xAxis.setLabelCount(nb-1);
-        xAxis.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                return ar.get((int)value);
+        if(arrayListGame != null && arrayListGame.size() >= 1) {
+            for (int i = 0; i < arrayListGame.size(); ++i) {
+                Game game = arrayListGame.get(i);
+                nbScoreLogistiqueByTurn.put(i, game.getScoreLogistique());
+                nbScoreAttractiviteByTurn.put(i, game.getScoreAttractivite());
+                nbScoreFluiditeByTurn.put(i, game.getScoreFluidite());
+                nbScoreEnvironnementalByTurn.put(i, game.getScoreEnvironnemental());
             }
-        });
+
+            mChart = findViewById(R.id.linechart);
+            mChart.setDragEnabled(true);
+            mChart.setScaleEnabled(true);
+            mChart.setExtraOffsets(10, 10, 10, 10);
+            mChart.getDescription().setEnabled(false);
+
+
+            YAxis leftAxis = mChart.getAxisLeft();
+            leftAxis.setAxisMaximum(10);
+            leftAxis.setAxisMinimum(-10);
+            leftAxis.setLabelCount(20);
+            leftAxis.setDrawGridLinesBehindData(true);
+
+            mChart.getAxisRight().setEnabled(false);
+
+
+            ArrayList<Entry> yValues1 = new ArrayList<>();
+            int nb = 0;
+            for (Map.Entry<Integer, Integer> entry : nbScoreLogistiqueByTurn.entrySet()) {
+                yValues1.add(new Entry(nb, entry.getValue()));
+                ar.add("tour : " + String.valueOf(nb));
+                nb++;
+            }
+
+            ArrayList<Entry> yValues2 = new ArrayList<>();
+            nb = 0;
+            for (Map.Entry<Integer, Integer> entry : nbScoreAttractiviteByTurn.entrySet()) {
+                yValues2.add(new Entry(nb, entry.getValue()));
+                nb++;
+            }
+
+            ArrayList<Entry> yValues3 = new ArrayList<>();
+            nb = 0;
+            for (Map.Entry<Integer, Integer> entry : nbScoreFluiditeByTurn.entrySet()) {
+                yValues3.add(new Entry(nb, entry.getValue()));
+                nb++;
+            }
+
+            ArrayList<Entry> yValues4 = new ArrayList<>();
+            nb = 0;
+            for (Map.Entry<Integer, Integer> entry : nbScoreEnvironnementalByTurn.entrySet()) {
+                yValues4.add(new Entry(nb, entry.getValue()));
+                nb++;
+            }
+
+            LineDataSet set1 = new LineDataSet(yValues1, "Score Logistique");
+            LineDataSet set2 = new LineDataSet(yValues2, "Score Attractivité");
+            LineDataSet set3 = new LineDataSet(yValues3, "Score Fluidité");
+            LineDataSet set4 = new LineDataSet(yValues4, "Score Environnemental");
+
+            set1.setColor(Color.RED);
+            set2.setColor(Color.BLUE);
+            set3.setColor(Color.YELLOW);
+            set4.setColor(Color.GREEN);
+
+
+            set1.setCircleColor(Color.TRANSPARENT);
+            set2.setCircleColor(Color.TRANSPARENT);
+            set3.setCircleColor(Color.TRANSPARENT);
+            set4.setCircleColor(Color.TRANSPARENT);
+
+            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+            dataSets.add(set1);
+            dataSets.add(set2);
+            dataSets.add(set3);
+            dataSets.add(set4);
+            LineData data = new LineData(dataSets);
+
+            mChart.setData(data);
+
+            XAxis xAxis = mChart.getXAxis();
+            xAxis.setLabelCount(nb - 1);
+            xAxis.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return ar.get((int) value);
+                }
+            });
+        }
     }
 
     public void onBackPressed(){
         Intent intent = new Intent(StatsScorePerRoundActivity.this, EndGameActivity.class);
         startActivity(intent);
         finish();
-        return;
     }
 }

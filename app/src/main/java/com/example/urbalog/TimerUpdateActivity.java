@@ -25,10 +25,13 @@ public class TimerUpdateActivity extends AppCompatActivity {
     public void validerTimerUpdate(View view){
         boolean finish = true;
         String finalTurnTime = numberUpdateTimer.getText().toString().trim();
-        String finalGameTime = numberUpdateTimer.getText().toString().trim();
+        String finalGameTime = gameUpdateTimer.getText().toString().trim();
 
-        if(finalTurnTime.matches("") && finalGameTime.matches("")){
+        if(finalTurnTime.matches("")){
             numberUpdateTimer.setError("Champs manquant");
+            finish = false;
+        } else if (finalGameTime.matches("")) {
+            gameUpdateTimer.setError("Champs manquant");
             finish = false;
         }
 
