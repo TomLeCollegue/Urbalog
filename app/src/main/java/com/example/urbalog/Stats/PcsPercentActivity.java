@@ -114,37 +114,29 @@ public class PcsPercentActivity extends AppCompatActivity implements OnChartValu
         int nbProfession=0;
         while(mCursor.moveToNext()) {
             pcs = mCursor.getString(mCursor.getColumnIndex(DatabaseHandler.PLAYER_JOB));
-            switch (pcs) {
-                case "Etudiant":
-                    nbEtudiant++;
-                    break;
-                case "Sans emploi":
-                    nbSansEmploi++;
-                    break;
-                case "Ouvrier qualifié":
-                    nbOuvrier++;
-                    break;
-                case "Employé et personnel de service":
-                    nbEmploye++;
-                    break;
-                case "Cadres et profession intellectuelle supérieure":
-                    nbCadre++;
-                    break;
-                case "Retraité":
-                    nbRetraite++;
-                    break;
-                case "Agriculteur, exploitant":
-                    nbAgriculteur++;
-                    break;
-                case "Main d'oeuvre et ouvrier specialisé":
-                    nbMain++;
-                    break;
-                case "Artisan, commerçant, chef d'entreprise, profession libérale":
-                    nbArtisant++;
-                    break;
-                case "Profession intérmediaire, cadre moyen":
-                    nbProfession++;
-                    break;
+            if(pcs != null){
+                switch (pcs) {
+                    case "Agriculteur":
+                        nbEtudiant++;
+                        break;
+                    case "Artisan, commerçant, chef d'entreprise":
+                        nbSansEmploi++;
+                        break;
+                    case "Cadre":
+                        nbOuvrier++;
+                        break;
+                    case "Profession intermédiaire":
+                        nbEmploye++;
+                        break;
+                    case "Employé":
+                        nbCadre++;
+                        break;
+                    case "Ouvrier":
+                        nbRetraite++;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
