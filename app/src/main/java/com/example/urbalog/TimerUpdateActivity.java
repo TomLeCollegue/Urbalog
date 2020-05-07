@@ -12,27 +12,33 @@ import androidx.appcompat.app.AppCompatActivity;
 public class TimerUpdateActivity extends AppCompatActivity {
 
     private EditText numberUpdateTimer;
+    private EditText gameUpdateTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer_update);
         numberUpdateTimer = findViewById(R.id.numberUpdateTimer);
+        gameUpdateTimer = findViewById(R.id.gameTimerInput);
     }
 
     public void validerTimerUpdate(View view){
         boolean finish = true;
-        String finalTime = numberUpdateTimer.getText().toString().trim();
+        String finalTurnTime = numberUpdateTimer.getText().toString().trim();
+        String finalGameTime = gameUpdateTimer.getText().toString().trim();
 
-        if(finalTime.matches("")){
-            numberUpdateTimer.setError("champs vide");
+        if(finalTurnTime.matches("")){
+            numberUpdateTimer.setError("Champs manquant");
+            finish = false;
+        } else if (finalGameTime.matches("")) {
+            gameUpdateTimer.setError("Champs manquant");
             finish = false;
         }
 
         if(finish) {
-            AdminConnectionActivity.net.setTURN_TIME(Integer.parseInt(finalTime));
-            Log.i("Urbalog", "Turn game: " + AdminConnectionActivity.net.getTURN_TIME());
-            Toast.makeText(this, "Le temps de mise a été mis a jour", Toast.LENGTH_SHORT).show();
+            AdminConnectionActivity.net.setTURN_TIME(Integer.parseInt(finalTurnTime));
+            AdminConnectionActivity.net.setGAME_TIME(Integer.parseInt(finalGameTime));
+            Toast.makeText(this, "Les timers ont bien été mis à jour !", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(TimerUpdateActivity.this, ConfigurationActivity.class);
             startActivity(intent);
             finish();

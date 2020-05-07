@@ -6,38 +6,85 @@
     android:layout_height="match_parent"
     tools:context=".TimerUpdateActivity">
 
-    <TextView
-        android:id="@+id/textTimer"
-        android:layout_width="170dp"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Temps de la mise :"
-        android:textAlignment="center"
-        android:fontFamily="@font/caractere_l2"
-        android:textColor="@color/dark"
-        android:textSize="17dp"></TextView>
-
-    <EditText
-        android:id="@+id/numberUpdateTimer"
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:hint=" en secondes"
-        android:fontFamily="@font/caractere_l2"
-        android:inputType="number"
-        android:textAlignment="center"></EditText>
+        android:layout_height="match_parent"
+        android:gravity="center_vertical">
 
-    <Button
-        android:id="@+id/updateTimerButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:paddingHorizontal="10dp"
-        android:fontFamily="@font/caractere_l2"
-        android:background="@drawable/button_style"
-        android:onClick="validerTimerUpdate"
-        android:text="Mettre a jour"
-        android:textSize="14sp"></Button>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/textTimer"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/caractere_l2"
+                android:gravity="center"
+                android:text="Temps de mise :"
+                android:textAlignment="center"
+                android:textColor="@color/dark"
+                android:textSize="17dp"></TextView>
+
+            <EditText
+                android:id="@+id/numberUpdateTimer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/caractere_l2"
+                android:hint=" en secondes"
+                android:inputType="number"
+                android:textAlignment="center"></EditText>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/textTimerGame"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/caractere_l2"
+                android:gravity="center"
+                android:text="Durée de la partie  :"
+                android:textAlignment="center"
+                android:textColor="@color/dark"
+                android:textSize="17dp"></TextView>
+
+            <EditText
+                android:id="@+id/gameTimerInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/caractere_l2"
+                android:hint=" en secondes"
+                android:inputType="number"
+                android:textAlignment="center"></EditText>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20px"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/updateTimerButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/button_style"
+                android:fontFamily="@font/caractere_l2"
+                android:gravity="center"
+                android:onClick="validerTimerUpdate"
+                android:paddingHorizontal="10dp"
+                android:text="Mettre a jour"
+                android:textSize="14sp"></Button>
+        </TableRow>
+
+    </TableLayout>
 
 </FrameLayout>

@@ -931,8 +931,14 @@ public class NetworkHelper implements Serializable {
 
     public void setTURN_TIME(int time) {
         TURN_TIME = time;
-        Log.i(TAG, "Turn set time: " + time);
-        Log.i(TAG, "Turn set TURN: " + TURN_TIME);
+    }
+
+    public int getGAME_TIME() {
+        return GAME_TIME;
+    }
+
+    public void setGAME_TIME(int time) {
+        GAME_TIME = time;
     }
 
     public CityProgressionActivity getCurrentAdminView() {

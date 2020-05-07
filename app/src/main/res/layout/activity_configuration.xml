@@ -33,7 +33,7 @@
                 android:layout_marginTop="50dp"
                 android:fontFamily="@font/caractere_l2"
                 android:background="@drawable/button_style"
-                android:text="Changer le temps de mise"></Button>
+                android:text="Changer les limites\n de temps"></Button>
 
 
         </LinearLayout>
