@@ -452,12 +452,15 @@ public class PlayerViewActivity extends AppCompatActivity {
         buttonPlusTop= popUpView.findViewById(R.id.button_plus_top);
         buttonPlusBot= popUpView.findViewById(R.id.button_plus_bot);
 
+        updateStateButton(numBuildingF);
+
 
         textAvancementRessourceTop.setText(String.valueOf(financementRessource[numBuildingF][0]));
         TextAvancementRessourceBot.setText(String.valueOf(financementRessource[numBuildingF][1]));
         descriptionBuildingPopUp.setText(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding).getDescription());
 
         setEnabledBetButtons(buttonState);
+
 
 
         textNameBuildingPopup.setText(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding).getName());
@@ -522,6 +525,7 @@ public class PlayerViewActivity extends AppCompatActivity {
                 popUpBet.dismiss();
             }
         });
+
     }
 
     private void fillRoleCardObjectives(){
@@ -720,7 +724,7 @@ public class PlayerViewActivity extends AppCompatActivity {
         PlayerConnexionActivity.net.getPlayer().setFinancementRessource(financementRessource);
         textAvancementRessourceTop.setText(String.valueOf(financementRessource[numBuildingF][0]));
         TextAvancementRessourceBot.setText(String.valueOf(financementRessource[numBuildingF][1]));
-
+        updateStateButton(numBuilding);
     }
 
     public void enableTurnButton() {
@@ -738,10 +742,11 @@ public class PlayerViewActivity extends AppCompatActivity {
 
     public void setEnabledBetButtons(boolean bool){
         if(buttonMinusTop != null && buttonMinusBot != null && buttonPlusBot != null && buttonPlusTop != null) {
-            buttonMinusTop.setEnabled(bool);
+            /*buttonMinusTop.setEnabled(bool);
             buttonPlusTop.setEnabled(bool);
             buttonMinusBot.setEnabled(bool);
-            buttonPlusBot.setEnabled(bool);
+            buttonPlusBot.setEnabled(bool);*/
+            updateStateButton(numBuildingF);
         }
     }
 
@@ -1439,5 +1444,73 @@ public class PlayerViewActivity extends AppCompatActivity {
 
 
 
+
+
+    }
+
+    public void updateStateButton(int numBuilding){
+        Role RoleInfo = PlayerConnexionActivity.net.getPlayer().getRole();
+        if(financementRessource[numBuilding][0] == 0){
+            buttonMinusTop.setEnabled(false);
+        }
+        else{
+            buttonMinusTop.setEnabled(true);
+        }
+        if(financementRessource[numBuilding][1] == 0){
+            buttonMinusBot.setEnabled(false);
+        }
+        else{
+            buttonMinusBot.setEnabled(true);
+        }
+
+        Log.d(TAG, "update Button Bet");
+        // **** Ressource 1 ********* //
+        if(Ressource1.equals("Social")) {
+            if (RoleInfo.getTokenSocial() == 0) {
+                buttonPlusTop.setEnabled(false);
+            } else {
+                buttonPlusTop.setEnabled(true);
+            }
+        }
+        else if(Ressource1.equals("Economical")){
+            if(RoleInfo.getTokenEconomical() == 0){
+                buttonPlusTop.setEnabled(false);
+            }
+            else{
+                buttonPlusTop.setEnabled(true);
+            }
+        }
+        else if(Ressource1.equals("Political")){
+            if(RoleInfo.getTokenPolitical() == 0){
+                buttonPlusTop.setEnabled(false);
+            }
+            else{
+                buttonPlusTop.setEnabled(true);
+            }
+        }
+         // ******** Ressource 2 ******** //
+        if(Ressource2.equals("Social")) {
+            if (RoleInfo.getTokenSocial() == 0) {
+                buttonPlusBot.setEnabled(false);
+            } else {
+                buttonPlusBot.setEnabled(true);
+            }
+        }
+        else if(Ressource2.equals("Economical")){
+            if(RoleInfo.getTokenEconomical() == 0){
+                buttonPlusBot.setEnabled(false);
+            }
+            else{
+                buttonPlusBot.setEnabled(true);
+            }
+        }
+        else if(Ressource2.equals("Political")){
+            if(RoleInfo.getTokenPolitical() == 0){
+                buttonPlusBot.setEnabled(false);
+            }
+            else{
+                buttonPlusBot.setEnabled(true);
+            }
+        }
     }
 }
