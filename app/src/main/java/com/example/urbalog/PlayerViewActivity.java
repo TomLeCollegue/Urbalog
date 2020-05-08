@@ -465,25 +465,7 @@ public class PlayerViewActivity extends AppCompatActivity {
 
         textNameBuildingPopup.setText(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding).getName());
 
-        if (Ressource1.equals("Social")){
-            icoRessourceTopPopup.setImageResource(R.mipmap.img_ressource_social_foreground);
-        }
-        else if(Ressource1.equals("Economical")){
-            icoRessourceTopPopup.setImageResource(R.mipmap.img_ressource_eco_foreground);
-        }
-        else {
-            icoRessourceTopPopup.setImageResource(R.mipmap.img_ressource_political_foreground);
-        }
-
-        if (Ressource2.equals("Social")){
-            icoRessourceBotPopup.setImageResource(R.mipmap.img_attract_city_foreground);
-        }
-        else if(Ressource2.equals("Economical")){
-            icoRessourceBotPopup.setImageResource(R.mipmap.img_ressource_eco_foreground);
-        }
-        else {
-            icoRessourceBotPopup.setImageResource(R.mipmap.img_ressource_political_foreground);
-        }
+        imgPiecesRessources();
 
 
 
@@ -747,6 +729,7 @@ public class PlayerViewActivity extends AppCompatActivity {
             buttonMinusBot.setEnabled(bool);
             buttonPlusBot.setEnabled(bool);*/
             updateStateButton(numBuildingF);
+            imgPiecesRessources();
         }
     }
 
@@ -1510,6 +1493,171 @@ public class PlayerViewActivity extends AppCompatActivity {
             }
             else{
                 buttonPlusBot.setEnabled(true);
+            }
+        }
+    }
+
+
+    public void imgPiecesRessources(){
+        Role RoleInfo = PlayerConnexionActivity.net.getPlayer().getRole();
+
+        // ressource 1
+        if(Ressource1.equals("Social")) {
+            if (RoleInfo.getTokenSocial() == 0) {
+                icoRessourceTopPopup.setImageResource(R.drawable.zero_piece);
+            }
+            else if (RoleInfo.getTokenSocial() == 1){
+                icoRessourceTopPopup.setImageResource(R.drawable.one_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 2){
+                icoRessourceTopPopup.setImageResource(R.drawable.two_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 3){
+                icoRessourceTopPopup.setImageResource(R.drawable.three_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 4){
+                icoRessourceTopPopup.setImageResource(R.drawable.four_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 5){
+                icoRessourceTopPopup.setImageResource(R.drawable.five_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 6){
+                icoRessourceTopPopup.setImageResource(R.drawable.six_s);
+            }
+            else{
+                icoRessourceTopPopup.setImageResource(R.drawable.seven_s);
+            }
+        }
+        if(Ressource1.equals("Political")) {
+            if (RoleInfo.getTokenPolitical() == 0) {
+                icoRessourceTopPopup.setImageResource(R.drawable.zero_piece);
+            }
+            else if (RoleInfo.getTokenPolitical() == 1){
+                icoRessourceTopPopup.setImageResource(R.drawable.one_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 2){
+                icoRessourceTopPopup.setImageResource(R.drawable.two_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 3){
+                icoRessourceTopPopup.setImageResource(R.drawable.three_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 4){
+                icoRessourceTopPopup.setImageResource(R.drawable.four_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 5){
+                icoRessourceTopPopup.setImageResource(R.drawable.five_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 6){
+                icoRessourceTopPopup.setImageResource(R.drawable.six_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 7){
+                icoRessourceTopPopup.setImageResource(R.drawable.seven_p);
+            }
+        }
+        if(Ressource1.equals("Economical")) {
+            if (RoleInfo.getTokenEconomical() == 0) {
+                icoRessourceTopPopup.setImageResource(R.drawable.zero_piece);
+            }
+            else if (RoleInfo.getTokenEconomical() == 1){
+                icoRessourceTopPopup.setImageResource(R.drawable.one_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 2){
+                icoRessourceTopPopup.setImageResource(R.drawable.two_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 3){
+                icoRessourceTopPopup.setImageResource(R.drawable.three_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 4){
+                icoRessourceTopPopup.setImageResource(R.drawable.four_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 5){
+                icoRessourceTopPopup.setImageResource(R.drawable.five_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 6){
+                icoRessourceTopPopup.setImageResource(R.drawable.six_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 7){
+                icoRessourceTopPopup.setImageResource(R.drawable.seven_e);
+            }
+        }
+
+        // ressource 2
+        if(Ressource2.equals("Social")) {
+            if (RoleInfo.getTokenSocial() == 0) {
+                icoRessourceBotPopup.setImageResource(R.drawable.zero_piece);
+            }
+            else if (RoleInfo.getTokenSocial() == 1){
+                icoRessourceBotPopup.setImageResource(R.drawable.one_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 2){
+                icoRessourceBotPopup.setImageResource(R.drawable.two_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 3){
+                icoRessourceBotPopup.setImageResource(R.drawable.three_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 4){
+                icoRessourceBotPopup.setImageResource(R.drawable.four_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 5){
+                icoRessourceBotPopup.setImageResource(R.drawable.five_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 6){
+                icoRessourceBotPopup.setImageResource(R.drawable.six_s);
+            }
+            else{
+                icoRessourceBotPopup.setImageResource(R.drawable.seven_s);
+            }
+        }
+        if(Ressource2.equals("Political")) {
+            if (RoleInfo.getTokenPolitical() == 0) {
+                icoRessourceBotPopup.setImageResource(R.drawable.zero_piece);
+            }
+            else if (RoleInfo.getTokenPolitical() == 1){
+                icoRessourceBotPopup.setImageResource(R.drawable.one_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 2){
+                icoRessourceBotPopup.setImageResource(R.drawable.two_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 3){
+                icoRessourceBotPopup.setImageResource(R.drawable.three_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 4){
+                icoRessourceBotPopup.setImageResource(R.drawable.four_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 5){
+                icoRessourceBotPopup.setImageResource(R.drawable.five_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 6){
+                icoRessourceBotPopup.setImageResource(R.drawable.six_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 7){
+                icoRessourceBotPopup.setImageResource(R.drawable.seven_p);
+            }
+        }
+        if(Ressource2.equals("Economical")) {
+            if (RoleInfo.getTokenEconomical() == 0) {
+                icoRessourceBotPopup.setImageResource(R.drawable.zero_piece);
+            }
+            else if (RoleInfo.getTokenEconomical() == 1){
+                icoRessourceBotPopup.setImageResource(R.drawable.one_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 2){
+                icoRessourceBotPopup.setImageResource(R.drawable.two_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 3){
+                icoRessourceBotPopup.setImageResource(R.drawable.three_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 4){
+                icoRessourceBotPopup.setImageResource(R.drawable.four_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 5){
+                icoRessourceBotPopup.setImageResource(R.drawable.five_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 6){
+                icoRessourceBotPopup.setImageResource(R.drawable.six_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 7){
+                icoRessourceBotPopup.setImageResource(R.drawable.seven_e);
             }
         }
     }
