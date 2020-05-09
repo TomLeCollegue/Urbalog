@@ -44,7 +44,12 @@
                         android:id="@+id/timeLeftToBet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="time"/>
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/red"
+                        android:text="timer"
+                        android:fontFamily="@font/caractere_l1"/>
                 </FrameLayout>
 
                 <LinearLayout

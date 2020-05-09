@@ -613,9 +613,11 @@ public class PlayerViewActivity extends AppCompatActivity {
         }
     }
 
-    public void setTimeLeftTurnTimer (int compteur){
-        timeLeftTurnTimer.setText(String.valueOf(compteur));
-        compteur--;
+    public void setTimeLeftTurnTimer (long millisLeft){
+        String ms = String.format("%02d:%02d",
+                "    TimeUnit.MILLISECONDS.toMinutes(millis)" +
+                "    TimeUnit.MILLISECONDS.toSeconds(millis) % TimeUnit.MINUTES.toSeconds(1))");
+        timeLeftTurnTimer.setText(DateFormat.format(ms, millisLeft));
     }
 
     private void betFromButton(int numBuilding, int ressource, int Value){
