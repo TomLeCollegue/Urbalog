@@ -264,7 +264,7 @@ public class NetworkHelper implements Serializable {
                                     timer = new CountDownTimerHandler(currentGame.getTurnDur() * 1000, new CountDownTimerHandler.TimerTickListener() {
                                         @Override
                                         public void onTick(long millisLeft) {
-                                            // Unused
+                                            PlayerConnexionActivity.net.currentPlayerView.setTimeLeftTurnTimer((int)millisLeft);
                                         }
 
                                         @Override

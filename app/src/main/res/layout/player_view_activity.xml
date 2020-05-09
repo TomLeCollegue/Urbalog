@@ -25,11 +25,10 @@
                 android:background="#f3d7be"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <FrameLayout
                     android:id="@+id/title_market"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/text_title_market"
@@ -38,9 +37,15 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/caractere_l1"
                         android:text="MARCHÉ"
+                        android:layout_gravity="center"
                         android:textAlignment="center"
                         android:textSize="30dp" />
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/timeLeftToBet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="time"/>
+                </FrameLayout>
 
                 <LinearLayout
                     android:id="@+id/infrastructures_list"
