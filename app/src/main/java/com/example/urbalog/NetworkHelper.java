@@ -1123,7 +1123,7 @@ public class NetworkHelper implements Serializable {
         gameTimer = new CountDownTimerHandler(currentGame.getGameDur() * 1000, 1000, new CountDownTimerHandler.TimerTickListener() {
             @Override
             public void onTick(long millisLeft) {
-                // Unused
+                AdminConnectionActivity.net.currentAdminView.setTextGameTimer(millisLeft);
             }
 
             @Override
@@ -1137,7 +1137,7 @@ public class NetworkHelper implements Serializable {
             }
         });
         gameTimer.start();
-
+        AdminConnectionActivity.net.currentAdminView.appearGameTimer();
     }
 
     private void stopGame() {
