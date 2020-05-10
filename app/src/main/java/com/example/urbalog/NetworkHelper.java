@@ -70,8 +70,8 @@ public class NetworkHelper implements Serializable {
     private static int NB_BUILDINGS_PER_TURN = 2;
     private static String SERVER_DB_ADRESS = "";
 
-    private int TURN_TIME = 60;
-    private int GAME_TIME = 30;
+    private int TURN_TIME = 30;
+    private int GAME_TIME = 3600;
 
     private Game currentGame;
     private boolean gameStarted;
@@ -261,9 +261,10 @@ public class NetworkHelper implements Serializable {
                         else if(dataReceived instanceof Signal) {
                             switch ((Signal) dataReceived) {
                                 case START_TIMER:
-                                    timer = new CountDownTimerHandler(currentGame.getTurnDur() * 1000, new CountDownTimerHandler.TimerTickListener() {
+                                    timer = new CountDownTimerHandler(currentGame.getTurnDur() * 1000, 1000, new CountDownTimerHandler.TimerTickListener() {
                                         @Override
                                         public void onTick(long millisLeft) {
+                                            Log.d(TAG, "onTick timer turn, time left : " + millisLeft);
                                             PlayerConnexionActivity.net.currentPlayerView.setTimeLeftTurnTimer(millisLeft);
                                         }
 
@@ -1118,7 +1119,7 @@ public class NetworkHelper implements Serializable {
         }
 
         currentGame.setGameDur(GAME_TIME);
-        gameTimer = new CountDownTimerHandler(currentGame.getGameDur() * 1000, new CountDownTimerHandler.TimerTickListener() {
+        gameTimer = new CountDownTimerHandler(currentGame.getGameDur() * 1000, 1000, new CountDownTimerHandler.TimerTickListener() {
             @Override
             public void onTick(long millisLeft) {
                 // Unused

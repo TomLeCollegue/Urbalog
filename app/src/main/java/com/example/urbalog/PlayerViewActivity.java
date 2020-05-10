@@ -614,6 +614,7 @@ public class PlayerViewActivity extends AppCompatActivity {
     }
 
     public void setTimeLeftTurnTimer (long millisLeft){
+        Log.d(NetworkHelper.TAG, "setTimeLeftTurnTimer : "+millisLeft);
         String ms = String.format("%02d:%02d",
                 "    TimeUnit.MILLISECONDS.toMinutes(millis)" +
                 "    TimeUnit.MILLISECONDS.toSeconds(millis) % TimeUnit.MINUTES.toSeconds(1))");
