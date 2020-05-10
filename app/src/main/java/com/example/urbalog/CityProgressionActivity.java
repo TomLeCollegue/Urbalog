@@ -40,7 +40,6 @@ public class CityProgressionActivity extends AppCompatActivity {
         camionAttract = findViewById(R.id.camion3);
 
         gameTimerText = findViewById(R.id.gameTimerText);
-        gameTimerText.setVisibility(View.GONE);
 
         int scoreEnvi = AdminConnectionActivity.net.getCurrentGame().getScoreEnvironnemental();
         int scoreFluid = AdminConnectionActivity.net.getCurrentGame().getScoreFluidite();
