@@ -46,9 +46,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:textAlignment="center"
                         android:textColor="@color/red"
-                        android:text="timer"
+                        android:text="temps restant : "
                         android:fontFamily="@font/caractere_l1"/>
                 </FrameLayout>
 

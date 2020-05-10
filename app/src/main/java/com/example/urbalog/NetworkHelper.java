@@ -264,13 +264,13 @@ public class NetworkHelper implements Serializable {
                                     timer = new CountDownTimerHandler(currentGame.getTurnDur() * 1000, 1000, new CountDownTimerHandler.TimerTickListener() {
                                         @Override
                                         public void onTick(long millisLeft) {
-                                            Log.d(TAG, "onTick timer turn, time left : " + millisLeft);
                                             PlayerConnexionActivity.net.currentPlayerView.setTimeLeftTurnTimer(millisLeft);
                                         }
 
                                         @Override
                                         public void onFinish() {
                                             try {
+                                                PlayerConnexionActivity.net.currentPlayerView.disappearTimerBet();
                                                 sendToAllClients(Signal.NEXT_TURN);
                                             } catch (IOException e) {
                                                 e.printStackTrace();
@@ -279,10 +279,11 @@ public class NetworkHelper implements Serializable {
 
                                         @Override
                                         public void onCancel() {
-
+                                            PlayerConnexionActivity.net.currentPlayerView.disappearTimerBet();
                                         }
                                     });
                                     timer.start();
+                                    PlayerConnexionActivity.net.currentPlayerView.appearTimerBet();
                                     break;
 
                                 case STOP_TIMER:

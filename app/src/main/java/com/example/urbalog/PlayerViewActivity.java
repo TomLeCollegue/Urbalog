@@ -205,6 +205,7 @@ public class PlayerViewActivity extends AppCompatActivity {
         social_5 = findViewById(R.id.social_5);
 
         timeLeftTurnTimer = findViewById(R.id.timeLeftToBet);
+        timeLeftTurnTimer.setVisibility(View.GONE);
 
         financementRessource = PlayerConnexionActivity.net.getPlayer().getFinancementRessource();
 
@@ -614,11 +615,25 @@ public class PlayerViewActivity extends AppCompatActivity {
     }
 
     public void setTimeLeftTurnTimer (long millisLeft){
-        Log.d(NetworkHelper.TAG, "setTimeLeftTurnTimer : "+millisLeft);
-        String ms = String.format("%02d:%02d",
-                "    TimeUnit.MILLISECONDS.toMinutes(millis)" +
-                "    TimeUnit.MILLISECONDS.toSeconds(millis) % TimeUnit.MINUTES.toSeconds(1))");
-        timeLeftTurnTimer.setText(DateFormat.format(ms, millisLeft));
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(millisLeft);
+        millisLeft -= TimeUnit.MINUTES.toMillis(minutes);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(millisLeft);
+
+        StringBuilder sb = new StringBuilder(64);
+        sb.append("Temps restant : ");
+        sb.append(minutes);
+        sb.append(":");
+        sb.append(seconds);
+
+        timeLeftTurnTimer.setText(sb);
+    }
+
+    public void disappearTimerBet(){
+        timeLeftTurnTimer.setVisibility(View.GONE);
+    }
+
+    public void appearTimerBet(){
+        timeLeftTurnTimer.setVisibility(View.VISIBLE);
     }
 
     private void betFromButton(int numBuilding, int ressource, int Value){
