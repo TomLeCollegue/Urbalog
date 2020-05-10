@@ -28,7 +28,7 @@ public class CityProgressionActivity extends AppCompatActivity {
     private ImageView camionFluid;
     private ImageView camionAttract;
 
-    private TextView gameTimer;
+    private TextView gameTimerText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +39,8 @@ public class CityProgressionActivity extends AppCompatActivity {
         camionFluid = findViewById(R.id.camion2);
         camionAttract = findViewById(R.id.camion3);
 
-        gameTimer = findViewById(R.id.gameTimer);
-        gameTimer.setVisibility(View.GONE);
+        gameTimerText = findViewById(R.id.gameTimerText);
+        gameTimerText.setVisibility(View.GONE);
 
         int scoreEnvi = AdminConnectionActivity.net.getCurrentGame().getScoreEnvironnemental();
         int scoreFluid = AdminConnectionActivity.net.getCurrentGame().getScoreFluidite();
@@ -137,10 +137,10 @@ public class CityProgressionActivity extends AppCompatActivity {
         sb.append(":");
         sb.append(seconds);
 
-        gameTimer.setText(sb);
+        gameTimerText.setText(sb);
     }
 
     public void appearGameTimer(){
-        gameTimer.setVisibility(View.VISIBLE);
+        gameTimerText.setVisibility(View.VISIBLE);
     }
 }

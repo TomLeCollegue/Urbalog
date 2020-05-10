@@ -204,8 +204,9 @@
                     android:layout_height="110px"
                     android:layout_marginTop="195px"
                     app:srcCompat="@drawable/camionenvi" />
+
                 <TextView
-                    android:id="@+id/gameTimer"
+                    android:id="@+id/gameTimerText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|center_horizontal"
