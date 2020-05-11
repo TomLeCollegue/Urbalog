@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -166,7 +167,8 @@ public class PlayerViewActivity extends AppCompatActivity {
     private ImageView fluidity4;
     private ImageView fluidity5;
 
-
+    //5 elements, 1 if the building is funded or 0 if not
+    private Integer[] readyBuildings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,6 +185,8 @@ public class PlayerViewActivity extends AppCompatActivity {
         B3 = findViewById(R.id.infrastructure_3);
         B4 = findViewById(R.id.infrastructure_4);
         B5 = findViewById(R.id.infrastructure_5);
+
+        readyBuildings = new Integer[]{0,0,0,0,0}; //None of the buildings are funded
 
         poli_1 = findViewById(R.id.poli_1);
         eco_1 = findViewById(R.id.eco_1);
@@ -772,42 +776,62 @@ public class PlayerViewActivity extends AppCompatActivity {
         this.buttonState = buttonState;
     }
 
-
+    /**
+     * Put the building layout in green if the building is fully funded
+     * Also write a 1 in the corresponding value of the readyBuildings tab or
+     * 0 if unfunded.
+     */
     public void colorBuildingBet(){
         Market M = PlayerConnexionActivity.net.getCurrentGame().getMarket();
         if( M.getBuildings().get(0).isFilled()){
             B1.setBackground(getDrawable(R.drawable.style_market_view_green));
+            readyBuildings[0] = 1;
+            tooManyBuildings();
+
         }
         else {
             B1.setBackground(getDrawable(R.drawable.style_market_view));
+            readyBuildings[0] = 0;
         }
 
         if( M.getBuildings().get(1).isFilled()){
             B2.setBackground(getDrawable(R.drawable.style_market_view_green));
+            readyBuildings[1] = 1;
+            tooManyBuildings();
         }
         else {
             B2.setBackground(getDrawable(R.drawable.style_market_view));
+            readyBuildings[1] = 0;
         }
 
         if( M.getBuildings().get(2).isFilled()){
             B3.setBackground(getDrawable(R.drawable.style_market_view_green));
+            readyBuildings[2] = 1;
+            tooManyBuildings();
         }
         else {
             B3.setBackground(getDrawable(R.drawable.style_market_view));
+            readyBuildings[2]=0;
         }
 
         if( M.getBuildings().get(3).isFilled()){
             B4.setBackground(getDrawable(R.drawable.style_market_view_green));
+            readyBuildings[3] = 1;
+            tooManyBuildings();
         }
         else {
             B4.setBackground(getDrawable(R.drawable.style_market_view));
+            readyBuildings[3] = 0;
     }
 
         if( M.getBuildings().get(4).isFilled()){
             B5.setBackground(getDrawable(R.drawable.style_market_view_green));
+            readyBuildings[4] = 1;
+            tooManyBuildings();
         }
         else {
             B5.setBackground(getDrawable(R.drawable.style_market_view));
+            readyBuildings[4] = 0;
         }
     }
 
@@ -1457,10 +1481,29 @@ public class PlayerViewActivity extends AppCompatActivity {
             textTraficBuilding5.setTextColor(colorBlack);
         }
 
+    }
+    /**
+     * Displays a message to all the players if they try to build too many buildings in a single turn.
+     */
+    public void tooManyBuildings(){
+        Game currentGame;
+        currentGame = PlayerConnexionActivity.net.getCurrentGame();
 
+        Toast toast;
+        String tooMany = "Rappel : Vous ne pouvez construire que "+ currentGame.getMaxBuildingsPerTurn()+" aménagement(s) par tour.";
 
+        int nbBuildingsReady = 0;
 
+        for (int i = 0; i <5; i++){
+            if (readyBuildings[i] == 1){
+                nbBuildingsReady++;
+            }
+        }
 
+        if (nbBuildingsReady > currentGame.getMaxBuildingsPerTurn()){
+            toast = Toast.makeText(getApplicationContext(),tooMany, Toast.LENGTH_LONG);
+            toast.show();
+        }
 
 
 

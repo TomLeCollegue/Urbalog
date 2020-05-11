@@ -67,6 +67,7 @@ public class NetworkHelper implements Serializable {
 
     private static int NB_PLAYERS = 5;
     private static int NB_BUILDINGS = 3;
+
     private static int NB_BUILDINGS_PER_TURN = 2;
     private static String SERVER_DB_ADRESS = "";
 
@@ -926,6 +927,14 @@ public class NetworkHelper implements Serializable {
         return currentGame;
     }
 
+    public static int getNbBuildingsPerTurn() {
+        return NB_BUILDINGS_PER_TURN;
+    }
+
+    public static void setNbBuildingsPerTurn(int nbBuildingsPerTurn) {
+        NB_BUILDINGS_PER_TURN = nbBuildingsPerTurn;
+    }
+
     public PlayerViewActivity getCurrentPlayerView() {
         return currentPlayerView;
     }
@@ -1114,6 +1123,7 @@ public class NetworkHelper implements Serializable {
 
     public void startGame(ArrayList<Role> roles){
         try {
+            currentGame.setMaxBuildingsPerTurn(NB_BUILDINGS_PER_TURN);
             currentGame.setTurnDur(TURN_TIME);
             sendToAllClients(new TransferPackage<>(
                     Signal.GAME_RECEIVED,
@@ -1185,7 +1195,7 @@ public class NetworkHelper implements Serializable {
     private void showAlertBuildings(){
         AlertDialog diaBox = new AlertDialog.Builder(currentPlayerView)
                 .setTitle("Attention")
-                .setMessage("Vous cherchez à constuire trop de bâtiments durant ce tour, veuillez limiter leur nombre à "+NB_BUILDINGS_PER_TURN+" maximum.")
+                .setMessage("Vous cherchez à constuire trop de bâtiments durant ce tour, veuillez limiter leur nombre à "+currentGame.getMaxBuildingsPerTurn()+" maximum.")
                 .setIcon(R.drawable.warning_icon)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
