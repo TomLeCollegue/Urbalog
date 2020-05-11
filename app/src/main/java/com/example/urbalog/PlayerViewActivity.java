@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,11 +26,20 @@ import com.example.urbalog.Class.Role;
 import com.example.urbalog.Class.Signal;
 import com.example.urbalog.Class.TransferPackage;
 
+import org.apache.commons.lang3.time.StopWatch;
+
 import java.io.IOException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.concurrent.TimeUnit;
 
 public class PlayerViewActivity extends AppCompatActivity {
 
     private static final String TAG = "slt";
+
+    private TextView timeLeftTurnTimer;
 
     private TextView textPoliticalResssourcesBuilding1;
     private TextView textEcoResssourcesBuilding1;
@@ -193,6 +203,9 @@ public class PlayerViewActivity extends AppCompatActivity {
         poli_5 = findViewById(R.id.poli_5);
         eco_5 = findViewById(R.id.eco_5);
         social_5 = findViewById(R.id.social_5);
+
+        timeLeftTurnTimer = findViewById(R.id.timeLeftToBet);
+        timeLeftTurnTimer.setVisibility(View.GONE);
 
         financementRessource = PlayerConnexionActivity.net.getPlayer().getFinancementRessource();
 
@@ -581,6 +594,28 @@ public class PlayerViewActivity extends AppCompatActivity {
             icoRessourceRightRole.setImageResource(R.mipmap.img_ressource_political_foreground);
             textRessourceRightRole.setText(String.valueOf(RoleInfo.getTokenPolitical()));
         }
+    }
+
+    public void setTimeLeftTurnTimer (long millisLeft){
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(millisLeft);
+        millisLeft -= TimeUnit.MINUTES.toMillis(minutes);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(millisLeft);
+
+        StringBuilder sb = new StringBuilder(64);
+        sb.append("Temps restant : ");
+        sb.append(minutes);
+        sb.append(":");
+        sb.append(seconds);
+
+        timeLeftTurnTimer.setText(sb);
+    }
+
+    public void disappearTimerBet(){
+        timeLeftTurnTimer.setVisibility(View.GONE);
+    }
+
+    public void appearTimerBet(){
+        timeLeftTurnTimer.setVisibility(View.VISIBLE);
     }
 
     private void betFromButton(int numBuilding, int ressource, int Value){

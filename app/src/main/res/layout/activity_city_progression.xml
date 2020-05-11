@@ -205,6 +205,16 @@
                     android:layout_marginTop="195px"
                     app:srcCompat="@drawable/camionenvi" />
 
+                <TextView
+                    android:id="@+id/gameTimerText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/caractere_l1"
+                    android:text="temps restant : "
+                    android:textSize="17dp"/>
+
             </FrameLayout>
 
         </LinearLayout>

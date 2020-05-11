@@ -1,8 +1,10 @@
 package com.example.urbalog;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +14,7 @@ import com.example.urbalog.Adapter.CityProgressionAdapter;
 import com.example.urbalog.Class.Building;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /* This activity is opened whenever a player wants to see the city
  progression during gameplay */
@@ -25,6 +28,8 @@ public class CityProgressionActivity extends AppCompatActivity {
     private ImageView camionFluid;
     private ImageView camionAttract;
 
+    private TextView gameTimerText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +38,8 @@ public class CityProgressionActivity extends AppCompatActivity {
         camionEnvi = findViewById(R.id.camion);
         camionFluid = findViewById(R.id.camion2);
         camionAttract = findViewById(R.id.camion3);
+
+        gameTimerText = findViewById(R.id.gameTimerText);
 
         int scoreEnvi = AdminConnectionActivity.net.getCurrentGame().getScoreEnvironnemental();
         int scoreFluid = AdminConnectionActivity.net.getCurrentGame().getScoreFluidite();
@@ -112,5 +119,27 @@ public class CityProgressionActivity extends AppCompatActivity {
         lpAttract.setMargins(900 + 100*scoreAttract,195, 0, 0);
 
         camionAttract.setLayoutParams(lpAttract);
+    }
+
+    public void setTextGameTimer(long millisLeft){
+        long hours = TimeUnit.MILLISECONDS.toHours(millisLeft);
+        millisLeft -= TimeUnit.HOURS.toMillis(hours);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(millisLeft);
+        millisLeft -= TimeUnit.MINUTES.toMillis(minutes);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(millisLeft);
+
+        StringBuilder sb = new StringBuilder(64);
+        sb.append("Fin de la partie dans : ");
+        sb.append(hours);
+        sb.append(":");
+        sb.append(minutes);
+        sb.append(":");
+        sb.append(seconds);
+
+        gameTimerText.setText(sb);
+    }
+
+    public void appearGameTimer(){
+        gameTimerText.setVisibility(View.VISIBLE);
     }
 }
