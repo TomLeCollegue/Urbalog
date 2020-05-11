@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -22,11 +21,13 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EndGameStats.StatsScorePerRoundActivity"
-            android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name=".ChangeNbBuildingPerTurn"></activity>
+        <activity
+            android:name=".EndGameStats.StatsScorePerRoundActivity"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".DbConfigActivity"
-            android:screenOrientation="sensorLandscape"/>
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".TimerUpdateActivity"
             android:screenOrientation="sensorLandscape" />

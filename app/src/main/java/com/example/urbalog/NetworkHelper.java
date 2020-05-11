@@ -67,11 +67,12 @@ public class NetworkHelper implements Serializable {
 
     private static int NB_PLAYERS = 5;
     private static int NB_BUILDINGS = 3;
+
     private static int NB_BUILDINGS_PER_TURN = 2;
     private static String SERVER_DB_ADRESS = "";
 
-    private int TURN_TIME = 60;
-    private int GAME_TIME = 30;
+    private int TURN_TIME = 30;
+    private int GAME_TIME = 3600;
 
     private Game currentGame;
     private boolean gameStarted;
@@ -261,10 +262,11 @@ public class NetworkHelper implements Serializable {
                         else if(dataReceived instanceof Signal) {
                             switch ((Signal) dataReceived) {
                                 case START_TIMER:
-                                    timer = new CountDownTimerHandler(currentGame.getTurnDur() * 1000, new CountDownTimerHandler.TimerTickListener() {
+                                    timer = new CountDownTimerHandler(currentGame.getTurnDur() * 1000, 1000, new CountDownTimerHandler.TimerTickListener() {
                                         @Override
                                         public void onTick(long millisLeft) {
-                                            // Unused
+                                            if(currentPlayerView != null)
+                                                currentPlayerView.setTimeLeftTurnTimer(millisLeft);
                                         }
 
                                         @Override
@@ -274,14 +276,26 @@ public class NetworkHelper implements Serializable {
                                             } catch (IOException e) {
                                                 e.printStackTrace();
                                             }
+                                            if(currentPlayerView != null) {
+                                                currentPlayerView.disappearTimerBet();
+                                                AlertDialog diaBox = showMessage("Tour passé",
+                                                        "Votre tour a été automatiquement passé car vous êtiez le dernier joueur et n'aviez pas passer votre tour.\n" +
+                                                                "Les ressources misées sur des aménagements qui n'ont pas été financé complètement ont été perdues.",
+                                                        currentPlayerView);
+                                                diaBox.show();
+                                            }
                                         }
 
                                         @Override
                                         public void onCancel() {
-
+                                            PlayerConnexionActivity.net.currentPlayerView.disappearTimerBet();
                                         }
                                     });
                                     timer.start();
+                                    if(currentPlayerView != null) {
+                                        Toast.makeText(currentPlayerView, "Attention : vous êtes le dernier joueur. Votre tour sera automatiquement passé dans " + TURN_TIME + " secs.", Toast.LENGTH_LONG).show();
+                                        currentPlayerView.appearTimerBet();
+                                    }
                                     break;
 
                                 case STOP_TIMER:
@@ -457,16 +471,12 @@ public class NetworkHelper implements Serializable {
                             {
                                 // Cancel turn timer for last player if exist
                                 if(endpointLast != null) {
-                                    for (int i = 0; i < playersVotes.size(); i++) {
-                                        if (!playersVotes.get(i).second) {
-                                            try {
-                                                sendToClient(Signal.STOP_TIMER, endpointLast);
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                            }
-                                            endpointLast = null;
-                                        }
+                                    try {
+                                        sendToClient(Signal.STOP_TIMER, endpointLast);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
                                     }
+                                    endpointLast = null;
                                 }
 
                                 // Reset turns votes
@@ -917,6 +927,14 @@ public class NetworkHelper implements Serializable {
         return currentGame;
     }
 
+    public static int getNbBuildingsPerTurn() {
+        return NB_BUILDINGS_PER_TURN;
+    }
+
+    public static void setNbBuildingsPerTurn(int nbBuildingsPerTurn) {
+        NB_BUILDINGS_PER_TURN = nbBuildingsPerTurn;
+    }
+
     public PlayerViewActivity getCurrentPlayerView() {
         return currentPlayerView;
     }
@@ -1105,6 +1123,7 @@ public class NetworkHelper implements Serializable {
 
     public void startGame(ArrayList<Role> roles){
         try {
+            currentGame.setMaxBuildingsPerTurn(NB_BUILDINGS_PER_TURN);
             currentGame.setTurnDur(TURN_TIME);
             sendToAllClients(new TransferPackage<>(
                     Signal.GAME_RECEIVED,
@@ -1118,10 +1137,11 @@ public class NetworkHelper implements Serializable {
         }
 
         currentGame.setGameDur(GAME_TIME);
-        gameTimer = new CountDownTimerHandler(currentGame.getGameDur() * 1000, new CountDownTimerHandler.TimerTickListener() {
+        gameTimer = new CountDownTimerHandler(currentGame.getGameDur() * 1000, 1000, new CountDownTimerHandler.TimerTickListener() {
             @Override
             public void onTick(long millisLeft) {
-                // Unused
+                if(currentAdminView != null)
+                    currentAdminView.setTextGameTimer(millisLeft);
             }
 
             @Override
@@ -1135,7 +1155,8 @@ public class NetworkHelper implements Serializable {
             }
         });
         gameTimer.start();
-
+        if(currentAdminView != null)
+            currentAdminView.appearGameTimer();
     }
 
     private void stopGame() {
@@ -1153,10 +1174,28 @@ public class NetworkHelper implements Serializable {
         gameStarted = false;
     }
 
+    /**
+     * Create AlertDialog for displaying a message
+     *
+     * @return Message alert dialog
+     */
+    private AlertDialog showMessage(String title, String message, Context context)
+    {
+        return new AlertDialog.Builder(currentPlayerView)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+    }
+
     private void showAlertBuildings(){
         AlertDialog diaBox = new AlertDialog.Builder(currentPlayerView)
                 .setTitle("Attention")
-                .setMessage("Vous cherchez à constuire trop de bâtiments durant ce tour, veuillez limiter leur nombre à "+NB_BUILDINGS_PER_TURN+" maximum.")
+                .setMessage("Vous cherchez à constuire trop de bâtiments durant ce tour, veuillez limiter leur nombre à "+currentGame.getMaxBuildingsPerTurn()+" maximum.")
                 .setIcon(R.drawable.warning_icon)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {

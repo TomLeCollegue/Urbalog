@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,11 +27,20 @@ import com.example.urbalog.Class.Role;
 import com.example.urbalog.Class.Signal;
 import com.example.urbalog.Class.TransferPackage;
 
+import org.apache.commons.lang3.time.StopWatch;
+
 import java.io.IOException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.concurrent.TimeUnit;
 
 public class PlayerViewActivity extends AppCompatActivity {
 
     private static final String TAG = "slt";
+
+    private TextView timeLeftTurnTimer;
 
     private TextView textPoliticalResssourcesBuilding1;
     private TextView textEcoResssourcesBuilding1;
@@ -156,7 +167,8 @@ public class PlayerViewActivity extends AppCompatActivity {
     private ImageView fluidity4;
     private ImageView fluidity5;
 
-
+    //5 elements, 1 if the building is funded or 0 if not
+    private Integer[] readyBuildings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,6 +185,8 @@ public class PlayerViewActivity extends AppCompatActivity {
         B3 = findViewById(R.id.infrastructure_3);
         B4 = findViewById(R.id.infrastructure_4);
         B5 = findViewById(R.id.infrastructure_5);
+
+        readyBuildings = new Integer[]{0,0,0,0,0}; //None of the buildings are funded
 
         poli_1 = findViewById(R.id.poli_1);
         eco_1 = findViewById(R.id.eco_1);
@@ -193,6 +207,9 @@ public class PlayerViewActivity extends AppCompatActivity {
         poli_5 = findViewById(R.id.poli_5);
         eco_5 = findViewById(R.id.eco_5);
         social_5 = findViewById(R.id.social_5);
+
+        timeLeftTurnTimer = findViewById(R.id.timeLeftToBet);
+        timeLeftTurnTimer.setVisibility(View.GONE);
 
         financementRessource = PlayerConnexionActivity.net.getPlayer().getFinancementRessource();
 
@@ -465,25 +482,7 @@ public class PlayerViewActivity extends AppCompatActivity {
 
         textNameBuildingPopup.setText(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding).getName());
 
-        if (Ressource1.equals("Social")){
-            icoRessourceTopPopup.setImageResource(R.mipmap.img_ressource_social_foreground);
-        }
-        else if(Ressource1.equals("Economical")){
-            icoRessourceTopPopup.setImageResource(R.mipmap.img_ressource_eco_foreground);
-        }
-        else {
-            icoRessourceTopPopup.setImageResource(R.mipmap.img_ressource_political_foreground);
-        }
-
-        if (Ressource2.equals("Social")){
-            icoRessourceBotPopup.setImageResource(R.mipmap.img_attract_city_foreground);
-        }
-        else if(Ressource2.equals("Economical")){
-            icoRessourceBotPopup.setImageResource(R.mipmap.img_ressource_eco_foreground);
-        }
-        else {
-            icoRessourceBotPopup.setImageResource(R.mipmap.img_ressource_political_foreground);
-        }
+        imgPiecesRessources();
 
 
 
@@ -599,6 +598,28 @@ public class PlayerViewActivity extends AppCompatActivity {
             icoRessourceRightRole.setImageResource(R.mipmap.img_ressource_political_foreground);
             textRessourceRightRole.setText(String.valueOf(RoleInfo.getTokenPolitical()));
         }
+    }
+
+    public void setTimeLeftTurnTimer (long millisLeft){
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(millisLeft);
+        millisLeft -= TimeUnit.MINUTES.toMillis(minutes);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(millisLeft);
+
+        StringBuilder sb = new StringBuilder(64);
+        sb.append("Temps restant : ");
+        sb.append(minutes);
+        sb.append(":");
+        sb.append(seconds);
+
+        timeLeftTurnTimer.setText(sb);
+    }
+
+    public void disappearTimerBet(){
+        timeLeftTurnTimer.setVisibility(View.GONE);
+    }
+
+    public void appearTimerBet(){
+        timeLeftTurnTimer.setVisibility(View.VISIBLE);
     }
 
     private void betFromButton(int numBuilding, int ressource, int Value){
@@ -747,6 +768,7 @@ public class PlayerViewActivity extends AppCompatActivity {
             buttonMinusBot.setEnabled(bool);
             buttonPlusBot.setEnabled(bool);*/
             updateStateButton(numBuildingF);
+            imgPiecesRessources();
         }
     }
 
@@ -754,42 +776,62 @@ public class PlayerViewActivity extends AppCompatActivity {
         this.buttonState = buttonState;
     }
 
-
+    /**
+     * Put the building layout in green if the building is fully funded
+     * Also write a 1 in the corresponding value of the readyBuildings tab or
+     * 0 if unfunded.
+     */
     public void colorBuildingBet(){
         Market M = PlayerConnexionActivity.net.getCurrentGame().getMarket();
         if( M.getBuildings().get(0).isFilled()){
             B1.setBackground(getDrawable(R.drawable.style_market_view_green));
+            readyBuildings[0] = 1;
+            tooManyBuildings();
+
         }
         else {
             B1.setBackground(getDrawable(R.drawable.style_market_view));
+            readyBuildings[0] = 0;
         }
 
         if( M.getBuildings().get(1).isFilled()){
             B2.setBackground(getDrawable(R.drawable.style_market_view_green));
+            readyBuildings[1] = 1;
+            tooManyBuildings();
         }
         else {
             B2.setBackground(getDrawable(R.drawable.style_market_view));
+            readyBuildings[1] = 0;
         }
 
         if( M.getBuildings().get(2).isFilled()){
             B3.setBackground(getDrawable(R.drawable.style_market_view_green));
+            readyBuildings[2] = 1;
+            tooManyBuildings();
         }
         else {
             B3.setBackground(getDrawable(R.drawable.style_market_view));
+            readyBuildings[2]=0;
         }
 
         if( M.getBuildings().get(3).isFilled()){
             B4.setBackground(getDrawable(R.drawable.style_market_view_green));
+            readyBuildings[3] = 1;
+            tooManyBuildings();
         }
         else {
             B4.setBackground(getDrawable(R.drawable.style_market_view));
+            readyBuildings[3] = 0;
     }
 
         if( M.getBuildings().get(4).isFilled()){
             B5.setBackground(getDrawable(R.drawable.style_market_view_green));
+            readyBuildings[4] = 1;
+            tooManyBuildings();
         }
         else {
             B5.setBackground(getDrawable(R.drawable.style_market_view));
+            readyBuildings[4] = 0;
         }
     }
 
@@ -1439,10 +1481,29 @@ public class PlayerViewActivity extends AppCompatActivity {
             textTraficBuilding5.setTextColor(colorBlack);
         }
 
+    }
+    /**
+     * Displays a message to all the players if they try to build too many buildings in a single turn.
+     */
+    public void tooManyBuildings(){
+        Game currentGame;
+        currentGame = PlayerConnexionActivity.net.getCurrentGame();
 
+        Toast toast;
+        String tooMany = "Rappel : Vous ne pouvez construire que "+ currentGame.getMaxBuildingsPerTurn()+" aménagement(s) par tour.";
 
+        int nbBuildingsReady = 0;
 
+        for (int i = 0; i <5; i++){
+            if (readyBuildings[i] == 1){
+                nbBuildingsReady++;
+            }
+        }
 
+        if (nbBuildingsReady > currentGame.getMaxBuildingsPerTurn()){
+            toast = Toast.makeText(getApplicationContext(),tooMany, Toast.LENGTH_LONG);
+            toast.show();
+        }
 
 
 
@@ -1510,6 +1571,171 @@ public class PlayerViewActivity extends AppCompatActivity {
             }
             else{
                 buttonPlusBot.setEnabled(true);
+            }
+        }
+    }
+
+
+    public void imgPiecesRessources(){
+        Role RoleInfo = PlayerConnexionActivity.net.getPlayer().getRole();
+
+        // ressource 1
+        if(Ressource1.equals("Social")) {
+            if (RoleInfo.getTokenSocial() == 0) {
+                icoRessourceTopPopup.setImageResource(R.drawable.zero_piece);
+            }
+            else if (RoleInfo.getTokenSocial() == 1){
+                icoRessourceTopPopup.setImageResource(R.drawable.one_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 2){
+                icoRessourceTopPopup.setImageResource(R.drawable.two_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 3){
+                icoRessourceTopPopup.setImageResource(R.drawable.three_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 4){
+                icoRessourceTopPopup.setImageResource(R.drawable.four_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 5){
+                icoRessourceTopPopup.setImageResource(R.drawable.five_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 6){
+                icoRessourceTopPopup.setImageResource(R.drawable.six_s);
+            }
+            else{
+                icoRessourceTopPopup.setImageResource(R.drawable.seven_s);
+            }
+        }
+        if(Ressource1.equals("Political")) {
+            if (RoleInfo.getTokenPolitical() == 0) {
+                icoRessourceTopPopup.setImageResource(R.drawable.zero_piece);
+            }
+            else if (RoleInfo.getTokenPolitical() == 1){
+                icoRessourceTopPopup.setImageResource(R.drawable.one_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 2){
+                icoRessourceTopPopup.setImageResource(R.drawable.two_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 3){
+                icoRessourceTopPopup.setImageResource(R.drawable.three_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 4){
+                icoRessourceTopPopup.setImageResource(R.drawable.four_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 5){
+                icoRessourceTopPopup.setImageResource(R.drawable.five_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 6){
+                icoRessourceTopPopup.setImageResource(R.drawable.six_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 7){
+                icoRessourceTopPopup.setImageResource(R.drawable.seven_p);
+            }
+        }
+        if(Ressource1.equals("Economical")) {
+            if (RoleInfo.getTokenEconomical() == 0) {
+                icoRessourceTopPopup.setImageResource(R.drawable.zero_piece);
+            }
+            else if (RoleInfo.getTokenEconomical() == 1){
+                icoRessourceTopPopup.setImageResource(R.drawable.one_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 2){
+                icoRessourceTopPopup.setImageResource(R.drawable.two_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 3){
+                icoRessourceTopPopup.setImageResource(R.drawable.three_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 4){
+                icoRessourceTopPopup.setImageResource(R.drawable.four_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 5){
+                icoRessourceTopPopup.setImageResource(R.drawable.five_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 6){
+                icoRessourceTopPopup.setImageResource(R.drawable.six_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 7){
+                icoRessourceTopPopup.setImageResource(R.drawable.seven_e);
+            }
+        }
+
+        // ressource 2
+        if(Ressource2.equals("Social")) {
+            if (RoleInfo.getTokenSocial() == 0) {
+                icoRessourceBotPopup.setImageResource(R.drawable.zero_piece);
+            }
+            else if (RoleInfo.getTokenSocial() == 1){
+                icoRessourceBotPopup.setImageResource(R.drawable.one_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 2){
+                icoRessourceBotPopup.setImageResource(R.drawable.two_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 3){
+                icoRessourceBotPopup.setImageResource(R.drawable.three_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 4){
+                icoRessourceBotPopup.setImageResource(R.drawable.four_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 5){
+                icoRessourceBotPopup.setImageResource(R.drawable.five_s);
+            }
+            else if (RoleInfo.getTokenSocial() == 6){
+                icoRessourceBotPopup.setImageResource(R.drawable.six_s);
+            }
+            else{
+                icoRessourceBotPopup.setImageResource(R.drawable.seven_s);
+            }
+        }
+        if(Ressource2.equals("Political")) {
+            if (RoleInfo.getTokenPolitical() == 0) {
+                icoRessourceBotPopup.setImageResource(R.drawable.zero_piece);
+            }
+            else if (RoleInfo.getTokenPolitical() == 1){
+                icoRessourceBotPopup.setImageResource(R.drawable.one_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 2){
+                icoRessourceBotPopup.setImageResource(R.drawable.two_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 3){
+                icoRessourceBotPopup.setImageResource(R.drawable.three_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 4){
+                icoRessourceBotPopup.setImageResource(R.drawable.four_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 5){
+                icoRessourceBotPopup.setImageResource(R.drawable.five_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 6){
+                icoRessourceBotPopup.setImageResource(R.drawable.six_p);
+            }
+            else if (RoleInfo.getTokenPolitical() == 7){
+                icoRessourceBotPopup.setImageResource(R.drawable.seven_p);
+            }
+        }
+        if(Ressource2.equals("Economical")) {
+            if (RoleInfo.getTokenEconomical() == 0) {
+                icoRessourceBotPopup.setImageResource(R.drawable.zero_piece);
+            }
+            else if (RoleInfo.getTokenEconomical() == 1){
+                icoRessourceBotPopup.setImageResource(R.drawable.one_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 2){
+                icoRessourceBotPopup.setImageResource(R.drawable.two_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 3){
+                icoRessourceBotPopup.setImageResource(R.drawable.three_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 4){
+                icoRessourceBotPopup.setImageResource(R.drawable.four_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 5){
+                icoRessourceBotPopup.setImageResource(R.drawable.five_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 6){
+                icoRessourceBotPopup.setImageResource(R.drawable.six_e);
+            }
+            else if (RoleInfo.getTokenEconomical() == 7){
+                icoRessourceBotPopup.setImageResource(R.drawable.seven_e);
             }
         }
     }
