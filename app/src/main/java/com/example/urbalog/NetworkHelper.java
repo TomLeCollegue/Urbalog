@@ -264,17 +264,19 @@ public class NetworkHelper implements Serializable {
                                     timer = new CountDownTimerHandler(currentGame.getTurnDur() * 1000, 1000, new CountDownTimerHandler.TimerTickListener() {
                                         @Override
                                         public void onTick(long millisLeft) {
-                                            PlayerConnexionActivity.net.currentPlayerView.setTimeLeftTurnTimer(millisLeft);
+                                            if(currentPlayerView != null)
+                                                currentPlayerView.setTimeLeftTurnTimer(millisLeft);
                                         }
 
                                         @Override
                                         public void onFinish() {
                                             try {
-                                                PlayerConnexionActivity.net.currentPlayerView.disappearTimerBet();
                                                 sendToAllClients(Signal.NEXT_TURN);
                                             } catch (IOException e) {
                                                 e.printStackTrace();
                                             }
+                                            if(currentPlayerView != null)
+                                                currentPlayerView.disappearTimerBet();
                                         }
 
                                         @Override
@@ -283,7 +285,8 @@ public class NetworkHelper implements Serializable {
                                         }
                                     });
                                     timer.start();
-                                    PlayerConnexionActivity.net.currentPlayerView.appearTimerBet();
+                                    if(currentPlayerView != null)
+                                        currentPlayerView.appearTimerBet();
                                     break;
 
                                 case STOP_TIMER:
@@ -459,16 +462,12 @@ public class NetworkHelper implements Serializable {
                             {
                                 // Cancel turn timer for last player if exist
                                 if(endpointLast != null) {
-                                    for (int i = 0; i < playersVotes.size(); i++) {
-                                        if (!playersVotes.get(i).second) {
-                                            try {
-                                                sendToClient(Signal.STOP_TIMER, endpointLast);
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                            }
-                                            endpointLast = null;
-                                        }
+                                    try {
+                                        sendToClient(Signal.STOP_TIMER, endpointLast);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
                                     }
+                                    endpointLast = null;
                                 }
 
                                 // Reset turns votes
@@ -1123,7 +1122,8 @@ public class NetworkHelper implements Serializable {
         gameTimer = new CountDownTimerHandler(currentGame.getGameDur() * 1000, 1000, new CountDownTimerHandler.TimerTickListener() {
             @Override
             public void onTick(long millisLeft) {
-                //AdminConnectionActivity.net.currentAdminView.setTextGameTimer(millisLeft);
+                if(currentAdminView != null)
+                    currentAdminView.setTextGameTimer(millisLeft);
             }
 
             @Override
@@ -1137,7 +1137,8 @@ public class NetworkHelper implements Serializable {
             }
         });
         gameTimer.start();
-        //AdminConnectionActivity.net.currentAdminView.appearGameTimer();
+        if(currentAdminView != null)
+            currentAdminView.appearGameTimer();
     }
 
     private void stopGame() {
