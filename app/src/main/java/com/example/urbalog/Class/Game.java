@@ -24,6 +24,9 @@ public class Game implements Serializable {
     private long dbID;
     private String dbKEY;
     private Date date;
+
+    private int maxBuildingsPerTurn;
+
     private ArrayList<Game> arrayGame = new ArrayList<Game>();
 
     public void addArrayGame(){
@@ -47,6 +50,8 @@ public class Game implements Serializable {
 
         city = new City();
         date = new Date();
+
+        maxBuildingsPerTurn = 2;
     }
 
     public Game(Game game){
@@ -163,6 +168,14 @@ public class Game implements Serializable {
     public void setTurnDur(int turnDur) {
         this.turnDur = turnDur;
         Log.i("Urbalog", "Turn game: " + turnDur);
+    }
+
+    public int getMaxBuildingsPerTurn() {
+        return maxBuildingsPerTurn;
+    }
+
+    public void setMaxBuildingsPerTurn(int maxBuildingsPerTurn) {
+        this.maxBuildingsPerTurn = maxBuildingsPerTurn;
     }
 
     @Override
