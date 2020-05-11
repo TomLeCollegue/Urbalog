@@ -1,55 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_weight="2"
     android:background="@color/lightPink">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ScrollView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical">
+        android:layout_weight="1"
+        android:layout_gravity="center">
 
-        <Button
-            android:id="@+id/resetDb"
-            android:layout_width="250dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:background="@drawable/button_style"
-            android:fontFamily="@font/caractere_l2"
-            android:text="réinitialiser bdd"></Button>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/exportCsv"
-            android:layout_width="250dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/button_style"
-            android:fontFamily="@font/caractere_l2"
-            android:text="Exporter bdd vers csv"></Button>
+            <Button
+                android:id="@+id/resetDb"
+                android:layout_width="250dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button_style"
+                android:fontFamily="@font/caractere_l2"
+                android:text="réinitialiser bdd" />
 
-        <Button
-            android:id="@+id/exportJson"
-            android:layout_width="250dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/button_style"
-            android:fontFamily="@font/caractere_l2"
-            android:text="Exporter bdd vers json"></Button>
+            <Button
+                android:id="@+id/exportCsv"
+                android:layout_width="250dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/button_style"
+                android:fontFamily="@font/caractere_l2"
+                android:text="Exporter bdd vers csv" />
 
-        <Button
-            android:id="@+id/syncDb"
-            android:layout_width="250dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/button_style"
-            android:fontFamily="@font/caractere_l2"
-            android:text="Synchroniser BDD"></Button>
 
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
-</ScrollView>
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/exportJson"
+                android:layout_width="250dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button_style"
+                android:fontFamily="@font/caractere_l2"
+                android:text="Exporter bdd vers json" />
+
+            <Button
+                android:id="@+id/syncDb"
+                android:layout_width="250dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/button_style"
+                android:fontFamily="@font/caractere_l2"
+                android:text="Synchroniser BDD" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
