@@ -275,8 +275,14 @@ public class NetworkHelper implements Serializable {
                                             } catch (IOException e) {
                                                 e.printStackTrace();
                                             }
-                                            if(currentPlayerView != null)
+                                            if(currentPlayerView != null) {
                                                 currentPlayerView.disappearTimerBet();
+                                                AlertDialog diaBox = showMessage("Tour passé",
+                                                        "Votre tour a été automatiquement passé car vous êtiez le dernier joueur et n'aviez pas passer votre tour.\n" +
+                                                                "Les ressources misées sur des aménagements qui n'ont pas été financé complètement ont été perdues.",
+                                                        currentPlayerView);
+                                                diaBox.show();
+                                            }
                                         }
 
                                         @Override
@@ -285,8 +291,10 @@ public class NetworkHelper implements Serializable {
                                         }
                                     });
                                     timer.start();
-                                    if(currentPlayerView != null)
+                                    if(currentPlayerView != null) {
+                                        Toast.makeText(currentPlayerView, "Attention : vous êtes le dernier joueur. Votre tour sera automatiquement passé dans " + TURN_TIME + " secs.", Toast.LENGTH_LONG).show();
                                         currentPlayerView.appearTimerBet();
+                                    }
                                     break;
 
                                 case STOP_TIMER:
@@ -1154,6 +1162,24 @@ public class NetworkHelper implements Serializable {
         gameTimer.cancel();
         db.updateGame(currentGame);
         gameStarted = false;
+    }
+
+    /**
+     * Create AlertDialog for displaying a message
+     *
+     * @return Message alert dialog
+     */
+    private AlertDialog showMessage(String title, String message, Context context)
+    {
+        return new AlertDialog.Builder(currentPlayerView)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
     }
 
     private void showAlertBuildings(){
