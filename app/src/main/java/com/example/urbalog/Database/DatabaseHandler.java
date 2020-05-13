@@ -10,7 +10,9 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.example.urbalog.Class.Bet;
+import com.example.urbalog.Class.Building;
 import com.example.urbalog.Class.Game;
+import com.example.urbalog.Class.Market;
 import com.example.urbalog.Class.Player;
 import com.example.urbalog.Class.Role;
 import com.example.urbalog.Database.Export.DBExporterCsv;
@@ -129,6 +131,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String BET_MISE_SOCIAL = "mise_social";
     public static final String BET_MISE_ECO = "mise_eco";
     public static final String BET_BUILDING = "building";
+    public static final String BET_TURN = "turn";
     public static final String BET_CREATED_AT = "created_at";
     public static final String BET_TABLE_NAME = "bet_history";
 
@@ -142,10 +145,50 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     BET_MISE_POLITIQUE + " INTEGER, " +
                     BET_MISE_SOCIAL + " INTEGER, " +
                     BET_MISE_ECO + " INTEGER, " +
+                    BET_TURN + " INTEGER, " +
                     BET_BUILDING + " TEXT, " +
                     BET_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
                     "FOREIGN KEY(" + BET_GAME_ID + ") REFERENCES " + GAME_TABLE_NAME + "(" + GAME_KEY + ")," +
                     "FOREIGN KEY(" + BET_PLAYER_ID + ") REFERENCES " + PLAYER_TABLE_NAME + "(" + PLAYER_KEY + ")" +
+                    ");";
+
+    // Constants for turn_history table
+    public static final String TURN_KEY = "id";
+    public static final String TURN_GAME_ID = "game_id";
+    public static final String TURN_GAME_KEY = "game_key";
+    public static final String TURN_NUMBER = "turn_number";
+    public static final String TURN_MARKET1 = "building_market_1";
+    public static final String TURN_MARKET2 = "building_market_2";
+    public static final String TURN_MARKET3 = "building_market_3";
+    public static final String TURN_MARKET4 = "building_market_4";
+    public static final String TURN_MARKET5 = "building_market_5";
+    public static final String TURN_BUILDED1 = "building_completed_1";
+    public static final String TURN_BUILDED2 = "building_completed_2";
+    public static final String TURN_BUILDED3 = "building_completed_3";
+    public static final String TURN_BUILDED4 = "building_completed_4";
+    public static final String TURN_BUILDED5 = "building_completed_5";
+    public static final String TURN_CREATED_AT = "created_at";
+    public static final String TURN_TABLE_NAME = "turn_history";
+
+
+    private final String TABLE_TURN_CREATE =
+            "CREATE TABLE " + TURN_TABLE_NAME + " (" +
+                    TURN_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    TURN_GAME_ID + " INTEGER , " +
+                    TURN_GAME_KEY + " TEXT , " +
+                    TURN_NUMBER + " INTEGER, " +
+                    TURN_MARKET1 + " TEXT, " +
+                    TURN_MARKET2 + " TEXT, " +
+                    TURN_MARKET3 + " TEXT, " +
+                    TURN_MARKET4 + " TEXT, " +
+                    TURN_MARKET5 + " TEXT, " +
+                    TURN_BUILDED1 + " TEXT, " +
+                    TURN_BUILDED2 + " TEXT, " +
+                    TURN_BUILDED3 + " TEXT, " +
+                    TURN_BUILDED4 + " TEXT, " +
+                    TURN_BUILDED5 + " TEXT, " +
+                    TURN_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
+                    "FOREIGN KEY(" + BET_GAME_ID + ") REFERENCES " + GAME_TABLE_NAME + "(" + GAME_KEY + ")" +
                     ");";
 
     private Context appContext;
@@ -310,9 +353,59 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         v.put(BET_MISE_POLITIQUE, bet.getMisePolitique());
         v.put(BET_MISE_SOCIAL, bet.getMiseSocial());
         v.put(BET_MISE_ECO, bet.getMiseEco());
+        v.put(BET_TURN, game.getnTurn());
         v.put(BET_BUILDING, bet.getNameBuilding());
         long res = db.insert(BET_TABLE_NAME, null, v);
 
+        return res != -1;
+    }
+
+    /**
+     * Insert turn data in db (Market state and builded buildings per turn)
+     *
+     * @param game Game Instance
+     * @param newBuildings Builded building list
+     * @return bool
+     */
+    public boolean insertTurn(Game game, ArrayList<Building> newBuildings)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues v = new ContentValues();
+
+        v.put(TURN_GAME_ID, game.getDbID());
+        v.put(TURN_GAME_KEY, game.getDbKEY());
+        v.put(TURN_NUMBER, game.getnTurn());
+        v.put(TURN_MARKET1, game.getMarket().getBuildings().get(0).getName());
+        v.put(TURN_MARKET2, game.getMarket().getBuildings().get(1).getName());
+        v.put(TURN_MARKET3, game.getMarket().getBuildings().get(2).getName());
+        v.put(TURN_MARKET4, game.getMarket().getBuildings().get(3).getName());
+        v.put(TURN_MARKET5, game.getMarket().getBuildings().get(4).getName());
+
+        for (int i = 0; i < 5; i++) {
+            if(i < newBuildings.size()){
+                switch (i){
+                    case 0:
+                        v.put(TURN_BUILDED1, newBuildings.get(i).getName());
+                        break;
+                    case 1:
+                        v.put(TURN_BUILDED2, newBuildings.get(i).getName());
+                        break;
+                    case 2:
+                        v.put(TURN_BUILDED3, newBuildings.get(i).getName());
+                        break;
+                    case 3:
+                        v.put(TURN_BUILDED4, newBuildings.get(i).getName());
+                        break;
+                    case 4:
+                        v.put(TURN_BUILDED5, newBuildings.get(i).getName());
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        long res = db.insert(TURN_TABLE_NAME, null, v);
         return res != -1;
     }
 
@@ -529,6 +622,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(TABLE_GAME_CREATE);
         db.execSQL(TABLE_PLAYER_CREATE);
         db.execSQL(TABLE_BET_CREATE);
+        db.execSQL(TABLE_TURN_CREATE);
     }
 
     @Override

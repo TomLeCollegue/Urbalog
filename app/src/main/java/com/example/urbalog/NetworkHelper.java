@@ -499,6 +499,7 @@ public class NetworkHelper implements Serializable {
                                             // Delete build buildings to deck
                                             currentGame.getMarket().deleteBuilding(newBuildings.get(i));
                                         }
+                                        db.insertTurn(currentGame, newBuildings);
                                         try {
                                             sendToAllClients(new TransferPackage<>(
                                                     Signal.CHECK_GOALS,
