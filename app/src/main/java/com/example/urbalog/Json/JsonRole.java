@@ -52,7 +52,6 @@ public class JsonRole {
      */
     public static void init(Context mContext){
         context = mContext;
-        deleteJson();
         if(fichierExiste())
         {
             Log.d("debug", "le fichier existe deja");
@@ -62,6 +61,17 @@ public class JsonRole {
         }
     }
 
+    /**
+     * delete the current JsonRole file
+     * create a new JsonRole file with initial roles
+     *
+     * @param mContext
+     */
+    public static void recreate(Context mContext){
+        context = mContext;
+        deleteJson();
+        init(mContext);
+    }
 
     /**
      * Add initial roles in file
