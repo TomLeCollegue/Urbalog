@@ -228,6 +228,37 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     "FOREIGN KEY(" + BUILDING_GAME_ID + ") REFERENCES " + GAME_TABLE_NAME + "(" + GAME_KEY + ")" +
                     ");";
 
+    // Constants for roles table
+    public static final String ROLE_KEY = "id";
+    public static final String ROLE_GAME_ID = "game_id";
+    public static final String ROLE_GAME_KEY = "game_key";
+    public static final String ROLE_NAME = "name";
+    public static final String ROLE_SOCIAL_TOKENS = "social_tokens";
+    public static final String ROLE_ECO_TOKENS = "economic_tokens";
+    public static final String ROLE_POL_TOKENS = "political_tokens";
+    public static final String ROLE_OBJECTIVE = "objective";
+    public static final String ROLE_HOLD = "hold";
+    public static final String ROLE_IMPROVE = "improve";
+    public static final String ROLE_CREATED_AT = "created_at";
+    public static final String ROLE_TABLE_NAME = "roles";
+
+
+    private final String TABLE_ROLES_CREATE =
+            "CREATE TABLE IF NOT EXISTS " + ROLE_TABLE_NAME + " (" +
+                    ROLE_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    ROLE_GAME_ID + " INTEGER , " +
+                    ROLE_GAME_KEY + " TEXT , " +
+                    ROLE_NAME + " TEXT, " +
+                    ROLE_SOCIAL_TOKENS + " INTEGER, " +
+                    ROLE_ECO_TOKENS + " INTEGER, " +
+                    ROLE_POL_TOKENS + " INTEGER, " +
+                    ROLE_OBJECTIVE + " TEXT, " +
+                    ROLE_HOLD + " TEXT, " +
+                    ROLE_IMPROVE + " TEXT, " +
+                    ROLE_CREATED_AT + " DATETIME DEFAULT (datetime('now', 'localtime')), " +
+                    "FOREIGN KEY(" + ROLE_GAME_ID + ") REFERENCES " + GAME_TABLE_NAME + "(" + GAME_KEY + ")" +
+                    ");";
+
     private Context appContext;
 
     public DatabaseHandler(Context context) {
@@ -245,7 +276,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
     public boolean insertInitialGameData(Game game, ArrayList<Role> roles, int nbPlayers, int nbBuildings)
     {
-        return insertGame(game, nbPlayers, nbBuildings) && insertBuildings(game);
+        return insertGame(game, nbPlayers, nbBuildings) && insertBuildings(game) && insertRoles(game, roles);
     }
 
     /**
@@ -274,6 +305,38 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 v.put(BUILDING_LOG_BUFF, building.getScoreLogistique());
                 v.put(BUILDING_LOG_CONTEXT, building.getExplicationLogistique());
                 db.insert(BUILDING_TABLE_NAME, null, v);
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+        return true;
+    }
+
+    /**
+     * Insert roles pool data for a game in db
+     *
+     * @param game Game instance
+     * @param roles Roles pool list
+     * @return bool
+     */
+    public boolean insertRoles(Game game, ArrayList<Role> roles)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            ContentValues v = new ContentValues();
+            for (Role role : roles) {
+                v.put(ROLE_GAME_ID, game.getDbID());
+                v.put(ROLE_GAME_KEY, game.getDbKEY());
+                v.put(ROLE_NAME, role.getTypeRole());
+                v.put(ROLE_SOCIAL_TOKENS, role.getTokenSocial());
+                v.put(ROLE_ECO_TOKENS, role.getTokenEconomical());
+                v.put(ROLE_POL_TOKENS, role.getTokenPolitical());
+                v.put(ROLE_OBJECTIVE, role.getObjective());
+                v.put(ROLE_HOLD, role.getHold());
+                v.put(ROLE_IMPROVE, role.getImprove());
+                db.insert(ROLE_TABLE_NAME, null, v);
             }
             db.setTransactionSuccessful();
         } finally {
@@ -592,7 +655,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         for (String table : tables) {
             if(table.equals(GAME_TABLE_NAME) || table.equals(PLAYER_TABLE_NAME)
                     || table.equals(BET_TABLE_NAME) || table.equals(TURN_TABLE_NAME)
-                    || table.equals(BUILDING_TABLE_NAME)) {
+                    || table.equals(BUILDING_TABLE_NAME) || table.equals(ROLE_TABLE_NAME)) {
                 String dropQuery = "DROP TABLE IF EXISTS " + table;
                 db.execSQL(dropQuery);
             }
@@ -710,6 +773,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(TABLE_BET_CREATE);
         db.execSQL(TABLE_TURN_CREATE);
         db.execSQL(TABLE_BUILDINGS_CREATE);
+        db.execSQL(TABLE_ROLES_CREATE);
     }
 
     @Override
