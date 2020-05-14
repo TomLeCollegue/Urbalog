@@ -27,6 +27,14 @@ public class Market implements Serializable {
         this.buildings = buildings;
     }
 
+    public ArrayList<Building> getDeck() {
+        return deck;
+    }
+
+    public void setDeck(ArrayList<Building> deck) {
+        this.deck = deck;
+    }
+
     public void deleteBuilding(Building b){
         int index = 0;
         boolean find = false;
