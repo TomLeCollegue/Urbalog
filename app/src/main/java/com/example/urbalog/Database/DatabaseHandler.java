@@ -75,7 +75,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     GAME_SCORE_ENV + " INTEGER, " +
                     GAME_SCORE_LOG + " INTEGER, " +
                     GAME_NB_TURN + " INTEGER, " +
-                    GAME_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP" +
+                    GAME_CREATED_AT + " DATETIME DEFAULT (datetime('now', 'localtime'))" +
                     ");";
 
     // Constants for players table
@@ -118,7 +118,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     PLAYER_ECO + " INTEGER, " +
                     PLAYER_SCORE + " INTEGER, " +
                     PLAYER_ROLE + " TEXT, " +
-                    PLAYER_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
+                    PLAYER_CREATED_AT + " DATETIME DEFAULT (datetime('now', 'localtime')), " +
                     "FOREIGN KEY(" + PLAYER_GAME_ID + ") REFERENCES " + GAME_TABLE_NAME + "(" + GAME_KEY + ")" +
                     ");";
 
@@ -147,7 +147,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     BET_MISE_ECO + " INTEGER, " +
                     BET_TURN + " INTEGER, " +
                     BET_BUILDING + " TEXT, " +
-                    BET_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
+                    BET_CREATED_AT + " DATETIME DEFAULT (datetime('now', 'localtime')), " +
                     "FOREIGN KEY(" + BET_GAME_ID + ") REFERENCES " + GAME_TABLE_NAME + "(" + GAME_KEY + ")," +
                     "FOREIGN KEY(" + BET_PLAYER_ID + ") REFERENCES " + PLAYER_TABLE_NAME + "(" + PLAYER_KEY + ")" +
                     ");";
@@ -187,7 +187,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     TURN_BUILDED3 + " TEXT, " +
                     TURN_BUILDED4 + " TEXT, " +
                     TURN_BUILDED5 + " TEXT, " +
-                    TURN_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
+                    TURN_CREATED_AT + " DATETIME DEFAULT (datetime('now', 'localtime')), " +
                     "FOREIGN KEY(" + TURN_GAME_ID + ") REFERENCES " + GAME_TABLE_NAME + "(" + GAME_KEY + ")" +
                     ");";
 
@@ -224,7 +224,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     BUILDING_ENV_BUFF + " INTEGER, " +
                     BUILDING_LOG_BUFF + " INTEGER, " +
                     BUILDING_LOG_CONTEXT + " TEXT, " +
-                    BUILDING_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
+                    BUILDING_CREATED_AT + " DATETIME DEFAULT (datetime('now', 'localtime')), " +
                     "FOREIGN KEY(" + BUILDING_GAME_ID + ") REFERENCES " + GAME_TABLE_NAME + "(" + GAME_KEY + ")" +
                     ");";
 
