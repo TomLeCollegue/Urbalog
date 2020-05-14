@@ -48,7 +48,7 @@ public class BuildingConfigActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 JsonBuilding.recreate(mContext);
-                Toast.makeText(mContext, "Les batiments on été réinitialisé", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "Les batiments on été réinitialisés", Toast.LENGTH_LONG).show();
             }
         });
 

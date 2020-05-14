@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/lightPink"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/modificationRole"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:background="@drawable/button_style"
+            android:fontFamily="@font/caractere_l2"
+            android:text="@string/modifRole"></Button>
+
+        <Button
+            android:id="@+id/initRole"
+            android:background="@drawable/button_style"
+            android:text="@string/initRole"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            android:layout_width="250dp"
+            android:fontFamily="@font/caractere_l2"
+            android:layout_height="100dp">
+        </Button>
+
+        <Button
+            android:id="@+id/addRole"
+            android:background="@drawable/button_style"
+            android:text="@string/addRole"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            android:layout_width="250dp"
+            android:fontFamily="@font/caractere_l2"
+            android:layout_height="100dp">
+        </Button>
+
+    </LinearLayout>
+
+
+</ScrollView>
