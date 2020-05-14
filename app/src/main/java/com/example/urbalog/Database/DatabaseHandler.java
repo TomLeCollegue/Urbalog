@@ -56,6 +56,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String GAME_GENERATED_KEY = "game_key";
     public static final String GAME_NB_PLAYER = "nb_player";
     public static final String GAME_NB_BUILDING = "nb_building";
+    public static final String GAME_NB_BUILDING_PER_TURN = "nb_building_per_turn";
+    public static final String GAME_TIMER = "game_timer";
+    public static final String GAME_TURN_TIMER = "turn_timer";
     public static final String GAME_SCORE_FLUID = "score_fluidité";
     public static final String GAME_SCORE_ATTR = "score_attractivité";
     public static final String GAME_SCORE_ENV = "score_environmental";
@@ -70,6 +73,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     GAME_GENERATED_KEY + " TEXT, " +
                     GAME_NB_PLAYER + " INTEGER, " +
                     GAME_NB_BUILDING + " INTEGER, " +
+                    GAME_NB_BUILDING_PER_TURN + " INTEGER, " +
+                    GAME_TIMER + " INTEGER, " +
+                    GAME_TURN_TIMER + " INTEGER, " +
                     GAME_SCORE_FLUID + " INTEGER, " +
                     GAME_SCORE_ATTR + " INTEGER, " +
                     GAME_SCORE_ENV + " INTEGER, " +
@@ -274,9 +280,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @param nbBuildings Number of buildings required for current game
      * @return bool
      */
-    public boolean insertInitialGameData(Game game, ArrayList<Role> roles, int nbPlayers, int nbBuildings)
+    public boolean insertInitialGameData(Game game, ArrayList<Role> roles,
+                                         int nbPlayers, int nbBuildings, int nbBuildingsPerTurn,
+                                         int gameTimer, int turnTimer)
     {
-        return insertGame(game, nbPlayers, nbBuildings) && insertBuildings(game) && insertRoles(game, roles);
+        return insertGame(game, nbPlayers, nbBuildings, nbBuildingsPerTurn, gameTimer, turnTimer)
+                && insertBuildings(game)
+                && insertRoles(game, roles);
     }
 
     /**
@@ -353,7 +363,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @param nbBuildings Number of buildings required for current game
      * @return bool
      */
-    public boolean insertGame(Game game, int nbPlayers, int nbBuildings)
+    public boolean insertGame(Game game, int nbPlayers, int nbBuildings,
+                              int nbBuildingsPerTurn, int gameTimer, int turnTimer)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues v = new ContentValues();
@@ -364,6 +375,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         v.put(GAME_GENERATED_KEY, key);
         v.put(GAME_NB_PLAYER, nbPlayers);
         v.put(GAME_NB_BUILDING, nbBuildings);
+        v.put(GAME_NB_BUILDING_PER_TURN, nbBuildingsPerTurn);
+        v.put(GAME_TIMER, gameTimer);
+        v.put(GAME_TURN_TIMER, turnTimer);
         long res = db.insert(GAME_TABLE_NAME, null, v);
 
         game.setDbID(res);

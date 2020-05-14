@@ -1130,7 +1130,7 @@ public class NetworkHelper implements Serializable {
                     Signal.GAME_RECEIVED,
                     currentGame)
             );
-            db.insertInitialGameData(currentGame, roles, NB_PLAYERS, NB_BUILDINGS);
+            db.insertInitialGameData(currentGame, roles, NB_PLAYERS, NB_BUILDINGS, NB_BUILDINGS_PER_TURN, GAME_TIME, TURN_TIME);
             sendRandomRoleToAllClients(roles);
             createPlayersVotes();
         } catch (IOException e) {
