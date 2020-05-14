@@ -3,6 +3,7 @@ package com.example.urbalog.Json;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.urbalog.Class.Building;
 import com.example.urbalog.Class.Role;
 
 import org.json.JSONArray;
@@ -244,6 +245,85 @@ public class JsonRole {
             e.printStackTrace();
         }
         return listeRole;
+    }
+
+    /**
+     * Mofication of a role in the json File
+     *
+     * @param role
+     * @param name
+     */
+    public static void modificationBuilding(Role role, String name){
+        Log.d("debug", "modificationRole...");
+        removeRole(name);
+        writeRole(role);
+    }
+
+    /**
+     * Write building in Json File
+     *
+     * @param role
+     */
+    public static void writeRole(Role role){
+        Log.d("debug", "writeRole...");
+        String jsonText = null;
+        JSONObject jsonRoot = null;
+        JSONArray jsonRoles = null;
+        try {
+            JSONObject object = new JSONObject();
+            object.put("name", role.getTypeRole());
+            object.put("description", role.getObjective());
+            object.put("hold", role.getHold());
+            object.put("improve", role.getImprove());
+            JSONArray ressources = new JSONArray();
+            ressources.put(role.getBooleanRessource()[0]);
+            ressources.put(role.getBooleanRessource()[1]);
+            ressources.put(role.getBooleanRessource()[2]);
+            object.put("ressources", ressources);
+            object.put("tokenSocial", role.getTokenSocial());
+            object.put("tokenEconomical", role.getTokenEconomical());
+            object.put("tokenPolitical", role.getTokenPolitical());
+            
+            jsonText = readText();
+            jsonRoot = new JSONObject(jsonText);
+            jsonRoles = jsonRoot.getJSONArray("roles");
+            jsonRoles.put(object);
+            Log.d("debug", jsonRoles.toString());
+            writeText(jsonRoot.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+
+    /**
+     * remove a Role from Json file with the name of the Role
+     * check in all the file if it exist
+     *
+     * @param name
+     */
+    public static void removeRole(String name){
+        Log.d("debug", "removeRole...");
+        String jsonText = null;
+        JSONObject jsonRoot = null;
+        JSONArray jsonRoles = null;
+        JSONObject jsonRole = null;
+        try {
+            jsonText = readText();
+            jsonRoot = new JSONObject(jsonText);
+            jsonRoles = jsonRoot.getJSONArray("roles");
+            for(int i=0; i<jsonRoles.length(); i++){
+                jsonRole = jsonRoles.getJSONObject(i);
+                if((jsonRole.getString("name").replaceAll("([A-Z])", "$1").toLowerCase()).equals(name.replaceAll("([A-Z])", "$1").toLowerCase())){
+                    jsonRoles.remove(i);
+                }
+            }
+            writeText(jsonRoot.toString());
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
