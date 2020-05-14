@@ -8,9 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.urbalog.Class.Building;
-import com.example.urbalog.Json.JsonBuilding;
+import com.example.urbalog.Class.Role;
 import com.example.urbalog.Json.JsonRole;
 
 import static java.lang.String.valueOf;
@@ -121,7 +119,20 @@ public class AddRoleActivity extends AppCompatActivity {
             if(JsonRole.roleAlreadyInList(finalName)){
                 name.setError("Il y a déja un role avec le même nom");
             }else{
-
+                //temporaire   |
+                //             V
+                boolean[] booleanRessource = new boolean[3];
+                booleanRessource[0] = true;
+                booleanRessource[1] = true;
+                booleanRessource[2] = false;
+                //             ^
+                //temporaire   |
+                Role newRole = new Role(finalName, booleanRessource, 1, 2, 3, "obj", "hol", "imp" );
+                JsonRole.writeRole(newRole);
+                Toast.makeText(this, "Le role à été ajouté", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AddRoleActivity.this, ConfigurationActivity.class);
+                startActivity(intent);
+                finish();
             }
         }
 
