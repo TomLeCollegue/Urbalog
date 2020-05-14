@@ -253,7 +253,7 @@ public class JsonRole {
      * @param role
      * @param name
      */
-    public static void modificationBuilding(Role role, String name){
+    public static void modificationRole(Role role, String name){
         Log.d("debug", "modificationRole...");
         removeRole(name);
         writeRole(role);
