@@ -245,4 +245,34 @@ public class JsonRole {
         }
         return listeRole;
     }
+
+    /**
+     * check if a role exist in the json file
+     * with the name of the role
+     *
+     * @param name
+     * @return
+     */
+    public static boolean roleAlreadyInList(String name){
+        Log.d("debug", "roleAlreadyInList...");
+        String jsonText = null;
+        JSONObject jsonRoot = null;
+        JSONArray jsonRoles = null;
+        JSONObject jsonRole = null;
+        try {
+            jsonText = readText();
+            jsonRoot = new JSONObject(jsonText);
+            jsonRoles = jsonRoot.getJSONArray("roles");
+            for(int i=0; i<jsonRoles.length(); i++){
+                jsonRole = jsonRoles.getJSONObject(i);
+
+                if((jsonRole.getString("name").replaceAll("([A-Z])", "$1").toLowerCase()).equals(name.replaceAll("([A-Z])", "$1").toLowerCase()) || (jsonRole.getString("name").replaceAll("([A-Z])", "$1").toLowerCase()).equals(name.replaceAll("([A-Z])", "$1").toLowerCase())){
+                    return true;
+                }
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
