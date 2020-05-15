@@ -190,6 +190,7 @@ public class NetworkHelper implements Serializable {
                                 /* If host have send Player, used on game start for role attribution */
                                 case UPDATE_PLAYER:
                                     player = (Player)((TransferPackage) dataReceived).second;
+                                    player.setScore(0);
 
                                     Intent intentPlayerView = new Intent(appContext, PlayerViewActivity.class);
                                     appContext.startActivity(intentPlayerView);
