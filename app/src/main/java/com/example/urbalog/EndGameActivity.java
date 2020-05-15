@@ -45,7 +45,6 @@ public class EndGameActivity extends AppCompatActivity {
 
         logisticButton = findViewById(R.id.logisticButton);
 
-        //Log.d("debug", buildings.toString());
         rv1 = findViewById(R.id.recyclerListBuildingBuilt);
         rv1.setLayoutManager(new LinearLayoutManager(EndGameActivity.this, LinearLayoutManager.VERTICAL, false));
 
@@ -58,18 +57,7 @@ public class EndGameActivity extends AppCompatActivity {
         textEnvironmentScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreEnvironnemental()));
         textFluidityScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreFluidite()));
 
-        /*logisticButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("debug", "Listener");
-                Intent MyIntent = new Intent(EndGameActivity.this, LogisticActivity.class);
-                Log.d("debug", "Before startActivity");
-                startActivity(MyIntent);
-            }
-        });*/
-
-
-
+        PlayerConnexionActivity.net.setCurrentEndView(this);
     }
 
     public void scoreLog(View view) {
