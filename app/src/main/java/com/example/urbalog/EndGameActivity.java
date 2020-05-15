@@ -1,7 +1,11 @@
 package com.example.urbalog;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +38,7 @@ public class EndGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_game);
+        PlayerConnexionActivity.net.setCurrentEndView(this);
 
         buildings = PlayerConnexionActivity.net.getCurrentGame().getCity().getBuildings();
 
@@ -57,7 +62,13 @@ public class EndGameActivity extends AppCompatActivity {
         textEnvironmentScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreEnvironnemental()));
         textFluidityScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreFluidite()));
 
-        PlayerConnexionActivity.net.setCurrentEndView(this);
+        if (PlayerConnexionActivity.net.isTimeOver()) {
+            AlertDialog diaBox = PlayerConnexionActivity.net.showMessage("Temps écoulé !",
+                    "Le temps est écoulé et vous n'avez malheuresement pas eu le temps de contruire votre ville en entier...\n" +
+                            "La prochaine fois gardez un oeil sur le temps restant.",
+                    this);
+            diaBox.show();
+        }
     }
 
     public void scoreLog(View view) {

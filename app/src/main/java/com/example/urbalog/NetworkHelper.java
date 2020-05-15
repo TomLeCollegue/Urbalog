@@ -79,6 +79,7 @@ public class NetworkHelper implements Serializable {
 
     private Game currentGame;
     private boolean gameStarted;
+    private boolean timeOver;
     private Player player;
     private String endpointLast;
 
@@ -257,15 +258,6 @@ public class NetworkHelper implements Serializable {
                                     currentPlayerView.finish();
                                     Intent myIntent = new Intent(appContext, EndGameActivity.class);
                                     appContext.startActivity(myIntent);
-                                    if(currentGame.getCity().getBuildings().size() < NB_BUILDINGS){
-                                        if (currentEndView != null) {
-                                            AlertDialog diaBox = showMessage("Temps écoulé !",
-                                                    "Le temps est écoulé et vous n'avez malheuresement pas eu le temps de contruire votre ville en entier...\n" +
-                                                            "La prochaine fois gardez un oeil sur le temps restant.",
-                                                    currentEndView);
-                                            diaBox.show();
-                                        }
-                                    }
                                     break;
 
                                 default:
@@ -323,6 +315,10 @@ public class NetworkHelper implements Serializable {
                                 case TOO_MUCH_TOTAL_BUILDINGS:
                                     showAlertBuildingsTotal();
                                     currentPlayerView.enableTurnButton();
+                                    break;
+
+                                case TIME_LEFT:
+                                    timeOver = true;
                                     break;
 
                                 default:
@@ -798,6 +794,7 @@ public class NetworkHelper implements Serializable {
         host = mHost;
         currentGame = new Game();
         gameStarted = false;
+        timeOver = false;
         player = new Player();
         listPlayer = new ArrayList<>();
         playersInformations = new ArrayList<>();
@@ -864,6 +861,7 @@ public class NetworkHelper implements Serializable {
         connectionsClient.stopAllEndpoints();
         listPlayer.clear();
         gameStarted = false;
+        timeOver = false;
         advertising = false;
         discovering = false;
         if(host) {
@@ -960,6 +958,10 @@ public class NetworkHelper implements Serializable {
         this.currentPlayerView = currentPlayerView;
     }
 
+    public static int getNbBuildings() {
+        return NB_BUILDINGS;
+    }
+
     public int getTURN_TIME() {
         return TURN_TIME;
     }
@@ -1026,6 +1028,10 @@ public class NetworkHelper implements Serializable {
 
     public boolean isGameStarted() {
         return gameStarted;
+    }
+
+    public boolean isTimeOver() {
+        return timeOver;
     }
 
     public void setGameStarted(boolean gameStarted) {
@@ -1189,6 +1195,11 @@ public class NetworkHelper implements Serializable {
                 @Override
                 public void onFinish() {
                     stopGame();
+                    try {
+                        sendToAllClients(Signal.TIME_LEFT);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
@@ -1224,9 +1235,9 @@ public class NetworkHelper implements Serializable {
      *
      * @return Message alert dialog
      */
-    private AlertDialog showMessage(String title, String message, Context context)
+    public AlertDialog showMessage(String title, String message, Context context)
     {
-        return new AlertDialog.Builder(currentPlayerView)
+        return new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
