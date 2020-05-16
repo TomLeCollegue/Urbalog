@@ -252,7 +252,8 @@ public class EditBuildingActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
-            }        }
+            }
+        }
     }
 
     /**

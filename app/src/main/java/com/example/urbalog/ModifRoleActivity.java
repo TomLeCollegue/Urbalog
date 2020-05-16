@@ -57,7 +57,9 @@ public class ModifRoleActivity extends AppCompatActivity {
         mbSocialRole.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                social.setText(valueOf(Integer.parseInt(valueOf(social.getText())) - 1));
+                if(!(Integer.parseInt(social.getText().toString()) <= 0)){
+                    social.setText(valueOf(Integer.parseInt(valueOf(social.getText())) - 1));
+                }
             }
         });
         pbSocialRole = findViewById(R.id.pbSocialRole);
@@ -74,7 +76,9 @@ public class ModifRoleActivity extends AppCompatActivity {
         mbPolitiqueRole.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                politique.setText(valueOf(Integer.parseInt(valueOf(politique.getText())) - 1));
+                if(!(Integer.parseInt(politique.getText().toString()) <= 0)){
+                    politique.setText(valueOf(Integer.parseInt(valueOf(politique.getText())) - 1));
+                }
             }
         });
         pbPolitiqueRole = findViewById(R.id.pbPolitiqueRole);
@@ -91,7 +95,9 @@ public class ModifRoleActivity extends AppCompatActivity {
         mbEconomiqueRole.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                economique.setText(valueOf(Integer.parseInt(valueOf(economique.getText())) - 1));
+                if(!(Integer.parseInt(economique.getText().toString()) <= 0)){
+                    economique.setText(valueOf(Integer.parseInt(valueOf(economique.getText())) - 1));
+                }
             }
         });
         pbEconomiqueRole = findViewById(R.id.pbEconomiqueRole);
@@ -141,6 +147,10 @@ public class ModifRoleActivity extends AppCompatActivity {
         String finalName = name.getText().toString().trim();
         String finalDescription = description.getText().toString().trim();
 
+        int finalSocial = Integer.parseInt(social.getText().toString());
+        int finalPolitique = Integer.parseInt(politique.getText().toString());
+        int finalEconomique = Integer.parseInt(economique.getText().toString());
+
         int radioButtonHoldId = holdRadio.getCheckedRadioButtonId();
         RadioButton radioButtonHold = (RadioButton) holdRadio.findViewById(radioButtonHoldId);
         String selectedTextHold = (String) radioButtonHold.getText();
@@ -163,27 +173,65 @@ public class ModifRoleActivity extends AppCompatActivity {
             Toast.makeText(this, "Impossible de mettre les mêmes objectifs", Toast.LENGTH_SHORT).show();
             finish = false;
         }
+        if(!(((finalSocial == 0) && (finalPolitique > 0) && (finalEconomique > 0)) ||
+                ((finalSocial > 0) && (finalPolitique == 0) && (finalEconomique > 0)) ||
+                ((finalSocial > 0) && (finalPolitique > 0) && (finalEconomique == 0)))){
+            Toast.makeText(this, "Une des ressources doit être égale à 0", Toast.LENGTH_SHORT).show();
+            finish = false;
+        }
 
         if(finish == true){
             if(role.getTypeRole().equals(finalName))
             {
-
-
+                boolean[] booleanRessource = new boolean[3];
+                if(finalSocial == 0){
+                    booleanRessource[0] = false;
+                    booleanRessource[1] = true;
+                    booleanRessource[2] = true;
+                }else if(finalEconomique == 0){
+                    booleanRessource[0] = true;
+                    booleanRessource[1] = false;
+                    booleanRessource[2] = true;
+                }else{
+                    booleanRessource[0] = true;
+                    booleanRessource[1] = true;
+                    booleanRessource[2] = false;
+                }
+                Toast.makeText(this, "Le role a été modifié", Toast.LENGTH_SHORT).show();
+                Role newRole = new Role(finalName, booleanRessource,finalSocial, finalEconomique, finalPolitique, finalDescription, selectedTextHold, selectedTextImprove);
+                JsonRole.modificationRole(newRole, role.getTypeRole());
+                Intent intent = new Intent(ModifRoleActivity.this, RecyclerViewRolesActivity.class);
+                startActivity(intent);
+                finish();
             }
             else{
                 if(JsonRole.roleAlreadyInList(finalName)){
                     name.setError("Il y a déja un role avec le même nom");
                 }
                 else{
+                    boolean[] booleanRessource = new boolean[3];
+                    if(finalSocial == 0){
+                        booleanRessource[0] = false;
+                        booleanRessource[1] = true;
+                        booleanRessource[2] = true;
+                    }else if(finalEconomique == 0){
+                        booleanRessource[0] = true;
+                        booleanRessource[1] = false;
+                        booleanRessource[2] = true;
+                    }else{
+                        booleanRessource[0] = true;
+                        booleanRessource[1] = true;
+                        booleanRessource[2] = false;
+                    }
                     Toast.makeText(this, "Le role a été modifié", Toast.LENGTH_SHORT).show();
-
+                    Role newRole = new Role(finalName, booleanRessource,finalSocial, finalEconomique, finalPolitique, finalDescription, selectedTextHold, selectedTextImprove);
+                    JsonRole.modificationRole(newRole, role.getTypeRole());
+                    Intent intent = new Intent(ModifRoleActivity.this, RecyclerViewRolesActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
         }
-
-
     }
-
-
 
 }
