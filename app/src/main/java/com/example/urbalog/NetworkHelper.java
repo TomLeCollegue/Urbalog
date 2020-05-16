@@ -293,7 +293,7 @@ public class NetworkHelper implements Serializable {
 
                                         @Override
                                         public void onCancel() {
-                                            PlayerConnexionActivity.net.currentPlayerView.disappearTimerBet();
+                                            MainActivity.net.currentPlayerView.disappearTimerBet();
                                         }
                                     });
                                     timer.start();

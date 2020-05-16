@@ -41,9 +41,9 @@ public class CityProgressionActivity extends AppCompatActivity {
 
         gameTimerText = findViewById(R.id.gameTimerText);
 
-        int scoreEnvi = AdminConnectionActivity.net.getCurrentGame().getScoreEnvironnemental();
-        int scoreFluid = AdminConnectionActivity.net.getCurrentGame().getScoreFluidite();
-        int scoreAttract = AdminConnectionActivity.net.getCurrentGame().getScoreAttractivite();
+        int scoreEnvi = MainActivity.net.getCurrentGame().getScoreEnvironnemental();
+        int scoreFluid = MainActivity.net.getCurrentGame().getScoreFluidite();
+        int scoreAttract = MainActivity.net.getCurrentGame().getScoreAttractivite();
 
         final FrameLayout.LayoutParams lpEnvi = (FrameLayout.LayoutParams) camionEnvi.getLayoutParams();
         lpEnvi.setMargins(900 + 100*scoreEnvi,0, 0, 0);
@@ -60,7 +60,7 @@ public class CityProgressionActivity extends AppCompatActivity {
 
         camionAttract.setLayoutParams(lpAttract);
 
-        buildings.addAll(AdminConnectionActivity.net.getCurrentGame().getCity().getBuildings());
+        buildings.addAll(MainActivity.net.getCurrentGame().getCity().getBuildings());
 
         Building b = new Building("Emplacement Libre"," ",0,0,0,0,0,0,0, " ");
 
@@ -76,18 +76,18 @@ public class CityProgressionActivity extends AppCompatActivity {
 
         rv.setAdapter(mProgressionAdapter);
 
-        AdminConnectionActivity.net.setCurrentAdminView(this);
+        MainActivity.net.setCurrentAdminView(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        AdminConnectionActivity.net.setCurrentAdminView(null);
+        MainActivity.net.setCurrentAdminView(null);
     }
 
     public void updateView(){ // a appeler pour refresh la vue
         buildings.clear();
-        buildings.addAll(AdminConnectionActivity.net.getCurrentGame().getCity().getBuildings());
+        buildings.addAll(MainActivity.net.getCurrentGame().getCity().getBuildings());
         Building bVide = new Building("Emplacement Libre"," ",0,0,0,0,0,0,0, " ");
         int size = buildings.size();
 
@@ -100,9 +100,9 @@ public class CityProgressionActivity extends AppCompatActivity {
 
         rv.setAdapter(mProgressionAdapter);
 
-        int scoreEnvi = AdminConnectionActivity.net.getCurrentGame().getScoreEnvironnemental();
-        int scoreFluid = AdminConnectionActivity.net.getCurrentGame().getScoreFluidite();
-        int scoreAttract = AdminConnectionActivity.net.getCurrentGame().getScoreAttractivite();
+        int scoreEnvi = MainActivity.net.getCurrentGame().getScoreEnvironnemental();
+        int scoreFluid = MainActivity.net.getCurrentGame().getScoreFluidite();
+        int scoreAttract = MainActivity.net.getCurrentGame().getScoreAttractivite();
 
 
         final FrameLayout.LayoutParams lpEnvi = (FrameLayout.LayoutParams) camionEnvi.getLayoutParams();

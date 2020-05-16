@@ -23,7 +23,7 @@ public class ChangeNbBuildingPerTurn extends AppCompatActivity {
         setContentView(R.layout.activity_nb_building_per_turn);
 
         nbBuildingPerTurn = findViewById(R.id.inputNbBuilding);
-        nbBuildingPerTurn.setText(String.valueOf(AdminConnectionActivity.net.getNbBuildingsPerTurn()));
+        nbBuildingPerTurn.setText(String.valueOf(MainActivity.net.getNbBuildingsPerTurn()));
 
 
     }
@@ -43,7 +43,7 @@ public class ChangeNbBuildingPerTurn extends AppCompatActivity {
         }
 
         if (finish){
-            AdminConnectionActivity.net.setNbBuildingsPerTurn(Integer.parseInt(chosenNbBuilding));
+            MainActivity.net.setNbBuildingsPerTurn(Integer.parseInt(chosenNbBuilding));
             Toast.makeText(this, "Le nombre d'aménagements possible que l'on peut construire par tour a été mis à jour", Toast.LENGTH_LONG).show();
         }
 

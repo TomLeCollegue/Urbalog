@@ -11,6 +11,7 @@ import com.example.urbalog.AdminConnectionActivity;
 import com.example.urbalog.Class.Game;
 import com.example.urbalog.ConfigurationActivity;
 import com.example.urbalog.EndGameActivity;
+import com.example.urbalog.MainActivity;
 import com.example.urbalog.PlayerConnexionActivity;
 import com.example.urbalog.R;
 import com.example.urbalog.StatsActivity;
@@ -74,7 +75,7 @@ public class StatsScorePerRoundActivity extends AppCompatActivity {
             arrayListGame.add(c);
            */
 
-        arrayListGame = PlayerConnexionActivity.net.getCurrentGame().getArrayGame();
+        arrayListGame = MainActivity.net.getCurrentGame().getArrayGame();
 
         if(arrayListGame != null && arrayListGame.size() >= 1) {
             for (int i = 0; i < arrayListGame.size(); ++i) {

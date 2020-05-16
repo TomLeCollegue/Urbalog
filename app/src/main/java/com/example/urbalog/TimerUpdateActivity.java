@@ -27,14 +27,14 @@ public class TimerUpdateActivity extends AppCompatActivity {
         switchGameTimer = findViewById(R.id.disableGameTimer);
         switchTurnTimer = findViewById(R.id.disableTurnTimer);
 
-        numberUpdateTimer.setText(String.valueOf(AdminConnectionActivity.net.getTURN_TIME()));
-        gameUpdateTimer.setText(String.valueOf(AdminConnectionActivity.net.getGAME_TIME()));
+        numberUpdateTimer.setText(String.valueOf(MainActivity.net.getTURN_TIME()));
+        gameUpdateTimer.setText(String.valueOf(MainActivity.net.getGAME_TIME()));
 
-        if(!AdminConnectionActivity.net.isGAME_TIME_ENABLE()){
+        if(!MainActivity.net.isGAME_TIME_ENABLE()){
             switchGameTimer.setChecked(true);
             gameUpdateTimer.setEnabled(false);
         }
-        if(!AdminConnectionActivity.net.isTURN_TIME_ENABLE()){
+        if(!MainActivity.net.isTURN_TIME_ENABLE()){
             switchTurnTimer.setChecked(true);
             numberUpdateTimer.setEnabled(false);
         }
@@ -43,11 +43,11 @@ public class TimerUpdateActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    AdminConnectionActivity.net.setGAME_TIME_ENABLE(false);
+                    MainActivity.net.setGAME_TIME_ENABLE(false);
                     gameUpdateTimer.setEnabled(false);
                 }
                 else{
-                    AdminConnectionActivity.net.setGAME_TIME_ENABLE(true);
+                    MainActivity.net.setGAME_TIME_ENABLE(true);
                     gameUpdateTimer.setEnabled(true);
                 }
             }
@@ -56,11 +56,11 @@ public class TimerUpdateActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    AdminConnectionActivity.net.setTURN_TIME_ENABLE(false);
+                    MainActivity.net.setTURN_TIME_ENABLE(false);
                     numberUpdateTimer.setEnabled(false);
                 }
                 else{
-                    AdminConnectionActivity.net.setTURN_TIME_ENABLE(true);
+                    MainActivity.net.setTURN_TIME_ENABLE(true);
                     numberUpdateTimer.setEnabled(true);
                 }
             }
@@ -81,8 +81,8 @@ public class TimerUpdateActivity extends AppCompatActivity {
         }
 
         if(finish) {
-            AdminConnectionActivity.net.setTURN_TIME(Integer.parseInt(finalTurnTime));
-            AdminConnectionActivity.net.setGAME_TIME(Integer.parseInt(finalGameTime));
+            MainActivity.net.setTURN_TIME(Integer.parseInt(finalTurnTime));
+            MainActivity.net.setGAME_TIME(Integer.parseInt(finalGameTime));
             Toast.makeText(this, "Les timers ont bien été mis à jour !", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(TimerUpdateActivity.this, ConfigurationActivity.class);
             startActivity(intent);
