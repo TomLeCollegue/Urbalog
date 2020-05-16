@@ -29,7 +29,9 @@ public class PlayerConnexionActivity extends AppCompatActivity {
 
         if(MainActivity.net == null || MainActivity.net.isHost()) {
             MainActivity.net = new NetworkHelper(this, false);
-            MainActivity.net.setHost(false);
+        }
+        else{
+            MainActivity.net.reset();
         }
         MainActivity.net.setPlayer((Player) getIntent().getSerializableExtra("player"));
 

@@ -255,6 +255,7 @@ public class NetworkHelper implements Serializable {
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
+                                    gameStarted = false;
                                     currentPlayerView.finish();
                                     Intent myIntent = new Intent(appContext, EndGameActivity.class);
                                     appContext.startActivity(myIntent);
@@ -1228,6 +1229,23 @@ public class NetworkHelper implements Serializable {
         gameTimer.cancel();
         db.updateGame(currentGame);
         gameStarted = false;
+    }
+
+    public void reset(){
+        if(host){
+            stopAll();
+            discovering = false;
+            advertising = false;
+            currentGame = new Game();
+            gameStarted = false;
+            timeOver = false;
+            listPlayer = new ArrayList<>();
+            playersInformations = new ArrayList<>();
+        }
+        else{
+            disconnectFromAllEndpoints();
+            player.setScore(0);
+        }
     }
 
     /**

@@ -116,8 +116,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 configurationButton.setEnabled(true);
                 bPlay.setEnabled(true);
-                MainActivity.net.stopAll();
-                MainActivity.net = new NetworkHelper(getApplicationContext(), true);
+                MainActivity.net.reset();
                 updateStatus("Disconnected");
                 updateNbPlayers();
             }
@@ -140,6 +139,18 @@ public class AdminConnectionActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(!MainActivity.net.isGameStarted()){
+            MainActivity.net.reset();
+            configurationButton.setEnabled(true);
+            bPlay.setEnabled(true);
+            updateStatus("Disconnected");
+            updateNbPlayers();
+        }
     }
 
     public static void updateNbPlayers()
