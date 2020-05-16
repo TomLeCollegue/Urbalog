@@ -1,8 +1,5 @@
 package com.example.urbalog.Database.Export;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 public class DBExporterCsv extends DBExporter {
     private boolean newTable;
     private String dataRow;
