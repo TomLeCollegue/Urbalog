@@ -190,12 +190,12 @@ public class ModifRoleActivity extends AppCompatActivity {
                     booleanRessource[2] = true;
                 }else if(finalEconomique == 0){
                     booleanRessource[0] = true;
-                    booleanRessource[1] = false;
-                    booleanRessource[2] = true;
-                }else{
-                    booleanRessource[0] = true;
                     booleanRessource[1] = true;
                     booleanRessource[2] = false;
+                }else{
+                    booleanRessource[0] = true;
+                    booleanRessource[1] = false;
+                    booleanRessource[2] = true;
                 }
                 Toast.makeText(this, "Le role a été modifié", Toast.LENGTH_SHORT).show();
                 Role newRole = new Role(finalName, booleanRessource,finalSocial, finalEconomique, finalPolitique, finalDescription, selectedTextHold, selectedTextImprove);
