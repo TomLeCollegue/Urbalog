@@ -353,6 +353,18 @@ public class PlayerViewActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        popUpBet.dismiss();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        popUpBet.dismiss();
+    }
+
+    @Override
     public void onBackPressed() {
         AlertDialog diaBox = AskOption();
         diaBox.show();
