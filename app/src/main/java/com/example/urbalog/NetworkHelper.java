@@ -60,6 +60,7 @@ public class NetworkHelper implements Serializable {
 
     private PlayerViewActivity currentPlayerView = null;
     private CityProgressionActivity currentAdminView = null;
+    private EndGameActivity currentEndView = null;
 
     private boolean advertising;
     private boolean discovering;
@@ -73,9 +74,12 @@ public class NetworkHelper implements Serializable {
 
     private int TURN_TIME = 30;
     private int GAME_TIME = 3600;
+    private boolean TURN_TIME_ENABLE = true;
+    private boolean GAME_TIME_ENABLE = true;
 
     private Game currentGame;
     private boolean gameStarted;
+    private boolean timeOver;
     private Player player;
     private String endpointLast;
 
@@ -187,6 +191,7 @@ public class NetworkHelper implements Serializable {
                                 /* If host have send Player, used on game start for role attribution */
                                 case UPDATE_PLAYER:
                                     player = (Player)((TransferPackage) dataReceived).second;
+                                    player.setScore(0);
 
                                     Intent intentPlayerView = new Intent(appContext, PlayerViewActivity.class);
                                     appContext.startActivity(intentPlayerView);
@@ -310,6 +315,10 @@ public class NetworkHelper implements Serializable {
                                 case TOO_MUCH_TOTAL_BUILDINGS:
                                     showAlertBuildingsTotal();
                                     currentPlayerView.enableTurnButton();
+                                    break;
+
+                                case TIME_LEFT:
+                                    timeOver = true;
                                     break;
 
                                 default:
@@ -472,7 +481,8 @@ public class NetworkHelper implements Serializable {
                                 // Cancel turn timer for last player if exist
                                 if(endpointLast != null) {
                                     try {
-                                        sendToClient(Signal.STOP_TIMER, endpointLast);
+                                        if(TURN_TIME_ENABLE)
+                                            sendToClient(Signal.STOP_TIMER, endpointLast);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -499,6 +509,7 @@ public class NetworkHelper implements Serializable {
                                             // Delete build buildings to deck
                                             currentGame.getMarket().deleteBuilding(newBuildings.get(i));
                                         }
+                                        db.insertTurn(currentGame, newBuildings);
                                         try {
                                             sendToAllClients(new TransferPackage<>(
                                                     Signal.CHECK_GOALS,
@@ -552,7 +563,8 @@ public class NetworkHelper implements Serializable {
                                     if(!playersVotes.get(i).second){
                                         endpointLast = playersVotes.get(i).first;
                                         try {
-                                            sendToClient(Signal.START_TIMER, endpointLast);
+                                            if(TURN_TIME_ENABLE)
+                                                sendToClient(Signal.START_TIMER, endpointLast);
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }
@@ -565,7 +577,8 @@ public class NetworkHelper implements Serializable {
                                     for (int i = 0; i < playersVotes.size(); i++) {
                                         if (!playersVotes.get(i).second) {
                                             try {
-                                                sendToClient(Signal.STOP_TIMER, endpointLast);
+                                                if(TURN_TIME_ENABLE)
+                                                    sendToClient(Signal.STOP_TIMER, endpointLast);
                                             } catch (IOException e) {
                                                 e.printStackTrace();
                                             }
@@ -781,6 +794,7 @@ public class NetworkHelper implements Serializable {
         host = mHost;
         currentGame = new Game();
         gameStarted = false;
+        timeOver = false;
         player = new Player();
         listPlayer = new ArrayList<>();
         playersInformations = new ArrayList<>();
@@ -847,6 +861,7 @@ public class NetworkHelper implements Serializable {
         connectionsClient.stopAllEndpoints();
         listPlayer.clear();
         gameStarted = false;
+        timeOver = false;
         advertising = false;
         discovering = false;
         if(host) {
@@ -943,6 +958,10 @@ public class NetworkHelper implements Serializable {
         this.currentPlayerView = currentPlayerView;
     }
 
+    public static int getNbBuildings() {
+        return NB_BUILDINGS;
+    }
+
     public int getTURN_TIME() {
         return TURN_TIME;
     }
@@ -959,12 +978,36 @@ public class NetworkHelper implements Serializable {
         GAME_TIME = time;
     }
 
+    public boolean isTURN_TIME_ENABLE() {
+        return TURN_TIME_ENABLE;
+    }
+
+    public void setTURN_TIME_ENABLE(boolean TURN_TIME_ENABLE) {
+        this.TURN_TIME_ENABLE = TURN_TIME_ENABLE;
+    }
+
+    public boolean isGAME_TIME_ENABLE() {
+        return GAME_TIME_ENABLE;
+    }
+
+    public void setGAME_TIME_ENABLE(boolean GAME_TIME_ENABLE) {
+        this.GAME_TIME_ENABLE = GAME_TIME_ENABLE;
+    }
+
     public CityProgressionActivity getCurrentAdminView() {
         return currentAdminView;
     }
 
     public void setCurrentAdminView(CityProgressionActivity currentAdminView) {
         this.currentAdminView = currentAdminView;
+    }
+
+    public EndGameActivity getCurrentEndView() {
+        return currentEndView;
+    }
+
+    public void setCurrentEndView(EndGameActivity currentEndView) {
+        this.currentEndView = currentEndView;
     }
 
     public DatabaseHandler getDb() {
@@ -985,6 +1028,10 @@ public class NetworkHelper implements Serializable {
 
     public boolean isGameStarted() {
         return gameStarted;
+    }
+
+    public boolean isTimeOver() {
+        return timeOver;
     }
 
     public void setGameStarted(boolean gameStarted) {
@@ -1129,34 +1176,43 @@ public class NetworkHelper implements Serializable {
                     Signal.GAME_RECEIVED,
                     currentGame)
             );
-            db.insertGame(currentGame, NB_PLAYERS, NB_BUILDINGS);
+            db.insertInitialGameData(currentGame, roles, NB_PLAYERS, NB_BUILDINGS, NB_BUILDINGS_PER_TURN, GAME_TIME, TURN_TIME);
             sendRandomRoleToAllClients(roles);
             createPlayersVotes();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        currentGame.setGameDur(GAME_TIME);
-        gameTimer = new CountDownTimerHandler(currentGame.getGameDur() * 1000, 1000, new CountDownTimerHandler.TimerTickListener() {
-            @Override
-            public void onTick(long millisLeft) {
-                if(currentAdminView != null)
-                    currentAdminView.setTextGameTimer(millisLeft);
-            }
+        if(GAME_TIME_ENABLE) {
+            currentGame.setGameDur(GAME_TIME);
+            gameTimer = new CountDownTimerHandler(currentGame.getGameDur() * 1000, 1000, new CountDownTimerHandler.TimerTickListener() {
+                @Override
+                public void onTick(long millisLeft) {
+                    if (currentAdminView != null)
+                        currentAdminView.setTextGameTimer(millisLeft);
+                }
 
-            @Override
-            public void onFinish() {
-                stopGame();
-            }
+                @Override
+                public void onFinish() {
+                    stopGame();
+                    try {
+                        sendToAllClients(Signal.TIME_LEFT);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
 
-            @Override
-            public void onCancel() {
+                @Override
+                public void onCancel() {
 
-            }
-        });
-        gameTimer.start();
-        if(currentAdminView != null)
-            currentAdminView.appearGameTimer();
+                }
+            });
+            gameTimer.start();
+            if (currentAdminView != null)
+                currentAdminView.appearGameTimer();
+        }
+        else
+            currentGame.setGameDur(0);
     }
 
     private void stopGame() {
@@ -1179,9 +1235,9 @@ public class NetworkHelper implements Serializable {
      *
      * @return Message alert dialog
      */
-    private AlertDialog showMessage(String title, String message, Context context)
+    public AlertDialog showMessage(String title, String message, Context context)
     {
-        return new AlertDialog.Builder(currentPlayerView)
+        return new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {

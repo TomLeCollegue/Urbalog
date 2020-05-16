@@ -10,7 +10,9 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.example.urbalog.Class.Bet;
+import com.example.urbalog.Class.Building;
 import com.example.urbalog.Class.Game;
+import com.example.urbalog.Class.Market;
 import com.example.urbalog.Class.Player;
 import com.example.urbalog.Class.Role;
 import com.example.urbalog.Database.Export.DBExporterCsv;
@@ -54,6 +56,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String GAME_GENERATED_KEY = "game_key";
     public static final String GAME_NB_PLAYER = "nb_player";
     public static final String GAME_NB_BUILDING = "nb_building";
+    public static final String GAME_NB_BUILDING_PER_TURN = "nb_building_per_turn";
+    public static final String GAME_TIMER = "game_timer";
+    public static final String GAME_TURN_TIMER = "turn_timer";
     public static final String GAME_SCORE_FLUID = "score_fluidité";
     public static final String GAME_SCORE_ATTR = "score_attractivité";
     public static final String GAME_SCORE_ENV = "score_environmental";
@@ -63,17 +68,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String GAME_TABLE_NAME = "games";
 
     private final String TABLE_GAME_CREATE =
-            "CREATE TABLE " + GAME_TABLE_NAME + " (" +
+            "CREATE TABLE IF NOT EXISTS " + GAME_TABLE_NAME + " (" +
                     GAME_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     GAME_GENERATED_KEY + " TEXT, " +
                     GAME_NB_PLAYER + " INTEGER, " +
                     GAME_NB_BUILDING + " INTEGER, " +
+                    GAME_NB_BUILDING_PER_TURN + " INTEGER, " +
+                    GAME_TIMER + " INTEGER, " +
+                    GAME_TURN_TIMER + " INTEGER, " +
                     GAME_SCORE_FLUID + " INTEGER, " +
                     GAME_SCORE_ATTR + " INTEGER, " +
                     GAME_SCORE_ENV + " INTEGER, " +
                     GAME_SCORE_LOG + " INTEGER, " +
                     GAME_NB_TURN + " INTEGER, " +
-                    GAME_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP" +
+                    GAME_CREATED_AT + " DATETIME DEFAULT (datetime('now', 'localtime'))" +
                     ");";
 
     // Constants for players table
@@ -98,7 +106,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String PLAYER_TABLE_NAME = "players";
 
     private final String TABLE_PLAYER_CREATE =
-            "CREATE TABLE " + PLAYER_TABLE_NAME + " (" +
+            "CREATE TABLE IF NOT EXISTS " + PLAYER_TABLE_NAME + " (" +
                     PLAYER_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     PLAYER_GAME_ID + " INTEGER , " +
                     PLAYER_GAME_KEY + " TEXT , " +
@@ -116,7 +124,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     PLAYER_ECO + " INTEGER, " +
                     PLAYER_SCORE + " INTEGER, " +
                     PLAYER_ROLE + " TEXT, " +
-                    PLAYER_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
+                    PLAYER_CREATED_AT + " DATETIME DEFAULT (datetime('now', 'localtime')), " +
                     "FOREIGN KEY(" + PLAYER_GAME_ID + ") REFERENCES " + GAME_TABLE_NAME + "(" + GAME_KEY + ")" +
                     ");";
 
@@ -129,12 +137,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String BET_MISE_SOCIAL = "mise_social";
     public static final String BET_MISE_ECO = "mise_eco";
     public static final String BET_BUILDING = "building";
+    public static final String BET_TURN = "turn";
     public static final String BET_CREATED_AT = "created_at";
     public static final String BET_TABLE_NAME = "bet_history";
 
 
     private final String TABLE_BET_CREATE =
-            "CREATE TABLE " + BET_TABLE_NAME + " (" +
+            "CREATE TABLE IF NOT EXISTS " + BET_TABLE_NAME + " (" +
                     BET_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     BET_GAME_ID + " INTEGER , " +
                     BET_GAME_KEY + " TEXT , " +
@@ -142,10 +151,118 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     BET_MISE_POLITIQUE + " INTEGER, " +
                     BET_MISE_SOCIAL + " INTEGER, " +
                     BET_MISE_ECO + " INTEGER, " +
+                    BET_TURN + " INTEGER, " +
                     BET_BUILDING + " TEXT, " +
-                    BET_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
+                    BET_CREATED_AT + " DATETIME DEFAULT (datetime('now', 'localtime')), " +
                     "FOREIGN KEY(" + BET_GAME_ID + ") REFERENCES " + GAME_TABLE_NAME + "(" + GAME_KEY + ")," +
                     "FOREIGN KEY(" + BET_PLAYER_ID + ") REFERENCES " + PLAYER_TABLE_NAME + "(" + PLAYER_KEY + ")" +
+                    ");";
+
+    // Constants for turn_history table
+    public static final String TURN_KEY = "id";
+    public static final String TURN_GAME_ID = "game_id";
+    public static final String TURN_GAME_KEY = "game_key";
+    public static final String TURN_NUMBER = "turn_number";
+    public static final String TURN_MARKET1 = "building_market_1";
+    public static final String TURN_MARKET2 = "building_market_2";
+    public static final String TURN_MARKET3 = "building_market_3";
+    public static final String TURN_MARKET4 = "building_market_4";
+    public static final String TURN_MARKET5 = "building_market_5";
+    public static final String TURN_BUILDED1 = "building_completed_1";
+    public static final String TURN_BUILDED2 = "building_completed_2";
+    public static final String TURN_BUILDED3 = "building_completed_3";
+    public static final String TURN_BUILDED4 = "building_completed_4";
+    public static final String TURN_BUILDED5 = "building_completed_5";
+    public static final String TURN_CREATED_AT = "created_at";
+    public static final String TURN_TABLE_NAME = "turn_history";
+
+
+    private final String TABLE_TURN_CREATE =
+            "CREATE TABLE IF NOT EXISTS " + TURN_TABLE_NAME + " (" +
+                    TURN_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    TURN_GAME_ID + " INTEGER , " +
+                    TURN_GAME_KEY + " TEXT , " +
+                    TURN_NUMBER + " INTEGER, " +
+                    TURN_MARKET1 + " TEXT, " +
+                    TURN_MARKET2 + " TEXT, " +
+                    TURN_MARKET3 + " TEXT, " +
+                    TURN_MARKET4 + " TEXT, " +
+                    TURN_MARKET5 + " TEXT, " +
+                    TURN_BUILDED1 + " TEXT, " +
+                    TURN_BUILDED2 + " TEXT, " +
+                    TURN_BUILDED3 + " TEXT, " +
+                    TURN_BUILDED4 + " TEXT, " +
+                    TURN_BUILDED5 + " TEXT, " +
+                    TURN_CREATED_AT + " DATETIME DEFAULT (datetime('now', 'localtime')), " +
+                    "FOREIGN KEY(" + TURN_GAME_ID + ") REFERENCES " + GAME_TABLE_NAME + "(" + GAME_KEY + ")" +
+                    ");";
+
+    // Constants for buildings table
+    public static final String BUILDING_KEY = "id";
+    public static final String BUILDING_GAME_ID = "game_id";
+    public static final String BUILDING_GAME_KEY = "game_key";
+    public static final String BUILDING_NAME = "name";
+    public static final String BUILDING_DESCRIPTION = "description";
+    public static final String BUILDING_POLITIC_COST = "political_cost";
+    public static final String BUILDING_SOCIAL_COST = "social_cost";
+    public static final String BUILDING_ECO_COST = "economic_cost";
+    public static final String BUILDING_ATTR_BUFF = "attractiveness_score";
+    public static final String BUILDING_FLUID_BUFF = "fluency_score";
+    public static final String BUILDING_ENV_BUFF = "environmental_score";
+    public static final String BUILDING_LOG_BUFF = "logistic_score";
+    public static final String BUILDING_LOG_CONTEXT = "logistic_description";
+    public static final String BUILDING_CREATED_AT = "created_at";
+    public static final String BUILDING_TABLE_NAME = "buildings";
+
+
+    private final String TABLE_BUILDINGS_CREATE =
+            "CREATE TABLE IF NOT EXISTS " + BUILDING_TABLE_NAME + " (" +
+                    BUILDING_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    BUILDING_GAME_ID + " INTEGER , " +
+                    BUILDING_GAME_KEY + " TEXT , " +
+                    BUILDING_NAME + " TEXT, " +
+                    BUILDING_DESCRIPTION + " TEXT, " +
+                    BUILDING_POLITIC_COST + " INTEGER, " +
+                    BUILDING_SOCIAL_COST + " INTEGER, " +
+                    BUILDING_ECO_COST + " INTEGER, " +
+                    BUILDING_ATTR_BUFF + " INTEGER, " +
+                    BUILDING_FLUID_BUFF + " INTEGER, " +
+                    BUILDING_ENV_BUFF + " INTEGER, " +
+                    BUILDING_LOG_BUFF + " INTEGER, " +
+                    BUILDING_LOG_CONTEXT + " TEXT, " +
+                    BUILDING_CREATED_AT + " DATETIME DEFAULT (datetime('now', 'localtime')), " +
+                    "FOREIGN KEY(" + BUILDING_GAME_ID + ") REFERENCES " + GAME_TABLE_NAME + "(" + GAME_KEY + ")" +
+                    ");";
+
+    // Constants for roles table
+    public static final String ROLE_KEY = "id";
+    public static final String ROLE_GAME_ID = "game_id";
+    public static final String ROLE_GAME_KEY = "game_key";
+    public static final String ROLE_NAME = "name";
+    public static final String ROLE_SOCIAL_TOKENS = "social_tokens";
+    public static final String ROLE_ECO_TOKENS = "economic_tokens";
+    public static final String ROLE_POL_TOKENS = "political_tokens";
+    public static final String ROLE_OBJECTIVE = "objective";
+    public static final String ROLE_HOLD = "hold";
+    public static final String ROLE_IMPROVE = "improve";
+    public static final String ROLE_CREATED_AT = "created_at";
+    public static final String ROLE_TABLE_NAME = "roles";
+
+
+    private final String TABLE_ROLES_CREATE =
+            "CREATE TABLE IF NOT EXISTS " + ROLE_TABLE_NAME + " (" +
+                    ROLE_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    ROLE_GAME_ID + " INTEGER , " +
+                    ROLE_GAME_KEY + " TEXT , " +
+                    ROLE_NAME + " TEXT, " +
+                    ROLE_SOCIAL_TOKENS + " INTEGER, " +
+                    ROLE_ECO_TOKENS + " INTEGER, " +
+                    ROLE_POL_TOKENS + " INTEGER, " +
+                    ROLE_OBJECTIVE + " TEXT, " +
+                    ROLE_HOLD + " TEXT, " +
+                    ROLE_IMPROVE + " TEXT, " +
+                    ROLE_CREATED_AT + " DATETIME DEFAULT (datetime('now', 'localtime')), " +
+                    "FOREIGN KEY(" + ROLE_GAME_ID + ") REFERENCES " + GAME_TABLE_NAME + "(" + GAME_KEY + ")" +
                     ");";
 
     private Context appContext;
@@ -156,6 +273,89 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
+     * Insert initial data in db (buildings/roles pools & game settings)
+     *
+     * @param game Game Instance
+     * @param nbPlayers Number of players of current game
+     * @param nbBuildings Number of buildings required for current game
+     * @return bool
+     */
+    public boolean insertInitialGameData(Game game, ArrayList<Role> roles,
+                                         int nbPlayers, int nbBuildings, int nbBuildingsPerTurn,
+                                         int gameTimer, int turnTimer)
+    {
+        return insertGame(game, nbPlayers, nbBuildings, nbBuildingsPerTurn, gameTimer, turnTimer)
+                && insertBuildings(game)
+                && insertRoles(game, roles);
+    }
+
+    /**
+     * Insert buildings pool data for a game in db
+     *
+     * @param game Game Instance
+     * @return bool
+     */
+    public boolean insertBuildings(Game game)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            ContentValues v = new ContentValues();
+            for (Building building : game.getMarket().getDeck()) {
+                v.put(BUILDING_GAME_ID, game.getDbID());
+                v.put(BUILDING_GAME_KEY, game.getDbKEY());
+                v.put(BUILDING_NAME, building.getName());
+                v.put(BUILDING_DESCRIPTION, building.getDescription());
+                v.put(BUILDING_POLITIC_COST, building.getCoutPolitique());
+                v.put(BUILDING_SOCIAL_COST, building.getCoutSocial());
+                v.put(BUILDING_ECO_COST, building.getCoutEconomique());
+                v.put(BUILDING_ATTR_BUFF, building.getEffetAttractivite());
+                v.put(BUILDING_FLUID_BUFF, building.getEffetFluidite());
+                v.put(BUILDING_ENV_BUFF, building.getEffetEnvironnemental());
+                v.put(BUILDING_LOG_BUFF, building.getScoreLogistique());
+                v.put(BUILDING_LOG_CONTEXT, building.getExplicationLogistique());
+                db.insert(BUILDING_TABLE_NAME, null, v);
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+        return true;
+    }
+
+    /**
+     * Insert roles pool data for a game in db
+     *
+     * @param game Game instance
+     * @param roles Roles pool list
+     * @return bool
+     */
+    public boolean insertRoles(Game game, ArrayList<Role> roles)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            ContentValues v = new ContentValues();
+            for (Role role : roles) {
+                v.put(ROLE_GAME_ID, game.getDbID());
+                v.put(ROLE_GAME_KEY, game.getDbKEY());
+                v.put(ROLE_NAME, role.getTypeRole());
+                v.put(ROLE_SOCIAL_TOKENS, role.getTokenSocial());
+                v.put(ROLE_ECO_TOKENS, role.getTokenEconomical());
+                v.put(ROLE_POL_TOKENS, role.getTokenPolitical());
+                v.put(ROLE_OBJECTIVE, role.getObjective());
+                v.put(ROLE_HOLD, role.getHold());
+                v.put(ROLE_IMPROVE, role.getImprove());
+                db.insert(ROLE_TABLE_NAME, null, v);
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+        return true;
+    }
+
+    /**
      * Insert Game instance data in db
      *
      * @param game Game Instance
@@ -163,7 +363,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @param nbBuildings Number of buildings required for current game
      * @return bool
      */
-    public boolean insertGame(Game game, int nbPlayers, int nbBuildings)
+    public boolean insertGame(Game game, int nbPlayers, int nbBuildings,
+                              int nbBuildingsPerTurn, int gameTimer, int turnTimer)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues v = new ContentValues();
@@ -174,6 +375,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         v.put(GAME_GENERATED_KEY, key);
         v.put(GAME_NB_PLAYER, nbPlayers);
         v.put(GAME_NB_BUILDING, nbBuildings);
+        v.put(GAME_NB_BUILDING_PER_TURN, nbBuildingsPerTurn);
+        v.put(GAME_TIMER, gameTimer);
+        v.put(GAME_TURN_TIMER, turnTimer);
         long res = db.insert(GAME_TABLE_NAME, null, v);
 
         game.setDbID(res);
@@ -310,9 +514,59 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         v.put(BET_MISE_POLITIQUE, bet.getMisePolitique());
         v.put(BET_MISE_SOCIAL, bet.getMiseSocial());
         v.put(BET_MISE_ECO, bet.getMiseEco());
+        v.put(BET_TURN, game.getnTurn());
         v.put(BET_BUILDING, bet.getNameBuilding());
         long res = db.insert(BET_TABLE_NAME, null, v);
 
+        return res != -1;
+    }
+
+    /**
+     * Insert turn data in db (Market state and builded buildings per turn)
+     *
+     * @param game Game Instance
+     * @param newBuildings Builded building list
+     * @return bool
+     */
+    public boolean insertTurn(Game game, ArrayList<Building> newBuildings)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues v = new ContentValues();
+
+        v.put(TURN_GAME_ID, game.getDbID());
+        v.put(TURN_GAME_KEY, game.getDbKEY());
+        v.put(TURN_NUMBER, game.getnTurn());
+        v.put(TURN_MARKET1, game.getMarket().getBuildings().get(0).getName());
+        v.put(TURN_MARKET2, game.getMarket().getBuildings().get(1).getName());
+        v.put(TURN_MARKET3, game.getMarket().getBuildings().get(2).getName());
+        v.put(TURN_MARKET4, game.getMarket().getBuildings().get(3).getName());
+        v.put(TURN_MARKET5, game.getMarket().getBuildings().get(4).getName());
+
+        for (int i = 0; i < 5; i++) {
+            if(i < newBuildings.size()){
+                switch (i){
+                    case 0:
+                        v.put(TURN_BUILDED1, newBuildings.get(i).getName());
+                        break;
+                    case 1:
+                        v.put(TURN_BUILDED2, newBuildings.get(i).getName());
+                        break;
+                    case 2:
+                        v.put(TURN_BUILDED3, newBuildings.get(i).getName());
+                        break;
+                    case 3:
+                        v.put(TURN_BUILDED4, newBuildings.get(i).getName());
+                        break;
+                    case 4:
+                        v.put(TURN_BUILDED5, newBuildings.get(i).getName());
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        long res = db.insert(TURN_TABLE_NAME, null, v);
         return res != -1;
     }
 
@@ -413,7 +667,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         c.close();
 
         for (String table : tables) {
-            if(table.equals(GAME_TABLE_NAME) || table.equals(PLAYER_TABLE_NAME) || table.equals(BET_TABLE_NAME)) {
+            if(table.equals(GAME_TABLE_NAME) || table.equals(PLAYER_TABLE_NAME)
+                    || table.equals(BET_TABLE_NAME) || table.equals(TURN_TABLE_NAME)
+                    || table.equals(BUILDING_TABLE_NAME) || table.equals(ROLE_TABLE_NAME)) {
                 String dropQuery = "DROP TABLE IF EXISTS " + table;
                 db.execSQL(dropQuery);
             }
@@ -529,6 +785,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(TABLE_GAME_CREATE);
         db.execSQL(TABLE_PLAYER_CREATE);
         db.execSQL(TABLE_BET_CREATE);
+        db.execSQL(TABLE_TURN_CREATE);
+        db.execSQL(TABLE_BUILDINGS_CREATE);
+        db.execSQL(TABLE_ROLES_CREATE);
     }
 
     @Override

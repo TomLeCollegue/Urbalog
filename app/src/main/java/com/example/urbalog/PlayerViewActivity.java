@@ -169,6 +169,7 @@ public class PlayerViewActivity extends AppCompatActivity {
 
     //5 elements, 1 if the building is funded or 0 if not
     private Integer[] readyBuildings;
+    private boolean isReadyBuildings; //to know if the toast has already been shown to the players
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,6 +188,7 @@ public class PlayerViewActivity extends AppCompatActivity {
         B5 = findViewById(R.id.infrastructure_5);
 
         readyBuildings = new Integer[]{0,0,0,0,0}; //None of the buildings are funded
+        isReadyBuildings = false;
 
         poli_1 = findViewById(R.id.poli_1);
         eco_1 = findViewById(R.id.eco_1);
@@ -1483,7 +1485,7 @@ public class PlayerViewActivity extends AppCompatActivity {
 
     }
     /**
-     * Displays a message to all the players if they try to build too many buildings in a single turn.
+     * Displays a toast to all the players if they try to build too many buildings in a single turn.
      */
     public void tooManyBuildings(){
         Game currentGame;
@@ -1500,12 +1502,16 @@ public class PlayerViewActivity extends AppCompatActivity {
             }
         }
 
-        if (nbBuildingsReady > currentGame.getMaxBuildingsPerTurn()){
+        if (nbBuildingsReady > currentGame.getMaxBuildingsPerTurn() && isReadyBuildings == false){
             toast = Toast.makeText(getApplicationContext(),tooMany, Toast.LENGTH_LONG);
             toast.show();
+            isReadyBuildings = true;
         }
-
-
+        else {
+            if (nbBuildingsReady <= currentGame.getMaxBuildingsPerTurn() && isReadyBuildings == true){
+                isReadyBuildings = false;
+            }
+        }
 
     }
 

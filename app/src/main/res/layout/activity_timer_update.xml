@@ -18,7 +18,7 @@
 
             <TextView
                 android:id="@+id/textTimer"
-                android:layout_width="170dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/caractere_l2"
                 android:gravity="center"
@@ -29,13 +29,19 @@
 
             <EditText
                 android:id="@+id/numberUpdateTimer"
-                android:layout_width="match_parent"
+                android:layout_width="138dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/caractere_l2"
                 android:hint=" en secondes"
                 android:inputType="number"
                 android:textAlignment="center"></EditText>
+
+            <Switch
+                android:id="@+id/disableTurnTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Désactivé" />
         </TableRow>
 
         <TableRow
@@ -63,6 +69,12 @@
                 android:hint=" en secondes"
                 android:inputType="number"
                 android:textAlignment="center"></EditText>
+
+            <Switch
+                android:id="@+id/disableGameTimer"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:text="Désactivé" />
         </TableRow>
 
         <TableRow
