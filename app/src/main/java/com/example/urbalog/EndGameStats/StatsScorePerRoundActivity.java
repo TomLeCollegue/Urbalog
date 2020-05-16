@@ -99,7 +99,7 @@ public class StatsScorePerRoundActivity extends AppCompatActivity {
             int nb = 0;
             for (Map.Entry<Integer, Integer> entry : nbScoreLogistiqueByTurn.entrySet()) {
                 yValues1.add(new Entry(nb, entry.getValue()));
-                ar.add("tour : " + String.valueOf(nb));
+                ar.add("tour : " + nb);
                 nb++;
             }
 

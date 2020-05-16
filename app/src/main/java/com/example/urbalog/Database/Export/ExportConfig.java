@@ -13,7 +13,7 @@ import java.util.Set;
 public class ExportConfig {
 
     public enum ExportType {
-        JSON, CSV;
+        JSON, CSV
     }
 
     // Package variables
