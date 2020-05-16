@@ -21,9 +21,27 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ModifRoleActivity"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name=".RecyclerViewRolesActivity"
+            android:screenOrientation="sensorLandscape"/>
         <activity
-            android:name=".ChangeNbBuildingPerTurn"
+            android:name=".AddRoleActivity"
             android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".RoleConfigActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity android:name=".ChangeNbBuildingPerTurn" 
+        android:screenOrientation="sensorLandscape"/>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="sensorLandscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".EndGameStats.StatsScorePerRoundActivity"
             android:screenOrientation="sensorLandscape" />
@@ -69,15 +87,6 @@
         <activity
             android:name=".EditBuildingActivity"
             android:screenOrientation="sensorLandscape" />
-        <activity
-            android:name=".MainActivity"
-            android:screenOrientation="sensorLandscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".PlayerViewActivity"
             android:screenOrientation="sensorLandscape" />

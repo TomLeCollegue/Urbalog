@@ -13,6 +13,7 @@ public class ConfigurationActivity extends AppCompatActivity {
     private Button updateTimer;
     private Button buildingConfig;
     private Button dbConfig;
+    private Button roleConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,7 @@ public class ConfigurationActivity extends AppCompatActivity {
         updateTimer = findViewById(R.id.updateTimer);
         buildingConfig = findViewById(R.id.buildingButton);
         dbConfig = findViewById(R.id.dbButton);
+        roleConfig = findViewById(R.id.roleButton);
 
 
         statistics.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +59,15 @@ public class ConfigurationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ConfigurationActivity.this, DbConfigActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        roleConfig.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ConfigurationActivity.this, RoleConfigActivity.class);
                 startActivity(intent);
                 finish();
             }

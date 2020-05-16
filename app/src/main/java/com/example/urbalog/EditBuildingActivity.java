@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +51,8 @@ public class EditBuildingActivity extends AppCompatActivity {
 
 
     public Building building;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

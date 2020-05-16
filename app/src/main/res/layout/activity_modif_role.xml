@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_margin="20dp"
+        android:paddingBottom="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="30dp"
+                android:textColor="@color/dark"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:text="Nom :">
+            </TextView>
+
+            <EditText
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:id="@+id/nameRoleEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="nom">
+            </EditText>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="30dp"
+                android:textColor="@color/dark"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:text="Description :">
+            </TextView>
+
+            <EditText
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:id="@+id/descriptionRoleEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="description">
+            </EditText>
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Maintenir et améliorer : ">
+        </TextView>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="30dp"
+                android:textColor="@color/dark"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:text="Maintenir :">
+            </TextView>
+
+            <RadioGroup
+                android:id="@+id/hold_radio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/hold_Environnement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Environnement" />
+
+                <RadioButton
+                    android:id="@+id/hold_Attractivite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Attractivité" />
+
+                <RadioButton
+                    android:id="@+id/hold_fluidite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fluidité" />
+            </RadioGroup>
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="30dp"
+                android:textColor="@color/dark"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:text="Ameliorer :">
+            </TextView>
+
+            <RadioGroup
+                android:id="@+id/improve_radio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/improve_Environnement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Environnement" />
+
+                <RadioButton
+                    android:id="@+id/improve_Attractivite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Attractivité" />
+
+                <RadioButton
+                    android:id="@+id/improve_fluidite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fluidité" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ressources : ">
+        </TextView>
+
+        <LinearLayout
+            android:weightSum="10"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <TextView
+                android:gravity="center"
+                android:textSize="30dp"
+                android:textColor="@color/dark"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Social :"
+                android:layout_weight="3">
+            </TextView>
+
+            <LinearLayout
+                android:weightSum="5"
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6">
+
+                <View
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                </View>
+
+                <Button
+                    android:textAlignment="center"
+                    android:textColor="@color/dark"
+                    android:textSize="30dp"
+                    android:background="@android:color/transparent"
+                    android:id="@+id/mbSocialRole"
+                    android:text="-"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                </Button>
+
+                <TextView
+                    android:textSize="25dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:id="@+id/socialRoleEdit"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:hint="0">
+                </TextView>
+
+                <Button
+                    android:textAlignment="center"
+                    android:textColor="@color/dark"
+                    android:textSize="30dp"
+                    android:background="@android:color/transparent"
+                    android:id="@+id/pbSocialRole"
+                    android:text="+"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                </Button>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:weightSum="10"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <TextView
+                android:gravity="center"
+                android:textSize="30dp"
+                android:textColor="@color/dark"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Economique :"
+                android:layout_weight="3">
+            </TextView>
+
+            <LinearLayout
+                android:weightSum="5"
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6">
+
+                <View
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                </View>
+
+                <Button
+                    android:textAlignment="center"
+                    android:textColor="@color/dark"
+                    android:textSize="30dp"
+                    android:background="@android:color/transparent"
+                    android:id="@+id/mbEconomiqueRole"
+                    android:text="-"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                </Button>
+
+                <TextView
+                    android:textSize="25dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:id="@+id/economiqueRoleEdit"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:hint="0">
+                </TextView>
+
+                <Button
+                    android:textAlignment="center"
+                    android:textColor="@color/dark"
+                    android:textSize="30dp"
+                    android:background="@android:color/transparent"
+                    android:id="@+id/pbEconomiqueRole"
+                    android:text="+"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                </Button>
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:weightSum="10"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <TextView
+                android:gravity="center"
+                android:textSize="30dp"
+                android:textColor="@color/dark"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Politique :"
+                android:layout_weight="3">
+            </TextView>
+
+            <LinearLayout
+                android:weightSum="5"
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6">
+
+                <View
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                </View>
+
+                <Button
+                    android:textAlignment="center"
+                    android:textColor="@color/dark"
+                    android:textSize="30dp"
+                    android:background="@android:color/transparent"
+                    android:id="@+id/mbPolitiqueRole"
+                    android:text="-"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                </Button>
+
+                <TextView
+                    android:textSize="25dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:id="@+id/politiqueRoleEdit"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:hint="0">
+                </TextView>
+
+                <Button
+                    android:textAlignment="center"
+                    android:textColor="@color/dark"
+                    android:textSize="30dp"
+                    android:background="@android:color/transparent"
+                    android:id="@+id/pbPolitiqueRole"
+                    android:text="+"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                </Button>
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+
+
+        <Button
+            android:id="@+id/ButtonRoleEdit"
+            android:text="Modifier"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/button_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="validerRoleAdd">
+        </Button>
+
+    </LinearLayout>
+
+</ScrollView>
