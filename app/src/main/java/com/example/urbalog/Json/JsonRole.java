@@ -96,7 +96,7 @@ public class JsonRole {
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Transporteur\",\n" +
-                "      \"description\": \"Description de l'objet\",\n" +
+                "      \"description\": \"L'objectif est atteint quand ces deux conditions sont satisfaites. Le joueur marque alors un point\",\n" +
                 "      \"hold\": \"Attractivité\",\n" +
                 "      \"improve\": \"Fluidité\",\n" +
                 "      \"ressources\": [\n" +
@@ -110,7 +110,7 @@ public class JsonRole {
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Habitant\",\n" +
-                "      \"description\": \"Description de l'objet\",\n" +
+                "      \"description\": \"L'objectif est atteint quand ces deux conditions sont satisfaites. Le joueur marque alors un point\",\n" +
                 "      \"hold\": \"Fluidité\",\n" +
                 "      \"improve\": \"Environnement\",\n" +
                 "      \"ressources\": [\n" +
@@ -124,7 +124,7 @@ public class JsonRole {
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Commerçant\",\n" +
-                "      \"description\": \"Description de l'objet\",\n" +
+                "      \"description\": \"L'objectif est atteint quand ces deux conditions sont satisfaites. Le joueur marque alors un point\",\n" +
                 "      \"hold\": \"Fluidité\",\n" +
                 "      \"improve\": \"Attractivité\",\n" +
                 "      \"ressources\": [\n" +
@@ -138,7 +138,7 @@ public class JsonRole {
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Opérateur de transport public\",\n" +
-                "      \"description\": \"Description de l'objet\",\n" +
+                "      \"description\": \"L'objectif est atteint quand ces deux conditions sont satisfaites. Le joueur marque alors un point\",\n" +
                 "      \"hold\": \"Environnement\",\n" +
                 "      \"improve\": \"Fluidité\",\n" +
                 "      \"ressources\": [\n" +
