@@ -21,8 +21,10 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ModifRoleActivity"></activity>
-        <activity android:name=".RecyclerViewRolesActivity" />
+        <activity android:name=".ModifRoleActivity"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name=".RecyclerViewRolesActivity"
+            android:screenOrientation="sensorLandscape"/>
         <activity
             android:name=".AddRoleActivity"
             android:screenOrientation="sensorLandscape" />
