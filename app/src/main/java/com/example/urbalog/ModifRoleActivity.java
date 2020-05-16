@@ -2,6 +2,7 @@ package com.example.urbalog;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 
 import com.example.urbalog.Class.Building;
 import com.example.urbalog.Class.Role;
+import com.example.urbalog.Json.JsonBuilding;
+import com.example.urbalog.Json.JsonRole;
 
 import static java.lang.String.valueOf;
 
@@ -46,8 +49,7 @@ public class ModifRoleActivity extends AppCompatActivity {
 
         name = findViewById(R.id.nameRoleEdit);
         name.setText(role.getTypeRole());
-        description = findViewById(R.id.descriptionRoleEdit);
-        description.setText(role.getObjective());
+        description = findViewById(R.id.descriptionRoleEdit);        description.setText(role.getObjective());
 
         social = findViewById(R.id.socialRoleEdit);
         social.setText(""+ role.getTokenSocial());
@@ -135,21 +137,50 @@ public class ModifRoleActivity extends AppCompatActivity {
 
 }
     public void modifRoleFunction(){
+        boolean finish = true;
+        String finalName = name.getText().toString().trim();
+        String finalDescription = description.getText().toString().trim();
 
-        String improveString;
-        String holdString;
-        int radioIdImprove = improveRadio.getCheckedRadioButtonId();
-        radioButtonImprove = findViewById(radioIdImprove);
+        int radioButtonHoldId = holdRadio.getCheckedRadioButtonId();
+        RadioButton radioButtonHold = (RadioButton) holdRadio.findViewById(radioButtonHoldId);
+        String selectedTextHold = (String) radioButtonHold.getText();
 
-        int radioIdHold = holdRadio.getCheckedRadioButtonId();
-        radioButtonHold = findViewById(radioIdHold);
+        int radioButtonImproveId = improveRadio.getCheckedRadioButtonId();
+        RadioButton radioButtonImprove = (RadioButton) improveRadio.findViewById(radioButtonImproveId);
+        String selectedTextImprove = (String) radioButtonImprove.getText();
 
-        improveString = radioButtonImprove.getText().toString();
-        holdString = radioButtonHold.getText().toString();
+        if(finalName.matches(""))
+        {
+            name.setError("champs vide");
+            finish = false;
+        }
+        if(finalDescription.matches(""))
+        {
+            description.setError("champs vide");
+            finish = false;
+        }
+        if(selectedTextHold.equals(selectedTextImprove)){
+            Toast.makeText(this, "Impossible de mettre les mêmes objectifs", Toast.LENGTH_SHORT).show();
+            finish = false;
+        }
 
-        //test
-        Toast.makeText(this, improveString + "" + holdString, Toast.LENGTH_LONG).show();
-//
+        if(finish == true){
+            if(role.getTypeRole().equals(finalName))
+            {
+
+
+            }
+            else{
+                if(JsonRole.roleAlreadyInList(finalName)){
+                    name.setError("Il y a déja un role avec le même nom");
+                }
+                else{
+                    Toast.makeText(this, "Le role a été modifié", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        }
+
 
     }
 
