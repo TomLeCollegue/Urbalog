@@ -46,5 +46,13 @@ public class RoleConfigActivity extends AppCompatActivity {
                 finish();
             }
         });
+        modificationRole.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RoleConfigActivity.this, RecyclerViewRolesActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }
