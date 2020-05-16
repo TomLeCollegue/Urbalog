@@ -38,7 +38,7 @@ public class RecyclerViewRolesActivity extends AppCompatActivity implements Role
 
     public void onItemClick(int position) {
         Role clickedItem = roles.get(position);
-        Intent intent = new Intent(RecyclerViewRolesActivity.this, MainActivity.class);
+        Intent intent = new Intent(RecyclerViewRolesActivity.this, ModifRoleActivity.class);
         intent.putExtra("role", clickedItem);
         startActivity(intent);
         finish();
