@@ -13,9 +13,9 @@ import retrofit2.http.Part;
  */
 public interface FileUploadService {
     @Multipart
-    @POST("sync")
+    @POST("addGames")
     Call<ResponseBody> upload(
-            @Part("description") RequestBody description,
-            @Part MultipartBody.Part file
+            @Part MultipartBody.Part file,
+            @Part("games_data") RequestBody json
     );
 }

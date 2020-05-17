@@ -21,11 +21,24 @@ import com.example.urbalog.Database.Http.FileUploadService;
 import com.example.urbalog.Database.Http.ServiceGenerator;
 import com.example.urbalog.NetworkHelper;
 import com.example.urbalog.UUIDHelper;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import cz.msebera.android.httpclient.Header;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -740,39 +753,38 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public void syncDb(){
-        FileUploadService service =
-                ServiceGenerator.createService(FileUploadService.class);
-
         File dbJsonPath = new File(FileUtils.getAppDir(appContext) + "/databases/Urbalog.json");
         Log.d(NetworkHelper.TAG, dbJsonPath.getAbsolutePath());
 
-        RequestBody requestFile =
-                RequestBody.create(
-                        MediaType.parse(Uri.fromFile(dbJsonPath).toString()),
-                        dbJsonPath
-                );
+        String URBALOG_URL = "https://mobicampus-udl.entpe.fr/urbalog/addGames";
 
-        MultipartBody.Part body =
-                MultipartBody.Part.createFormData("value", dbJsonPath.getName(), requestFile);
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
 
-        String titleString = "Urbalog app sync";
-        RequestBody title =
-                RequestBody.create(
-                        okhttp3.MultipartBody.FORM, titleString);
+        String data = "";
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(dbJsonPath));
+            JsonObject js = new Gson().fromJson(bufferedReader, JsonObject.class);
+            data = new Gson().toJson(js);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return;
+        }
+        Log.d(NetworkHelper.TAG, data);
 
-        Call<ResponseBody> call = service.upload(title, body);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call,
-                                   Response<ResponseBody> response) {
-                Log.v("Upload", "success");
-            }
+        params.put("games_data", data);
+        client.post(URBALOG_URL, params, new AsyncHttpResponseHandler(){
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("Upload error:", t.getMessage());
-            }
-        });
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        System.out.println(Arrays.toString(responseBody));
+                    }
+                }
+        );
     }
 
     @Override
