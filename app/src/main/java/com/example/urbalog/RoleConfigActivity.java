@@ -55,4 +55,10 @@ public class RoleConfigActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void onBackPressed(){
+        Intent intent = new Intent(this, ConfigurationActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

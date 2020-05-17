@@ -161,8 +161,6 @@ public class StatsScorePerRoundActivity extends AppCompatActivity {
     }
 
     public void onBackPressed(){
-        Intent intent = new Intent(StatsScorePerRoundActivity.this, EndGameActivity.class);
-        startActivity(intent);
         finish();
     }
 }

@@ -69,9 +69,7 @@ public class EndGameActivity extends AppCompatActivity {
     }
 
     public void scoreLog(View view) {
-        Log.d("debug", "Listener");
         Intent MyIntent = new Intent(EndGameActivity.this, LogisticActivity.class);
-        Log.d("debug", "Before startActivity");
         startActivity(MyIntent);
     }
 
