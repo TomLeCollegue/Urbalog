@@ -11,12 +11,11 @@ public class FileUtils {
         return c.getApplicationInfo().dataDir;
     }
 
-    public static File createDirIfNotExist(String path){
-        File dir = new File(path);
-        if(!dir.exists()){
-            dir.mkdir();
+    public static File createDirIfNotExist(File path){
+        if(!path.exists()){
+            path.mkdir();
         }
-        return dir;
+        return path;
     }
 
     /**
