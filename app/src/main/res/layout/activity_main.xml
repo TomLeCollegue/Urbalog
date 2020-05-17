@@ -54,63 +54,68 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.6" />
 
                     <Button
                         android:id="@+id/buttonJoueur"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="200dp"
+                        android:layout_marginRight="200dp"
                         android:layout_weight="1"
-                        android:background="@drawable/button_style"
-                        android:fontFamily="@font/caractere_l1"
-                        android:onClick="changeActivityPlayer"
                         android:autoSizeMaxTextSize="50sp"
                         android:autoSizeMinTextSize="5sp"
                         android:autoSizeStepGranularity="2sp"
                         android:autoSizeTextType="uniform"
+                        android:background="@drawable/button_style"
+                        android:fontFamily="@font/caractere_l1"
+                        android:onClick="changeActivityPlayer"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
                         android:text="JOUER" />
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.6" />
 
                     <Button
                         android:id="@+id/buttonAdmin"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="200dp"
+                        android:layout_marginRight="200dp"
                         android:layout_weight="1"
-                        android:background="@drawable/button_style"
-                        android:fontFamily="@font/caractere_l1"
-                        android:onClick="changeActivityAdmin"
                         android:autoSizeMaxTextSize="50sp"
                         android:autoSizeMinTextSize="5sp"
                         android:autoSizeStepGranularity="2sp"
                         android:autoSizeTextType="uniform"
+                        android:background="@drawable/button_style"
+                        android:fontFamily="@font/caractere_l1"
+                        android:onClick="changeActivityAdmin"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
                         android:text="Administrateur" />
 
-                </LinearLayout>
+                    <View
+                        android:id="@+id/view3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.6" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:orientation="vertical"></LinearLayout>
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"/>
 
     </LinearLayout>
 

@@ -11,8 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.urbalog.Class.Player;
 
 public class PlayerConnexionActivity extends AppCompatActivity {
-    public static NetworkHelper net; // Temporary until class can be parcelable and send in intent
-
     private Button bCancel;
     private Button bSearch;
     private static TextView tStatus;
@@ -29,27 +27,31 @@ public class PlayerConnexionActivity extends AppCompatActivity {
         this.name = findViewById(R.id.player_name);
         tStatus = findViewById(R.id.textStatus);
 
-        net = new NetworkHelper(this, false);
-        net.setHost(false);
-        net.setPlayer((Player) getIntent().getSerializableExtra("player"));
+        if(MainActivity.net == null || MainActivity.net.isHost()) {
+            MainActivity.net = new NetworkHelper(this, false);
+        }
+        else{
+            MainActivity.net.reset();
+        }
+        MainActivity.net.setPlayer((Player) getIntent().getSerializableExtra("player"));
 
-        if(net.getPlayer().getName() == null){
+        if(MainActivity.net.getPlayer().getName() == null){
             name.setText("Formulaire pas rempli");
         }else{
-            name.setText(String.format("Bonjour %s", net.getPlayer().getFirstName()));
-            Log.d("debug", net.getPlayer().toString());
+            name.setText(String.format("Bonjour %s", MainActivity.net.getPlayer().getFirstName()));
+            Log.d("debug", MainActivity.net.getPlayer().toString());
         }
 
         this.bSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                net.searchGame();
+                MainActivity.net.searchGame();
             }
         });
         this.bCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                net.disconnectFromAllEndpoints();
+                MainActivity.net.disconnectFromAllEndpoints();
                 setStatus("Disconnected");
             }
         });

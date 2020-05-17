@@ -1,19 +1,15 @@
 package com.example.urbalog.EndGameStats;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.example.urbalog.AdminConnectionActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.urbalog.Class.Game;
-import com.example.urbalog.ConfigurationActivity;
 import com.example.urbalog.EndGameActivity;
-import com.example.urbalog.PlayerConnexionActivity;
+import com.example.urbalog.MainActivity;
 import com.example.urbalog.R;
-import com.example.urbalog.StatsActivity;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -24,10 +20,8 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class StatsScorePerRoundActivity extends AppCompatActivity {
 
@@ -74,7 +68,7 @@ public class StatsScorePerRoundActivity extends AppCompatActivity {
             arrayListGame.add(c);
            */
 
-        arrayListGame = PlayerConnexionActivity.net.getCurrentGame().getArrayGame();
+        arrayListGame = MainActivity.net.getCurrentGame().getArrayGame();
 
         if(arrayListGame != null && arrayListGame.size() >= 1) {
             for (int i = 0; i < arrayListGame.size(); ++i) {
@@ -105,7 +99,7 @@ public class StatsScorePerRoundActivity extends AppCompatActivity {
             int nb = 0;
             for (Map.Entry<Integer, Integer> entry : nbScoreLogistiqueByTurn.entrySet()) {
                 yValues1.add(new Entry(nb, entry.getValue()));
-                ar.add("tour : " + String.valueOf(nb));
+                ar.add("tour : " + nb);
                 nb++;
             }
 

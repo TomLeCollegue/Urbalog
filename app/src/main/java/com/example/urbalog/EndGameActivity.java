@@ -1,11 +1,8 @@
 package com.example.urbalog;
 
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -38,9 +35,9 @@ public class EndGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_game);
-        PlayerConnexionActivity.net.setCurrentEndView(this);
+        MainActivity.net.setCurrentEndView(this);
 
-        buildings = PlayerConnexionActivity.net.getCurrentGame().getCity().getBuildings();
+        buildings = MainActivity.net.getCurrentGame().getCity().getBuildings();
 
         textScorePlayer = findViewById(R.id.text_score_player);
 
@@ -56,14 +53,14 @@ public class EndGameActivity extends AppCompatActivity {
         BuildingBuiltAdapter MyAdapter= new BuildingBuiltAdapter(buildings);
         rv1.setAdapter(MyAdapter);
 
-        textScorePlayer.setText("Score : " + PlayerConnexionActivity.net.getPlayer().getScore());
+        textScorePlayer.setText("Score : " + MainActivity.net.getPlayer().getScore());
 
-        textAttractivityScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreAttractivite()));
-        textEnvironmentScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreEnvironnemental()));
-        textFluidityScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreFluidite()));
+        textAttractivityScore.setText(String.valueOf(MainActivity.net.getCurrentGame().getScoreAttractivite()));
+        textEnvironmentScore.setText(String.valueOf(MainActivity.net.getCurrentGame().getScoreEnvironnemental()));
+        textFluidityScore.setText(String.valueOf(MainActivity.net.getCurrentGame().getScoreFluidite()));
 
-        if (PlayerConnexionActivity.net.isTimeOver()) {
-            AlertDialog diaBox = PlayerConnexionActivity.net.showMessage("Temps écoulé !",
+        if (MainActivity.net.isTimeOver()) {
+            AlertDialog diaBox = MainActivity.net.showMessage("Temps écoulé !",
                     "Le temps est écoulé et vous n'avez malheuresement pas eu le temps de contruire votre ville en entier...\n" +
                             "La prochaine fois gardez un oeil sur le temps restant.",
                     this);

@@ -33,10 +33,10 @@ public class LogisticActivity extends AppCompatActivity {
         /*** Print the logistic score at the end of the game ***/
 
         totalLogisticScore = findViewById(R.id.TotalScore_TextView);
-        totalLogisticScore.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getScoreLogistique()));
+        totalLogisticScore.setText(String.valueOf(MainActivity.net.getCurrentGame().getScoreLogistique()));
 
         /*** Choose and print the sentence below the Logistic Score ***/
-        iLogisticScore = PlayerConnexionActivity.net.getCurrentGame().getScoreLogistique();
+        iLogisticScore = MainActivity.net.getCurrentGame().getScoreLogistique();
         totalLogisticScoreSentence = findViewById(R.id.LogisticSentence_TextView);
         
         if (iLogisticScore <= -2) {
@@ -54,7 +54,7 @@ public class LogisticActivity extends AppCompatActivity {
 
 
         /*** Put the city buildings in the recycler view ***/
-        buildings = PlayerConnexionActivity.net.getCurrentGame().getCity().getBuildings();
+        buildings = MainActivity.net.getCurrentGame().getCity().getBuildings();
 
         //Log.d("debug", buildings.toString());
         rv = findViewById(R.id.recyclerListBuildingInfluence);

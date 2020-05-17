@@ -1,19 +1,19 @@
 package com.example.urbalog.Database.Export;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.urbalog.Database.FileUtils;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+
 public class ExportConfig {
 
     public enum ExportType {
-        JSON, CSV;
+        JSON, CSV
     }
 
     // Package variables

@@ -78,8 +78,6 @@ public class ConfigurationActivity extends AppCompatActivity {
     }
 
     public void onBackPressed(){
-        Intent intent = new Intent(ConfigurationActivity.this, AdminConnectionActivity.class);
-        startActivity(intent);
         finish();
     }
 }

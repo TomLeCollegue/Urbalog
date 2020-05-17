@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,13 +26,7 @@ import com.example.urbalog.Class.Role;
 import com.example.urbalog.Class.Signal;
 import com.example.urbalog.Class.TransferPackage;
 
-import org.apache.commons.lang3.time.StopWatch;
-
 import java.io.IOException;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 public class PlayerViewActivity extends AppCompatActivity {
@@ -178,7 +171,7 @@ public class PlayerViewActivity extends AppCompatActivity {
         setContentView(R.layout.player_view_activity);
 
         /* Link player activity to NetworkHelper */
-        PlayerConnexionActivity.net.setCurrentPlayerView(this);
+        MainActivity.net.setCurrentPlayerView(this);
         buttonState = true;
 
         B1 = findViewById(R.id.infrastructure_1);
@@ -213,7 +206,7 @@ public class PlayerViewActivity extends AppCompatActivity {
         timeLeftTurnTimer = findViewById(R.id.timeLeftToBet);
         timeLeftTurnTimer.setVisibility(View.GONE);
 
-        financementRessource = PlayerConnexionActivity.net.getPlayer().getFinancementRessource();
+        financementRessource = MainActivity.net.getPlayer().getFinancementRessource();
 
         textPoliticalResssourcesBuilding1 = findViewById(R.id.text_political_resssources_building_1);
         textPoliticalResssourcesBuilding2 = findViewById(R.id.text_political_resssources_building_2);
@@ -286,7 +279,7 @@ public class PlayerViewActivity extends AppCompatActivity {
 
         textScorePlayer = findViewById(R.id.text_score_player);
 
-        textTitleRole.setText(PlayerConnexionActivity.net.getPlayer().getRole().getTypeRole());
+        textTitleRole.setText(MainActivity.net.getPlayer().getRole().getTypeRole());
 
         fillRoleCardObjectives();
         fillRessources();
@@ -329,7 +322,7 @@ public class PlayerViewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!nextTurn){
                     try {
-                        PlayerConnexionActivity.net.sendToAllClients(Signal.NEXT_TURN);
+                        MainActivity.net.sendToAllClients(Signal.NEXT_TURN);
                         bTurn.setText("Annuler");
                         nextTurn = true;
                     }
@@ -339,7 +332,7 @@ public class PlayerViewActivity extends AppCompatActivity {
                 }
                 else{
                     try {
-                        PlayerConnexionActivity.net.sendToAllClients(Signal.CANCEL_NEXT_TURN);
+                        MainActivity.net.sendToAllClients(Signal.CANCEL_NEXT_TURN);
                         bTurn.setText("Tour suivant");
                         nextTurn = false;
                     }
@@ -350,6 +343,18 @@ public class PlayerViewActivity extends AppCompatActivity {
             }
         });
         fillInfosView();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        popUpBet.dismiss();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        popUpBet.dismiss();
     }
 
     @Override
@@ -386,35 +391,35 @@ public class PlayerViewActivity extends AppCompatActivity {
     //button to test the building view
     void fillInfosView(){
 
-        textNameBuilding1.setText(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(0).getName());
-        textNameBuilding2.setText(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(1).getName());
-        textNameBuilding3.setText(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(2).getName());
-        textNameBuilding4.setText(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(3).getName());
-        textNameBuilding5.setText(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(4).getName());
+        textNameBuilding1.setText(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(0).getName());
+        textNameBuilding2.setText(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(1).getName());
+        textNameBuilding3.setText(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(2).getName());
+        textNameBuilding4.setText(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(3).getName());
+        textNameBuilding5.setText(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(4).getName());
 
-        textEnviBuilding1.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(0).getEffetEnvironnemental()));
-        textEnviBuilding2.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(1).getEffetEnvironnemental()));
-        textEnviBuilding3.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(2).getEffetEnvironnemental()));
-        textEnviBuilding4.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(3).getEffetEnvironnemental()));
-        textEnviBuilding5.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(4).getEffetEnvironnemental()));
+        textEnviBuilding1.setText(String.valueOf(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(0).getEffetEnvironnemental()));
+        textEnviBuilding2.setText(String.valueOf(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(1).getEffetEnvironnemental()));
+        textEnviBuilding3.setText(String.valueOf(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(2).getEffetEnvironnemental()));
+        textEnviBuilding4.setText(String.valueOf(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(3).getEffetEnvironnemental()));
+        textEnviBuilding5.setText(String.valueOf(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(4).getEffetEnvironnemental()));
 
-        textAttractBuilding1.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(0).getEffetAttractivite()));
-        textAttractBuilding2.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(1).getEffetAttractivite()));
-        textAttractBuilding3.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(2).getEffetAttractivite()));
-        textAttractBuilding4.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(3).getEffetAttractivite()));
-        textAttractBuilding5.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(4).getEffetAttractivite()));
+        textAttractBuilding1.setText(String.valueOf(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(0).getEffetAttractivite()));
+        textAttractBuilding2.setText(String.valueOf(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(1).getEffetAttractivite()));
+        textAttractBuilding3.setText(String.valueOf(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(2).getEffetAttractivite()));
+        textAttractBuilding4.setText(String.valueOf(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(3).getEffetAttractivite()));
+        textAttractBuilding5.setText(String.valueOf(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(4).getEffetAttractivite()));
 
-        textTraficBuilding1.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(0).getEffetFluidite()));
-        textTraficBuilding2.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(1).getEffetFluidite()));
-        textTraficBuilding3.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(2).getEffetFluidite()));
-        textTraficBuilding4.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(3).getEffetFluidite()));
-        textTraficBuilding5.setText(String.valueOf(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(4).getEffetFluidite()));
+        textTraficBuilding1.setText(String.valueOf(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(0).getEffetFluidite()));
+        textTraficBuilding2.setText(String.valueOf(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(1).getEffetFluidite()));
+        textTraficBuilding3.setText(String.valueOf(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(2).getEffetFluidite()));
+        textTraficBuilding4.setText(String.valueOf(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(3).getEffetFluidite()));
+        textTraficBuilding5.setText(String.valueOf(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(4).getEffetFluidite()));
 
-        Building Building1 = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(0);
-        Building Building2 = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(1);
-        Building Building3 = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(2);
-        Building Building4 = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(3);
-        Building Building5 = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(4);
+        Building Building1 = MainActivity.net.getCurrentGame().getMarket().getBuildings().get(0);
+        Building Building2 = MainActivity.net.getCurrentGame().getMarket().getBuildings().get(1);
+        Building Building3 = MainActivity.net.getCurrentGame().getMarket().getBuildings().get(2);
+        Building Building4 = MainActivity.net.getCurrentGame().getMarket().getBuildings().get(3);
+        Building Building5 = MainActivity.net.getCurrentGame().getMarket().getBuildings().get(4);
 
         textSocialRessourcesBuilding1.setText(Building1.getAvancementCoutSocial() + "/" + Building1.getCoutSocial());
         textSocialRessourcesBuilding2.setText(Building2.getAvancementCoutSocial() + "/" + Building2.getCoutSocial());
@@ -436,7 +441,7 @@ public class PlayerViewActivity extends AppCompatActivity {
 
 
 
-        textScorePlayer.setText("Score : " + PlayerConnexionActivity.net.getPlayer().getScore());
+        textScorePlayer.setText("Score : " + MainActivity.net.getPlayer().getScore());
 
 
 
@@ -476,13 +481,13 @@ public class PlayerViewActivity extends AppCompatActivity {
 
         textAvancementRessourceTop.setText(String.valueOf(financementRessource[numBuildingF][0]));
         TextAvancementRessourceBot.setText(String.valueOf(financementRessource[numBuildingF][1]));
-        descriptionBuildingPopUp.setText(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding).getDescription());
+        descriptionBuildingPopUp.setText(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding).getDescription());
 
         setEnabledBetButtons(buttonState);
 
 
 
-        textNameBuildingPopup.setText(PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding).getName());
+        textNameBuildingPopup.setText(MainActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding).getName());
 
         imgPiecesRessources();
 
@@ -531,7 +536,7 @@ public class PlayerViewActivity extends AppCompatActivity {
 
     private void fillRoleCardObjectives(){
 
-        Role RoleInfo = PlayerConnexionActivity.net.getPlayer().getRole();
+        Role RoleInfo = MainActivity.net.getPlayer().getRole();
 
         if (RoleInfo.getHold().equals("Attractivité")){
            icoObjectifLeftRole.setImageResource(R.mipmap.img_impact_on_city_foreground);
@@ -555,7 +560,7 @@ public class PlayerViewActivity extends AppCompatActivity {
     }
 
     private void fillRessources(){
-        Role RoleInfo = PlayerConnexionActivity.net.getPlayer().getRole();
+        Role RoleInfo = MainActivity.net.getPlayer().getRole();
 
         if (!RoleInfo.getBooleanRessource()[0]){
             Ressource1 = "Economical";
@@ -573,7 +578,7 @@ public class PlayerViewActivity extends AppCompatActivity {
 
     private void fillRoleCardRessources(){
 
-        Role RoleInfo = PlayerConnexionActivity.net.getPlayer().getRole();
+        Role RoleInfo = MainActivity.net.getPlayer().getRole();
 
         if (Ressource1.equals("Social")){
             icoRessourceLeftRole.setImageResource(R.mipmap.img_ressource_social_foreground);
@@ -626,8 +631,8 @@ public class PlayerViewActivity extends AppCompatActivity {
 
     private void betFromButton(int numBuilding, int ressource, int Value){
 
-        Role RoleInfo = PlayerConnexionActivity.net.getPlayer().getRole();
-        Building building = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding);
+        Role RoleInfo = MainActivity.net.getPlayer().getRole();
+        Building building = MainActivity.net.getCurrentGame().getMarket().getBuildings().get(numBuilding);
         String valeurRessource;
         if (ressource == 0){
             valeurRessource = Ressource1;
@@ -641,11 +646,11 @@ public class PlayerViewActivity extends AppCompatActivity {
                 if(((Value == 1) && (RoleInfo.getTokenSocial() > 0)) && (building.getAvancementCoutSocial() < building.getCoutSocial())){
                     buttonState = false;
                     setEnabledBetButtons(buttonState);
-                    mise = new Bet(building.getName(), numBuilding, 0, 0, 1, PlayerConnexionActivity.net.getPlayer().getDbID());
+                    mise = new Bet(building.getName(), numBuilding, 0, 0, 1, MainActivity.net.getPlayer().getDbID());
                     try {
-                        PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
+                        MainActivity.net.sendToAllClients(new TransferPackage<Duo>(
                                 Signal.BET_RECEIVED,
-                                new Duo<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise)));
+                                new Duo<Game, Bet> (MainActivity.net.getCurrentGame(), mise)));
                         RoleInfo.lessSocial();
                         fillRoleCardRessources();
                         financementRessource[numBuilding][ressource]++;
@@ -657,11 +662,11 @@ public class PlayerViewActivity extends AppCompatActivity {
                 else if ((Value == -1) && (building.getAvancementCoutSocial() > 0) && (financementRessource[numBuilding][ressource] != 0)) {
                     buttonState = false;
                     setEnabledBetButtons(buttonState);
-                    mise = new Bet(building.getName(), numBuilding, 0, 0, -1, PlayerConnexionActivity.net.getPlayer().getDbID());
+                    mise = new Bet(building.getName(), numBuilding, 0, 0, -1, MainActivity.net.getPlayer().getDbID());
                     try {
-                        PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
+                        MainActivity.net.sendToAllClients(new TransferPackage<Duo>(
                                 Signal.BET_RECEIVED,
-                                new Duo<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise)));
+                                new Duo<Game, Bet> (MainActivity.net.getCurrentGame(), mise)));
                         RoleInfo.addSocial();
                         fillRoleCardRessources();
                         financementRessource[numBuilding][ressource]--;
@@ -677,11 +682,11 @@ public class PlayerViewActivity extends AppCompatActivity {
             if(((Value == 1) && (RoleInfo.getTokenEconomical() > 0)) && (building.getAvancementCoutEconomique() < building.getCoutEconomique())){
                 buttonState = false;
                 setEnabledBetButtons(buttonState);
-                mise = new Bet(building.getName(), numBuilding, 0, 1, 0, PlayerConnexionActivity.net.getPlayer().getDbID());
+                mise = new Bet(building.getName(), numBuilding, 0, 1, 0, MainActivity.net.getPlayer().getDbID());
                 try {
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
+                    MainActivity.net.sendToAllClients(new TransferPackage<Duo>(
                             Signal.BET_RECEIVED,
-                            new Duo<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise)));
+                            new Duo<Game, Bet> (MainActivity.net.getCurrentGame(), mise)));
                     RoleInfo.lessEco();
                     fillRoleCardRessources();
                     financementRessource[numBuilding][ressource]++;
@@ -693,11 +698,11 @@ public class PlayerViewActivity extends AppCompatActivity {
             else if ((Value == -1)&&(building.getAvancementCoutEconomique() > 0) && (financementRessource[numBuilding][ressource] != 0)) {
                 buttonState = false;
                 setEnabledBetButtons(buttonState);
-                mise = new Bet(building.getName(), numBuilding, 0, -1, 0, PlayerConnexionActivity.net.getPlayer().getDbID());
+                mise = new Bet(building.getName(), numBuilding, 0, -1, 0, MainActivity.net.getPlayer().getDbID());
                 try {
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
+                    MainActivity.net.sendToAllClients(new TransferPackage<Duo>(
                             Signal.BET_RECEIVED,
-                            new Duo<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise)));
+                            new Duo<Game, Bet> (MainActivity.net.getCurrentGame(), mise)));
                     RoleInfo.addEco();
                     fillRoleCardRessources();
                     financementRessource[numBuilding][ressource]--;
@@ -713,11 +718,11 @@ public class PlayerViewActivity extends AppCompatActivity {
             if(((Value == 1) && (RoleInfo.getTokenPolitical() > 0)) && (building.getAvancementCoutPolitique() < building.getCoutPolitique())){
                 buttonState = false;
                 setEnabledBetButtons(buttonState);
-                mise = new Bet(building.getName(), numBuilding, 1, 0, 0, PlayerConnexionActivity.net.getPlayer().getDbID());
+                mise = new Bet(building.getName(), numBuilding, 1, 0, 0, MainActivity.net.getPlayer().getDbID());
                 try {
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
+                    MainActivity.net.sendToAllClients(new TransferPackage<Duo>(
                             Signal.BET_RECEIVED,
-                            new Duo<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise)));
+                            new Duo<Game, Bet> (MainActivity.net.getCurrentGame(), mise)));
                     RoleInfo.lessPolitical();
                     fillRoleCardRessources();
                     financementRessource[numBuilding][ressource]++;
@@ -729,11 +734,11 @@ public class PlayerViewActivity extends AppCompatActivity {
             else if ((Value == -1)&&(building.getAvancementCoutPolitique() > 0) && (financementRessource[numBuilding][ressource] != 0)) {
                 buttonState = false;
                 setEnabledBetButtons(buttonState);
-                mise = new Bet(building.getName(), numBuilding, -1, 0, 0, PlayerConnexionActivity.net.getPlayer().getDbID());
+                mise = new Bet(building.getName(), numBuilding, -1, 0, 0, MainActivity.net.getPlayer().getDbID());
                 try {
-                    PlayerConnexionActivity.net.sendToAllClients(new TransferPackage<Duo>(
+                    MainActivity.net.sendToAllClients(new TransferPackage<Duo>(
                             Signal.BET_RECEIVED,
-                            new Duo<Game, Bet> (PlayerConnexionActivity.net.getCurrentGame(), mise)));
+                            new Duo<Game, Bet> (MainActivity.net.getCurrentGame(), mise)));
                     RoleInfo.addPolitical();
                     fillRoleCardRessources();
                     financementRessource[numBuilding][ressource]--;
@@ -744,7 +749,7 @@ public class PlayerViewActivity extends AppCompatActivity {
             }
 
         }
-        PlayerConnexionActivity.net.getPlayer().setFinancementRessource(financementRessource);
+        MainActivity.net.getPlayer().setFinancementRessource(financementRessource);
         textAvancementRessourceTop.setText(String.valueOf(financementRessource[numBuildingF][0]));
         TextAvancementRessourceBot.setText(String.valueOf(financementRessource[numBuildingF][1]));
         updateStateButton(numBuilding);
@@ -760,7 +765,7 @@ public class PlayerViewActivity extends AppCompatActivity {
             bTurn.setText("Tour suivant");
             Integer[][] financementRessourceReset= {{0,0},{0,0},{0,0},{0,0},{0,0}};
             financementRessource = financementRessourceReset;
-            PlayerConnexionActivity.net.getPlayer().setFinancementRessource(financementRessource);
+            MainActivity.net.getPlayer().setFinancementRessource(financementRessource);
         }
 
     public void setEnabledBetButtons(boolean bool){
@@ -784,7 +789,7 @@ public class PlayerViewActivity extends AppCompatActivity {
      * 0 if unfunded.
      */
     public void colorBuildingBet(){
-        Market M = PlayerConnexionActivity.net.getCurrentGame().getMarket();
+        Market M = MainActivity.net.getCurrentGame().getMarket();
         if( M.getBuildings().get(0).isFilled()){
             B1.setBackground(getDrawable(R.drawable.style_market_view_green));
             readyBuildings[0] = 1;
@@ -1112,7 +1117,7 @@ public class PlayerViewActivity extends AppCompatActivity {
             }
         }
 
-        Market M = PlayerConnexionActivity.net.getCurrentGame().getMarket();
+        Market M = MainActivity.net.getCurrentGame().getMarket();
 
         //---------------------------------------------Economique------------------------------------------------------------
 
@@ -1262,11 +1267,11 @@ public class PlayerViewActivity extends AppCompatActivity {
      */
     public void colorImpact(){
 
-        Building building1 = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(0);
-        Building building2 = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(1);
-        Building building3 = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(2);
-        Building building4 = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(3);
-        Building building5 = PlayerConnexionActivity.net.getCurrentGame().getMarket().getBuildings().get(4);
+        Building building1 = MainActivity.net.getCurrentGame().getMarket().getBuildings().get(0);
+        Building building2 = MainActivity.net.getCurrentGame().getMarket().getBuildings().get(1);
+        Building building3 = MainActivity.net.getCurrentGame().getMarket().getBuildings().get(2);
+        Building building4 = MainActivity.net.getCurrentGame().getMarket().getBuildings().get(3);
+        Building building5 = MainActivity.net.getCurrentGame().getMarket().getBuildings().get(4);
 
         int colorRed = Color.parseColor("#D22C24");
         int colorGreen = Color.parseColor("#5e7a23");
@@ -1489,7 +1494,7 @@ public class PlayerViewActivity extends AppCompatActivity {
      */
     public void tooManyBuildings(){
         Game currentGame;
-        currentGame = PlayerConnexionActivity.net.getCurrentGame();
+        currentGame = MainActivity.net.getCurrentGame();
 
         Toast toast;
         String tooMany = "Rappel : Vous ne pouvez construire que "+ currentGame.getMaxBuildingsPerTurn()+" aménagement(s) par tour.";
@@ -1516,7 +1521,7 @@ public class PlayerViewActivity extends AppCompatActivity {
     }
 
     public void updateStateButton(int numBuilding){
-        Role RoleInfo = PlayerConnexionActivity.net.getPlayer().getRole();
+        Role RoleInfo = MainActivity.net.getPlayer().getRole();
         if(financementRessource[numBuilding][0] == 0){
             buttonMinusTop.setEnabled(false);
         }
@@ -1583,7 +1588,7 @@ public class PlayerViewActivity extends AppCompatActivity {
 
 
     public void imgPiecesRessources(){
-        Role RoleInfo = PlayerConnexionActivity.net.getPlayer().getRole();
+        Role RoleInfo = MainActivity.net.getPlayer().getRole();
 
         // ressource 1
         if(Ressource1.equals("Social")) {

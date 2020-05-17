@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminConnectionActivity extends AppCompatActivity {
-    public static NetworkHelper net; // Temporary until class can be parcelable and send in intent
-
     private ArrayList<Role> roles;
     private Button bHost;
     private Button bPlay;
@@ -45,9 +43,9 @@ public class AdminConnectionActivity extends AppCompatActivity {
 
         this.roles = JsonRole.readRole();
 
-        if(net == null) {
-            net = new NetworkHelper(this, true);
-            net.setHost(true);
+        if(MainActivity.net == null || !MainActivity.net.isHost()) {
+            MainActivity.net = new NetworkHelper(this, true);
+            MainActivity.net.setHost(true);
         }
         setContentView(R.layout.activity_admin_connection);
 
@@ -77,7 +75,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
         spinnerPlayer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                net.setNB_PLAYERS((Integer)spinnerPlayer.getSelectedItem());
+                MainActivity.net.setNB_PLAYERS((Integer)spinnerPlayer.getSelectedItem());
                 updateNbPlayers();
             }
 
@@ -92,22 +90,22 @@ public class AdminConnectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 configurationButton.setEnabled(false);
-                net.hostGame();
+                MainActivity.net.hostGame();
                 updateStatus("Searching...");
             }
         });
         bPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(net.getListPlayer().size() == NetworkHelper.getNbPlayers()) {
-                    Log.i("Urbalog", "Turn game: " + net.getTURN_TIME());
+                if(MainActivity.net.getListPlayer().size() == NetworkHelper.getNbPlayers()) {
+                    Log.i("Urbalog", "Turn game: " + MainActivity.net.getTURN_TIME());
                     bPlay.setEnabled(false);
                     configurationButton.setEnabled(false);
-                    net.setGameStarted(true);
-                    currentGame = net.getCurrentGame();
+                    MainActivity.net.setGameStarted(true);
+                    currentGame = MainActivity.net.getCurrentGame();
                     currentGame.setMarket(new Market());
-                    net.setCurrentGame(currentGame);
-                    net.startGame(roles);
+                    MainActivity.net.setCurrentGame(currentGame);
+                    MainActivity.net.startGame(roles);
                     Intent cityIntent = new Intent(AdminConnectionActivity.this, CityProgressionActivity.class);
                     startActivity(cityIntent);
                 }
@@ -118,8 +116,7 @@ public class AdminConnectionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 configurationButton.setEnabled(true);
                 bPlay.setEnabled(true);
-                net.stopAll();
-                net = new NetworkHelper(getApplicationContext(), true);
+                MainActivity.net.reset();
                 updateStatus("Disconnected");
                 updateNbPlayers();
             }
@@ -144,9 +141,21 @@ public class AdminConnectionActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(!MainActivity.net.isGameStarted()){
+            MainActivity.net.reset();
+            configurationButton.setEnabled(true);
+            bPlay.setEnabled(true);
+            updateStatus("Disconnected");
+            updateNbPlayers();
+        }
+    }
+
     public static void updateNbPlayers()
     {
-        tPlayers.setText(net.getListPlayer().size()+"/"+ NetworkHelper.getNbPlayers());
+        tPlayers.setText(MainActivity.net.getListPlayer().size()+"/"+ NetworkHelper.getNbPlayers());
     }
 
     public void updateStatus(String s)

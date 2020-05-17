@@ -37,7 +37,7 @@ public class DbConfigActivity extends AppCompatActivity {
         exportCsv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AdminConnectionActivity.net.getDb().exportDbToCSV();
+                MainActivity.net.getDb().exportDbToCSV();
                 Toast.makeText(DbConfigActivity.this, "Base de donnée exportée", Toast.LENGTH_LONG).show();
             }
         });
@@ -45,7 +45,7 @@ public class DbConfigActivity extends AppCompatActivity {
         exportJson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AdminConnectionActivity.net.getDb().exportDbToJSON();
+                MainActivity.net.getDb().exportDbToJSON();
                 Toast.makeText(DbConfigActivity.this, "Base de donnée exportée", Toast.LENGTH_LONG).show();
             }
         });
@@ -53,7 +53,7 @@ public class DbConfigActivity extends AppCompatActivity {
         syncDb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AdminConnectionActivity.net.getDb().syncDb();
+                MainActivity.net.getDb().syncDb();
                 Toast.makeText(DbConfigActivity.this, "Base de donnée synchronisée", Toast.LENGTH_LONG).show();
             }
         });
@@ -73,7 +73,7 @@ public class DbConfigActivity extends AppCompatActivity {
                 .setIcon(R.drawable.warning_icon)
                 .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        AdminConnectionActivity.net.getDb().resetDB();
+                        MainActivity.net.getDb().resetDB();
                         Toast.makeText(DbConfigActivity.this, "Base de donnée réinitialisée", Toast.LENGTH_LONG).show();
                     }
                 })
