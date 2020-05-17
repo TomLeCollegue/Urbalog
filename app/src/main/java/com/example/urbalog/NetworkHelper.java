@@ -1229,6 +1229,7 @@ public class NetworkHelper implements Serializable {
         gameTimer.cancel();
         db.updateGame(currentGame);
         gameStarted = false;
+        db.syncDb();
     }
 
     public void reset(){
