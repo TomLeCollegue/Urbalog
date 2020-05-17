@@ -43,6 +43,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -1120,8 +1122,8 @@ public class NetworkHelper implements Serializable {
      * @throws IOException
      */
     public void sendRandomRoleToAllClients(ArrayList<Role> srcData) throws IOException {
+        Collections.shuffle(srcData);
         if(srcData.size() >= listPlayer.size()){
-            int randomIndex = 0;
             Payload data;
             for (int i = 0; i < listPlayer.size(); i++) {
                 playersInformations.get(i).getFirst().setRole(srcData.get(i));
@@ -1149,16 +1151,6 @@ public class NetworkHelper implements Serializable {
         currentPlayerView.colorBuildingBet();
         currentPlayerView.resetColorRessources();
         currentPlayerView.colorRessources();
-    }
-
-    private int randomIndex(int min, int max)
-    {
-        if (min >= max) {
-            throw new IllegalArgumentException("max must be greater than min");
-        }
-
-        Random r = new Random();
-        return r.nextInt((max - min) + 1) + min;
     }
 
     public void setNB_PLAYERS(int NB_PLAYERS) {
@@ -1229,6 +1221,7 @@ public class NetworkHelper implements Serializable {
         gameTimer.cancel();
         db.updateGame(currentGame);
         gameStarted = false;
+        db.syncDb();
     }
 
     public void reset(){

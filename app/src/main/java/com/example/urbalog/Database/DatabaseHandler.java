@@ -753,7 +753,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public void syncDb(){
-        File dbJsonPath = new File(FileUtils.getAppDir(appContext) + "/databases/Urbalog.json");
+        exportDbToJSON();
+        File dbJsonPath = new File(appContext.getExternalFilesDir("Urbalog/") + "/Urbalog.json");
         Log.d(NetworkHelper.TAG, dbJsonPath.getAbsolutePath());
 
         String URBALOG_URL = "https://mobicampus-udl.entpe.fr/urbalog/addGames";

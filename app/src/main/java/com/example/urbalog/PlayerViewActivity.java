@@ -347,14 +347,16 @@ public class PlayerViewActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        if(popUpBet != null)
+            popUpBet.dismiss();
         super.onDestroy();
-        popUpBet.dismiss();
     }
 
     @Override
     protected void onPause() {
+        if(popUpBet != null)
+            popUpBet.dismiss();
         super.onPause();
-        popUpBet.dismiss();
     }
 
     @Override

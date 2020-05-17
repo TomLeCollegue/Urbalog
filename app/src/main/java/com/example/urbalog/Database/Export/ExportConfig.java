@@ -2,12 +2,15 @@ package com.example.urbalog.Database.Export;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.urbalog.Database.FileUtils;
+import com.example.urbalog.NetworkHelper;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class ExportConfig {
@@ -23,6 +26,7 @@ public class ExportConfig {
 
     private String databaseName;
     private Set<String> excludedTables;
+    private Context appContext;
 
     /**
      * Constructor
@@ -36,11 +40,12 @@ public class ExportConfig {
         this.db = db;
         this.exportType = exportType;
         this.databaseName = databaseName;
+        this.appContext = appContext;
 
         if( !FileUtils.isExternalStorageWritable() ){
             throw new IOException("Cannot write to external storage");
         }
-        this.directory = FileUtils.createDirIfNotExist(FileUtils.getAppDir(appContext) + "/databases/");
+        this.directory = appContext.getExternalFilesDir("Urbalog/");
     }
 
     public void setExcludeTable(String tableName) {
