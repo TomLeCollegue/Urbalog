@@ -29,7 +29,7 @@ import com.google.android.gms.tasks.Task;
 
 public class MainActivity extends AppCompatActivity {
 
-    public final static String VERSION = "© Release v1.0.0";
+    public final static String VERSION = "© Release v1.0.1";
     private static final int REQUEST_CHECK_SETTINGS = 0x1;
     public static NetworkHelper net;
     private LocationRequest locationRequest;
