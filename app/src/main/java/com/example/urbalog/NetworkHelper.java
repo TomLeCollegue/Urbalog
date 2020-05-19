@@ -23,7 +23,9 @@ import com.example.urbalog.Class.Role;
 import com.example.urbalog.Class.Signal;
 import com.example.urbalog.Class.TransferPackage;
 import com.example.urbalog.Class.Triplet;
+
 import com.example.urbalog.Database.DatabaseHandler;
+
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
 import com.google.android.gms.nearby.connection.ConnectionInfo;
@@ -43,11 +45,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
 /**
  * Helper class for network interactions using Nearby Connection API
@@ -69,10 +69,8 @@ public class NetworkHelper implements Serializable {
     private boolean host;
 
     private static int NB_PLAYERS = 5;
-    private static int NB_BUILDINGS = 3;
-
+    private static int NB_BUILDINGS = 6;
     private static int NB_BUILDINGS_PER_TURN = 2;
-    private static String SERVER_DB_ADRESS = "";
 
     private int TURN_TIME = 30;
     private int GAME_TIME = 3600;

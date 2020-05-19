@@ -195,6 +195,6 @@ public class Building implements Serializable {
 
     public boolean isFilled()
     {
-        return /*(avancementCoutSocial == coutSocial) && */(avancementCoutPolitique == coutPolitique) && (avancementCoutEconomique == coutEconomique);
+        return (avancementCoutSocial == coutSocial) && (avancementCoutPolitique == coutPolitique) && (avancementCoutEconomique == coutEconomique);
     }
 }
